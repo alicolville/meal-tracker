@@ -16,7 +16,7 @@
 	function yk_mt_meal_add( $meal ) {
 
 		// Ensure we have the expected fields.
-		if ( false === yk_mt_array_check_fields( $meal, [ 'added_by', 'name', 'calories', 'quantity', 'description' ] ) ) {
+		if ( false === yk_mt_array_check_fields( $meal, [ 'added_by', 'name', 'calories', 'quantity' ] ) ) {
 			return false;
 		}
 
@@ -28,7 +28,51 @@
 
 		$result = $wpdb->insert( $wpdb->prefix . YK_WT_DB_MEALS , $meal, $formats );
 
-		return ( false === $result ) ? false : $wpdb->insert_id;
+		if ( false === $result ) {
+			return false;
+		}
+
+		do_action( 'yk_mt_meal_added', $meal );
+
+		return $wpdb->insert_id;
+	}
+
+	/**
+	 *
+	 * Update a meal
+	 *
+	 * @param $meal
+	 *
+	 * @return bool     true if success
+	 */
+	function yk_mt_meal_update( $meal ) {
+
+		if ( false === is_admin() ) {
+			return false;
+		}
+
+		if ( false === yk_mt_array_check_fields( $meal, [ 'id', 'added_by', 'name', 'calories', 'quantity' ] ) ) {
+			return false;
+		}
+
+		// Extract ID
+		$id = $meal[ 'id' ];
+
+		unset( $meal[ 'id' ] );
+
+		global $wpdb;
+
+		$formats = yk_mt_mysql_formats( $meal );
+
+		$result = $wpdb->update( $wpdb->prefix . YK_WT_DB_MEALS, $meal, [ 'id' => $id ], $formats, [ '%d' ] );
+
+		if ( false === $result ) {
+			return false;
+		}
+
+		do_action( 'yk_mt_meal_updated', $meal );
+
+		return true;
 	}
 
 	/**
