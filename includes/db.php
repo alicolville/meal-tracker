@@ -26,7 +26,7 @@
 
 		$formats = yk_mt_mysql_formats( $meal );
 
-		$result = $wpdb->insert( $wpdb->prefix . WE_LS_MYSQL_AWARDS , $meal, $formats );
+		$result = $wpdb->insert( $wpdb->prefix . YK_WT_DB_MEALS , $meal, $formats );
 
 		return ( false === $result ) ? false : $wpdb->insert_id;
 	}
