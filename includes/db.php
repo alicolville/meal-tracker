@@ -47,10 +47,6 @@
 	 */
 	function yk_mt_meal_update( $meal ) {
 
-		if ( false === is_admin() ) {
-			return false;
-		}
-
 		if ( false === yk_mt_array_check_fields( $meal, [ 'id', 'added_by', 'name', 'calories', 'quantity' ] ) ) {
 			return false;
 		}
@@ -74,6 +70,46 @@
 
 		return true;
 	}
+
+	/**
+	 * Delete a meal
+	 *
+	 * @param $id       meal ID to delete
+	 * @return bool     true if success
+	 */
+	function yk_mt_meal_delete( $id ) {
+
+		global $wpdb;
+
+		do_action( 'yk_mt_meal_deleting', $id );
+
+		$result = $wpdb->delete( $wpdb->prefix . YK_WT_DB_MEALS, [ 'id' => $id ], [ '%d' ] );
+
+		if ( 1 !== $result ) {
+			return false;
+		}
+
+		do_action( 'yk_mt_meal_deleted', $id );
+
+		return true;
+	}
+
+	/**
+	 * Delete all entries for meal
+	 *
+	 * @param $meta_field_id
+	 * @return bool
+	 */
+//	function ws_ls_awards_delete_all_given( $award_id ) {
+//
+//		global $wpdb;
+//
+//		$result = $wpdb->delete( $wpdb->prefix . YK_WT_DB_ENTRY_MEAL, [ 'award_id' => $award_id ], [ '%d' ] );
+//
+//		return ( 1 === $result );
+//
+//	}
+//	do_action( 'wlt-awards-deleting', 'ws_ls_awards_delete_all_given' );
 
 	/**
 	 * Return data formats

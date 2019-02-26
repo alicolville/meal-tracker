@@ -58,6 +58,31 @@
 			yk_test_error( 'Failed to add meal', $meal );
 		}
 
+		$meal = [
+			'added_by' => YK_TEST_USER_ID,
+			'name' => 'Meal to UPDATE',
+			'calories' => 210,
+			'quantity' => 9999,
+			'description' => ''
+		];
+
+		if ( false === yk_mt_meal_add( $meal ) ) {
+			yk_test_error( 'Failed to add meal', $meal );
+		}
+
+		$meal = [
+			'id' => 4,
+			'added_by' => YK_TEST_USER_ID,
+			'name' => 'Spag Bol',
+			'calories' => 210,
+			'quantity' => 400,
+			'description' => 'Some pasta and red sauce!'
+		];
+
+		if ( false === yk_mt_meal_update( $meal ) ) {
+			yk_test_error( 'Failed to update meal', $meal );
+		}
+
 	}
 
 	function yk_test_truncate_all() {
