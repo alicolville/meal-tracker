@@ -41,6 +41,9 @@ include_once YK_MT_ABSPATH . 'includes/caching.php';
 include_once YK_MT_ABSPATH . 'includes/db.php';
 include_once YK_MT_ABSPATH . 'includes/activate.php';
 
+// TODO: Remove
+include_once YK_MT_ABSPATH . 'tests.php';
+
 // -----------------------------------------------------------------------------------------
 // AC: Load relevant language files
 // -----------------------------------------------------------------------------------------
