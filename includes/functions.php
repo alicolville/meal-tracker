@@ -17,3 +17,34 @@
 
 		return true;
 	}
+
+	/**
+	 * Validate an ISO date
+	 *
+	 * @param $iso
+	 *
+	 * @return bool
+	 */
+	function yk_mt_date_is_valid_iso( $iso ) {
+
+		if ( true === empty( $iso ) ) {
+			return false;
+		}
+
+		$iso = explode( '-', $iso );
+
+		if ( 3 !== count( $iso ) ) {
+			return false;
+		}
+
+		return checkdate ( $iso[ 1 ], $iso[ 2 ], $iso[ 0 ] );
+	}
+
+	/**
+	 * Get today's date in ISO
+	 *
+	 * @return string
+	 */
+	function yk_mt_date_iso_today() {
+		return date( 'Y-m-d' );
+	}
