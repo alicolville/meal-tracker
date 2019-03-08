@@ -254,3 +254,40 @@
 		yk_mt_cache_delete( 'entry-' . $id );
 	}
 	add_action( 'yk_mt_entry_deleted', 'yk_mt_cache_hook_entry_delete' );
+
+	/**
+	 * Update / Set cache for meal types
+	 *
+	 * @param $meal_types
+	 */
+	function yk_mt_cache_hook_meal_types_set( $meal_types ) {
+
+		yk_mt_cache_set( 'meal-types', $meal_types );
+
+	}
+	add_action( 'yk_mt_meal_types_all', 'yk_mt_cache_hook_meal_types_set' );
+
+	/**
+	 * Get cache for meal types
+	 *
+	 * @param $id
+	 * @param $meal
+	 */
+	function yk_mt_cache_filter_meal_types_get( $default_value ) {
+
+		$cache = yk_mt_cache_get( 'meal-types' );
+
+		return ( false === empty( $cache ) ) ? $cache : NULL;
+
+	}
+	add_filter( 'yk_mt_db_meal_types_all', 'yk_mt_cache_filter_meal_types_get' );
+
+	/**
+	 * Clear cache for meal types
+	 *
+	 * @param $id
+	 */
+	function yk_mt_cache_hook_meal_types_delete( $id ) {
+		yk_mt_cache_delete( 'meal-types' );
+	}
+	add_action( 'yk_mt_meal_types_added', 'yk_mt_cache_hook_meal_types_delete' );

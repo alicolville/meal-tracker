@@ -29,17 +29,17 @@ defined('ABSPATH') or die("Jog on!");
 
 define( 'YK_MT_ABSPATH', plugin_dir_path( __FILE__ ) );
 
-define( 'YK_MT_PLUGIN_VERSION', '0.1-1' );
+define( 'YK_MT_PLUGIN_VERSION', '0.1-2' );
 define( 'YK_MT_SLUG', 'meal-tracker' );
 
 // -----------------------------------------------------------------------------------------
 // AC: Include all relevant PHP files
 // -----------------------------------------------------------------------------------------
 
-include_once YK_MT_ABSPATH . 'includes/functions.php';
-include_once YK_MT_ABSPATH . 'includes/caching.php';
-include_once YK_MT_ABSPATH . 'includes/db.php';
-include_once YK_MT_ABSPATH . 'includes/activate.php';
+include_once YK_MT_ABSPATH . 'core/functions.php';
+include_once YK_MT_ABSPATH . 'core/caching.php';
+include_once YK_MT_ABSPATH . 'core/db.php';
+include_once YK_MT_ABSPATH . 'core/activate.php';
 
 // TODO: Remove
 include_once YK_MT_ABSPATH . 'tests.php';

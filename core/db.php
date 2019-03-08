@@ -5,15 +5,16 @@
 	define( 'YK_WT_DB_MEALS', 'yk_mt_meals');                   // Store all meal types
 	define( 'YK_WT_DB_ENTRY', 'yk_mt_entry');                   // Store all entries for the given user
 	define( 'YK_WT_DB_ENTRY_MEAL', 'yk_mt_entry_meals');        // Store all meals for given entry
+	define( 'YK_WT_DB_MEAL_TYPES', 'yk_mt_meal_types');         // Store all meal types
 
-	/**
+/**
 	 * Add an entry
 	 *
 	 * @param $entry
 	 *
 	 * @return bool     true if success
 	 */
-	function yk_mt_entry_add( $entry ) {
+	function yk_mt_db_entry_add( $entry ) {
 
 		// Ensure we have the expected fields.
 		if ( false === yk_mt_array_check_fields( $entry, [ 'user_id', 'calories_allowed', 'calories_used', 'date' ] ) ) {
@@ -29,7 +30,7 @@
 
 		global $wpdb;
 
-		$formats = yk_mt_mysql_formats( $entry );
+		$formats = yk_mt_db_mysql_formats( $entry );
 
 		$result = $wpdb->insert( $wpdb->prefix . YK_WT_DB_ENTRY , $entry, $formats );
 
@@ -50,9 +51,9 @@
 	 *
 	 * @return bool     true if success
 	 */
-	function yk_mt_entry_update( $entry ) {
+	function yk_mt_db_entry_update( $entry ) {
 
-		if ( false === yk_mt_array_check_fields( $entry, [ 'id', 'user_id', 'calories_allowed', 'calories_used', 'date' ] ) ) {
+		if ( false === yk_mt_array_check_fields( $entry, [ 'id' ] ) ) {
 			return false;
 		}
 
@@ -62,7 +63,7 @@
 
 		global $wpdb;
 
-		$formats = yk_mt_mysql_formats( $entry );
+		$formats = yk_mt_db_mysql_formats( $entry );
 
 		$result = $wpdb->update( $wpdb->prefix . YK_WT_DB_ENTRY, $entry, [ 'id' => $id ], $formats, [ '%d' ] );
 
@@ -81,7 +82,7 @@
 	 * @param $id       entry ID to delete
 	 * @return bool     true if success
 	 */
-	function yk_mt_entry_delete( $id ) {
+	function yk_mt_db_entry_delete( $id ) {
 
 		global $wpdb;
 
@@ -104,7 +105,7 @@
 	 * @param $meal_id
 	 * @return bool
 	 */
-	function yk_mt_entry_delete_entries( $entry_id ) {
+	function yk_mt_db_entry_delete_entries( $entry_id ) {
 
 		global $wpdb;
 
@@ -120,16 +121,15 @@
 	 *
 	 * @param $key
 	 */
-	function yk_mt_entry_get( $id ) {
+	function yk_mt_db_entry_get( $id ) {
 
 		if ( $cache = apply_filters( 'yk_mt_db_entry_get', NULL, $id ) ) {
-			echo 'cache';
 			return $cache;
 		}
 
 		global $wpdb;
 
-		$sql = $wpdb->prepare('Select * from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where id = %s limit 0, 1', $id );
+		$sql = $wpdb->prepare('Select * from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where id = %d limit 0, 1', $id );
 
 		$entry = $wpdb->get_row( $sql, ARRAY_A );
 
@@ -141,16 +141,34 @@
 	}
 
 	/**
+	 * Count calories for given entry
+	 *
+	 * @param $entry_id
+	 *
+	 * @return null|string
+	 */
+	function yk_mt_db_entry_calories_count( $entry_id ) {
+
+		global $wpdb;
+
+		$sql = $wpdb->prepare( 'Select sum( calories ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em 
+				inner join ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
+				on em.meal_id = m.id where entry_id = %d', $entry_id );
+
+		return $wpdb->get_var( $sql );
+	}
+
+	/**
 	 * Add an entry / meal relationship
 	 *
 	 * @param $entry_meal
 	 *
 	 * @return bool     true if success
 	 */
-	function yk_mt_entry_meal_add( $entry_meal ) {
+	function yk_mt_db_entry_meal_add( $entry_meal ) {
 
 		// Ensure we have the expected fields.
-		if ( false === yk_mt_array_check_fields( $entry_meal, [ 'meal_time', 'meal_id', 'entry_id' ] ) ) {
+		if ( false === yk_mt_array_check_fields( $entry_meal, [ 'meal_type', 'meal_id', 'entry_id' ] ) ) {
 			return false;
 		}
 
@@ -158,7 +176,7 @@
 
 		global $wpdb;
 
-		$formats = yk_mt_mysql_formats( $entry_meal );
+		$formats = yk_mt_db_mysql_formats( $entry_meal );
 
 		$result = $wpdb->insert( $wpdb->prefix . YK_WT_DB_ENTRY_MEAL , $entry_meal, $formats );
 
@@ -172,6 +190,22 @@
 	}
 
 	/**
+	 * Get details for an entry_meal
+	 *
+	 * @param $key
+	 */
+	function yk_mt_db_entry_meal_get( $id ) {
+
+		global $wpdb;
+
+		$sql = $wpdb->prepare('Select * from ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' where id = %d limit 0, 1', $id );
+
+		$entry_meal = $wpdb->get_row( $sql, ARRAY_A );
+
+		return ( false === empty( $entry_meal ) ) ? $entry_meal : false;
+	}
+
+	/**
 	 *
 	 * Update an entry / meal
 	 *
@@ -179,9 +213,9 @@
 	 *
 	 * @return bool     true if success
 	 */
-	function yk_mt_entry_meal_update( $entry_meal ) {
+	function yk_mt_db_entry_meal_update( $entry_meal ) {
 
-		if ( false === yk_mt_array_check_fields( $entry_meal, [ 'id', 'meal_time', 'meal_id', 'entry_id' ] ) ) {
+		if ( false === yk_mt_array_check_fields( $entry_meal, [ 'id', 'meal_type', 'meal_id', 'entry_id' ] ) ) {
 			return false;
 		}
 
@@ -191,7 +225,7 @@
 
 		global $wpdb;
 
-		$formats = yk_mt_mysql_formats( $entry_meal );
+		$formats = yk_mt_db_mysql_formats( $entry_meal );
 
 		$result = $wpdb->update( $wpdb->prefix . YK_WT_DB_ENTRY_MEAL, $entry_meal, [ 'id' => $id ], $formats, [ '%d' ] );
 
@@ -210,7 +244,7 @@
 	 * @param $id       entry ID to delete
 	 * @return bool     true if success
 	 */
-	function yk_mt_entry_meal_delete( $id ) {
+	function yk_mt_db_entry_meal_delete( $id ) {
 
 		global $wpdb;
 
@@ -234,7 +268,7 @@
 	 *
 	 * @return bool     true if success
 	 */
-	function yk_mt_meal_add( $meal ) {
+	function yk_mt_db_meal_add( $meal ) {
 
 		// Ensure we have the expected fields.
 		if ( false === yk_mt_array_check_fields( $meal, [ 'added_by', 'name', 'calories', 'quantity' ] ) ) {
@@ -245,7 +279,7 @@
 
 		global $wpdb;
 
-		$formats = yk_mt_mysql_formats( $meal );
+		$formats = yk_mt_db_mysql_formats( $meal );
 
 		$result = $wpdb->insert( $wpdb->prefix . YK_WT_DB_MEALS , $meal, $formats );
 
@@ -266,9 +300,9 @@
 	 *
 	 * @return bool     true if success
 	 */
-	function yk_mt_meal_update( $meal ) {
+	function yk_mt_db_meal_update( $meal ) {
 
-		if ( false === yk_mt_array_check_fields( $meal, [ 'id', 'added_by', 'name', 'calories', 'quantity' ] ) ) {
+		if ( false === yk_mt_array_check_fields( $meal, [ 'id' ] ) ) {
 			return false;
 		}
 
@@ -278,7 +312,7 @@
 
 		global $wpdb;
 
-		$formats = yk_mt_mysql_formats( $meal );
+		$formats = yk_mt_db_mysql_formats( $meal );
 
 		$result = $wpdb->update( $wpdb->prefix . YK_WT_DB_MEALS, $meal, [ 'id' => $id ], $formats, [ '%d' ] );
 
@@ -297,7 +331,7 @@
 	 * @param $id       meal ID to delete
 	 * @return bool     true if success
 	 */
-	function yk_mt_meal_delete( $id ) {
+	function yk_mt_db_meal_delete( $id ) {
 
 		global $wpdb;
 
@@ -319,7 +353,7 @@
 	 *
 	 * @param $key
 	 */
-	function yk_mt_meal_get( $id ) {
+	function yk_mt_db_meal_get( $id ) {
 
 		if ( $cache = apply_filters( 'yk_mt_db_meal_get', NULL, $id ) ) {
 			return $cache;
@@ -327,7 +361,7 @@
 
 		global $wpdb;
 
-		$sql = $wpdb->prepare('Select * from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where id = %s limit 0, 1', $id );
+		$sql = $wpdb->prepare('Select * from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where id = %d limit 0, 1', $id );
 
 		$meal = $wpdb->get_row( $sql, ARRAY_A );
 
@@ -339,12 +373,52 @@
 	}
 
 	/**
+	 * Get meals added by a user
+	 *
+	 * @param null $user_id
+	 * @param bool $include_deleted
+	 *
+	 * @return array|null
+	 */
+	function yk_mt_db_meal_for_user( $user_id = NULL, $options  = []  ) {
+
+		$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+		$options = wp_parse_args( $options, [
+			'exclude-deleted' => true,
+			'sort' => 'name',
+			'sort-order' => 'asc'
+		]);
+
+		global $wpdb;
+
+		$sql = $wpdb->prepare('Select * from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where added_by = %d', $user_id );
+
+		// Exclude deleted?
+		if ( true === $options[ 'exclude-deleted' ] ) {
+			$sql .= ' and deleted = 0';
+		}
+
+		$sort = ( true === in_array( $options[ 'sort' ], [ 'name', 'calories' ] ) ) ?  $options[ 'sort' ] : 'name';
+
+		$sort_order = ( true === in_array( $options[ 'sort-order' ], [ 'asc', 'desc' ] ) ) ? $options[ 'sort-order' ] : 'asc';
+
+		$sql .= sprintf( ' order by %s %s', $sort, $sort_order );
+
+		$meals = $wpdb->get_results( $sql, ARRAY_A );
+
+		$meals = ( false === empty( $meals ) ) ? $meals : false;
+
+		return $meals;
+	}
+
+	/**
 	 * Delete all entries / meals relationships when a meal is deleted
 	 *
 	 * @param $meal_id
 	 * @return bool
 	 */
-	function yk_mt_meal_delete_entries( $meal_id ) {
+	function yk_mt_db_meal_delete_entries( $meal_id ) {
 
 		global $wpdb;
 
@@ -356,11 +430,64 @@
 	add_action( 'yk_mt_meal_deleted', 'yk_mt_meal_delete_entries' );     // Delete all Meal / Entry relationships when a meal has been deleted
 
 	/**
+	 * Add a meal type
+	 *
+	 * @param $meal
+	 *
+	 * @return bool     true if success
+	 */
+	function yk_mt_db_meal_types_add( $meal_type ) {
+
+		// Ensure we have the expected fields.
+		if ( false === yk_mt_array_check_fields( $meal_type, [ 'name', 'sort'  ] ) ) {
+			return false;
+		}
+
+		unset( $meal_type[ 'id' ] );
+
+		global $wpdb;
+
+		$formats = yk_mt_db_mysql_formats( $meal_type );
+
+		$result = $wpdb->insert( $wpdb->prefix . YK_WT_DB_MEAL_TYPES , $meal_type, $formats );
+
+		if ( false === $result ) {
+			return false;
+		}
+
+		do_action( 'yk_mt_meal_types_added', $wpdb->insert_id, $meal_type );
+
+		return $wpdb->insert_id;
+	}
+
+	/**
+	 * Get all meal types
+	 *
+	 * @param $key
+	 */
+	function yk_mt_db_meal_types_all() {
+
+		if ( $cache = apply_filters( 'yk_mt_db_meal_types_all', NULL ) ) {
+			return $cache;
+		}
+
+		global $wpdb;
+
+		$meal_types = $wpdb->get_results( 'Select * from ' . $wpdb->prefix . YK_WT_DB_MEAL_TYPES . ' order by sort asc', ARRAY_A );
+
+		$meal_types = ( false === empty( $meal_types ) ) ? $meal_types : false;
+
+		do_action( 'yk_mt_meal_types_all', $meal_types );
+
+		return $meal_types;
+	}
+
+	/**
 	 * @param null $table
 	 *
 	 * @return null|string
 	 */
-	function yk_mt_mysql_count_table( $table = NULL ) {
+	function yk_mt_db_mysql_count_table( $table = NULL ) {
 
 		global $wpdb;
 
@@ -379,12 +506,13 @@
 	 * @param $data
 	 * @return array
 	 */
-	function yk_mt_mysql_formats( $data ) {
+	function yk_mt_db_mysql_formats( $data ) {
 
 		$formats = [
 			'id' => '%d',
 			'name' => '%s',
 			'added_by' => '%d',
+			'entry_id' => '%d',
 			'gain_loss' => '%s',
 			'calories' => '%f',
 			'quantity' => '%f',
@@ -392,11 +520,12 @@
 			'user_id' => '%d',
 			'calories_allowed' => '%f',
 			'calories_used' => '%f',
-			'meal_time' => '%d',
+			'meal_type' => '%d',
 			'meal_id' => '%d',
 			'date' => '%s',
 			'value' => '%s',
-			'deleted' => '%d'
+			'deleted' => '%d',
+			'favourite' => '%d'
 		];
 
 		$return = [];
@@ -413,7 +542,7 @@
 	/**
 	 *  Build the relevant database tables
 	 */
-	function yk_wt_mysql_tables_create() {
+	function yk_wt_db_tables_create() {
 
 		global $wpdb;
 
@@ -434,7 +563,8 @@
 					calories float DEFAULT 0 NOT NULL,
 					quantity float DEFAULT 0 NOT NULL,
 					description varchar(40) NOT NULL,
-					deleted bit DEFAULT 0
+					deleted bit DEFAULT 0,
+					favourite bit DEFAULT 0,
 				  UNIQUE KEY id (id)
 				) $charset_collate;";
 
@@ -469,9 +599,26 @@
 
 		$sql = "CREATE TABLE $table_name (
 					id mediumint(9) NOT NULL AUTO_INCREMENT,
-					meal_time int NOT NULL,
+					meal_type int NOT NULL,
 					meal_id int NOT NULL,
 					entry_id int NOT NULL,
+				  UNIQUE KEY id (id)
+				) $charset_collate;";
+
+		dbDelta( $sql );
+
+		// -------------------------------------------------
+		// Store Meal Types
+		// -------------------------------------------------
+
+		$table_name = $wpdb->prefix . YK_WT_DB_MEAL_TYPES;
+
+		$charset_collate = $wpdb->get_charset_collate();
+
+		$sql = "CREATE TABLE $table_name (
+					id mediumint(9) NOT NULL AUTO_INCREMENT,
+					name varchar(60) NOT NULL, 
+					sort int DEFAULT 100 NOT NULL,
 				  UNIQUE KEY id (id)
 				) $charset_collate;";
 
