@@ -48,4 +48,4 @@ include_once YK_MT_ABSPATH . 'tests.php';
 // AC: Load relevant language files
 // -----------------------------------------------------------------------------------------
 
-load_plugin_textdomain( YK_MT_SLUG, false, dirname( plugin_basename( __FILE__ ) ) . '/includes/languages/' );
+load_plugin_textdomain( YK_MT_SLUG, false, dirname( plugin_basename( __FILE__ ) ) . '/core/languages/' );
