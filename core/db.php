@@ -7,7 +7,7 @@
 	define( 'YK_WT_DB_ENTRY_MEAL', 'yk_mt_entry_meals');        // Store all meals for given entry
 	define( 'YK_WT_DB_MEAL_TYPES', 'yk_mt_meal_types');         // Store all meal types
 
-/**
+	/**
 	 * Add an entry
 	 *
 	 * @param $entry
