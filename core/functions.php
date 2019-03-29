@@ -41,7 +41,7 @@
 		if ( false === $result ) {
 			return false;
 		}
-
+return true;
 		return yk_mt_entry_calories_calculate_update_used( $entry_id );
 	}
 
@@ -87,7 +87,11 @@
 			return false;
 		}
 
-		return yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_used' => $calories ] );
+		$result = yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_used' => $calories ] );
+
+		do_action( 'yk_mt_entry_cache_clear', $entry_id );
+
+		return $result;
 	}
 
 	/**

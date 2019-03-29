@@ -117,6 +117,28 @@
 	add_action( 'yk_mt_entry_deleted', 'yk_mt_entry_delete_entries' );     // Delete all Meal / Entry relationships when a meal has been deleted
 
 	/**
+	 * Get Entry ID
+	 *
+	 * @param null $user_id
+	 *
+	 * @return null|string
+	 */
+	function yk_mt_db_entry_get_id_for_today( $user_id = NULL ) {
+
+		$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+		$todays_date = yk_mt_date_iso_today();
+
+		global $wpdb;
+
+		$sql = $wpdb->prepare( 'Select id from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where user_id = %d and date = %s', $user_id, $todays_date );
+
+		$result = $wpdb->get_var( $sql );
+
+		return ( false === empty( $result ) ) ? (int) $result : NULL ;
+	}
+
+	/**
 	 * Get details for an entry
 	 *
 	 * @param $key
@@ -124,6 +146,7 @@
 	function yk_mt_db_entry_get( $id ) {
 
 		if ( $cache = apply_filters( 'yk_mt_db_entry_get', NULL, $id ) ) {
+			echo 'cachfe';
 			return $cache;
 		}
 
@@ -134,6 +157,35 @@
 		$entry = $wpdb->get_row( $sql, ARRAY_A );
 
 		$entry = ( false === empty( $entry ) ) ? $entry : false;
+
+		// If an entry was found, fetch all the meals entered for it.
+		if ( $entry !== false ) {
+
+			$sql = $wpdb->prepare( 'Select m.*, em.meal_type from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
+									Inner Join ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em
+									on em.meal_id = m.id
+									where em.entry_id = %d
+									order by meal_type, em.id asc',
+									$id
+			);
+
+			$entry['meals'] = [];
+
+			$meals = $wpdb->get_results( $sql, ARRAY_A );
+
+			if ( false === empty( $meals ) ) {
+
+				foreach ( $meals as $meal ) {
+
+					// Initiate an empty array
+					if ( false === isset( $entry['meals'][ $meal['meal_type'] ] ) ) {
+						$entry['meals'][ $meal['meal_type'] ] = [];
+					}
+
+					$entry['meals'][ $meal['meal_type'] ][] = $meal;
+				}
+			}
+		}
 
 		do_action( 'yk_mt_entry_lookup', $id, $entry );
 
@@ -185,6 +237,7 @@
 		}
 
 		do_action( 'yk_mt_entry_meal_added', $wpdb->insert_id, $entry_meal );
+		do_action( 'yk_mt_entry_cache_clear', $entry_meal[ 'entry_id' ] );
 
 		return $wpdb->insert_id;
 	}
@@ -473,7 +526,7 @@
 
 		global $wpdb;
 
-		$meal_types = $wpdb->get_results( 'Select * from ' . $wpdb->prefix . YK_WT_DB_MEAL_TYPES . ' order by sort asc', ARRAY_A );
+		$meal_types = $wpdb->get_results( 'Select * from ' . $wpdb->prefix . YK_WT_DB_MEAL_TYPES . ' where deleted = 0 order by sort asc', ARRAY_A );
 
 		$meal_types = ( false === empty( $meal_types ) ) ? $meal_types : false;
 
@@ -619,6 +672,7 @@
 					id mediumint(9) NOT NULL AUTO_INCREMENT,
 					name varchar(60) NOT NULL, 
 					sort int DEFAULT 100 NOT NULL,
+					deleted bit DEFAULT 0,
 				  UNIQUE KEY id (id)
 				) $charset_collate;";
 

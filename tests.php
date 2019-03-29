@@ -10,6 +10,15 @@
 			return;
 		}
 
+		$t = yk_mt_db_entry_get_id_for_today();
+
+		var_dump($t);
+
+		//$entry = yk_mt_db_entry_get( 5 );
+
+
+	///	print_r( $entry );
+
 //		$entry = [
 //			'user_id' => 10,
 //			'calories_allowed' => 2000,
@@ -21,9 +30,9 @@
 
 		//$t = yk_mt_entry_meal_add( 5, 3, 1 );
 
-		$t = yk_mt_entry_meal_delete(15);
+//		$t = yk_mt_entry_meal_delete(15);
 
-		var_dump( $t );
+//		var_dump( $t );
 
 
 	//	yk_mt_db_entry_calories_count( 34 );

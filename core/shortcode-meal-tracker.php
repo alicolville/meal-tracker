@@ -9,16 +9,41 @@
 	 */
 	function yk_mt_shortcode_meal_tracker() {
 
-		$html = yk_mt_html_accordion_open();
+		$html = '<!-- Meal Tracker Start -->';
 
-		$html .= yk_mt_html_accordion_section( 'Title 1', '', true );
-		$html .= yk_mt_html_accordion_section( 'Title 2' );
-
-		$html .= yk_mt_html_accordion_close();
+		$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
 		return $html;
 	}
 	add_shortcode( 'meal-tracker', 'yk_mt_shortcode_meal_tracker' );
+
+	function yk_mt_shortcode_meal_tracker_meal_types() {
+
+		$html = '<!-- Start Meal Types -->';
+
+		// Fetch all meal types that haven't been deleted
+		$meal_types = yk_mt_db_meal_types_all();
+
+		if ( false === empty( $meal_types ) ) {
+
+			$html = yk_mt_html_accordion_open();
+
+			$active_tab = true;
+
+			foreach ( $meal_types as $meal ) {
+
+				$html .= yk_mt_html_accordion_section( $meal['name'], '', $active_tab );
+
+				$active_tab = false;
+			}
+
+			$html .= yk_mt_html_accordion_close();
+
+		}
+
+		return $html;
+
+	}
 
 	/**
 	 * Return HTML for opening an accordion

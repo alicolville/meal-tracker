@@ -246,14 +246,31 @@
 	add_action( 'yk_mt_entry_updated', 'yk_mt_cache_hook_entry_set', 10, 2);
 
 	/**
+	 * Get cache for given Entry ID
+	 *
+	 * @param $id
+	 * @param $entry
+	 */
+	function yk_mt_cache_filter_entry_get( $default_value, $id ) {
+
+		$cache = yk_mt_cache_get( 'entry-' . $id );
+
+		return ( false === empty( $cache ) ) ? $cache : NULL;
+
+	}
+	add_filter( 'yk_mt_db_entry_get', 'yk_mt_cache_filter_entry_get', 10, 2 );
+
+	/**
 	 * Clear cache for a given entry
 	 *
 	 * @param $id
 	 */
 	function yk_mt_cache_hook_entry_delete( $id ) {
+		var_dump($id);
 		yk_mt_cache_delete( 'entry-' . $id );
 	}
 	add_action( 'yk_mt_entry_deleted', 'yk_mt_cache_hook_entry_delete' );
+	add_action( 'yk_mt_entry_cache_clear', 'yk_mt_cache_hook_entry_delete' );
 
 	/**
 	 * Update / Set cache for meal types
