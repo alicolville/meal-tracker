@@ -49,3 +49,20 @@
     padding:15px;
     display:none;
 }
+
+/*
+    Tables with div
+ */
+.yk-mt-t {
+    width: 100%;
+    display: table;
+}
+.yk-mt-r {
+    display: table-row;
+}
+.yk-mt-c {
+    display: table-cell;
+}
+.yk-mt-label-col {
+    width: 10%;
+}

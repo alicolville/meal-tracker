@@ -143,10 +143,17 @@
 	 *
 	 * @param $key
 	 */
-	function yk_mt_db_entry_get( $id ) {
+	function yk_mt_db_entry_get( $id = NULL ) {
+
+		if ( NULL === $id ) {
+			$id = yk_mt_db_entry_get_id_for_today();
+		}
+
+		if ( true === empty( $id ) ) {
+			return NULL;
+		}
 
 		if ( $cache = apply_filters( 'yk_mt_db_entry_get', NULL, $id ) ) {
-			echo 'cachfe';
 			return $cache;
 		}
 
