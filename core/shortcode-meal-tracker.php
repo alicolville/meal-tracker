@@ -11,12 +11,26 @@
 
 		$html = '<!-- Meal Tracker Start -->';
 
+		// Is the user logged in?
+		if ( false === is_user_logged_in() ) {
+			return yk_mt_shortcode_log_in_prompt();
+		}
+
+
 		$html .= yk_mt_shortcode_meal_tracker_meal_types();
+
+		// Embed hidden form / dialog required for adding a meal
+		$html .= yk_mt_shortcode_meal_tracker_add_meal_dialog();
 
 		return $html;
 	}
 	add_shortcode( 'meal-tracker', 'yk_mt_shortcode_meal_tracker' );
 
+	/**
+	 * Render HTML for Meal Types
+	 *
+	 * @return string
+	 */
 	function yk_mt_shortcode_meal_tracker_meal_types() {
 
 		$html = '<!-- Start Meal Types -->';
@@ -28,21 +42,21 @@
 
 			yk_mt_shortcode_meal_tracker_localise();
 
-			//TODO: Change entry ID to lokup for today
 			$todays_meals = yk_mt_db_entry_get();
 
 			$html = yk_mt_html_accordion_open();
 
 			$active_tab = true;
-print_r($meal_types);
-print_r($todays_meals);
+//TODO
+// print_r($meal_types);
+// print_r($todays_meals);
 			// For each meal type, display an accordian and relevant meal data
 			foreach ( $meal_types as $meal_type ) {
 
 				$meal_type_html = sprintf( '<p class="yk-mt-no-meals">%1$s, <a href="%2$s">%3$s</a>.</p>',
-										__( 'No data', YK_MT_SLUG ),
+										__( 'No data for today', YK_MT_SLUG ),
 										'#',
-										__( 'add a meal now', YK_MT_SLUG )
+										yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type['id'], '' )
 				);
 
 				if ( false === empty( $todays_meals['meals'][ $meal_type['id'] ] ) ) {
@@ -64,6 +78,64 @@ print_r($todays_meals);
 
 		return $html;
 
+	}
+
+	$yk_mt_add_meal_button_id = 0;
+
+	/**
+	 * Return the HTML required to trigger the Add Meal dialog box.
+	 *
+	 * @param $button_text
+	 * @param null $meal_type_id
+	 *
+	 * @return string
+	 */
+	function yk_mt_shortcode_meal_tracker_add_meal_button( $button_text, $meal_type_id = NULL, $default_css_class = 'button' ) {
+
+		global $yk_mt_add_meal_button_id;
+
+		$yk_mt_add_meal_button_id++;
+
+		$css_class = apply_filters( 'yk_mt_shortcode_button_meal_add_css', $default_css_class );
+		$button_text = apply_filters( 'yk_mt_shortcode_button_meal_add_text', $button_text );
+
+		return sprintf( '<a href="#yk-mt-add-meal-dialog" class="%1$s yk-mt-add-meal-prompt" id="%2$d" data-meal-id="%3$d">%4$s</a>',
+						esc_attr( $css_class ),
+						(int) $meal_type_id,
+						(int) $yk_mt_add_meal_button_id,
+						esc_html( $button_text )
+			       );
+	}
+
+	/**
+	 * Render HTML required for "Add Meal" dialog.
+	 *
+	 * This HTML remains hidden until the relevant HTML prompt is clicked (has to have a class "yk-mt-add-meal-prompt")
+	 *
+	 * @return string
+	 */
+	function yk_mt_shortcode_meal_tracker_add_meal_dialog() {
+
+		yk_mt_shortcode_meal_tracker_enqueue_scripts();
+
+		?>
+
+		<!--DEMO01-->
+		<div id="yk-mt-add-meal-dialog">
+			<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
+			<div  id="btn-close-modal" class="close-yk-mt-add-meal-dialog">
+				CLOSE MODAL
+			</div>
+
+			<div class="modal-content">
+
+				<!--Your modal content goes here-->
+			</div>
+		</div>
+
+		<?php
+
+		return '';
 	}
 
 	/**
@@ -125,6 +197,29 @@ print_r($todays_meals);
 		return '</div>';
 	}
 
+	$yk_mt_shortcode_meal_tracker_modal_enqueued = false;
+
+	/**
+	 * Enqueue CSS / JS for this shortcode
+	 */
+	function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
+
+		global $yk_mt_shortcode_meal_tracker_modal_enqueued;
+
+		// Only enqueue dialog etc once.
+		if ( true === $yk_mt_shortcode_meal_tracker_modal_enqueued ) {
+			return;
+		}
+
+		wp_enqueue_script( 'meal-tracker-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+		wp_enqueue_style( 'meal-tracker-normalize', plugins_url( 'assets/css/normalize.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+		wp_enqueue_style( 'meal-tracker-animate', plugins_url( 'assets/css/animate.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+
+		wp_add_inline_script( 'meal-tracker-modal', ' jQuery(".yk-mt-add-meal-prompt").animatedModal(); ' );
+
+		$yk_mt_shortcode_meal_tracker_modal_enqueued = true;
+	}
+
 	/**
 	 * Add relevant data into JS object
 	 */
@@ -151,6 +246,9 @@ print_r($todays_meals);
 		$meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt-t' );
 
 		$html = sprintf( '<div class="%s">', esc_attr( $meal_list_class ) );
+
+		// Add the "Add Meal" prompt now
+		$html .= sprintf( '<p>%s</p>', yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type_id ) );
 
 		$total = 0;
 
