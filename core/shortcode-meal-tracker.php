@@ -118,11 +118,12 @@
 
 		yk_mt_shortcode_meal_tracker_enqueue_scripts();
 
+	    $top = apply_filters( 'yk_mt_shortcode_dialog_top', 30 );
+
 		?>
 
-		<!--DEMO01-->
-		<div id="yk-mt-add-meal-dialog">
-			<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
+		<div id="yk-mt-add-meal-dialog" style="<?php printf( 'top: %dpx', $top);?>">
+
 			<div  id="btn-close-modal" class="close-yk-mt-add-meal-dialog">
 				CLOSE MODAL
 			</div>
