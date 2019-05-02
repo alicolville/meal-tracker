@@ -56,7 +56,7 @@
 				$meal_type_html = sprintf( '<p class="yk-mt-no-meals">%1$s, <a href="%2$s">%3$s</a>.</p>',
 										__( 'No data for today', YK_MT_SLUG ),
 										'#',
-										yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type['id'], '' )
+										yk_mt_shortcode_meal_tracker_add_meal_button( __( 'add a meal', YK_MT_SLUG ), $meal_type['id'], '' )
 				);
 
 				if ( false === empty( $todays_meals['meals'][ $meal_type['id'] ] ) ) {
@@ -122,16 +122,41 @@
 
 		?>
 
-		<div id="yk-mt-add-meal-dialog" style="<?php printf( 'top: %dpx', $top);?>">
+		<div id="yk-mt-add-meal-dialog" style="<?php printf( 'top: %dpx', $top);?>" data-meal-id="0" >
 
 			<div  id="btn-close-modal" class="close-yk-mt-add-meal-dialog">
 				CLOSE MODAL
 			</div>
 
 			<div class="modal-content">
+				<h3><?php echo __( 'Search for a meal', YK_MT_SLUG ); ?></h3>
+                <?php
 
-				<!--Your modal content goes here-->
-			</div>
+                    $html = yk_mt_html_accordion_open();
+
+                    $test = sprintf( '<select id="select-movie" class="yk-mt-select-meal" placeholder="%s..."><option>123</option><option>eee</option><option>ggg</option></select>',
+	                                __( 'Find a meal', YK_MT_SLUG )
+                    );
+
+
+                    $html .= yk_mt_html_accordion_section( [    'id' => 12,
+                                                                'title' => __( 'Search', YK_MT_SLUG ),
+                                                                'content' => $test,
+                                                                'is-active' => true
+                    ]);
+
+                    $html .= yk_mt_html_accordion_section( [    'id' => 12,
+                                                                'title' => __( 'Add a new meal', YK_MT_SLUG ),
+                                                                'content' => 'add',
+                                                                'is-active' => false
+                    ]);
+
+                    $html .= yk_mt_html_accordion_close();
+
+                    echo $html;
+                ?>
+
+            </div>
 		</div>
 
 		<?php
@@ -183,7 +208,7 @@
 			esc_attr( $accordion_section_class ),
 			( true === $options['is-active'] ) ? ' initial-active' : '',
 			esc_html( $options['title'] ),
-			wp_kses_post( $options['content'] )
+			$options['content'] // TODO: Add some sort of sanitiser
 		);
 
 		return $html;
@@ -216,7 +241,9 @@
 		wp_enqueue_style( 'meal-tracker-normalize', plugins_url( 'assets/css/normalize.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 		wp_enqueue_style( 'meal-tracker-animate', plugins_url( 'assets/css/animate.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
-		wp_add_inline_script( 'meal-tracker-modal', ' jQuery(".yk-mt-add-meal-prompt").animatedModal(); ' );
+		// Bring in jQuery library for fancy drop down box
+		wp_enqueue_style( 'selectize', 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css', [], YK_MT_PLUGIN_VERSION );
+		wp_enqueue_script( 'selectize', 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js', [], YK_MT_PLUGIN_VERSION, true );
 
 		$yk_mt_shortcode_meal_tracker_modal_enqueued = true;
 	}
@@ -226,8 +253,18 @@
 	 */
 	function yk_mt_shortcode_meal_tracker_localise() {
 
+		$dialog_options = [
+			'color' => '#FFFFFF',
+			'top' => '30px',
+		];
+
+		$dialog_options = apply_filters( 'yk_mt_shortcode_meal_tracker_dialog_options', $dialog_options );
+
 		wp_localize_script( 'meal-tracker-js', 'yk_mt', [
-			'html-meal-row' => yk_mt_html_template_row()
+			'html-meal-row'     => yk_mt_html_template_row(),
+            'dialog-options'    => json_encode( $dialog_options ),
+            'ajax-url'          => admin_url('admin-ajax.php'),
+            'ajax-nonce'        => wp_create_nonce( 'yk-mt-nonce' )
 		] );
 	}
 

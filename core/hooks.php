@@ -14,3 +14,26 @@
 
 	}
 	add_action( 'wp_enqueue_scripts', 'yk_mt_enqueue_front_end_dependencies' );
+
+	/**
+	 * AJAX handler for looking up meals
+	 */
+	function yk_mt_ajax_meal_lookup() {
+
+		check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+		$data = [
+			0 => [
+				'id' => 1,
+				'name' => 'Bandung',
+			],
+			1 => [
+				'id' => 2,
+				'name' => 'Cimahi',
+			]
+		];
+
+
+		wp_send_json( $data );
+	}
+	add_action( 'wp_ajax_meal_lookup', 'yk_mt_ajax_meal_lookup' );

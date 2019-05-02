@@ -41,7 +41,7 @@
 		if ( false === $result ) {
 			return false;
 		}
-return true;
+
 		return yk_mt_entry_calories_calculate_update_used( $entry_id );
 	}
 
