@@ -15,6 +15,8 @@
 	}
 	add_action( 'wp_enqueue_scripts', 'yk_mt_enqueue_front_end_dependencies' );
 
+
+	//TODO: Delete this function?
 	/**
 	 * AJAX handler for looking up meals
 	 */
@@ -37,3 +39,20 @@
 		wp_send_json( $data );
 	}
 	add_action( 'wp_ajax_meal_lookup', 'yk_mt_ajax_meal_lookup' );
+
+
+	function yk_mt_ajax_meal_add() {
+
+		check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+		// All post data there?
+		if ( false === yk_mt_post_values_exist( [ 'meal-id', 'quantity' ] ) ) {
+			wp_send_json( -100 );
+		}
+
+		//TODO: Save to DB
+
+		wp_send_json( 0 );
+	}
+	add_action( 'wp_ajax_meal_lookup', 'yk_mt_ajax_meal_lookup' );
+

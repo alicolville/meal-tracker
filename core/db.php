@@ -441,7 +441,7 @@
 	 * @return array|null
 	 */
 	function yk_mt_db_meal_for_user( $user_id = NULL, $options  = []  ) {
-
+// TODO: Cache?
 		$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
 		$options = wp_parse_args( $options, [

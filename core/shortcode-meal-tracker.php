@@ -134,21 +134,34 @@
 
                     $html = yk_mt_html_accordion_open();
 
-                    $test = sprintf( '<select id="select-movie" class="yk-mt-select-meal" placeholder="%s..."><option>123</option><option>eee</option><option>ggg</option></select>',
-	                                __( 'Find a meal', YK_MT_SLUG )
-                    );
+                    // Build HTML for "Add Meal" tab
+                    $add_form = yk_mt_shortcode_meal_tracker_add_meal_select( 'yk-mt-meal-id' );
+
+                    $open_add_meal_tab = true;
+
+                    // Do we have any existing meals for this user?
+                    if ( false === empty( $add_form ) ) {
 
 
-                    $html .= yk_mt_html_accordion_section( [    'id' => 12,
-                                                                'title' => __( 'Search', YK_MT_SLUG ),
-                                                                'content' => $test,
-                                                                'is-active' => true
-                    ]);
+	                    $add_form .= '<input type="number" id="yk-mt-quantity" value="1" min="1" max="400" />';
 
-                    $html .= yk_mt_html_accordion_section( [    'id' => 12,
+	                    $add_form .= '<button class="yk-mt-meal-button-add btn button" >Add</button>';
+
+	                    $html .= yk_mt_html_accordion_section( [    'id' => 999,
+	                                                                'title' => __( 'Find a meal', YK_MT_SLUG ),
+	                                                                'content' => $add_form,
+	                                                                'is-active' => true
+	                    ]);
+
+	                    $open_add_meal_tab = false;
+                    }
+
+
+
+                    $html .= yk_mt_html_accordion_section( [    'id' => 998,
                                                                 'title' => __( 'Add a new meal', YK_MT_SLUG ),
                                                                 'content' => 'add',
-                                                                'is-active' => false
+                                                                'is-active' => $open_add_meal_tab
                     ]);
 
                     $html .= yk_mt_html_accordion_close();
@@ -163,6 +176,43 @@
 
 		return '';
 	}
+
+	function yk_mt_shortcode_meal_tracker_add_meal_select( $select_name, $user_id = NULL ) {
+
+		$meals = yk_mt_db_meal_for_user( $user_id );
+
+		if ( true === empty( $meals ) ) {
+		    return '';
+        }
+
+        $html = sprintf(   '<select id="%1$s" name="%1$s" class="yk-mt-select-meal" placeholder="%2$s...">',
+	                        esc_attr( $select_name ),
+		                    __( 'Find a meal', YK_MT_SLUG )
+	    );
+
+		foreach ( $meals as $meal ) {
+			$html .= sprintf( '<option value="%d$s">%2$s ( %3$s %4$s / %5$s )</option>',
+                                esc_attr( $meal['id'] ),
+                                esc_html( $meal['name'] ),
+				                esc_html( $meal['calories'] ),
+				                __( 'kcal', YK_MT_SLUG ),
+				                esc_html( $meal['quantity'] )
+			);
+        }
+
+		print_r($meals);
+	    
+	    
+//	    <option>123</option><option>eee</option><option>ggg</option></select>',
+//
+//		);
+
+
+		$html .= '</select>';
+
+
+	    return $html;
+    }
 
 	/**
 	 * Return HTML for opening an accordion
@@ -198,7 +248,7 @@
 
 		$accordion_section_class = apply_filters( 'yk_mt_shortcode_meal_tracker_accordion_section', '' );
 
-		$html = sprintf( '  <div class="yk-mt-accordion-section %2$s" id="%1$d">
+		$html = sprintf( '  <div class="yk-mt-accordion-section%2$s" id="%1$d">
 									<a class="yk-mt-accordion-section-title%3$s" href="#yk-mt-acc-%1$d">%4$s</a>
 									<div id="yk-mt-acc-%1$d" class="yk-mt-accordion-section-content">
 										%5$s

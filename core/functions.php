@@ -195,3 +195,33 @@
 		return ''; //TODO
 		return ( true === defined('SCRIPT_DEBUG') && false == SCRIPT_DEBUG ) ? '.min' : '';
 	}
+
+	/**
+	 * Fetch a value from the $_POST array
+	 *
+	 * @param $key
+	 * @param null $default
+	 *
+	 * @return null
+	 */
+	function yk_mt_post_value( $key, $default = NULL ) {
+		return ( false === empty( $_POST[ $key ] ) ) ? $_POST[ $key ] : $default;
+	}
+
+	/**
+	 * Check for $_POST keys
+	 *
+	 * @param $keys
+	 *
+	 * @return bool
+	 */
+	function yk_mt_post_values_exist( $keys ) {
+
+		foreach ( $keys as $key ) {
+			if ( true === empty( $_POST[ $key ] ) ) {
+				return false;
+			}
+		}
+
+		return true;
+	}

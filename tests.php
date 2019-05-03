@@ -10,9 +10,9 @@
 			return;
 		}
 
-		$t = yk_mt_db_entry_get_id_for_today();
+		//$t = yk_mt_db_entry_get_id_for_today();
 
-		var_dump($t);
+	//	var_dump($t);
 
 		//$entry = yk_mt_db_entry_get( 5 );
 
@@ -45,7 +45,9 @@
 
 //		print_r($t);
 
-		//yk_mt_meal_types_add( [ 'name' => __( 'One Two three', YK_MT_SLUG ), 'sort' => 800 ] );
+		//[ 'added_by', 'name', 'calories', 'quantity' ]
+
+		yk_mt_db_meal_add( [ 'added_by' => 1, 'name' => __( 'Pizza', YK_MT_SLUG ), 'calories' => 8000, 'quantity' => 100, 'description' => 'Some greasy minging pizza!' ] );
 
 		//$t = yk_mt_meal_types_all();
 

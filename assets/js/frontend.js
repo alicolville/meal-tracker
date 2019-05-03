@@ -75,6 +75,8 @@ jQuery( document ).ready( function( $ ) {
     function yk_mt_dialog_open() {
 
         var meal_id = yk_mt_dialog_meal_id_get();
+
+
     }
 
     /**
@@ -109,5 +111,12 @@ jQuery( document ).ready( function( $ ) {
      */
 
     $('.yk-mt-select-meal').selectize();
+
+    $( '.yk-mt-meal-button-add' ).click( function( e ) {
+
+       alert('here');
+
+        e.preventDefault();
+    });
 
 });
