@@ -16,7 +16,6 @@
 			return yk_mt_shortcode_log_in_prompt();
 		}
 
-
 		$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
 		// Embed hidden form / dialog required for adding a meal
@@ -120,63 +119,64 @@
 
 	    $top = apply_filters( 'yk_mt_shortcode_dialog_top', 30 );
 
-		?>
+        $html = sprintf( '<div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-id="0" >
+                            <div  id="btn-close-modal" class="close-yk-mt-add-meal-dialog">
+                                %2$s
+                            </div>
+                			<div class="modal-content">
+				                <h3>%3$s</h3>',
+				            $top,
+                            __( 'CLOSE MODAL', YK_MT_SLUG ),
+                            __( 'Search for a meal', YK_MT_SLUG )
+        );
 
-		<div id="yk-mt-add-meal-dialog" style="<?php printf( 'top: %dpx', $top);?>" data-meal-id="0" >
+        $html .= yk_mt_html_accordion_open();
 
-			<div  id="btn-close-modal" class="close-yk-mt-add-meal-dialog">
-				CLOSE MODAL
-			</div>
+        // Build HTML for "Add Meal" tab
+        $add_form = yk_mt_shortcode_meal_tracker_add_meal_select( 'yk-mt-meal-id' );
 
-			<div class="modal-content">
-				<h3><?php echo __( 'Search for a meal', YK_MT_SLUG ); ?></h3>
-                <?php
+        $open_add_meal_tab = true;
 
-                    $html = yk_mt_html_accordion_open();
-
-                    // Build HTML for "Add Meal" tab
-                    $add_form = yk_mt_shortcode_meal_tracker_add_meal_select( 'yk-mt-meal-id' );
-
-                    $open_add_meal_tab = true;
-
-                    // Do we have any existing meals for this user?
-                    if ( false === empty( $add_form ) ) {
-
-
-	                    $add_form .= '<input type="number" id="yk-mt-quantity" value="1" min="1" max="400" />';
-
-	                    $add_form .= '<button class="yk-mt-meal-button-add btn button" >Add</button>';
-
-	                    $html .= yk_mt_html_accordion_section( [    'id' => 999,
-	                                                                'title' => __( 'Find a meal', YK_MT_SLUG ),
-	                                                                'content' => $add_form,
-	                                                                'is-active' => true
-	                    ]);
-
-	                    $open_add_meal_tab = false;
-                    }
+        // Do we have any existing meals for this user?
+        if ( false === empty( $add_form ) ) {
 
 
+            $add_form .= '<input type="number" id="yk-mt-quantity" value="1" min="1" max="400" />';
 
-                    $html .= yk_mt_html_accordion_section( [    'id' => 998,
-                                                                'title' => __( 'Add a new meal', YK_MT_SLUG ),
-                                                                'content' => 'add',
-                                                                'is-active' => $open_add_meal_tab
-                    ]);
+            $add_form .= '<button class="yk-mt-meal-button-add btn button" >Add</button>';
 
-                    $html .= yk_mt_html_accordion_close();
+            $html .= yk_mt_html_accordion_section( [    'id' => 999,
+                                                        'title' => __( 'Find a meal', YK_MT_SLUG ),
+                                                        'content' => $add_form,
+                                                        'is-active' => true
+            ]);
 
-                    echo $html;
-                ?>
+            $open_add_meal_tab = false;
+        }
 
-            </div>
-		</div>
 
-		<?php
 
-		return '';
+        $html .= yk_mt_html_accordion_section( [    'id' => 998,
+                                                    'title' => __( 'Add a new meal', YK_MT_SLUG ),
+                                                    'content' => 'add',
+                                                    'is-active' => $open_add_meal_tab
+        ]);
+
+        $html .= yk_mt_html_accordion_close();
+
+        $html .= '</div></div>';
+
+		return $html;
 	}
 
+    /**
+     * Render <select> for meals
+     *
+     * @param $select_name
+     * @param null $user_id
+     *
+     * @return string
+     */
 	function yk_mt_shortcode_meal_tracker_add_meal_select( $select_name, $user_id = NULL ) {
 
 		$meals = yk_mt_db_meal_for_user( $user_id );
@@ -191,7 +191,7 @@
 	    );
 
 		foreach ( $meals as $meal ) {
-			$html .= sprintf( '<option value="%d$s">%2$s ( %3$s %4$s / %5$s )</option>',
+			$html .= sprintf( '<option value="%1$s">%2$s ( %3$s %4$s / %5$s )</option>',
                                 esc_attr( $meal['id'] ),
                                 esc_html( $meal['name'] ),
 				                esc_html( $meal['calories'] ),
@@ -200,16 +200,7 @@
 			);
         }
 
-		print_r($meals);
-	    
-	    
-//	    <option>123</option><option>eee</option><option>ggg</option></select>',
-//
-//		);
-
-
 		$html .= '</select>';
-
 
 	    return $html;
     }

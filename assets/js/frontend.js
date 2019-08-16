@@ -76,7 +76,6 @@ jQuery( document ).ready( function( $ ) {
 
         var meal_id = yk_mt_dialog_meal_id_get();
 
-
     }
 
     /**
@@ -114,7 +113,10 @@ jQuery( document ).ready( function( $ ) {
 
     $( '.yk-mt-meal-button-add' ).click( function( e ) {
 
-       alert('here');
+        var meal_id = yk_mt_dialog_meal_id_get();
+
+
+        alert(meal_id);
 
         e.preventDefault();
     });

@@ -38,9 +38,11 @@
 			return false;
 		}
 
-		do_action( 'yk_mt_entry_added', $wpdb->insert_id, $entry );
+		$id = $wpdb->insert_id;
 
-		return $wpdb->insert_id;
+		do_action( 'yk_mt_entry_added', $id, $entry );
+
+		return $id;
 	}
 
 	/**
@@ -243,10 +245,12 @@
 			return false;
 		}
 
-		do_action( 'yk_mt_entry_meal_added', $wpdb->insert_id, $entry_meal );
+		$id = $wpdb->insert_id;
+
+		do_action( 'yk_mt_entry_meal_added', $id, $entry_meal );
 		do_action( 'yk_mt_entry_cache_clear', $entry_meal[ 'entry_id' ] );
 
-		return $wpdb->insert_id;
+		return $id;
 	}
 
 	/**
@@ -347,9 +351,11 @@
 			return false;
 		}
 
-		do_action( 'yk_mt_meal_added', $wpdb->insert_id, $meal );
+		$id = $wpdb->insert_id;
 
-		return $wpdb->insert_id;
+		do_action( 'yk_mt_meal_added', $id, $meal );
+
+		return $id;
 	}
 
 	/**
@@ -515,9 +521,11 @@
 			return false;
 		}
 
-		do_action( 'yk_mt_meal_types_added', $wpdb->insert_id, $meal_type );
+		$id = $wpdb->insert_id;
 
-		return $wpdb->insert_id;
+		do_action( 'yk_mt_meal_types_added', $id, $meal_type );
+
+		return $id;
 	}
 
 	/**

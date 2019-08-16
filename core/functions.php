@@ -1,6 +1,33 @@
 <?php
 
 	/**
+	 * Fetch the entry ID for today if it already exists, otherwise create it!
+	 *
+	 * @return null|int
+	 */
+	function yk_mt_entry_get_id_or_create( $user_id ) {
+
+		$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+		$entry_id = yk_mt_db_entry_get_id_for_today( $user_id );
+
+		if ( NULL !== $entry_id ) {
+			return $entry_id;
+		}
+
+		$entry = [
+			'user_id'               => $user_id,
+			'calories_allowed'      => yk_mt_user_calories_target(),
+			'calories_used'         => 0,
+			'date'                  => yk_mt_date_iso_today()
+		];
+
+		$id = yk_mt_db_entry_add( $entry );
+
+		return ( false === empty( $id ) ) ? (int) $id : NULL;
+	}
+
+	/**
 	 * Add a meal to an entry
 	 *
 	 * @param $entry_id

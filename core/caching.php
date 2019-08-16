@@ -266,7 +266,6 @@
 	 * @param $id
 	 */
 	function yk_mt_cache_hook_entry_delete( $id ) {
-		var_dump($id);
 		yk_mt_cache_delete( 'entry-' . $id );
 	}
 	add_action( 'yk_mt_entry_deleted', 'yk_mt_cache_hook_entry_delete' );

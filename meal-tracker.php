@@ -42,6 +42,7 @@ include_once YK_MT_ABSPATH . 'core/db.php';
 include_once YK_MT_ABSPATH . 'core/hooks.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-functions.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-meal-tracker.php';
+include_once YK_MT_ABSPATH . 'core/public-api.php';
 include_once YK_MT_ABSPATH . 'core/activate.php';
 
 // TODO: Remove
