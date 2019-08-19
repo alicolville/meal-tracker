@@ -252,3 +252,18 @@
 
 		return true;
 	}
+
+    /**
+     * Return an array for config values for AJAX localize
+     * @return array
+     */
+	function yk_mt_ajax_config() {
+
+	    $site_url = site_url();
+
+        return [
+            'site-url'                          => $site_url,
+            'ajax-url'                          => admin_url('admin-ajax.php'),
+            'ajax-security-nonce'               => wp_create_nonce( 'yk-mt-nonce' ),
+        ];
+    }

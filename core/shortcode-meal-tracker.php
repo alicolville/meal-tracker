@@ -43,12 +43,10 @@
 
 			$todays_meals = yk_mt_db_entry_get();
 
-			$html = yk_mt_html_accordion_open();
+			$html = yk_mt_html_accordion_open( 'yk-mt-meal-types' );
 
 			$active_tab = true;
-//TODO
-// print_r($meal_types);
-// print_r($todays_meals);
+
 			// For each meal type, display an accordian and relevant meal data
 			foreach ( $meal_types as $meal_type ) {
 
@@ -98,7 +96,7 @@
 		$css_class = apply_filters( 'yk_mt_shortcode_button_meal_add_css', $default_css_class );
 		$button_text = apply_filters( 'yk_mt_shortcode_button_meal_add_text', $button_text );
 
-		return sprintf( '<a href="#yk-mt-add-meal-dialog" class="%1$s yk-mt-add-meal-prompt" id="%2$d" data-meal-id="%3$d">%4$s</a>',
+		return sprintf( '<a href="#yk-mt-add-meal-dialog" class="%1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d">%4$s</a>',
 						esc_attr( $css_class ),
 						(int) $meal_type_id,
 						(int) $yk_mt_add_meal_button_id,
@@ -119,8 +117,8 @@
 
 	    $top = apply_filters( 'yk_mt_shortcode_dialog_top', 30 );
 
-        $html = sprintf( '<div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-id="0" >
-                            <div  id="btn-close-modal" class="close-yk-mt-add-meal-dialog">
+        $html = sprintf( '<div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-type="0" >
+                            <div id="btn-close-modal" class="close-yk-mt-add-meal-dialog">
                                 %2$s
                             </div>
                 			<div class="modal-content">
@@ -141,9 +139,11 @@
         if ( false === empty( $add_form ) ) {
 
 
-            $add_form .= '<input type="number" id="yk-mt-quantity" value="1" min="1" max="400" />';
+            $add_form .= '<input type="number" id="yk-mt-quantity" value="1" min="1" max="100" />';
 
-            $add_form .= '<button class="yk-mt-meal-button-add btn button" >Add</button>';
+            $add_form .= sprintf( '<button class="yk-mt-meal-button-add btn button">%s</button>', __( 'Add', YK_MT_SLUG ) );
+
+            $add_form .= sprintf( '<button class="yk-mt-meal-button-add btn button close-yk-mt-add-meal-dialog">%s</button>', __( 'Add & Close', YK_MT_SLUG ) );
 
             $html .= yk_mt_html_accordion_section( [    'id' => 999,
                                                         'title' => __( 'Find a meal', YK_MT_SLUG ),
@@ -153,8 +153,6 @@
 
             $open_add_meal_tab = false;
         }
-
-
 
         $html .= yk_mt_html_accordion_section( [    'id' => 998,
                                                     'title' => __( 'Add a new meal', YK_MT_SLUG ),
@@ -191,7 +189,7 @@
 	    );
 
 		foreach ( $meals as $meal ) {
-			$html .= sprintf( '<option value="%1$s">%2$s ( %3$s %4$s / %5$s )</option>',
+			$html .= sprintf( '<option value="%1$s">%2$s ( %3$s %4$s / %5$sg )</option>',
                                 esc_attr( $meal['id'] ),
                                 esc_html( $meal['name'] ),
 				                esc_html( $meal['calories'] ),
@@ -210,11 +208,11 @@
 	 *
 	 * @return string
 	 */
-	function yk_mt_html_accordion_open() {
+	function yk_mt_html_accordion_open( $id = '' ) {
 
 		$accordion_class = apply_filters( 'yk_mt_shortcode_meal_tracker_accordion', 'yk-mt-accordion' );
 
-		return sprintf( '<div class="%s">', esc_attr( $accordion_class ) );
+		return sprintf( '<div class="%s" %s>', esc_attr( $accordion_class ), ( false === empty( $id ) ? ' id="' . esc_attr( $id ) . '" ' : '' ) );
 	}
 
 	$yk_mt_accordion_id = 0;
@@ -301,11 +299,9 @@
 
 		$dialog_options = apply_filters( 'yk_mt_shortcode_meal_tracker_dialog_options', $dialog_options );
 
-		wp_localize_script( 'meal-tracker-js', 'yk_mt', [
+		wp_localize_script( 'meal-tracker', 'yk_mt_sc_meal_tracker', [
 			'html-meal-row'     => yk_mt_html_template_row(),
-            'dialog-options'    => json_encode( $dialog_options ),
-            'ajax-url'          => admin_url('admin-ajax.php'),
-            'ajax-nonce'        => wp_create_nonce( 'yk-mt-nonce' )
+            'dialog-options'    => json_encode( $dialog_options )
 		] );
 	}
 

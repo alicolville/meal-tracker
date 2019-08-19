@@ -4,6 +4,8 @@ defined('ABSPATH') or die("Jog on!");
 
 define( 'YK_WT_API_ENDPOINT', 'yeken-meal-tracker/v1' );
 
+// TODO: Remove this file.
+
 /**
  * Register all the public endpoints for the API
  */
@@ -12,9 +14,9 @@ function yk_mt_api_register_end_points() {
 	register_rest_route( YK_WT_API_ENDPOINT, '/entry-meal/add', array(
 		'methods' => 'POST',
 		'callback' => 'yk_mt_api_post_add_meal_to_entry',
-		'permission_callback' => function () {
-			return current_user_can( 'read' );
-		}
+//		'permission_callback' => function () {
+//			return current_user_can( 'read' );
+//		}
 	));
 }
 add_action( 'rest_api_init', 'yk_mt_api_register_end_points' );
