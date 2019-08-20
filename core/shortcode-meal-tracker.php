@@ -127,39 +127,23 @@
                             __( 'Search for a meal', YK_MT_SLUG )
         );
 
-        $html .= yk_mt_html_accordion_open();
-
         // Build HTML for "Add Meal" tab
         $add_form = yk_mt_shortcode_meal_tracker_add_meal_select( 'yk-mt-meal-id' );
-
-        $open_add_meal_tab = true;
 
         // Do we have any existing meals for this user?
         if ( false === empty( $add_form ) ) {
 
+            $html .= '<input type="number" id="yk-mt-quantity" value="1" min="1" max="50" step="1" />';
 
-            $add_form .= '<input type="number" id="yk-mt-quantity" value="1" min="1" max="100" />';
+            $html .= sprintf( '<button class="yk-mt-meal-button-add btn button">%s</button>', __( 'Add', YK_MT_SLUG ) );
 
-            $add_form .= sprintf( '<button class="yk-mt-meal-button-add btn button">%s</button>', __( 'Add', YK_MT_SLUG ) );
+            $html .= sprintf( '<button class="yk-mt-meal-button-add btn button close-yk-mt-add-meal-dialog">%s</button>', __( 'Add & Close', YK_MT_SLUG ) );
 
-            $add_form .= sprintf( '<button class="yk-mt-meal-button-add btn button close-yk-mt-add-meal-dialog">%s</button>', __( 'Add & Close', YK_MT_SLUG ) );
-
-            $html .= yk_mt_html_accordion_section( [    'id' => 999,
-                                                        'title' => __( 'Find a meal', YK_MT_SLUG ),
-                                                        'content' => $add_form,
-                                                        'is-active' => true
-            ]);
-
-            $open_add_meal_tab = false;
+            $html .= $add_form;
         }
 
-        $html .= yk_mt_html_accordion_section( [    'id' => 998,
-                                                    'title' => __( 'Add a new meal', YK_MT_SLUG ),
-                                                    'content' => 'add',
-                                                    'is-active' => $open_add_meal_tab
-        ]);
+        $html .= '<h4>Add new meal</h4>';
 
-        $html .= yk_mt_html_accordion_close();
 
         $html .= '</div></div>';
 

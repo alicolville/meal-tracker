@@ -24,7 +24,13 @@ function yk_mt_ajax_add_meal_to_entry() {
 		}
 	}
 
-    for ( $i = 0; $i < (int) $post_data[ 'quantity' ]; $i++ ) {
+	$quantity = (int) $post_data[ 'quantity' ];
+
+    if ( $quantity > 50 ) {
+        $quantity = 50;
+    }
+
+    for ( $i = 0; $i < $quantity; $i++ ) {
         if ( false === yk_mt_entry_meal_add( (int) $post_data[ 'entry-id' ], (int) $post_data[ 'meal-id' ], (int) $post_data[ 'meal-type' ] ) ) {
             // wp_send_json( [ (int) $post_data[ 'entry-id' ], (int) $post_data[ 'meal-id' ], (int) $post_data[ 'meal-type' ] ]); //todo
 

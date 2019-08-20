@@ -19,7 +19,7 @@ jQuery( document ).ready( function( $ ) {
     });
 
     $( '.yk-mt-accordion-section-title' ).click( function( e ) {
-console.log('a');
+
         // Grab current anchor value
         var currentAttrValue = $( this ).attr( 'href' );
 
@@ -38,7 +38,6 @@ console.log('a');
     });
 
     function yk_mt_accordion_close_sections() {
-        console.log('b');
         $( '.yk-mt-accordion .yk-mt-accordion-section-title' ).removeClass( 'active' );
         $( '.yk-mt-accordion .yk-mt-accordion-section-content' ).slideUp(300).removeClass( 'open' );
     }
@@ -123,8 +122,13 @@ console.log('a');
         data[ 'action' ]    = action;
         data[ 'security' ]  = yk_mt[ 'ajax-security-nonce' ];
 
+        $( 'body' ).trigger( 'meal-tracker-ajax-started' );
+
         jQuery.post( yk_mt[ 'ajax-url' ], data, function( response ) {
+
             callback( data, response );
+
+            $( 'body' ).trigger( 'meal-tracker-ajax-finished' );
         });
     }
 
@@ -285,6 +289,28 @@ console.log('a');
     if ( yk_mt_sc_meal_tracker [ 'load-entry' ] ) {
         yk_mt_render_entry( yk_mt_sc_meal_tracker [ 'todays-entry' ] );
     }
+
+    /**
+     * ------ ---------------------------------------------------------------------------------
+     * Loading Overlay
+     * ---------------------------------------------------------------------------------------
+     */
+
+    function yk_mt_loading_start() {
+        $.LoadingOverlay("show");
+    }
+
+    function yk_mt_loading_stop() {
+        $.LoadingOverlay("hide");
+    }
+
+    $( 'body' ).on( 'meal-tracker-ajax-started', function( event ) {
+        yk_mt_loading_start();
+    });
+
+    $( 'body' ).on( 'meal-tracker-ajax-finished', function( event ) {
+        yk_mt_loading_stop();
+    });
 
     // https://www.chartjs.org/docs/latest/charts/doughnut.html
 });
