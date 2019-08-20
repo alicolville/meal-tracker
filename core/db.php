@@ -167,7 +167,10 @@
 
 		$entry = ( false === empty( $entry ) ) ? $entry : false;
 
-		// If an entry was found, fetch all the meals entered for it.
+        $entry[ 'percentage-used' ] = ( $entry[ 'calories_used' ] / $entry[ 'calories_allowed' ] ) * 100;
+        $entry[ 'percentage-used' ] = round( $entry[ 'percentage-used' ], 1);
+
+        // If an entry was found, fetch all the meals entered for it.
 		if ( $entry !== false ) {
 
 			$sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity,
