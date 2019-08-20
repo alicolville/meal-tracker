@@ -390,7 +390,7 @@ jQuery( document ).ready( function( $ ) {
             elements: {
                 center: {
                     text: '25%',
-                    color: '#36A2EB', //Default black
+                    color: 'rgb(255, 99, 132)', //Default black
                     fontStyle: 'Helvetica', //Default Arial
                     sidePadding: 15 //Default 20 (as a percentage)
                 }
