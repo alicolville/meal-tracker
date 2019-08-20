@@ -3,3 +3,4 @@ TODO:
 - Add a hook to delete all entries when a user is deleted
 - Use this loader for loading events
 - limit quantity when adding a meal to 5? OTherwise it does x inserts, clearing cache etc
+- check user's can only edit entries and data belonging to those entries that are theirs
