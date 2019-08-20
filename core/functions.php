@@ -5,7 +5,7 @@
 	 *
 	 * @return null|int
 	 */
-	function yk_mt_entry_get_id_or_create( $user_id ) {
+	function yk_mt_entry_get_id_or_create( $user_id = NULL ) {
 
 		$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
