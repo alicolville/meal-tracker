@@ -170,7 +170,8 @@
 		// If an entry was found, fetch all the meals entered for it.
 		if ( $entry !== false ) {
 
-			$sql = $wpdb->prepare( 'Select m.*, em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
+			$sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity,
+                                    em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m 
 									Inner Join ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em
 									on em.meal_id = m.id
 									where em.entry_id = %d
