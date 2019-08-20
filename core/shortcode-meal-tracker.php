@@ -19,6 +19,8 @@
 		// This is used to create an empty entry if one doesn't already exist for this user / day
 		yk_mt_entry_get_id_or_create();
 
+        $html .= yk_mt_shortcode_meal_tracker_summary();
+
 		$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
 		// Embed hidden form / dialog required for adding a meal
@@ -27,6 +29,13 @@
 		return $html;
 	}
 	add_shortcode( 'meal-tracker', 'yk_mt_shortcode_meal_tracker' );
+
+    /**
+     * Display chart JS and summary data
+     */
+	function yk_mt_shortcode_meal_tracker_summary() {
+	    return '<canvas id="yk-mt-chart" class="yk-mt-chart" width="400" height="400"></canvas>';
+    }
 
 	/**
 	 * Render HTML for Meal Types
@@ -270,7 +279,11 @@
 		wp_enqueue_style( 'selectize', 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css', [], YK_MT_PLUGIN_VERSION );
 		wp_enqueue_script( 'selectize', 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js', [], YK_MT_PLUGIN_VERSION, true );
 
-		$yk_mt_shortcode_meal_tracker_modal_enqueued = true;
+		// Loading Overlay and Chart JS
+        wp_enqueue_script( 'loading-overlay', plugins_url( 'assets/js/loadingoverlay.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+        wp_enqueue_script( 'chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+
+    	$yk_mt_shortcode_meal_tracker_modal_enqueued = true;
 	}
 
 	/**
