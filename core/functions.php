@@ -254,6 +254,26 @@
 	}
 
     /**
+     * Return an array that represents the entry
+     *
+     * @param null $entry_id
+     *
+     * @return array|bool
+     */
+    function yk_mt_entry( $entry_id = NULL ) {
+
+        // If we have no entry ID, then lets fetch today's entry for the given user or create a new entry!
+        $entry_id = ( false === empty( $entry_id ) ) ? (int) $entry_id :  yk_mt_db_entry_get_id_for_today( get_current_user_id() );
+
+        if ( true === empty( $entry_id ) ) {
+            return false;
+        }
+
+        // TODO: Condense this object. Half the fields do not need to be returned via JSON / AJAX
+        return yk_mt_db_entry_get( $entry_id );
+    }
+
+    /**
      * Return an array for config values for AJAX localize
      * @return array
      */
@@ -265,5 +285,16 @@
             'site-url'                          => $site_url,
             'ajax-url'                          => admin_url('admin-ajax.php'),
             'ajax-security-nonce'               => wp_create_nonce( 'yk-mt-nonce' ),
+        ];
+    }
+
+    /**
+     * Return an array of localised strings
+     * @return array
+     */
+    function yk_mt_localised_strings( ) {
+        return [
+            'calorie-unit'      => __( 'kcal', YK_MT_SLUG ),
+            'remove-text'       => __( 'Remove', YK_MT_SLUG ),
         ];
     }

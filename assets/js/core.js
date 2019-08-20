@@ -19,7 +19,7 @@ jQuery( document ).ready( function( $ ) {
     });
 
     $( '.yk-mt-accordion-section-title' ).click( function( e ) {
-
+console.log('a');
         // Grab current anchor value
         var currentAttrValue = $( this ).attr( 'href' );
 
@@ -38,6 +38,7 @@ jQuery( document ).ready( function( $ ) {
     });
 
     function yk_mt_accordion_close_sections() {
+        console.log('b');
         $( '.yk-mt-accordion .yk-mt-accordion-section-title' ).removeClass( 'active' );
         $( '.yk-mt-accordion .yk-mt-accordion-section-content' ).slideUp(300).removeClass( 'open' );
     }
@@ -67,18 +68,9 @@ jQuery( document ).ready( function( $ ) {
 
     dialog_options = JSON.parse( dialog_options );
 
-    dialog_options.beforeOpen = function() { yk_mt_dialog_open() };
-   // dialog_options.beforeClose = function() { yk_mt_dialog_close() };
+    //dialog_options.beforeOpen = function() { yk_mt_dialog_open() };
 
     var meal_tracker_dialog = $(".yk-mt-add-meal-prompt").animatedModal( dialog_options );
-
-    /**
-     * Initialise opened dialog
-     */
-    function yk_mt_dialog_open() {
-        // todo
-        // var meal_id = yk_mt_dialog_meal_type_get();
-    }
 
     /**
      * Tidy up after dialog closed
@@ -93,13 +85,6 @@ jQuery( document ).ready( function( $ ) {
     function yk_mt_dialog_meal_type_reset() {
         yk_mt_selected_meal_type = false;
     }
-
-    /**
-     * Fetch the meal ID required for dialog
-     */
-    // function yk_mt_dialog_meal_type_get() {
-    //     return ( undefined === yk_mt_selected_meal_type ) ? false : yk_mt_selected_meal_type;
-    // }
 
     // Init meal type data attribute
     yk_mt_dialog_meal_type_reset();
@@ -168,18 +153,43 @@ jQuery( document ).ready( function( $ ) {
      * @param response
      */
     function yk_mt_post_api_add_meal_to_entry_callback( data, response ) {
-        if ( true === response ) {
-            $( 'body' ).trigger( 'meal-tracker-refresh' );
+        if ( false === response[ 'error' ] ) {
+            yk_mt_render_entry( response[ 'entry' ] );
+
+            $( 'body' ).trigger( 'meal-tracker-added' );
         } else {
             $( 'body' ).trigger( 'meal-tracker-save-error' );
         }
     }
 
     /**
+     * Refresh entry UI
+     * @param entry_id
+     */
+    function yk_mt_refresh_entry( entry_id = false ) {
+
+        var data = {
+            'entry-id'  : entry_id
+        };
+
+        yk_mt_post( 'get_entry', data,  yk_mt_refresh_entry_callback);
+    }
+
+    /**
+     * Update UI component with latest entry data
+     * @param data
+     * @param response
+     */
+    function yk_mt_refresh_entry_callback( data, response ) {
+        yk_mt_render_entry( response );
+    }
+
+    /**
      * Data has been refreshed, reload as needed!
      */
     $( 'body' ).on( 'meal-tracker-refresh', function( event ) {
-        alert( 'Data refresh!' );
+        //
+        // yk_mt_refresh_entry();
     });
 
     /**
@@ -188,4 +198,93 @@ jQuery( document ).ready( function( $ ) {
     $( 'body' ).on( 'meal-tracker-save-error', function( event ) {
         alert( 'There was an error saving your entry!' ); //TODO: Either make this pretty / translate it
     });
+
+    /**
+     * ------ ---------------------------------------------------------------------------------
+     * HTML Templates and Rendering
+     * ---------------------------------------------------------------------------------------
+     */
+
+    /**
+     * HTML for a Meal row (within data table)
+     * @param meal_entry_id
+     * @param meal_type
+     * @param name
+     * @param calories
+     * @param quantity
+     * @returns {string}
+     * @constructor
+     */
+    const MealRow = ({ meal_entry_id, meal_type, name, calories, quantity}) => `
+                        <div class="yk-mt-r" data-mt="${meal_type}">
+                            <div class="yk-mt-c">
+                                 ${name}
+                            </div>
+                            <div class="yk-mt-c yk-mt-cq">
+                                ${calories}${yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ]} / ${quantity}g
+                            </div>
+                            <div class="yk-mt-c yk-mt-o">
+                                <a href="#" data-id="${meal_entry_id}" class="yk-mt-act-r">${yk_mt_sc_meal_tracker[ 'localise' ][ 'remove-text' ]}</a>
+                            </div>
+                        </div>`;
+
+    /**
+     * HTML to provide a total row
+     * @param total
+     * @param unit
+     * @returns {string}
+     * @constructor
+     */
+    const SummaryRow = ({ total, unit }) => `
+                        <div class="yk-mt-r" >
+                                <div class="yk-mt-c">
+                                </div>
+                                <div class="yk-mt-c yk-mt-cq">
+                                    ${total}${unit}
+                                </div>	
+                                <div class="yk-mt-c yk-mt-o">
+                                </div>
+                        </div>`;
+
+    /**
+     * Render all meals for a given meal type
+     * @param table_id
+     * @param meals
+     * @param total
+     */
+    function yk_mt_render_meal_rows( table_id, meals, total ) {
+
+        // Get HTML for all meal rows
+        html_meals = meals.map( MealRow ).join('');
+
+        total = [ { total: total, unit: yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ] } ]; //todo: localise kcal
+
+        // Get HTML for total row
+        html_total = total.map( SummaryRow ).join('');
+
+        $( '#meals-table-' + table_id ).html( html_meals + html_total );
+    }
+
+    /**
+     * Take an entry in JSON format and render into UI
+     * @param entry
+     */
+    function yk_mt_render_entry( entry ) {
+
+        if ( typeof entry !== 'object' ) {
+            return;
+        }
+
+        // Render meal rows under each meal type
+        $.each( entry.meals, function( meal_type_id, meals ) {
+            yk_mt_render_meal_rows( meal_type_id, meals, entry.counts[ meal_type_id ]);
+        });
+    }
+
+    // Are we on a shortcode page and have initial data to load?
+    if ( yk_mt_sc_meal_tracker [ 'load-entry' ] ) {
+        yk_mt_render_entry( yk_mt_sc_meal_tracker [ 'todays-entry' ] );
+    }
+
+    // https://www.chartjs.org/docs/latest/charts/doughnut.html
 });

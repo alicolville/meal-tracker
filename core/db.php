@@ -170,7 +170,7 @@
 		// If an entry was found, fetch all the meals entered for it.
 		if ( $entry !== false ) {
 
-			$sql = $wpdb->prepare( 'Select m.*, em.meal_type from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
+			$sql = $wpdb->prepare( 'Select m.*, em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
 									Inner Join ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em
 									on em.meal_id = m.id
 									where em.entry_id = %d
@@ -186,12 +186,14 @@
 
 				foreach ( $meals as $meal ) {
 
-					// Initiate an empty array
-					if ( false === isset( $entry['meals'][ $meal['meal_type'] ] ) ) {
-						$entry['meals'][ $meal['meal_type'] ] = [];
-					}
+                    // Initiate an empty array
+                    if ( false === isset( $entry['meals'][ $meal['meal_type'] ] ) ) {
+                        $entry['meals'][ $meal['meal_type'] ] = [];
+                        $entry['counts'][ $meal['meal_type'] ] = 0;
+                    }
 
-					$entry['meals'][ $meal['meal_type'] ][] = $meal;
+                    $entry['meals'][ $meal['meal_type'] ][] = $meal;
+                    $entry['counts'][ $meal['meal_type'] ] += $meal['calories'];
 				}
 			}
 		}

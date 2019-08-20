@@ -31,10 +31,28 @@ function yk_mt_ajax_add_meal_to_entry() {
             return wp_send_json( [ 'error' => 'updating-db' ] );
         }
     }
+    $entry = yk_mt_entry( $post_data[ 'entry-id' ] );
 
-    wp_send_json( true );
+    wp_send_json( [ 'error' => false, 'entry' => $entry ] );
 }
 add_action( 'wp_ajax_add_meal_to_entry', 'yk_mt_ajax_add_meal_to_entry' );
+
+/**
+ * REST Handler for fetching an entry
+ *
+ * @return WP_REST_Response
+ */
+function yk_mt_ajax_get_entry() {
+
+    check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+    $entry_id = ( false === empty( $_POST[ 'entry-id' ] ) ) ? (int) $_POST[ 'entry-id' ] : false;
+
+    $entry = yk_mt_entry( $entry_id );
+
+    wp_send_json( $entry );
+}
+add_action( 'wp_ajax_get_entry', 'yk_mt_ajax_get_entry' );
 
 /**
  * Extra layer to ensure an admin call to the API is allowed.

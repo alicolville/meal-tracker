@@ -41,24 +41,23 @@
 
 			yk_mt_shortcode_meal_tracker_localise();
 
-			$todays_meals = yk_mt_db_entry_get();
-
 			$html = yk_mt_html_accordion_open( 'yk-mt-meal-types' );
 
 			$active_tab = true;
 
-			// For each meal type, display an accordian and relevant meal data
+			// For each meal type, display an accordion and relevant meal data
 			foreach ( $meal_types as $meal_type ) {
 
-				$meal_type_html = sprintf( '<p class="yk-mt-no-meals">%1$s, <a href="%2$s">%3$s</a>.</p>',
-										__( 'No data for today', YK_MT_SLUG ),
-										'#',
-										yk_mt_shortcode_meal_tracker_add_meal_button( __( 'add a meal', YK_MT_SLUG ), $meal_type['id'], '' )
-				);
+                // Add the "Add Meal" prompt now
+                $meal_type_html = sprintf( '<p>%s</p>', yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type['id'] ) );
 
-				if ( false === empty( $todays_meals['meals'][ $meal_type['id'] ] ) ) {
-					$meal_type_html = yk_mt_html_meals_list( $meal_type['id'], $todays_meals['meals'][ $meal_type['id'] ] );
-				}
+                $meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt-t' );
+
+                $meal_type_html .= sprintf( '<div id="meals-table-%d" class="%s">%s.</div>',
+                                                    $meal_type['id'],
+                                                    esc_attr( $meal_list_class ),
+                                                    __( 'No data has been entered', YK_MT_SLUG )
+                );
 
 				$html .= yk_mt_html_accordion_section( [    'id' => $meal_type['id'],
 															'title' => $meal_type['name'],
@@ -96,7 +95,7 @@
 		$css_class = apply_filters( 'yk_mt_shortcode_button_meal_add_css', $default_css_class );
 		$button_text = apply_filters( 'yk_mt_shortcode_button_meal_add_text', $button_text );
 
-		return sprintf( '<a href="#yk-mt-add-meal-dialog" class="%1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d">%4$s</a>',
+		return sprintf( '<a href="#yk-mt-add-meal-dialog" class="%1$s yk-mt-add-meal-prompt btn button" id="%3$d" data-meal-type="%2$d">%4$s</a>',
 						esc_attr( $css_class ),
 						(int) $meal_type_id,
 						(int) $yk_mt_add_meal_button_id,
@@ -300,85 +299,9 @@
 		$dialog_options = apply_filters( 'yk_mt_shortcode_meal_tracker_dialog_options', $dialog_options );
 
 		wp_localize_script( 'meal-tracker', 'yk_mt_sc_meal_tracker', [
-			'html-meal-row'     => yk_mt_html_template_row(),
-            'dialog-options'    => json_encode( $dialog_options )
+			'dialog-options'    => json_encode( $dialog_options ),
+            'localise'          => yk_mt_localised_strings(),
+            'todays-entry'      => yk_mt_entry(),
+            'load-entry'        => true
 		] );
-	}
-
-	/**
-	 * Render a meals object into a <div> table
-	 *
-	 * @param $meals
-	 *
-	 * @return string
-	 */
-	function yk_mt_html_meals_list( $meal_type_id, $meals ) {
-
-		if ( true === empty( $meals ) ) {
-			return '';
-		}
-
-		$meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt-t' );
-
-		$html = sprintf( '<div class="%s">', esc_attr( $meal_list_class ) );
-
-		// Add the "Add Meal" prompt now
-		$html .= sprintf( '<p>%s</p>', yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type_id ) );
-
-		$total = 0;
-
-		foreach ( $meals as $meal ) {
-
-			$meal = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_data', $meal );
-
-			$html .= sprintf(   yk_mt_html_template_row(),
-								(int) $meal['id'],
-								esc_html( $meal['name'] ),
-								__( 'Remove', YK_MT_SLUG ),
-								esc_html( $meal['calories'] ),
-								esc_html( $meal['quantity'] ),
-								$meal_type_id
-			);
-
-			$total += $meal['calories'];
-		}
-
-		$html .= sprintf( ' <div class="yk-mt-r" >
-									<div class="yk-mt-c">
-									</div>
-									<div class="yk-mt-c yk-mt-cq">
-										%1$skcal
-									</div>	
-									<div class="yk-mt-c yk-mt-o">
-									</div>
-							</div>',
-							$total
-		);
-
-		$html .= '</div>';
-
-		return $html;
-	}
-
-	/**
-	 * Return HTML for Meal row
-	 *
-	 * @return string
-	 */
-	function yk_mt_html_template_row() {
-
-		$html = '<div class="yk-mt-r" data-mt="%6$d">
-					<div class="yk-mt-c">
-						%2$s
-					</div>
-					<div class="yk-mt-c yk-mt-cq">
-						%4$skcal / %5$sg
-					</div>	
-					<div class="yk-mt-c yk-mt-o">
-						<a href="#" data-id="%1$d" class="yk-mt-act-r">%3$s</a>
-					</div>
-				</div>';
-
-		// Remove white spaces, tabs, etc
-		return preg_replace( '/\s+/S', ' ', $html );
 	}
