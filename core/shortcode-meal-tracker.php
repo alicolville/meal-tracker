@@ -16,6 +16,9 @@
 			return yk_mt_shortcode_log_in_prompt();
 		}
 
+		// This is used to create an empty entry if one doesn't already exist for this user / day
+		yk_mt_entry_get_id_or_create();
+
 		$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
 		// Embed hidden form / dialog required for adding a meal
