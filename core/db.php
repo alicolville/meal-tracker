@@ -167,8 +167,11 @@
 
 		$entry = ( false === empty( $entry ) ) ? $entry : false;
 
-        $entry[ 'percentage-used' ] = ( $entry[ 'calories_used' ] / $entry[ 'calories_allowed' ] ) * 100;
-        $entry[ 'percentage-used' ] = round( $entry[ 'percentage-used' ], 1);
+        $entry[ 'percentage_used' ] = ( $entry[ 'calories_used' ] / $entry[ 'calories_allowed' ] ) * 100;
+        $entry[ 'percentage_used' ] = round( $entry[ 'percentage_used' ], 1);
+
+		$entry[ 'calories_remaining' ] = $entry[ 'calories_allowed' ] - $entry[ 'calories_used' ];
+		$entry[ 'calories_remaining' ] = ( $entry[ 'calories_remaining' ] < 0 ) ? 0 : $entry[ 'calories_remaining' ];
 
         // If an entry was found, fetch all the meals entered for it.
 		if ( $entry !== false ) {

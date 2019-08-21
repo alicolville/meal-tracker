@@ -69,6 +69,32 @@
 /*
     Modal
  */
-#yk-mt-add-meal-dialog {
+#yk-mt-add-meal-dialog{
     background-color: #FFFFFF;
+}
+
+/**
+    Summary section
+ */
+.yk-mt-shortcode-meal-tracker {
+
+}
+.yk-mt-summary-table {
+
+}
+.yk-mt-summary-details {
+    text-align: right;
+    vertical-align: middle !important;
+}
+.yk-mt-summary-chart-slot {
+    width: 300px ! important;
+}
+.yk-mt-summary-chart-slot canvas{
+
+}
+.yk-mt-summary-details p {
+    margin-bottom: 0px;
+}
+.yk-mt-summary-details .yk-mt-figure {
+    font-size: 30px;
 }

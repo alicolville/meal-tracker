@@ -19,9 +19,13 @@
 		// This is used to create an empty entry if one doesn't already exist for this user / day
 		yk_mt_entry_get_id_or_create();
 
-        $html .= yk_mt_shortcode_meal_tracker_summary();
+		$html .= '<div class="yk-mt-shortcode-meal-tracker">';
+
+		$html .= yk_mt_shortcode_meal_tracker_summary();
 
 		$html .= yk_mt_shortcode_meal_tracker_meal_types();
+
+		$html .= '</div>';
 
 		// Embed hidden form / dialog required for adding a meal
 		$html .= yk_mt_shortcode_meal_tracker_add_meal_dialog();
@@ -34,7 +38,15 @@
      * Display chart JS and summary data
      */
 	function yk_mt_shortcode_meal_tracker_summary() {
-	    return '<canvas id="yk-mt-chart" class="yk-mt-chart" width="400" height="400"></canvas>';
+
+		return '<div class="yk-mt-t yk-mt-summary-table">
+			                <div class="yk-mt-r" >
+			                        <div class="yk-mt-c yk-mt-summary-chart-slot">
+			                            <canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
+			                        </div>
+			                        
+			                </div>
+	                    </div>';
     }
 
 	/**

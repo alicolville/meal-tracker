@@ -1,5 +1,8 @@
 
-var yk_mt_selected_meal_type = false;
+var yk_mt_selected_meal_type    = false;
+var yk_mt_chart_config          = false;
+var yk_mt_ctx                   = false;
+var yk_mt_chart                 = false;
 
 jQuery( document ).ready( function( $ ) {
 
@@ -279,15 +282,47 @@ jQuery( document ).ready( function( $ ) {
             return;
         }
 
+        yk_mt_loading_start();
+
         // Render meal rows under each meal type
         $.each( entry.meals, function( meal_type_id, meals ) {
             yk_mt_render_meal_rows( meal_type_id, meals, entry.counts[ meal_type_id ]);
         });
+
+        yk_mt_chart_data_set( entry[ 'calories_allowed' ],
+            entry[ 'calories_remaining' ],
+            entry[ 'calories_used' ],
+            entry[ 'percentage_used' ]
+        );
+
+        yk_mt_chart_render();
+
+        //todo
+      //  yk_mt_animate_text( '.yk-mt-remaining-calories', entry[ 'calories_remaining' ] );
+      //  yk_mt_animate_text( '.yk-mt-used-calories', entry[ 'calories_used' ] );
+
+        yk_mt_loading_stop();
     }
 
     // Are we on a shortcode page and have initial data to load?
     if ( yk_mt_sc_meal_tracker [ 'load-entry' ] ) {
         yk_mt_render_entry( yk_mt_sc_meal_tracker [ 'todays-entry' ] );
+    }
+
+    /** todo:
+     * Animate changing of text
+     * @param field
+     * @param new_value
+     */
+    function yk_mt_animate_text( field, new_value ) {
+
+        $( field ).animate({
+            opacity: 0
+        }, 250, function() {
+            $( field ).text( new_value ).animate({
+                opacity: 1
+            }, 250);
+        });
     }
 
     /**
@@ -317,7 +352,11 @@ jQuery( document ).ready( function( $ ) {
      * Charting
      * ---------------------------------------------------------------------------------------
      */
-    //https://stackoverflow.com/questions/20966817/how-to-add-text-inside-the-doughnut-chart-using-chart-js
+
+    /**
+     * Extend Chart.JS to render text within doughnut
+     * Based on: https://stackoverflow.com/questions/20966817/how-to-add-text-inside-the-doughnut-chart-using-chart-js
+     */
     Chart.pluginService.register({
         beforeDraw: function (chart) {
             if (chart.config.options.elements.center) {
@@ -360,42 +399,93 @@ jQuery( document ).ready( function( $ ) {
         }
     });
 
-    var ctx = $('#yk-mt-chart');
-    var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
+    /**
+     * Set chart data
+     * @param calories_allowed
+     * @param calories_remaining
+     * @param calories_used
+     * @param percentage_used
+     */
+    function yk_mt_chart_data_set( calories_allowed, calories_remaining, calories_used, percentage_used ) {
+
+        yk_mt_chart_config = {
+            calories_allowed:   calories_allowed,
+            calories_remaining: calories_remaining,
+            calories_used:      calories_used,
+            percentage_used:    percentage_used
+        };
+
+    }
+
+    /**
+     * Render Chart
+     */
+    function yk_mt_chart_render() {
+
+        // If the chart is already rendered, then just trigger a refresh. If not, we need to render chart.
+        if ( yk_mt_ctx ) {
+
+            yk_mt_chart.data    = yk_mt_chart_data();
+            yk_mt_chart.options = yk_mt_chart_options();
+            yk_mt_chart.update();
+
+        } else {
+
+            yk_mt_ctx   = $('#yk-mt-chart');
+
+            yk_mt_chart = new Chart( yk_mt_ctx, {
+                type:       'doughnut',
+                data:       yk_mt_chart_data(),
+                options:    yk_mt_chart_options()
+            });
+        }
+    }
+
+    function yk_mt_chart_data() {
+        return {
             datasets: [{
-                data: [100, 20],
+                data: [ yk_mt_chart_config[ 'calories_used' ],  yk_mt_chart_config[ 'calories_remaining' ] ],
                 backgroundColor: ["rgb(255, 99, 132)","rgb(228,228,228)"]
             }],
-
-            // These labels appear in the legend and in the tooltips when hovering different arcs
             labels: [
-                'Used calories (kcal)',
-                'Remaining calories (kcal)'
+                yk_mt_chart_config[ 'calories_used' ] + ' ' + yk_mt_sc_meal_tracker[ 'localise' ][ 'chart-label-used' ],
+                yk_mt_chart_config[ 'calories_remaining' ] + ' ' + yk_mt_sc_meal_tracker[ 'localise' ][ 'chart-label-remaining' ]
             ]
+        };
+    }
 
+    /**
+     * Return options for Chart.js doughnut
+     * @returns object
+     */
+    function yk_mt_chart_options() {
 
-        },
-        options: {
+        return {
             cutoutPercentage: 80,
             title: {
-                display: true,
+                display: false,
                 position: 'bottom',
-                text: 'Target: 999kcal '
+                text: yk_mt_sc_meal_tracker[ 'localise' ][ 'chart-label-target' ] + ': ' +
+                yk_mt_chart_config[ 'calories_allowed' ] +
+                yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ]
             },
             legend: {
-                display: false
+                display: true,
+                position: 'right',
+                labels: {
+                    fontSize: 17,
+                    boxWidth: 20
+                }
             },
             elements: {
                 center: {
-                    text: '25%',
-                    color: 'rgb(255, 99, 132)', //Default black
-                    fontStyle: 'Helvetica', //Default Arial
-                    sidePadding: 15 //Default 20 (as a percentage)
+                    text: yk_mt_chart_config[ 'percentage_used' ] + '%',
+                    color: 'rgb(255, 99, 132)',
+                    fontStyle:  'Helvetica',
+                    sidePadding: 125
                 }
             }
-        }
-    });
-    // https://www.chartjs.org/docs/latest/charts/doughnut.html
+        };
+    }
+
 });
