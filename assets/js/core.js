@@ -490,7 +490,8 @@ jQuery( document ).ready( function( $ ) {
         return {
             datasets: [{
                 data: [ yk_mt_chart_config[ 'calories_used' ],  yk_mt_chart_config[ 'calories_remaining' ] ],
-                backgroundColor: ["rgb(255, 99, 132)","rgb(228,228,228)"]
+                backgroundColor: [ "rgb(255, 99, 132)", "rgb(228,228,228)" ],
+                borderWidth: 1
             }],
             labels: [
                 yk_mt_chart_config[ 'calories_used' ] + ' ' + yk_mt_sc_meal_tracker[ 'localise' ][ 'chart-label-used' ],
@@ -506,13 +507,9 @@ jQuery( document ).ready( function( $ ) {
     function yk_mt_chart_options() {
 
         return {
-            cutoutPercentage: 80,
+            cutoutPercentage: 70,
             title: {
-                display: false,
-                position: 'bottom',
-                text: yk_mt_sc_meal_tracker[ 'localise' ][ 'chart-label-target' ] + ': ' +
-                yk_mt_chart_config[ 'calories_allowed' ] +
-                yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ]
+                display: false
             },
             legend: {
                 display: true,
