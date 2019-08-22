@@ -185,20 +185,21 @@
 									$id
 			);
 
-			$entry['meals'] = [];
+            $meal_type_ids = yk_mt_meal_types_ids();
+
+            $entry['meals'] = [];
+            $entry['counts'] = [];
+
+            // Initiate an empty array
+            foreach ( $meal_type_ids as $id ) {
+                $entry['meals'][ $id ] = [];
+                $entry['counts'][ $id ] = 0;
+            }
 
 			$meals = $wpdb->get_results( $sql, ARRAY_A );
 
 			if ( false === empty( $meals ) ) {
-
 				foreach ( $meals as $meal ) {
-
-                    // Initiate an empty array
-                    if ( false === isset( $entry['meals'][ $meal['meal_type'] ] ) ) {
-                        $entry['meals'][ $meal['meal_type'] ] = [];
-                        $entry['counts'][ $meal['meal_type'] ] = 0;
-                    }
-
                     $entry['meals'][ $meal['meal_type'] ][] = $meal;
                     $entry['counts'][ $meal['meal_type'] ] += $meal['calories'];
 				}
@@ -329,7 +330,7 @@
 			return false;
 		}
 
-		do_action( 'yk_mt_entry_meal_deleted', $id );
+   		do_action( 'yk_mt_entry_meal_deleted', $id );
 
 		return true;
 	}

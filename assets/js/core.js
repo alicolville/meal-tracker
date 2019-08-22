@@ -66,13 +66,13 @@ jQuery( document ).ready( function( $ ) {
     /**
      * Initialise dialog
      */
-    var dialog_options = yk_mt_sc_meal_tracker[ 'dialog-options' ];
+    if ( 'undefined' !== typeof( yk_mt_sc_meal_tracker ) ) {
 
-    dialog_options = JSON.parse( dialog_options );
+        var dialog_options = JSON.parse( yk_mt_sc_meal_tracker[ 'dialog-options' ] );
+        dialog_options.afterClose = function() { yk_mt_dialog_close() };
 
-    //dialog_options.beforeOpen = function() { yk_mt_dialog_open() };
-
-    var meal_tracker_dialog = $(".yk-mt-add-meal-prompt").animatedModal( dialog_options );
+        var meal_tracker_dialog = $(".yk-mt-add-meal-prompt").animatedModal( dialog_options );
+    }
 
     /**
      * Tidy up after dialog closed
@@ -163,7 +163,35 @@ jQuery( document ).ready( function( $ ) {
         if ( false === response[ 'error' ] ) {
             yk_mt_render_entry( response[ 'entry' ] );
 
-            $( 'body' ).trigger( 'meal-tracker-added' );
+            $( 'body' ).trigger( 'meal-tracker-meal-added' );
+        } else {
+            $( 'body' ).trigger( 'meal-tracker-save-error' );
+        }
+    }
+
+    /**
+     * Delete meal from entry
+     * @param meal_entry_id
+     */
+    function yk_mt_post_api_delete_meal_to_entry( meal_entry_id ) {
+
+        var data = {
+            'meal-entry-id'  : meal_entry_id
+        };
+
+        yk_mt_post( 'delete_meal_to_entry', data,  yk_mt_post_api_delete_meal_to_entry_callback);
+    }
+
+    /**
+     * Handle the call back to deleting a meal from an entry
+     * @param data
+     * @param response
+     */
+    function yk_mt_post_api_delete_meal_to_entry_callback( data, response ) {
+        if ( false === response[ 'error' ] ) {
+            yk_mt_render_entry( response[ 'entry' ] );
+
+            $( 'body' ).trigger( 'meal-tracker-meal-deleted' );
         } else {
             $( 'body' ).trigger( 'meal-tracker-save-error' );
         }
@@ -207,6 +235,13 @@ jQuery( document ).ready( function( $ ) {
     });
 
     /**
+     * Listen for trigger to delete meal from an entry
+     */
+    $( 'body' ).on( 'meal-tracker-meal-entry-delete', function( event, meal_entry_id ) {
+        yk_mt_post_api_delete_meal_to_entry( meal_entry_id );
+    });
+
+    /**
      * ------ ---------------------------------------------------------------------------------
      * HTML Templates and Rendering
      * ---------------------------------------------------------------------------------------
@@ -231,7 +266,7 @@ jQuery( document ).ready( function( $ ) {
                                 ${calories}${yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ]} / ${quantity}g
                             </div>
                             <div class="yk-mt-c yk-mt-o">
-                                <a href="#" data-id="${meal_entry_id}" class="yk-mt-act-r">${yk_mt_sc_meal_tracker[ 'localise' ][ 'remove-text' ]}</a>
+                                <a data-id="${meal_entry_id}" class="yk-mt-act-r" onclick="yk_mt_trigger_meal_entry_delete( ${meal_entry_id} )">${yk_mt_sc_meal_tracker[ 'localise' ][ 'remove-text' ]}</a>
                             </div>
                         </div>`;
 
@@ -261,15 +296,22 @@ jQuery( document ).ready( function( $ ) {
      */
     function yk_mt_render_meal_rows( table_id, meals, total ) {
 
-        // Get HTML for all meal rows
-        html_meals = meals.map( MealRow ).join('');
+        let html = yk_mt_sc_meal_tracker[ 'localise' ][ 'no-data' ] + '.';
 
-        total = [ { total: total, unit: yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ] } ]; //todo: localise kcal
+        if ( 0 !== total ) {
 
-        // Get HTML for total row
-        html_total = total.map( SummaryRow ).join('');
+            // Get HTML for all meal rows
+            html_meals = meals.map( MealRow ).join('');
 
-        $( '#meals-table-' + table_id ).html( html_meals + html_total );
+            total = [ { total: total, unit: yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ] } ]; //todo: localise kcal
+
+            // Get HTML for total row
+            html_total = total.map( SummaryRow ).join('');
+
+            html = html_meals + html_total;
+        }
+
+        $( '#meals-table-' + table_id ).html( html );
     }
 
     /**
@@ -340,6 +382,9 @@ jQuery( document ).ready( function( $ ) {
     }
 
     $( 'body' ).on( 'meal-tracker-ajax-started', function( event ) {
+
+        // AC: Set time out here? If "loading" for more than x seconds then hide and show error?
+        // note: to cause it to fail, just remove an AJAX hook
         yk_mt_loading_start();
     });
 
@@ -487,5 +532,12 @@ jQuery( document ).ready( function( $ ) {
             }
         };
     }
-
 });
+
+/**
+ * This is a wee hack to fire an event for links clicked to remove a meal from an entry
+ * @param meal_entry_id
+ */
+function yk_mt_trigger_meal_entry_delete( meal_entry_id ) {
+    jQuery( 'body' ).trigger( 'meal-tracker-meal-entry-delete', [ meal_entry_id ] );
+}

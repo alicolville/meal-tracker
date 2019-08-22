@@ -11,6 +11,8 @@ function yk_mt_ajax_add_meal_to_entry() {
 
     check_ajax_referer( 'yk-mt-nonce', 'security' );
 
+    // TODO: Check the logged in user is adding a meal to an entry of theirs?
+
 	$user_id = NULL;
 	$post_data = $_POST;
 
@@ -18,11 +20,7 @@ function yk_mt_ajax_add_meal_to_entry() {
     $post_data[ 'entry-id' ]    = ( true === empty( $post_data[ 'entry-id' ] ) ) ? yk_mt_entry_get_id_or_create( (int) $post_data[ 'user-id' ]  ) : (int) $post_data[ 'entry-id' ];
 
 	// Validate we have all the expected fields
-	foreach ( [ 'user-id', 'entry-id', 'meal-id', 'meal-type', 'quantity' ] as $key ) {
-		if ( true === empty( $post_data[ $key ] ) ) {
-			wp_send_json( [ 'error' => 'missing-' . $key ] );
-		}
-	}
+    yk_mt_ajax_validate_post_data( [ 'user-id', 'entry-id', 'meal-id', 'meal-type', 'quantity' ] );
 
 	$quantity = (int) $post_data[ 'quantity' ];
 
@@ -35,11 +33,50 @@ function yk_mt_ajax_add_meal_to_entry() {
             return wp_send_json( [ 'error' => 'updating-db' ] );
         }
     }
-    $entry = yk_mt_entry( $post_data[ 'entry-id' ] );
 
-    wp_send_json( [ 'error' => false, 'entry' => $entry ] );
+    wp_send_json( [ 'error' => false, 'entry' => yk_mt_entry( $post_data[ 'entry-id' ] ) ] );
 }
 add_action( 'wp_ajax_add_meal_to_entry', 'yk_mt_ajax_add_meal_to_entry' );
+
+/**
+ * Delete a meal from an entry
+ */
+function yk_mt_ajax_delete_meal_to_entry() {
+
+    check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+    $post_data = $_POST;
+
+    // TODO: Check the logged in user is deleting a meal entry of theirs?
+
+    $post_data[ 'meal-entry-id' ]  = ( false === empty( $post_data[ 'meal-entry-id' ] ) ) ? (int) $post_data[ 'meal-entry-id' ]  : false;
+    $post_data[ 'entry-id' ]       = ( true === empty( $post_data[ 'entry-id' ] ) ) ? yk_mt_entry_get_id_or_create() : (int) $post_data[ 'entry-id' ];
+
+    // Validate we have all the expected fields
+    yk_mt_ajax_validate_post_data( [ 'meal-entry-id', 'entry-id' ] );
+
+    if ( true !== yk_mt_entry_meal_delete( $post_data[ 'meal-entry-id' ] ) ) {
+        return wp_send_json( [ 'error' => 'updating-db' ] );
+    }
+
+    wp_send_json( [ 'error' => false, 'entry' => yk_mt_entry( $post_data[ 'entry-id' ] ) ] );
+}
+add_action( 'wp_ajax_delete_meal_to_entry', 'yk_mt_ajax_delete_meal_to_entry' );
+
+/**
+ * For the given array of keys, ensure they are found within $post_data
+ *
+ * @param array $post_data
+ * @param array $keys
+ */
+function yk_mt_ajax_validate_post_data( $post_data, $keys = [] ) {
+
+    foreach ( $keys as $key ) {
+        if ( true === empty( $post_data[ $key ] ) ) {
+            wp_send_json( [ 'error' => 'missing-' . $key ] );
+        }
+    }
+}
 
 /**
  * REST Handler for fetching an entry

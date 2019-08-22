@@ -109,9 +109,9 @@
 
 		$calories = yk_mt_db_entry_calories_count( $entry_id );
 
-		// If no calories for entry then we have an issue!
+		// If no calories, set to zero
 		if ( NULL === $calories ) {
-			return false;
+            $calories = 0;
 		}
 
 		$result = yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_used' => $calories ] );
@@ -298,6 +298,7 @@
             'remove-text'           => __( 'Remove', YK_MT_SLUG ),
 	        'chart-label-used'      => __( 'used', YK_MT_SLUG ),
             'chart-label-remaining' => __( 'remaining', YK_MT_SLUG ),
-            'chart-label-target'    => __( 'Target', YK_MT_SLUG )
+            'chart-label-target'    => __( 'Target', YK_MT_SLUG ),
+            'no-data'               => __( 'No data has been entered', YK_MT_SLUG )
         ];
     }

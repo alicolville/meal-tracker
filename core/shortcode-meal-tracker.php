@@ -77,10 +77,12 @@
 
                 $meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt-t' );
 
+                $localised_strings = yk_mt_localised_strings();
+
                 $meal_type_html .= sprintf( '<div id="meals-table-%d" class="%s">%s.</div>',
                                                     $meal_type['id'],
                                                     esc_attr( $meal_list_class ),
-                                                    __( 'No data has been entered', YK_MT_SLUG )
+                                                    $localised_strings[ 'no-data' ]
                 );
 
 				$html .= yk_mt_html_accordion_section( [    'id' => $meal_type['id'],
