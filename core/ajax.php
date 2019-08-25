@@ -28,6 +28,8 @@ function yk_mt_ajax_add_meal_to_entry() {
         $quantity = 50;
     }
 
+    $post_data = yk_mt_ajax_strip_incoming( $post_data );
+
     for ( $i = 0; $i < $quantity; $i++ ) {
         if ( false === yk_mt_entry_meal_add( (int) $post_data[ 'entry-id' ], (int) $post_data[ 'meal-id' ], (int) $post_data[ 'meal-type' ] ) ) {
             return wp_send_json( [ 'error' => 'updating-db' ] );
@@ -55,6 +57,8 @@ function yk_mt_ajax_delete_meal_to_entry() {
     // Validate we have all the expected fields
     yk_mt_ajax_validate_post_data( $post_data, [ 'meal-entry-id', 'entry-id' ] );
 
+    $post_data = yk_mt_ajax_strip_incoming( $post_data );
+
     if ( true !== yk_mt_entry_meal_delete( $post_data[ 'meal-entry-id' ] ) ) {
         return wp_send_json( [ 'error' => 'updating-db' ] );
     }
@@ -69,10 +73,9 @@ function yk_mt_ajax_add_meal() {
 
     $post_data = $_POST;
 
-    unset( $post_data[ 'security' ] );
-    unset( $post_data[ 'action' ] );
-
     $post_data[ 'added_by' ] = get_current_user_id();
+
+    $post_data = yk_mt_ajax_strip_incoming( $post_data );
 
     // Validate we have all the expected fields
     yk_mt_ajax_validate_post_data( $post_data, [ 'name', 'description', 'calories', 'quantity', 'unit' ] );
@@ -86,6 +89,18 @@ function yk_mt_ajax_add_meal() {
     wp_send_json( [ 'error' => false, 'id' => $meal_id ] );
 }
 add_action( 'wp_ajax_add_meal', 'yk_mt_ajax_add_meal' );
+
+/**
+ * Tidy up post data
+ * @param $postdata
+ * @return mixed
+ */
+function yk_mt_ajax_strip_incoming( $post_data ) {
+
+    unset( $post_data[ 'security' ] );
+    unset( $post_data[ 'action' ] );
+    return $post_data;
+}
 
 /**
  * For the given array of keys, ensure they are found within $post_data

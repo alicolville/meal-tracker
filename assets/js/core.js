@@ -70,7 +70,7 @@ jQuery( document ).ready( function( $ ) {
     var dialog_options = JSON.parse( yk_mt_sc_meal_tracker[ 'dialog-options' ] );
     dialog_options.afterClose = function() { yk_mt_dialog_close() };
 
-    //var meal_tracker_dialog = $(".yk-mt-add-meal-prompt").animatedModal( dialog_options );
+    // var meal_tracker_dialog = $(".yk-mt-add-meal-prompt").animatedModal( dialog_options );
 
     /**
      * Tidy up after dialog closed
@@ -160,6 +160,8 @@ jQuery( document ).ready( function( $ ) {
         if ( false === response[ 'error' ] ) {
             yk_mt_render_entry( response[ 'entry' ] );
 
+            yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-entry-added-success' ] );
+
             $( 'body' ).trigger( 'meal-tracker-meal-added' );
         } else {
             $( 'body' ).trigger( 'meal-tracker-save-error' );
@@ -187,7 +189,7 @@ jQuery( document ).ready( function( $ ) {
     function yk_mt_post_api_delete_meal_to_entry_callback( data, response ) {
         if ( false === response[ 'error' ] ) {
             yk_mt_render_entry( response[ 'entry' ] );
-
+//TODO: Add notidication
             $( 'body' ).trigger( 'meal-tracker-meal-deleted' );
         } else {
             $( 'body' ).trigger( 'meal-tracker-save-error' );
@@ -220,7 +222,7 @@ jQuery( document ).ready( function( $ ) {
      * Data has been refreshed, reload as needed!
      */
     $( 'body' ).on( 'meal-tracker-refresh', function( event ) {
-        //
+        // TODO:
         // yk_mt_refresh_entry();
     });
 
@@ -228,7 +230,7 @@ jQuery( document ).ready( function( $ ) {
      * There was an error saving the data
      */
     $( 'body' ).on( 'meal-tracker-save-error', function( event ) {
-        alert( 'There was an error saving your entry!' ); //TODO: Either make this pretty / translate it
+        yk_mt_warn( yk_mt_sc_meal_tracker[ 'localise' ][ 'db-error' ] );
     });
 
     /**
@@ -290,6 +292,7 @@ jQuery( document ).ready( function( $ ) {
         if ( false === response[ 'error' ] ) {
 
             // TODO: Take the meal ID, add show notification that it as added
+            yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-added-success' ] );
 
             $('#yk-mt-add-new-meal-to-entry').trigger("reset");
 
@@ -449,6 +452,35 @@ jQuery( document ).ready( function( $ ) {
     $( 'body' ).on( 'meal-tracker-ajax-finished', function( event ) {
         yk_mt_loading_stop();
     });
+
+    /**
+     * ------ ---------------------------------------------------------------------------------
+     * Notifications
+     * ---------------------------------------------------------------------------------------
+     */
+
+    function yk_mt_warn( text, selector = null ) {
+        yk_mt_notification( text, 'error', selector );
+    }
+
+    function yk_mt_info( text, selector = null ) {
+        yk_mt_notification( text, 'info', selector );
+    }
+
+    function yk_mt_success( text, selector = null ) {
+        yk_mt_notification( text, 'success', selector );
+    }
+
+    function yk_mt_notification( text, type = 'warn', selector = null ) {
+
+        let options = { position: 'bottom right', className: type };
+
+        if ( null === selector ) {
+            $.notify( text, options );
+        } else {
+            $( selector ).notify( text, options );
+        }
+    }
 
     /**
      * ------ ---------------------------------------------------------------------------------

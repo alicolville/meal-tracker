@@ -340,6 +340,7 @@
 		// Loading Overlay and Chart JS
         wp_enqueue_script( 'loading-overlay', plugins_url( 'assets/js/loadingoverlay.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+        wp_enqueue_script( 'notify', plugins_url( 'assets/js/notify.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
 
         // jQuery validator TODO:
         // ( 'validator', 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );

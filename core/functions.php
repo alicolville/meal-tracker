@@ -37,7 +37,7 @@
 	 * @return bool
 	 */
 	function yk_mt_entry_meal_add( $entry_id, $meal_id, $meal_type ) {
-
+//wp_send_json( [$entry_id, $meal_id, $meal_type]); //TODO
 		$entry = yk_mt_db_entry_get( $entry_id );
 
 		// Does entry exist?
@@ -294,12 +294,15 @@
      */
     function yk_mt_localised_strings( ) {
         return [
-            'calorie-unit'          => __( 'kcal', YK_MT_SLUG ),
-            'remove-text'           => __( 'Remove', YK_MT_SLUG ),
-	        'chart-label-used'      => __( 'used', YK_MT_SLUG ),
-            'chart-label-remaining' => __( 'remaining', YK_MT_SLUG ),
-            'chart-label-target'    => __( 'Target', YK_MT_SLUG ),
-            'no-data'               => __( 'No data has been entered', YK_MT_SLUG )
+            'calorie-unit'              => __( 'kcal', YK_MT_SLUG ),
+            'remove-text'               => __( 'Remove', YK_MT_SLUG ),
+	        'chart-label-used'          => __( 'used', YK_MT_SLUG ),
+            'chart-label-remaining'     => __( 'remaining', YK_MT_SLUG ),
+            'chart-label-target'        => __( 'Target', YK_MT_SLUG ),
+            'no-data'                   => __( 'No data has been entered', YK_MT_SLUG ),
+            'meal-added-success'        => __( 'The meal has been added', YK_MT_SLUG ),
+            'meal-entry-added-success'  => __( 'The meal has been added', YK_MT_SLUG ),
+            'db-error'                  => __( 'There was error saving your changes', YK_MT_SLUG )
         ];
     }
 
