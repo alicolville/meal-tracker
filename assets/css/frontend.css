@@ -69,8 +69,73 @@
 /*
     Modal
  */
-#yk-mt-add-meal-dialog{
+#yk-mt-add-meal-dialog {
     background-color: #FFFFFF;
+
+}
+.yk-mt-modal-content {
+    padding: 10px;
+}
+.yk-mt-modal-content h5 {
+    margin-bottom: 6px;
+}
+.yk-mt-modal-content  .yk-mt-quantity-row {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.yk-mt-modal-content  .yk-mt-quantity-row {
+    height: 30px;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+.yk-mt-modal-content  .yk-mt-quantity-row input {
+    width: 30px;
+    text-align: center;
+}
+.yk-mt-modal-content  .yk-mt-quantity-row button {
+    padding: 2px 6px
+}
+
+.yk-mt-modal-header, .yk-mt-modal-content {
+    padding: 10px;
+    margin: auto;
+}
+
+@media only screen and (min-width: 800px) {
+    .yk-mt-modal-header, .yk-mt-modal-content {
+        width: 60%;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .yk-mt-modal-header, .yk-mt-modal-content {
+        width: 40%;
+    }
+}
+.yk-mt-modal-header {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #cccccc;
+    overflow:hidden;
+}
+.yk-mt-modal-header button {
+    float: right;
+}
+.yk-mt-modal-header h3 {
+    float: left;
+    margin-bottom: 0px;
+    margin-top: 7px;
+}
+
+/**
+    Add a new meal form
+ */
+.yk-mt-add-new-meal-form * {
+    width: 100%;margin-bottom: 5px;
+}
+.yk-mt-add-new-meal-form select, .yk-mt-add-new-meal-form input {
+    margin-bottom: 5px;
 }
 
 /**
@@ -97,4 +162,57 @@
 }
 .yk-mt-summary-details .yk-mt-figure {
     font-size: 30px;
+}
+
+/**
+    Buttons
+ */
+.yk-mt-button-success,
+.yk-mt-button-error,
+.yk-mt-button-warning,
+.yk-mt-button-secondary {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.yk-mt-button-success {
+    background: rgb(28, 184, 65); /* this is a green */
+}
+
+.yk-mt-button-error {
+    background: rgb(202, 60, 60); /* this is a maroon */
+}
+
+.yk-mt-button-warning {
+    background: rgb(223, 117, 20); /* this is an orange */
+}
+
+.yk-mt-button-secondary {
+    background: rgb(66, 184, 221); /* this is a light blue */
+}
+
+.yk-mt-button-silent {
+    background: rgb(220,220,220)
+}
+
+
+
+
+.yk-mt-shortcode-meal-tracker input[type="text"],
+.yk-mt-shortcode-meal-tracker input[type="email"],
+.yk-mt-shortcode-meal-tracker input[type="password"],
+.yk-mt-shortcode-meal-tracker input[type="search"],
+.yk-mt-shortcode-meal-tracker input[type="url"],
+.yk-mt-shortcode-meal-tracker input[type="number"]
+{
+    border: 1px solid #eee;
+    font-size: 14px;
+    font-size: 1.4rem;
+    padding: 0.6em;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-transition: 0.2s ease-in;
+    transition: 0.2s ease-in;
 }

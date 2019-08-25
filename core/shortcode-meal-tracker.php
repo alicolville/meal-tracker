@@ -16,6 +16,10 @@
 			return yk_mt_shortcode_log_in_prompt();
 		}
 
+		yk_mt_shortcode_meal_tracker_enqueue_scripts();
+
+		yk_mt_shortcode_meal_tracker_localise();
+
 		// This is used to create an empty entry if one doesn't already exist for this user / day
 		yk_mt_entry_get_id_or_create();
 
@@ -25,10 +29,11 @@
 
 		$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
-		$html .= '</div>';
 
 		// Embed hidden form / dialog required for adding a meal
 		$html .= yk_mt_shortcode_meal_tracker_add_meal_dialog();
+
+		$html .= '</div>';
 
 		return $html;
 	}
@@ -62,8 +67,6 @@
 		$meal_types = yk_mt_db_meal_types_all();
 
 		if ( false === empty( $meal_types ) ) {
-
-			yk_mt_shortcode_meal_tracker_localise();
 
 			$html = yk_mt_html_accordion_open( 'yk-mt-meal-types' );
 
@@ -138,19 +141,20 @@
 	 */
 	function yk_mt_shortcode_meal_tracker_add_meal_dialog() {
 
-		yk_mt_shortcode_meal_tracker_enqueue_scripts();
-
-	    $top = apply_filters( 'yk_mt_shortcode_dialog_top', 30 );
+		$top = apply_filters( 'yk_mt_shortcode_dialog_top', 30 );
 
         $html = sprintf( '<div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-type="0" >
-                            <div id="btn-close-modal" class="close-yk-mt-add-meal-dialog">
-                                %2$s
-                            </div>
-                			<div class="modal-content">
-				                <h3>%3$s</h3>',
+                             <div class="yk-mt-modal-header">
+                                <h3>%3$s</h3>
+                                <button id="btn-close-modal" class="close-yk-mt-add-meal-dialog yk-mt-button-silent">
+                                    %2$s
+                                </button>
+                             </div>   
+                			 <div class="yk-mt-modal-content">
+				                ',
 				            $top,
-                            __( 'CLOSE MODAL', YK_MT_SLUG ),
-                            __( 'Search for a meal', YK_MT_SLUG )
+                            __( 'Close', YK_MT_SLUG ),
+                            __( 'Log a meal', YK_MT_SLUG )
         );
 
         // Build HTML for "Add Meal" tab
@@ -159,19 +163,55 @@
         // Do we have any existing meals for this user?
         if ( false === empty( $add_form ) ) {
 
-            $html .= '<input type="number" id="yk-mt-quantity" value="1" min="1" max="50" step="1" />';
+            $html .= sprintf('  <h5>%1$s</h5>', __( 'Quick Search', YK_MT_SLUG ) );
 
-            $html .= sprintf( '<button class="yk-mt-meal-button-add btn button">%s</button>', __( 'Add', YK_MT_SLUG ) );
+	        $html .= $add_form;
 
-            $html .= sprintf( '<button class="yk-mt-meal-button-add btn button close-yk-mt-add-meal-dialog">%s</button>', __( 'Add & Close', YK_MT_SLUG ) );
-
-            $html .= $add_form;
+	        $html .= sprintf('  <div class="yk-mt-quantity-row">
+		                            <label for="%1$s">%2$s:</label>
+		                            <input type="number" id="%1$s" value="1" min="1" max="50" step="1" required />
+		                            <button class="yk-mt-meal-button-add yk-mt-button-silent">%3$s</button>
+		                            <button class="yk-mt-meal-button-add yk-mt-button-secondary close-yk-mt-add-meal-dialog">%4$s</button>
+		                        </div>',
+		                        'yk-mt-quantity',
+			                    __( 'Quantity', YK_MT_SLUG ),
+		                        __( 'Add', YK_MT_SLUG ),
+		                        __( 'Add & Close', YK_MT_SLUG )
+	        );
         }
 
-        $html .= '<h4>Add new meal</h4>';
-
+        $html .= yk_mt_shortcode_meal_tracker_add_new_meal_form();
 
         $html .= '</div></div>';
+
+		return $html;
+	}
+
+	/**
+	 * Render Add new meal form
+	 * @return string
+	 */
+	function yk_mt_shortcode_meal_tracker_add_new_meal_form() {
+
+		$html = sprintf( '  <div class="yk-mt-add-new-meal-form">
+                                        <form id="yk-mt-add-new-meal-to-entry">
+								<h5>%s</h5>', __( 'Add new meal', YK_MT_SLUG ) );
+
+		$html .= yk_mt_form_text( __( 'Name', YK_MT_SLUG ),	'add-meal-name' );
+
+		$html .= yk_mt_form_text( __( 'Description', YK_MT_SLUG ), 'add-meal-description', '', 200 );
+
+		$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories' );
+
+		$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity' );
+
+		$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', '', yk_mt_units() );
+
+		$html .= sprintf( ' <button class="yk-mt-button-add-new-meal yk-mt-button-secondary">%1$s</button>',
+			__( 'Add a new meal', YK_MT_SLUG )
+		);
+
+		$html .= '</form></div>';
 
 		return $html;
 	}
@@ -194,8 +234,10 @@
 
         $html = sprintf(   '<select id="%1$s" name="%1$s" class="yk-mt-select-meal" placeholder="%2$s...">',
 	                        esc_attr( $select_name ),
-		                    __( 'Find a meal', YK_MT_SLUG )
+		                    __( 'Search for a meal', YK_MT_SLUG )
 	    );
+
+		$html .= sprintf( '<option value="">%1$s...</option>', __( 'Search for a meal', YK_MT_SLUG ) ) ;
 
 		foreach ( $meals as $meal ) {
 			$html .= sprintf( '<option value="%1$s">%2$s ( %3$s %4$s / %5$sg )</option>',
@@ -285,6 +327,8 @@
 			return;
 		}
 
+		yk_mt_enqueue_front_end_dependencies();
+
 		wp_enqueue_script( 'meal-tracker-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
 		wp_enqueue_style( 'meal-tracker-normalize', plugins_url( 'assets/css/normalize.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 		wp_enqueue_style( 'meal-tracker-animate', plugins_url( 'assets/css/animate.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
@@ -297,6 +341,9 @@
         wp_enqueue_script( 'loading-overlay', plugins_url( 'assets/js/loadingoverlay.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
 
+        // jQuery validator TODO:
+        // ( 'validator', 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+
     	$yk_mt_shortcode_meal_tracker_modal_enqueued = true;
 	}
 
@@ -306,8 +353,9 @@
 	function yk_mt_shortcode_meal_tracker_localise() {
 
 		$dialog_options = [
-			'color' => '#FFFFFF',
-			'top' => '30px',
+			'color'         => '#FFFFFF',
+			'zIndexIn'      => '999999',
+			'opacityIn'     => '1'
 		];
 
 		$dialog_options = apply_filters( 'yk_mt_shortcode_meal_tracker_dialog_options', $dialog_options );

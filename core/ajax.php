@@ -20,7 +20,7 @@ function yk_mt_ajax_add_meal_to_entry() {
     $post_data[ 'entry-id' ]    = ( true === empty( $post_data[ 'entry-id' ] ) ) ? yk_mt_entry_get_id_or_create( (int) $post_data[ 'user-id' ]  ) : (int) $post_data[ 'entry-id' ];
 
 	// Validate we have all the expected fields
-    yk_mt_ajax_validate_post_data( [ 'user-id', 'entry-id', 'meal-id', 'meal-type', 'quantity' ] );
+    yk_mt_ajax_validate_post_data( $post_data, [ 'user-id', 'entry-id', 'meal-id', 'meal-type', 'quantity' ] );
 
 	$quantity = (int) $post_data[ 'quantity' ];
 
@@ -53,7 +53,7 @@ function yk_mt_ajax_delete_meal_to_entry() {
     $post_data[ 'entry-id' ]       = ( true === empty( $post_data[ 'entry-id' ] ) ) ? yk_mt_entry_get_id_or_create() : (int) $post_data[ 'entry-id' ];
 
     // Validate we have all the expected fields
-    yk_mt_ajax_validate_post_data( [ 'meal-entry-id', 'entry-id' ] );
+    yk_mt_ajax_validate_post_data( $post_data, [ 'meal-entry-id', 'entry-id' ] );
 
     if ( true !== yk_mt_entry_meal_delete( $post_data[ 'meal-entry-id' ] ) ) {
         return wp_send_json( [ 'error' => 'updating-db' ] );
@@ -62,6 +62,30 @@ function yk_mt_ajax_delete_meal_to_entry() {
     wp_send_json( [ 'error' => false, 'entry' => yk_mt_entry( $post_data[ 'entry-id' ] ) ] );
 }
 add_action( 'wp_ajax_delete_meal_to_entry', 'yk_mt_ajax_delete_meal_to_entry' );
+
+function yk_mt_ajax_add_meal() {
+
+    check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+    $post_data = $_POST;
+
+    unset( $post_data[ 'security' ] );
+    unset( $post_data[ 'action' ] );
+
+    $post_data[ 'added_by' ] = get_current_user_id();
+
+    // Validate we have all the expected fields
+    yk_mt_ajax_validate_post_data( $post_data, [ 'name', 'description', 'calories', 'quantity', 'unit' ] );
+
+    $meal_id = yk_mt_db_meal_add( $post_data );
+
+    if ( false === $meal_id ) {
+        return wp_send_json( [ 'error' => 'updating-db' ] );
+    }
+
+    wp_send_json( [ 'error' => false, 'id' => $meal_id ] );
+}
+add_action( 'wp_ajax_add_meal', 'yk_mt_ajax_add_meal' );
 
 /**
  * For the given array of keys, ensure they are found within $post_data

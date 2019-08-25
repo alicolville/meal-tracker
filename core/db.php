@@ -603,7 +603,8 @@
 			'date' => '%s',
 			'value' => '%s',
 			'deleted' => '%d',
-			'favourite' => '%d'
+			'favourite' => '%d',
+            'unit' => '%s'
 		];
 
 		$return = [];
@@ -640,10 +641,11 @@
 					name varchar(60) NOT NULL, 
 					calories float DEFAULT 0 NOT NULL,
 					quantity float DEFAULT 0 NOT NULL,
-					description varchar(40) NOT NULL,
+					unit varchar(10) DEFAULT 'g' NOT NULL, 
+					description varchar(200) NOT NULL,
 					deleted bit DEFAULT 0,
 					favourite bit DEFAULT 0,
-				  UNIQUE KEY id (id)
+				 UNIQUE KEY id (id)
 				) $charset_collate;";
 
 		dbDelta( $sql );

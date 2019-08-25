@@ -302,3 +302,117 @@
             'no-data'               => __( 'No data has been entered', YK_MT_SLUG )
         ];
     }
+
+	/**
+	 * Return an array of units
+	 * @return array
+	 */
+    function yk_mt_units() {
+    	$units = [
+    	    'g'         => 	'g' ,
+		    'ml'        => 'ml',
+		    'small'     => __( 'Small', YK_MT_SLUG ),
+	        'medium'    => __( 'Medium', YK_MT_SLUG ),
+	        'large'     => __( 'Large', YK_MT_SLUG )
+	    ];
+
+    	$units = apply_filters( 'yk_mt_units', $units );
+
+    	return $units;
+    }
+
+/**
+ * @param $title
+ * @param $name
+ * @param int $max_length
+ *
+ * @return string
+ */
+function yk_mt_form_text( $title, $name, $value ='', $max_length = 60, $required = true ) {
+
+    $name = 'yk-mt-' . $name;
+
+    return sprintf(
+		'   <label for="%1$s">%2$s</label>
+				<input type="text" name="%1$s" id="%1$s" maxlength="%3$d" value="%4$s" %5$s />',
+		$name,
+		$title,
+		(int) $max_length,
+		esc_attr( $value ),
+        ( true === $required ) ? ' required' : ''
+	);
+}
+
+/**
+ * @param $title
+ * @param $name
+ * @param string $value
+ * @param array $options
+ *
+ * @return string
+ */
+function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $placeholder = '' ) {
+
+    $name = 'yk-mt-' . $name;
+
+	$html = sprintf( '<label for="%1$s">%2$s</label>
+							<select name="%1$s" id="%1$s" class="" %s>', $name, $title, $placeholder );
+
+	if ( false === empty( $placeholder ) ) {
+        $html .= '<option>' . $placeholder . '</option>';
+    }
+
+	foreach ( $options as $key => $value ) {
+		$html .= sprintf( '<option value="%1$s" %3$s>%2$s</option>', esc_attr( $key ), esc_attr( $value ), selected( $previous_value, $value, false ) );
+	}
+
+	$html .= '</select>';
+
+	return $html;
+}
+
+/**
+ * @param $title
+ * @param $name
+ * @param string $value
+ * @param int $step
+ * @param int $min
+ * @param int $max
+ * @param bool $show_label
+ *
+ * @return string
+ */
+function yk_mt_form_number( $title, $name, $value = '', $step = 1, $min = 1, $max = 99999, $show_label = true, $required = true ) {
+
+    $name = 'yk-mt-' . $name;
+
+	$html = '';
+
+	if ( true === $show_label ) {
+		$html .= sprintf( '<label for="%1$s">%2$s</label>', $name, $title );
+	}
+
+	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s />',
+		$name,
+		(int) $min,
+		(int) $max,
+		(int) $step,
+		$value,
+        ( true === $required ) ? ' required' : ''
+	);
+
+	return $html;
+}
+
+/**
+ * Enqueue front end JS / CSS
+ */
+function yk_mt_enqueue_front_end_dependencies() {
+
+	$minified = yk_mt_use_minified();
+
+	wp_enqueue_script( 'meal-tracker', plugins_url( 'assets/js/core' . $minified . '.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+	wp_enqueue_style( 'meal-tracker', plugins_url( 'assets/css/frontend' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+
+	wp_localize_script( 'meal-tracker', 'yk_mt', yk_mt_ajax_config() );
+}
