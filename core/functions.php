@@ -279,7 +279,6 @@
             return false;
         }
 
-        // TODO: Condense this object. Half the fields do not need to be returned via JSON / AJAX
         return yk_mt_db_entry_get( $entry_id );
     }
 

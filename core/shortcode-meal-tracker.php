@@ -229,34 +229,11 @@
      */
 	function yk_mt_shortcode_meal_tracker_add_meal_select( $select_name, $user_id = NULL ) {
 
-//TODO
-//$meals = yk_mt_db_meal_for_user( $user_id );
-//
-//		if ( true === empty( $meals ) ) {
-//		    return '';
-//        }
-
-        $html = sprintf(   '<select id="%1$s" name="%1$s" class="yk-mt-select-meal" placeholder="%2$s..." required>',
+        return sprintf(   '<select id="%1$s" name="%1$s" class="yk-mt-select-meal" placeholder="%2$s..." required></select>',
 	                        esc_attr( $select_name ),
 		                    __( 'Search for an exiting meal', YK_MT_SLUG )
 	    );
 
-		$html .= sprintf( '<option value="">%1$s...</option>', __( 'Search for a meal', YK_MT_SLUG ) ) ;
-
-		//TODO
-//		foreach ( $meals as $meal ) {
-//			$html .= sprintf( '<option value="%1$s">%2$s ( %3$s %4$s / %5$sg )</option>',
-//                                esc_attr( $meal['id'] ),
-//                                esc_html( $meal['name'] ),
-//				                esc_html( $meal['calories'] ),
-//				                __( 'kcal', YK_MT_SLUG ),
-//				                esc_html( $meal['quantity'] )
-//			);
-//        }
-
-		$html .= '</select>';
-
-	    return $html;
     }
 
 	/**
@@ -303,7 +280,7 @@
 			esc_attr( $accordion_section_class ),
 			( true === $options['is-active'] ) ? ' initial-active' : '',
 			esc_html( $options['title'] ),
-			$options['content'] // TODO: Add some sort of sanitiser
+			$options['content']
 		);
 
 		return $html;
@@ -347,10 +324,7 @@
         wp_enqueue_script( 'chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'notify', plugins_url( 'assets/js/notify.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
 
-        // jQuery validator TODO:
-        // ( 'validator', 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
-
-    	$yk_mt_shortcode_meal_tracker_modal_enqueued = true;
+        $yk_mt_shortcode_meal_tracker_modal_enqueued = true;
 	}
 
 	/**
