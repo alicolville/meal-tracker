@@ -424,7 +424,7 @@ jQuery( document ).ready( function( $ ) {
             // Get HTML for all meal rows
             html_meals = meals.map( MealRow ).join('');
 
-            total = [ { total: total, unit: yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ] } ]; //todo: localise kcal
+            total = [ { total: total, unit: yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ] } ]; 
 
             // Get HTML for total row
             html_total = total.map( SummaryRow ).join('');
