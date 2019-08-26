@@ -197,7 +197,7 @@
 	function yk_mt_shortcode_meal_tracker_add_new_meal_form() {
 
 		$html = sprintf( '  <div class="yk-mt-add-new-meal-form">
-                                        <form id="yk-mt-add-new-meal-to-entry">
+                                        <form id="yk-mt-form-add-new-meal">
 								<h5>%s</h5>', __( 'Add new meal', YK_MT_SLUG ) );
 
 		$html .= yk_mt_form_text( __( 'Name', YK_MT_SLUG ),	'add-meal-name' );

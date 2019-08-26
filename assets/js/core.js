@@ -301,19 +301,17 @@ jQuery( document ).ready( function( $ ) {
      * Add new meal
      * ---------------------------------------------------------------------------------------
      */
-//TODO: Check ID is right? Should have no mention of ID
-    $( '#yk-mt-add-new-meal-to-entry' ).submit(function( event ) {
+
+    $( '#yk-mt-form-add-new-meal' ).submit(function( event ) {
 
         event.preventDefault();
 
         yk_mt_post_api_add_meal(
-
                 $( '#yk-mt-add-meal-name' ).val(),
                 $( '#yk-mt-add-meal-description' ).val(),
                 $( '#yk-mt-add-meal-calories' ).val(),
                 $( '#yk-mt-add-meal-quantity' ).val(),
                 $( '#yk-mt-add-meal-unit' ).val()
-
         );
     });
 
@@ -355,7 +353,7 @@ jQuery( document ).ready( function( $ ) {
 
             yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-entry-added-short' ], '#yk-mt-button-meal-add' );
 
-            $('#yk-mt-add-new-meal-to-entry').trigger("reset");
+            $('#yk-mt-form-add-new-meal').trigger("reset");
 
             $( 'body' ).trigger( 'meal-tracker-new-meal-added' );
 
