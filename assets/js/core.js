@@ -228,11 +228,7 @@ jQuery( document ).ready( function( $ ) {
         }
     }
 
-    function yk_mt_dialog_close() {
-
-    }
-
-    /**
+     /**
      * Delete meal from entry
      * @param meal_entry_id
      */
