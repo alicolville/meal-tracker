@@ -37,7 +37,7 @@
 	 * @return bool
 	 */
 	function yk_mt_entry_meal_add( $entry_id, $meal_id, $meal_type ) {
-//wp_send_json( [$entry_id, $meal_id, $meal_type]); //TODO
+
 		$entry = yk_mt_db_entry_get( $entry_id );
 
 		// Does entry exist?
@@ -148,18 +148,28 @@
 	/**
 	 * Get the allowed calories for the given user
 	 *
-	 * @param null $id
+	 * @param null $user_id
 	 *
 	 * @return int
 	 */
-	function yk_mt_user_calories_target( $id = NULL ) {
+	function yk_mt_user_calories_target( $user_id = NULL ) {
 
-		$id = ( NULL === $id ) ? get_current_user_id() : $id;
+		$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
-		// TODO: Look this up? Hook this into WLT
+		// TODO: We need to store this locally unless there is an override by another system
 		$allowed_calories = 2000;
 
-		$allowed_calories = apply_filters( 'yk_mt_user_allowed_calories', $allowed_calories );
+		// Take Calories from WLT?
+        if ( true === function_exists( 'ws_ls_harris_benedict_calculate_calories' ) ) {
+            $yeken_wt = ws_ls_harris_benedict_calculate_calories();
+
+            // TODO: We need to have an option to select whether to use / lose / gain / maintain
+            if ( true === isset( $yeken_wt[ 'lose' ][ 'total' ] ) ) {
+                $allowed_calories = $yeken_wt[ 'lose' ][ 'total' ];
+            }
+        }
+
+		$allowed_calories = apply_filters( 'yk_mt_user_allowed_calories', $allowed_calories, $user_id );
 
 		return (int) $allowed_calories;
 	}
