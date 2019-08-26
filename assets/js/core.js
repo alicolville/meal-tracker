@@ -283,14 +283,6 @@ jQuery( document ).ready( function( $ ) {
     }
 
     /**
-     * Data has been refreshed, reload as needed!
-     */
-    // $( 'body' ).on( 'meal-tracker-refresh', function( event ) {
-    //     // TODO:
-    //     // yk_mt_refresh_entry();
-    // });
-
-    /**
      * There was an error saving the data
      */
     $( 'body' ).on( 'meal-tracker-save-error', function( event ) {
