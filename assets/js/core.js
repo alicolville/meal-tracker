@@ -4,7 +4,7 @@ var yk_mt_chart_config          = false;
 var yk_mt_ctx                   = false;
 var yk_mt_chart                 = false;
 var yk_mt_meal_tracker_found    = ( 'undefined' !== typeof( yk_mt_sc_meal_tracker ) );
-var meal_tracker_dialog         = false; //TODO: prefix
+var yk_meal_tracker_dialog      = false;
 var yk_mt_meal_selector         = false;
 
 jQuery( document ).ready( function( $ ) {
@@ -73,7 +73,7 @@ jQuery( document ).ready( function( $ ) {
     dialog_options.afterClose = function() { yk_mt_dialog_close() };
     dialog_options.beforeOpen = function() { yk_mk_selectize_init() };
 
-    meal_tracker_dialog = $(".yk-mt-add-meal-prompt").animatedModal( dialog_options );
+    yk_meal_tracker_dialog = $(".yk-mt-add-meal-prompt").animatedModal( dialog_options );
 
     /**
      * Tidy up after dialog closed
