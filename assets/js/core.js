@@ -424,7 +424,7 @@ jQuery( document ).ready( function( $ ) {
             // Get HTML for all meal rows
             html_meals = meals.map( MealRow ).join('');
 
-            total = [ { total: total, unit: yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ] } ]; 
+            total = [ { total: total, unit: yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ] } ];
 
             // Get HTML for total row
             html_total = total.map( SummaryRow ).join('');
@@ -460,32 +460,12 @@ jQuery( document ).ready( function( $ ) {
 
         yk_mt_chart_render();
 
-        //todo
-      //  yk_mt_animate_text( '.yk-mt-remaining-calories', entry[ 'calories_remaining' ] );
-      //  yk_mt_animate_text( '.yk-mt-used-calories', entry[ 'calories_used' ] );
-
         yk_mt_loading_stop();
     }
 
     // Are we on a shortcode page and have initial data to load?
     if ( yk_mt_sc_meal_tracker [ 'load-entry' ] ) {
         yk_mt_render_entry( yk_mt_sc_meal_tracker [ 'todays-entry' ] );
-    }
-
-    /** todo:
-     * Animate changing of text
-     * @param field
-     * @param new_value
-     */
-    function yk_mt_animate_text( field, new_value ) {
-
-        $( field ).animate({
-            opacity: 0
-        }, 250, function() {
-            $( field ).text( new_value ).animate({
-                opacity: 1
-            }, 250);
-        });
     }
 
     /**
