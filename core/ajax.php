@@ -111,8 +111,6 @@ function yk_mt_ajax_meals() {
 	// Compress meal objects to reduce data returned via AJAX
 	$meals = array_map('yk_mt_ajax_prep_meal', $meals);
 
-	// TODO: Cache formatted
-
 	wp_send_json( $meals );
 }
 add_action( 'wp_ajax_meals', 'yk_mt_ajax_meals' );
