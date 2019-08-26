@@ -9,3 +9,5 @@ TODO:
 - replace "Remove" with foo icon
 - add a notificion when meal added ok
 - add validation to add meal to entry (i.e. ensure they have selected a meal!)
+- hide chart if no data
+- only init selectize on dialog opening?

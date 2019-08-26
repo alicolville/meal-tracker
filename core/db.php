@@ -364,6 +364,7 @@
 		$id = $wpdb->insert_id;
 
 		do_action( 'yk_mt_meal_added', $id, $meal );
+        do_action( 'yk_mt_meals_deleted', $meal[ 'added_by' ] );
 
 		return $id;
 	}
@@ -384,6 +385,8 @@
 
 		$id = $meal[ 'id' ];
 
+        $meal_before = yk_mt_db_meal_get(  $id );
+
 		unset( $meal[ 'id' ] );
 
 		global $wpdb;
@@ -397,6 +400,7 @@
 		}
 
 		do_action( 'yk_mt_meal_updated', $id, $meal );
+        do_action( 'yk_mt_meals_deleted', $meal_before[ 'added_by' ] );
 
 		return true;
 	}
@@ -413,6 +417,8 @@
 
 		do_action( 'yk_mt_meal_deleting', $id );
 
+		$meal_before_delete = yk_mt_db_meal_get(  $id );
+
 		$result = $wpdb->delete( $wpdb->prefix . YK_WT_DB_MEALS, [ 'id' => $id ], [ '%d' ] );
 
 		if ( 1 !== $result ) {
@@ -420,6 +426,7 @@
 		}
 
 		do_action( 'yk_mt_meal_deleted', $id );
+        do_action( 'yk_mt_meals_deleted', $meal_before_delete[ 'added_by' ] );
 
 		return true;
 	}
@@ -457,7 +464,7 @@
 	 * @return array|null
 	 */
 	function yk_mt_db_meal_for_user( $user_id = NULL, $options  = []  ) {
-// TODO: Cache?
+
 		$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
 		$options = wp_parse_args( $options, [
@@ -465,6 +472,12 @@
 			'sort' => 'name',
 			'sort-order' => 'asc'
 		]);
+
+		$cache_key = md5( json_encode( $options ) );
+
+        if ( $cache = apply_filters( 'yk_mt_db_meals', $user_id, $cache_key ) ) {
+             return $cache;
+        }
 
 		global $wpdb;
 
@@ -484,6 +497,8 @@
 		$meals = $wpdb->get_results( $sql, ARRAY_A );
 
 		$meals = ( false === empty( $meals ) ) ? $meals : false;
+
+        do_action( 'yk_mt_meals_lookup', $user_id, $cache_key, $meals );
 
 		return $meals;
 	}

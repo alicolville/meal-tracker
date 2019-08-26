@@ -151,6 +151,7 @@
                                 </button>
                              </div>   
                 			 <div class="yk-mt-modal-content">
+                			    <form id="yk-mt-form-add-meal-to-entry">
 				                ',
 				            $top,
                             __( 'Close', YK_MT_SLUG ),
@@ -170,8 +171,8 @@
 	        $html .= sprintf('  <div class="yk-mt-quantity-row">
 		                            <label for="%1$s">%2$s:</label>
 		                            <input type="number" id="%1$s" value="1" min="1" max="50" step="1" required />
-		                            <button class="yk-mt-meal-button-add yk-mt-button-silent">%3$s</button>
-		                            <button class="yk-mt-meal-button-add yk-mt-button-secondary close-yk-mt-add-meal-dialog">%4$s</button>
+		                            <button id="yk-mt-button-add-meal" class="yk-mt-meal-button-add yk-mt-button-silent">%3$s</button>
+		                            <button id="yk-mt-button-add-and-close-meal" class="yk-mt-meal-button-add yk-mt-button-secondary close-yk-mt-add-meal-dialog">%4$s</button>
 		                        </div>',
 		                        'yk-mt-quantity',
 			                    __( 'Quantity', YK_MT_SLUG ),
@@ -179,6 +180,8 @@
 		                        __( 'Add & Close', YK_MT_SLUG )
 	        );
         }
+
+        $html .= '</form>';
 
         $html .= yk_mt_shortcode_meal_tracker_add_new_meal_form();
 
@@ -207,7 +210,7 @@
 
 		$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', '', yk_mt_units() );
 
-		$html .= sprintf( ' <button class="yk-mt-button-add-new-meal yk-mt-button-secondary">%1$s</button>',
+		$html .= sprintf( ' <button id="yk-mt-button-meal-add" class="yk-mt-button-add-new-meal yk-mt-button-secondary">%1$s</button>',
 			__( 'Add a new meal', YK_MT_SLUG )
 		);
 
@@ -226,28 +229,30 @@
      */
 	function yk_mt_shortcode_meal_tracker_add_meal_select( $select_name, $user_id = NULL ) {
 
-		$meals = yk_mt_db_meal_for_user( $user_id );
+//TODO
+//$meals = yk_mt_db_meal_for_user( $user_id );
+//
+//		if ( true === empty( $meals ) ) {
+//		    return '';
+//        }
 
-		if ( true === empty( $meals ) ) {
-		    return '';
-        }
-
-        $html = sprintf(   '<select id="%1$s" name="%1$s" class="yk-mt-select-meal" placeholder="%2$s...">',
+        $html = sprintf(   '<select id="%1$s" name="%1$s" class="yk-mt-select-meal" placeholder="%2$s..." required>',
 	                        esc_attr( $select_name ),
-		                    __( 'Search for a meal', YK_MT_SLUG )
+		                    __( 'Search for an exiting meal', YK_MT_SLUG )
 	    );
 
 		$html .= sprintf( '<option value="">%1$s...</option>', __( 'Search for a meal', YK_MT_SLUG ) ) ;
 
-		foreach ( $meals as $meal ) {
-			$html .= sprintf( '<option value="%1$s">%2$s ( %3$s %4$s / %5$sg )</option>',
-                                esc_attr( $meal['id'] ),
-                                esc_html( $meal['name'] ),
-				                esc_html( $meal['calories'] ),
-				                __( 'kcal', YK_MT_SLUG ),
-				                esc_html( $meal['quantity'] )
-			);
-        }
+		//TODO
+//		foreach ( $meals as $meal ) {
+//			$html .= sprintf( '<option value="%1$s">%2$s ( %3$s %4$s / %5$sg )</option>',
+//                                esc_attr( $meal['id'] ),
+//                                esc_html( $meal['name'] ),
+//				                esc_html( $meal['calories'] ),
+//				                __( 'kcal', YK_MT_SLUG ),
+//				                esc_html( $meal['quantity'] )
+//			);
+//        }
 
 		$html .= '</select>';
 

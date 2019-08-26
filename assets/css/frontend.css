@@ -84,7 +84,7 @@
     margin-bottom: 10px;
 }
 
-.yk-mt-modal-content  .yk-mt-quantity-row {
+.yk-mt-modal-content .yk-mt-quantity-row {
     height: 30px;
     margin-bottom: 12px;
     margin-top: 12px;
@@ -93,21 +93,15 @@
     width: 30px;
     text-align: center;
 }
-.yk-mt-modal-content  .yk-mt-quantity-row button {
-    padding: 2px 6px
-}
-
 .yk-mt-modal-header, .yk-mt-modal-content {
-    padding: 10px;
+    padding: 10px 20px 10px 20px;
     margin: auto;
 }
-
 @media only screen and (min-width: 800px) {
     .yk-mt-modal-header, .yk-mt-modal-content {
         width: 60%;
     }
 }
-
 @media only screen and (min-width: 1200px) {
     .yk-mt-modal-header, .yk-mt-modal-content {
         width: 40%;
@@ -131,11 +125,16 @@
 /**
     Add a new meal form
  */
-.yk-mt-add-new-meal-form * {
-    width: 100%;margin-bottom: 5px;
+.yk-mt-add-new-meal-form {
+    margin-top: 20px;
 }
-.yk-mt-add-new-meal-form select, .yk-mt-add-new-meal-form input {
-    margin-bottom: 5px;
+
+.yk-mt-add-new-meal-form label,
+    .yk-mt-add-new-meal-form input,
+        .yk-mt-add-new-meal-form select {
+    display: block;
+    width: 95%;
+    margin-bottom: 10px;
 }
 
 /**
@@ -196,15 +195,17 @@
     background: rgb(220,220,220)
 }
 
-
-
+/**
+   Generic styling for forms
+ */
 
 .yk-mt-shortcode-meal-tracker input[type="text"],
 .yk-mt-shortcode-meal-tracker input[type="email"],
 .yk-mt-shortcode-meal-tracker input[type="password"],
 .yk-mt-shortcode-meal-tracker input[type="search"],
 .yk-mt-shortcode-meal-tracker input[type="url"],
-.yk-mt-shortcode-meal-tracker input[type="number"]
+.yk-mt-shortcode-meal-tracker input[type="number"],
+.yk-mt-shortcode-meal-tracker select
 {
     border: 1px solid #eee;
     font-size: 14px;

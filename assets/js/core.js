@@ -4,6 +4,8 @@ var yk_mt_chart_config          = false;
 var yk_mt_ctx                   = false;
 var yk_mt_chart                 = false;
 var yk_mt_meal_tracker_found    = ( 'undefined' !== typeof( yk_mt_sc_meal_tracker ) );
+var meal_tracker_dialog         = false; //TODO: prefix
+var yk_mt_meal_selector         = false;
 
 jQuery( document ).ready( function( $ ) {
 
@@ -69,8 +71,9 @@ jQuery( document ).ready( function( $ ) {
      */
     var dialog_options = JSON.parse( yk_mt_sc_meal_tracker[ 'dialog-options' ] );
     dialog_options.afterClose = function() { yk_mt_dialog_close() };
+    dialog_options.beforeOpen = function() { yk_mk_selectize_init() };
 
-    // var meal_tracker_dialog = $(".yk-mt-add-meal-prompt").animatedModal( dialog_options );
+    meal_tracker_dialog = $(".yk-mt-add-meal-prompt").animatedModal( dialog_options );
 
     /**
      * Tidy up after dialog closed
@@ -89,17 +92,66 @@ jQuery( document ).ready( function( $ ) {
     // Init meal type data attribute
     yk_mt_dialog_meal_type_reset();
 
+
+    /**
+     * ---------------------------------------------------------------------------------------
+     * Selectize
+     * ---------------------------------------------------------------------------------------
+     */
+
+    /**
+     * Add an option to list of meals
+     * @param option
+     */
+    function yk_mk_selectize_add_option( option ) {
+
+        if ( false !== yk_mt_meal_selector && option ) {
+
+            var selectize = yk_mt_meal_selector[0].selectize;
+
+            selectize.addOption( option );
+            selectize.addItem( option[ 'id' ] );
+        }
+    }
+
+    /*
+        Initialise the Meal picker
+     */
+    function yk_mk_selectize_init() {
+
+        yk_mt_meal_selector = $( '#yk-mt-meal-id').selectize({
+            preload: true,
+            valueField: 'id',
+            labelField: 'name',
+            searchField: 'id',
+            load: function(query, callback) {
+                $.ajax({
+                    url: yk_mt[ 'ajax-url' ],
+                    type: 'POST',
+                    data: { action: 'meals', security: yk_mt[ 'ajax-security-nonce' ] },
+                    error: function() {
+                        callback();
+                    },
+                    success: function(res) {
+                        callback( res );
+                    }
+                });
+            }
+        });
+    }
+
     /**
      * ---------------------------------------------------------------------------------------
      * Add a meal form
      * ---------------------------------------------------------------------------------------
      */
-     $('.yk-mt-select-meal, .yk-mt-select').selectize();
 
     /**
      * Add meal today's entry
      */
     $( '.yk-mt-meal-button-add' ).click( function( e ) {
+
+        e.preventDefault();
 
         /**
          * Add meal to today's entry
@@ -158,14 +210,26 @@ jQuery( document ).ready( function( $ ) {
      */
     function yk_mt_post_api_add_meal_to_entry_callback( data, response ) {
         if ( false === response[ 'error' ] ) {
+
             yk_mt_render_entry( response[ 'entry' ] );
+
+            $('#yk-mt-form-add-meal-to-entry').trigger("reset");
 
             yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-entry-added-success' ] );
 
+            yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-entry-added-short' ], '#yk-mt-button-add-meal' );
+
             $( 'body' ).trigger( 'meal-tracker-meal-added' );
         } else {
+
+            $('#btn-close-modal').click();
+
             $( 'body' ).trigger( 'meal-tracker-save-error' );
         }
+    }
+
+    function yk_mt_dialog_close() {
+
     }
 
     /**
@@ -187,9 +251,13 @@ jQuery( document ).ready( function( $ ) {
      * @param response
      */
     function yk_mt_post_api_delete_meal_to_entry_callback( data, response ) {
+
         if ( false === response[ 'error' ] ) {
+
             yk_mt_render_entry( response[ 'entry' ] );
-//TODO: Add notidication
+
+            yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-entry-deleted-success' ] );
+
             $( 'body' ).trigger( 'meal-tracker-meal-deleted' );
         } else {
             $( 'body' ).trigger( 'meal-tracker-save-error' );
@@ -221,10 +289,10 @@ jQuery( document ).ready( function( $ ) {
     /**
      * Data has been refreshed, reload as needed!
      */
-    $( 'body' ).on( 'meal-tracker-refresh', function( event ) {
-        // TODO:
-        // yk_mt_refresh_entry();
-    });
+    // $( 'body' ).on( 'meal-tracker-refresh', function( event ) {
+    //     // TODO:
+    //     // yk_mt_refresh_entry();
+    // });
 
     /**
      * There was an error saving the data
@@ -245,8 +313,7 @@ jQuery( document ).ready( function( $ ) {
      * Add new meal
      * ---------------------------------------------------------------------------------------
      */
-
-
+//TODO: Check ID is right? Should have no mention of ID
     $( '#yk-mt-add-new-meal-to-entry' ).submit(function( event ) {
 
         event.preventDefault();
@@ -283,20 +350,27 @@ jQuery( document ).ready( function( $ ) {
         yk_mt_post( 'add_meal', data,  yk_mt_post_api_add_meal_callback);
     }
 
+    function yk_mt_selectize_init() {
+
+    }
+
     /**
      * Handle the call back to adding a meal
      * @param data
      * @param response
      */
     function yk_mt_post_api_add_meal_callback( data, response ) {
+
         if ( false === response[ 'error' ] ) {
 
-            // TODO: Take the meal ID, add show notification that it as added
-            yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-added-success' ] );
+            yk_mk_selectize_add_option( response[ 'new-meal' ] );
+
+            yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-entry-added-short' ], '#yk-mt-button-meal-add' );
 
             $('#yk-mt-add-new-meal-to-entry').trigger("reset");
 
             $( 'body' ).trigger( 'meal-tracker-new-meal-added' );
+
         } else {
             $( 'body' ).trigger( 'meal-tracker-save-error' );
         }

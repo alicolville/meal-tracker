@@ -67,6 +67,11 @@ function yk_mt_ajax_delete_meal_to_entry() {
 }
 add_action( 'wp_ajax_delete_meal_to_entry', 'yk_mt_ajax_delete_meal_to_entry' );
 
+/**
+ * Add a new meal
+ *
+ * @return mixed
+ */
 function yk_mt_ajax_add_meal() {
 
     check_ajax_referer( 'yk-mt-nonce', 'security' );
@@ -86,9 +91,53 @@ function yk_mt_ajax_add_meal() {
         return wp_send_json( [ 'error' => 'updating-db' ] );
     }
 
-    wp_send_json( [ 'error' => false, 'id' => $meal_id ] );
+	$post_data['id'] = $meal_id;
+
+    wp_send_json( [ 'error' => false, 'new-meal' => $post_data ] );
 }
 add_action( 'wp_ajax_add_meal', 'yk_mt_ajax_add_meal' );
+
+/**
+ * Fetch all meals for a given user
+ *
+ * TODO: expand to support search
+ */
+function yk_mt_ajax_meals() {
+
+	check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+	$meals = yk_mt_db_meal_for_user( get_current_user_id() );
+
+	// Compress meal objects to reduce data returned via AJAX
+	$meals = array_map('yk_mt_ajax_prep_meal', $meals);
+
+	// TODO: Cache formatted
+
+	wp_send_json( $meals );
+}
+add_action( 'wp_ajax_meals', 'yk_mt_ajax_meals' );
+
+/**
+ * Strip back a meal object ready for transmission via AJAX
+ * @param $meal
+ * @return mixed
+ */
+function yk_mt_ajax_prep_meal( $meal ) {
+
+    if ( true === is_array( $meal ) ) {
+        $meal[ 'name' ] = sprintf( '%1$s ( %2$d%3$s / %4$d%5$s )',
+                    $meal[ 'name' ],
+                    $meal[ 'quantity' ],
+                    $meal[ 'unit' ],
+                    $meal[ 'calories' ],
+                    __( 'kcal', YK_MT_SLUG )
+        );
+
+        $meal = yk_mt_array_strip_keys( $meal, [ 'added_by', 'calories', 'unit', 'quantity', 'description', 'deleted', 'favourite' ] );
+    }
+
+    return $meal;
+}
 
 /**
  * Tidy up post data
@@ -96,10 +145,7 @@ add_action( 'wp_ajax_add_meal', 'yk_mt_ajax_add_meal' );
  * @return mixed
  */
 function yk_mt_ajax_strip_incoming( $post_data ) {
-
-    unset( $post_data[ 'security' ] );
-    unset( $post_data[ 'action' ] );
-    return $post_data;
+	return yk_mt_array_strip_keys( $post_data, [ 'security', 'action' ] );
 }
 
 /**

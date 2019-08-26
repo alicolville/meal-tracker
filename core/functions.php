@@ -294,15 +294,19 @@
      */
     function yk_mt_localised_strings( ) {
         return [
-            'calorie-unit'              => __( 'kcal', YK_MT_SLUG ),
-            'remove-text'               => __( 'Remove', YK_MT_SLUG ),
-	        'chart-label-used'          => __( 'used', YK_MT_SLUG ),
-            'chart-label-remaining'     => __( 'remaining', YK_MT_SLUG ),
-            'chart-label-target'        => __( 'Target', YK_MT_SLUG ),
-            'no-data'                   => __( 'No data has been entered', YK_MT_SLUG ),
-            'meal-added-success'        => __( 'The meal has been added', YK_MT_SLUG ),
-            'meal-entry-added-success'  => __( 'The meal has been added', YK_MT_SLUG ),
-            'db-error'                  => __( 'There was error saving your changes', YK_MT_SLUG )
+	        'just-added'                    => __( 'Just Added:', YK_MT_SLUG ),
+            'calorie-unit'                  => __( 'kcal', YK_MT_SLUG ),
+            'remove-text'                   => __( 'Remove', YK_MT_SLUG ),
+	        'chart-label-used'              => __( 'used', YK_MT_SLUG ),
+            'chart-label-remaining'         => __( 'remaining', YK_MT_SLUG ),
+            'chart-label-target'            => __( 'Target', YK_MT_SLUG ),
+            'no-data'                       => __( 'No data has been entered', YK_MT_SLUG ),
+            'meal-added-success'            => __( 'The meal has been added', YK_MT_SLUG ),
+            'meal-added-success-short'      => __( 'Added', YK_MT_SLUG ),
+            'meal-entry-added-success'      => __( 'The meal has been added', YK_MT_SLUG ),
+            'meal-entry-added-short'        => __( 'Added', YK_MT_SLUG ),
+            'meal-entry-deleted-success'    => __( 'The meal has been removed', YK_MT_SLUG ),
+            'db-error'                      => __( 'There was error saving your changes', YK_MT_SLUG )
         ];
     }
 
@@ -418,4 +422,23 @@ function yk_mt_enqueue_front_end_dependencies() {
 	wp_enqueue_style( 'meal-tracker', plugins_url( 'assets/css/frontend' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
 	wp_localize_script( 'meal-tracker', 'yk_mt', yk_mt_ajax_config() );
+}
+
+/**
+ * Remove certain keys from array
+ * @param $array
+ * @param $keys
+ *
+ * @return mixed
+ */
+function yk_mt_array_strip_keys( $array, $keys ) {
+
+	if ( true === is_array( $array ) ) {
+
+		foreach ( $keys as $key ) {
+			unset( $array[ $key ] );
+		}
+	}
+
+	return $array;
 }

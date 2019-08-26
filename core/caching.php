@@ -181,6 +181,52 @@
 	// Listen for various hooks to maintain cache
 	// -------------------------------------------------------------
 
+    /**
+     * Update / Set cache for given Meal ID
+     *
+     * @param $user_id
+     * @param $options_key
+     * @param $meals
+     */
+    function yk_mt_cache_hook_meals_set( $user_id, $options_key, $meals ) {
+
+        $cache = yk_mt_cache_get( 'meals-' . $user_id );
+
+        if ( false === is_array( $cache ) ) {
+            $cache = [];
+        }
+
+        $cache[ $options_key ] = $meals;
+
+        yk_mt_cache_set( 'meals-' . $user_id, $cache );
+    }
+    add_action( 'yk_mt_meals_lookup', 'yk_mt_cache_hook_meals_set', 10, 3 );
+    // TODO: Delete when user deletes or adds a meal to
+
+    /**
+     * Get cache for of meals for given user / options
+     *
+     * @param $user_id
+     * @param $options_key
+     */
+    function yk_mt_cache_filter_meals_get( $user_id, $options_key ) {
+
+        $cache = yk_mt_cache_get( 'meals-' . $user_id );
+
+        return ( false === empty( $cache[ $options_key ] ) ) ? $cache[ $options_key ] : NULL;
+    }
+    add_filter( 'yk_mt_db_meals', 'yk_mt_cache_filter_meals_get', 10, 2 );
+
+    /**
+     * Clear cache for a given meals / certain user ID
+     *
+     * @param $id
+     */
+    function yk_mt_cache_hook_meals_delete( $user_id ) {
+        yk_mt_cache_delete( 'meals-' . $user_id );
+    }
+    add_action( 'yk_mt_meals_deleted', 'yk_mt_cache_hook_meals_delete' );
+
 	/**
 	 * Clear cache for a given meal
 	 *

@@ -38,7 +38,7 @@ define( 'YK_MT_SLUG', 'meal-tracker' );
 
 include_once YK_MT_ABSPATH . 'core/functions.php';
 include_once YK_MT_ABSPATH . 'core/license.php';
-// include_once YK_MT_ABSPATH . 'core/caching.php'; //TODO
+include_once YK_MT_ABSPATH . 'core/caching.php'; //TODO
 include_once YK_MT_ABSPATH . 'core/db.php';
 include_once YK_MT_ABSPATH . 'core/hooks.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-functions.php';
