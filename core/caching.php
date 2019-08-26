@@ -201,8 +201,7 @@
         yk_mt_cache_set( 'meals-' . $user_id, $cache );
     }
     add_action( 'yk_mt_meals_lookup', 'yk_mt_cache_hook_meals_set', 10, 3 );
-    // TODO: Delete when user deletes or adds a meal to
-
+    
     /**
      * Get cache for of meals for given user / options
      *
