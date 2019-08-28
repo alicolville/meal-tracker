@@ -198,7 +198,7 @@
 
         $cache[ $options_key ] = $meals;
 
-        yk_mt_cache_set( 'meals-' . $user_id, $cache );
+        yk_mt_cache_set( 'meals-' . $user_id, $cache, 600 ); // Cache for 10 minutes
     }
     add_action( 'yk_mt_meals_lookup', 'yk_mt_cache_hook_meals_set', 10, 3 );
 
@@ -208,13 +208,12 @@
      * @param $user_id
      * @param $options_key
      */
-    function yk_mt_cache_filter_meals_get( $user_id, $options_key ) {
+    function yk_mt_cache_filter_meals_get( $default_value, $user_id, $options_key ) {
 
         $cache = yk_mt_cache_get( 'meals-' . $user_id );
-
-        return ( false === empty( $cache[ $options_key ] ) ) ? $cache[ $options_key ] : NULL;
+	    return ( false === empty( $cache[ $options_key ] ) ) ? $cache[ $options_key ] : NULL;
     }
-    add_filter( 'yk_mt_db_meals', 'yk_mt_cache_filter_meals_get', 10, 2 );
+    add_filter( 'yk_mt_db_meals', 'yk_mt_cache_filter_meals_get', 10, 3 );
 
     /**
      * Clear cache for a given meals / certain user ID

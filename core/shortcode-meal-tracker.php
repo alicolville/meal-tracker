@@ -9,6 +9,10 @@
 	 */
 	function yk_mt_shortcode_meal_tracker() {
 
+		if ( true === is_admin() ) {
+			return '';
+		}
+
 		$html = '<!-- Meal Tracker Start -->';
 
 		// Is the user logged in?
@@ -16,12 +20,12 @@
 			return yk_mt_shortcode_log_in_prompt();
 		}
 
+		// This is used to create an empty entry if one doesn't already exist for this user / day
+		yk_mt_entry_get_id_or_create();
+
 		yk_mt_shortcode_meal_tracker_enqueue_scripts();
 
 		yk_mt_shortcode_meal_tracker_localise();
-
-		// This is used to create an empty entry if one doesn't already exist for this user / day
-		yk_mt_entry_get_id_or_create();
 
 		$html .= '<div class="yk-mt-shortcode-meal-tracker">';
 
@@ -202,7 +206,7 @@
 
 		$html .= yk_mt_form_text( __( 'Name', YK_MT_SLUG ),	'add-meal-name' );
 
-		$html .= yk_mt_form_text( __( 'Description', YK_MT_SLUG ), 'add-meal-description', '', 200 );
+		$html .= yk_mt_form_text( __( 'Description', YK_MT_SLUG ), 'add-meal-description', '', 200, false );
 
 		$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories' );
 
@@ -229,9 +233,9 @@
      */
 	function yk_mt_shortcode_meal_tracker_add_meal_select( $select_name, $user_id = NULL ) {
 
-        return sprintf(   '<select id="%1$s" name="%1$s" class="yk-mt-select-meal" placeholder="%2$s..." required></select>',
+        return sprintf(   '<select id="%1$s" name="%1$s" class="yk-mt-select-meal" placeholder="%2$s..." required ></select>',
 	                        esc_attr( $select_name ),
-		                    __( 'Search for an exiting meal', YK_MT_SLUG )
+		                    __( 'Search for an existing meal', YK_MT_SLUG )
 	    );
 
     }
@@ -301,6 +305,11 @@
 	 * Enqueue CSS / JS for this shortcode
 	 */
 	function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
+
+		// Don't include JS / CSS in admin.
+		if ( true === is_admin() ) {
+			return;
+		}
 
 		global $yk_mt_shortcode_meal_tracker_modal_enqueued;
 

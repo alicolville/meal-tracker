@@ -5,3 +5,6 @@ TODO:
 - hook into wp_Send_json and log an errors?
 - replace "Remove" with foo icon
 - hide quantity from options and strings when unit is a size e.g. large
+- If no existing meals then hide
+- sort ajax search for em,als
+- descrtipion should not be mandatory

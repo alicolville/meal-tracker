@@ -1,341 +1,434 @@
 <?php
 
-	/**
-	 * Fetch the entry ID for today if it already exists, otherwise create it!
-	 *
-	 * @return null|int
-	 */
-	function yk_mt_entry_get_id_or_create( $user_id = NULL ) {
+/**
+ * Fetch the entry ID for today if it already exists, otherwise create it!
+ *
+ * @return null|int
+ */
+function yk_mt_entry_get_id_or_create( $user_id = NULL ) {
 
-		$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
-		$entry_id = yk_mt_db_entry_get_id_for_today( $user_id );
+	$entry_id = yk_mt_db_entry_get_id_for_today( $user_id );
 
-		if ( NULL !== $entry_id ) {
-			return $entry_id;
-		}
-
-		$entry = [
-			'user_id'               => $user_id,
-			'calories_allowed'      => yk_mt_user_calories_target(),
-			'calories_used'         => 0,
-			'date'                  => yk_mt_date_iso_today()
-		];
-
-		$id = yk_mt_db_entry_add( $entry );
-
-		return ( false === empty( $id ) ) ? (int) $id : NULL;
+	if ( NULL !== $entry_id ) {
+		return $entry_id;
 	}
 
-	/**
-	 * Add a meal to an entry
-	 *
-	 * @param $entry_id
-	 * @param $meal_id
-	 * @param $meal_type
-	 *
-	 * @return bool
-	 */
-	function yk_mt_entry_meal_add( $entry_id, $meal_id, $meal_type ) {
+	$entry = [
+		'user_id'               => $user_id,
+		'calories_allowed'      => yk_mt_user_calories_target(),
+		'calories_used'         => 0,
+		'date'                  => yk_mt_date_iso_today()
+	];
 
-		$entry = yk_mt_db_entry_get( $entry_id );
+	$id = yk_mt_db_entry_add( $entry );
 
-		// Does entry exist?
-		if ( false === $entry ) {
-			return false;
-		}
+	return ( false === empty( $id ) ) ? (int) $id : NULL;
+}
 
-		$meal = yk_mt_db_meal_get( $meal_id );
+/**
+ * Add a meal to an entry
+ *
+ * @param $entry_id
+ * @param $meal_id
+ * @param $meal_type
+ *
+ * @return bool
+ */
+function yk_mt_entry_meal_add( $entry_id, $meal_id, $meal_type ) {
 
-		// Does meal exist?
-		if ( false === $meal ) {
-			return false;
-		}
+	$entry = yk_mt_db_entry_get( $entry_id );
 
-		// Valid meal time?
-		if ( false === in_array( $meal_type, yk_mt_meal_types_ids() ) ) {
-			return false;
-		}
-
-		// Add Meal to Entry
-		$result = yk_mt_db_entry_meal_add([
-			'entry_id' => $entry_id,
-			'meal_id' => $meal_id,
-			'meal_type' => $meal_type
-		]);
-
-		// Did the DB insert work?
-		if ( false === $result ) {
-			return false;
-		}
-
-		return yk_mt_entry_calories_calculate_update_used( $entry_id );
+	// Does entry exist?
+	if ( false === $entry ) {
+		return false;
 	}
 
-	/**
-	 * Delete a meal for a given entry_meal_id
-	 *
-	 * @param $entry_meal_id
-	 *
-	 * @return bool
-	 */
-	function yk_mt_entry_meal_delete( $entry_meal_id ) {
+	$meal = yk_mt_db_meal_get( $meal_id );
 
-		$entry_meal = yk_mt_db_entry_meal_get( $entry_meal_id );
-
-		if ( false === $entry_meal ) {
-			return false;
-		}
-
-		if ( false === yk_mt_db_entry_meal_delete( $entry_meal_id ) ) {
-			return false;
-		}
-
-		return yk_mt_entry_calories_calculate_update_used( $entry_meal['entry_id'] );
+	// Does meal exist?
+	if ( false === $meal ) {
+		return false;
 	}
 
-	/**
-	 * Total up the calories used for an entry (sum all meals added) and update.
-	 *
-	 * @param $entry_id
-	 *
-	 * @return bool
-	 */
-	function yk_mt_entry_calories_calculate_update_used( $entry_id ) {
-
-		if ( false === is_numeric( $entry_id ) ) {
-			return false;
-		}
-
-		$calories = yk_mt_db_entry_calories_count( $entry_id );
-
-		// If no calories, set to zero
-		if ( NULL === $calories ) {
-            $calories = 0;
-		}
-
-		$result = yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_used' => $calories ] );
-
-		do_action( 'yk_mt_entry_cache_clear', $entry_id );
-
-		return $result;
+	// Valid meal time?
+	if ( false === in_array( $meal_type, yk_mt_meal_types_ids() ) ) {
+		return false;
 	}
 
-	/**
-	 * Set fave status for a meal
-	 *
-	 * @param $meal_id
-	 * @param bool $favourite
-	 *
-	 * @return bool
-	 */
-	function yk_mt_meal_update_fave( $meal_id, $favourite = true ) {
-		return yk_mt_db_meal_update( [ 'id' => $meal_id, 'favourite' => ( true === $favourite ) ? 1 : 0 ] );
+	// Add Meal to Entry
+	$result = yk_mt_db_entry_meal_add([
+		'entry_id' => $entry_id,
+		'meal_id' => $meal_id,
+		'meal_type' => $meal_type
+	]);
+
+	// Did the DB insert work?
+	if ( false === $result ) {
+		return false;
 	}
 
-	/**
-	 * Fetch all IDs for Meal Types
-	 *
-	 * @return array
-	 */
-	function yk_mt_meal_types_ids() {
+	return yk_mt_entry_calories_calculate_update_used( $entry_id );
+}
 
-		$meal_types = yk_mt_db_meal_types_all();
+/**
+ * Delete a meal for a given entry_meal_id
+ *
+ * @param $entry_meal_id
+ *
+ * @return bool
+ */
+function yk_mt_entry_meal_delete( $entry_meal_id ) {
 
-		return ( false === empty( $meal_types ) ) ? wp_list_pluck( $meal_types, 'id' ) : [];
+	$entry_meal = yk_mt_db_entry_meal_get( $entry_meal_id );
+
+	if ( false === $entry_meal ) {
+		return false;
 	}
 
-	/**
-	 * Get the allowed calories for the given user
-	 *
-	 * @param null $user_id
-	 *
-	 * @return int
-	 */
-	function yk_mt_user_calories_target( $user_id = NULL ) {
+	if ( false === yk_mt_db_entry_meal_delete( $entry_meal_id ) ) {
+		return false;
+	}
 
-		$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+	return yk_mt_entry_calories_calculate_update_used( $entry_meal['entry_id'] );
+}
 
-		// TODO: We need to store this locally unless there is an override by another system
-		$allowed_calories = 2000;
+/**
+ * Total up the calories used for an entry (sum all meals added) and update.
+ *
+ * @param $entry_id
+ *
+ * @return bool
+ */
+function yk_mt_entry_calories_calculate_update_used( $entry_id ) {
 
-		// Take Calories from WLT?
-        if ( true === function_exists( 'ws_ls_harris_benedict_calculate_calories' ) ) {
-            $yeken_wt = ws_ls_harris_benedict_calculate_calories();
+	if ( false === is_numeric( $entry_id ) ) {
+		return false;
+	}
 
-            // TODO: We need to have an option to select whether to use / lose / gain / maintain
-            if ( true === isset( $yeken_wt[ 'lose' ][ 'total' ] ) ) {
-                $allowed_calories = $yeken_wt[ 'lose' ][ 'total' ];
-            }
+	$calories = yk_mt_db_entry_calories_count( $entry_id );
+
+	// If no calories, set to zero
+	if ( NULL === $calories ) {
+        $calories = 0;
+	}
+
+	$result = yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_used' => $calories ] );
+
+	do_action( 'yk_mt_entry_cache_clear', $entry_id );
+
+	return $result;
+}
+
+/**
+ * Set fave status for a meal
+ *
+ * @param $meal_id
+ * @param bool $favourite
+ *
+ * @return bool
+ */
+function yk_mt_meal_update_fave( $meal_id, $favourite = true ) {
+	return yk_mt_db_meal_update( [ 'id' => $meal_id, 'favourite' => ( true === $favourite ) ? 1 : 0 ] );
+}
+
+/**
+ * Fetch all IDs for Meal Types
+ *
+ * @return array
+ */
+function yk_mt_meal_types_ids() {
+
+	$meal_types = yk_mt_db_meal_types_all();
+
+	return ( false === empty( $meal_types ) ) ? wp_list_pluck( $meal_types, 'id' ) : [];
+}
+
+/**
+ * Get the allowed calories for the given user
+ *
+ * @param null $user_id
+ *
+ * @return int
+ */
+function yk_mt_user_calories_target( $user_id = NULL ) {
+
+	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+	// TODO: We need to store this locally unless there is an override by another system
+	$allowed_calories = 2000;
+
+	// Take Calories from WLT?
+    if ( true === function_exists( 'ws_ls_harris_benedict_calculate_calories' ) ) {
+        $yeken_wt = ws_ls_harris_benedict_calculate_calories();
+
+        // TODO: We need to have an option to select whether to use / lose / gain / maintain
+        if ( true === isset( $yeken_wt[ 'lose' ][ 'total' ] ) ) {
+            $allowed_calories = $yeken_wt[ 'lose' ][ 'total' ];
         }
+    }
 
-		$allowed_calories = apply_filters( 'yk_mt_user_allowed_calories', $allowed_calories, $user_id );
+	$allowed_calories = apply_filters( 'yk_mt_user_allowed_calories', $allowed_calories, $user_id );
 
-		return (int) $allowed_calories;
-	}
+	return (int) $allowed_calories;
+}
 
-	/**
-	 * Helper function to ensure all fields have expected keys
-	 *
-	 * @param $data
-	 * @param $expected_fields
-	 * @return bool
-	 */
-	function yk_mt_array_check_fields($data, $expected_fields ) {
+/**
+ * Helper function to ensure all fields have expected keys
+ *
+ * @param $data
+ * @param $expected_fields
+ * @return bool
+ */
+function yk_mt_array_check_fields($data, $expected_fields ) {
 
-		foreach ( $expected_fields as $field ) {
-			if ( false === isset( $data[ $field ] ) ) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Validate an ISO date
-	 *
-	 * @param $iso
-	 *
-	 * @return bool
-	 */
-	function yk_mt_date_is_valid_iso( $iso ) {
-
-		if ( true === empty( $iso ) ) {
+	foreach ( $expected_fields as $field ) {
+		if ( false === isset( $data[ $field ] ) ) {
 			return false;
 		}
+	}
 
-		$iso = explode( '-', $iso );
+	return true;
+}
 
-		if ( 3 !== count( $iso ) ) {
+/**
+ * Validate an ISO date
+ *
+ * @param $iso
+ *
+ * @return bool
+ */
+function yk_mt_date_is_valid_iso( $iso ) {
+
+	if ( true === empty( $iso ) ) {
+		return false;
+	}
+
+	$iso = explode( '-', $iso );
+
+	if ( 3 !== count( $iso ) ) {
+		return false;
+	}
+
+	return checkdate ( $iso[ 1 ], $iso[ 2 ], $iso[ 0 ] );
+}
+
+/**
+ * Get today's date in ISO
+ *
+ * @return string
+ */
+function yk_mt_date_iso_today() {
+	return date( 'Y-m-d' );
+}
+
+/**
+ * Use minified scripts?
+ *
+ * @return string
+ */
+function yk_mt_use_minified() {
+	return ''; //TODO
+	return ( true === defined('SCRIPT_DEBUG') && false == SCRIPT_DEBUG ) ? '.min' : '';
+}
+
+/**
+ * Fetch a value from the $_POST array
+ *
+ * @param $key
+ * @param null $default
+ *
+ * @return null
+ */
+function yk_mt_post_value( $key, $default = NULL ) {
+	return ( false === empty( $_POST[ $key ] ) ) ? $_POST[ $key ] : $default;
+}
+
+/**
+ * Check for $_POST keys
+ *
+ * @param $keys
+ *
+ * @return bool
+ */
+function yk_mt_post_values_exist( $keys ) {
+
+	foreach ( $keys as $key ) {
+		if ( true === empty( $_POST[ $key ] ) ) {
 			return false;
 		}
-
-		return checkdate ( $iso[ 1 ], $iso[ 2 ], $iso[ 0 ] );
 	}
 
-	/**
-	 * Get today's date in ISO
-	 *
-	 * @return string
-	 */
-	function yk_mt_date_iso_today() {
-		return date( 'Y-m-d' );
-	}
+	return true;
+}
 
-	/**
-	 * Use minified scripts?
-	 *
-	 * @return string
-	 */
-	function yk_mt_use_minified() {
-		return ''; //TODO
-		return ( true === defined('SCRIPT_DEBUG') && false == SCRIPT_DEBUG ) ? '.min' : '';
-	}
+/**
+ * Return an array that represents the entry
+ *
+ * @param null $entry_id
+ *
+ * @return array|bool
+ */
+function yk_mt_entry( $entry_id = NULL ) {
 
-	/**
-	 * Fetch a value from the $_POST array
-	 *
-	 * @param $key
-	 * @param null $default
-	 *
-	 * @return null
-	 */
-	function yk_mt_post_value( $key, $default = NULL ) {
-		return ( false === empty( $_POST[ $key ] ) ) ? $_POST[ $key ] : $default;
-	}
+    // If we have no entry ID, then lets fetch today's entry for the given user or create a new entry!
+    $entry_id = ( false === empty( $entry_id ) ) ? (int) $entry_id :  yk_mt_db_entry_get_id_for_today( get_current_user_id() );
 
-	/**
-	 * Check for $_POST keys
-	 *
-	 * @param $keys
-	 *
-	 * @return bool
-	 */
-	function yk_mt_post_values_exist( $keys ) {
+    if ( true === empty( $entry_id ) ) {
+        return false;
+    }
 
-		foreach ( $keys as $key ) {
-			if ( true === empty( $_POST[ $key ] ) ) {
-				return false;
-			}
+    return yk_mt_db_entry_get( $entry_id );
+}
+
+/**
+ * Return an array for config values for AJAX localize
+ * @return array
+ */
+function yk_mt_ajax_config() {
+
+    $site_url = site_url();
+
+    return [
+        'site-url'                          => $site_url,
+        'ajax-url'                          => admin_url('admin-ajax.php'),
+        'ajax-security-nonce'               => wp_create_nonce( 'yk-mt-nonce' ),
+    ];
+}
+
+/**
+ * Return an array of localised strings
+ * @return array
+ */
+function yk_mt_localised_strings( ) {
+    return [
+        'just-added'                    => __( 'Just Added:', YK_MT_SLUG ),
+        'calorie-unit'                  => __( 'kcal', YK_MT_SLUG ),
+        'remove-text'                   => __( 'Remove', YK_MT_SLUG ),
+        'chart-label-used'              => __( 'used', YK_MT_SLUG ),
+        'chart-label-remaining'         => __( 'remaining', YK_MT_SLUG ),
+        'chart-label-target'            => __( 'Target', YK_MT_SLUG ),
+        'no-data'                       => __( 'No data has been entered', YK_MT_SLUG ),
+        'meal-added-success'            => __( 'The meal has been added', YK_MT_SLUG ),
+        'meal-added-success-short'      => __( 'Added', YK_MT_SLUG ),
+        'meal-entry-added-success'      => __( 'The meal has been added', YK_MT_SLUG ),
+        'meal-entry-added-short'        => __( 'Added', YK_MT_SLUG ),
+        'meal-entry-missing-meal'       => __( 'Select a meal', YK_MT_SLUG ),
+        'meal-entry-deleted-success'    => __( 'The meal has been removed', YK_MT_SLUG ),
+        'db-error'                      => __( 'There was error saving your changes', YK_MT_SLUG )
+    ];
+}
+
+/**
+ * Return an array of units
+ * @return array
+ */
+function yk_mt_units() {
+
+    $units = [];
+
+    foreach ( yk_mt_units_raw() as $unit => $details ) {
+		$units[ $unit ] = $details[ 'label' ];
+    }
+
+    return $units;
+}
+
+/**
+ * Return an array of Units with full data
+ * @return array
+ */
+function yk_mt_units_raw() {
+	$units = [
+		'g'         => [ 'label' => 'g' ],
+		'ml'        => [ 'label' => 'ml' ],
+		'small'     => [ 'label' =>  __( 'Small', YK_MT_SLUG ), 'drop-quantity' => true ],
+		'medium'    => [ 'label' =>  __( 'Medium', YK_MT_SLUG ), 'drop-quantity' => true ],
+		'large'     => [ 'label' =>  __( 'Large', YK_MT_SLUG ), 'drop-quantity' => true ],
+	];
+
+	$units = apply_filters( 'yk_mt_units', $units );
+
+	return $units;
+}
+
+/**
+ * Return all fields where the data is met
+ *
+ * @param $field
+ * @param bool $equals
+ * @param bool $just_keys
+ *
+ * @return array
+ */
+function yk_mt_units_where( $field, $equals = true, $just_keys = true ) {
+
+	$units = [];
+
+	foreach ( yk_mt_units_raw() as $unit => $details ) {
+
+		if ( $equals === $details[ $field ] ) {
+			$units[ $unit ] = $details[ 'label' ];
 		}
-
-		return true;
 	}
 
-    /**
-     * Return an array that represents the entry
-     *
-     * @param null $entry_id
-     *
-     * @return array|bool
-     */
-    function yk_mt_entry( $entry_id = NULL ) {
+	if ( true === $just_keys ) {
+		$units  = array_keys( $units );
+	}
 
-        // If we have no entry ID, then lets fetch today's entry for the given user or create a new entry!
-        $entry_id = ( false === empty( $entry_id ) ) ? (int) $entry_id :  yk_mt_db_entry_get_id_for_today( get_current_user_id() );
+	return $units;
+}
 
-        if ( true === empty( $entry_id ) ) {
-            return false;
-        }
+/**
+ * Fetch the field for a given unit
+ *
+ * @param $unit
+ * @param string $field
+ *
+ * @return null
+ */
+function yk_mt_unit_get( $unit, $field = 'label' ) {
 
-        return yk_mt_db_entry_get( $entry_id );
-    }
+	$units = yk_mt_units_raw();
 
-    /**
-     * Return an array for config values for AJAX localize
-     * @return array
-     */
-	function yk_mt_ajax_config() {
+	return ( true === isset( $units[ $unit ][ $field ] ) ) ? $units[ $unit ][ $field ] : NULL;
+}
 
-	    $site_url = site_url();
+/**
+ * For a given meal, render the unit / quantity string
+ * @param $meal
+ *
+ * @return null|string
+ */
+function yk_mt_get_unit_string( $meal ) {
 
-        return [
-            'site-url'                          => $site_url,
-            'ajax-url'                          => admin_url('admin-ajax.php'),
-            'ajax-security-nonce'               => wp_create_nonce( 'yk-mt-nonce' ),
-        ];
-    }
+	if ( true === yk_mt_is_meal_object( $meal ) ) {
 
-    /**
-     * Return an array of localised strings
-     * @return array
-     */
-    function yk_mt_localised_strings( ) {
-        return [
-	        'just-added'                    => __( 'Just Added:', YK_MT_SLUG ),
-            'calorie-unit'                  => __( 'kcal', YK_MT_SLUG ),
-            'remove-text'                   => __( 'Remove', YK_MT_SLUG ),
-	        'chart-label-used'              => __( 'used', YK_MT_SLUG ),
-            'chart-label-remaining'         => __( 'remaining', YK_MT_SLUG ),
-            'chart-label-target'            => __( 'Target', YK_MT_SLUG ),
-            'no-data'                       => __( 'No data has been entered', YK_MT_SLUG ),
-            'meal-added-success'            => __( 'The meal has been added', YK_MT_SLUG ),
-            'meal-added-success-short'      => __( 'Added', YK_MT_SLUG ),
-            'meal-entry-added-success'      => __( 'The meal has been added', YK_MT_SLUG ),
-            'meal-entry-added-short'        => __( 'Added', YK_MT_SLUG ),
-            'meal-entry-deleted-success'    => __( 'The meal has been removed', YK_MT_SLUG ),
-            'db-error'                      => __( 'There was error saving your changes', YK_MT_SLUG )
-        ];
-    }
+		$units_to_drop_quantity_for = yk_mt_units_where( 'drop-quantity' );
 
-	/**
-	 * Return an array of units
-	 * @return array
-	 */
-    function yk_mt_units() {
-    	$units = [
-    	    'g'         => 	'g' ,
-		    'ml'        => 'ml',
-		    'small'     => __( 'Small', YK_MT_SLUG ),
-	        'medium'    => __( 'Medium', YK_MT_SLUG ),
-	        'large'     => __( 'Large', YK_MT_SLUG )
-	    ];
+		$drop_quantity = in_array( $meal[ 'unit' ], $units_to_drop_quantity_for );
 
-    	$units = apply_filters( 'yk_mt_units', $units );
+		$label = yk_mt_unit_get( $meal[ 'unit' ] );
 
-    	return $units;
-    }
+		return ( true === $drop_quantity ) ?
+			$label :
+			sprintf( '%d%s', $meal[ 'quantity' ], $label );
+	}
+
+	return 'Err';
+}
+
+/**
+ * Do we have a meal object?
+ * @param $meal
+ *
+ * @return bool
+ */
+function yk_mt_is_meal_object( $meal ) {
+	return true === is_array( $meal ) &&
+	       true === isset( $meal[ 'name'], $meal[ 'quantity'], $meal[ 'unit'], $meal[ 'calories'], $meal[ 'description'], $meal[ 'id'] );
+}
 
 /**
  * @param $title

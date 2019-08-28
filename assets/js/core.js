@@ -70,6 +70,7 @@ jQuery( document ).ready( function( $ ) {
      * Initialise dialog
      */
     var dialog_options = JSON.parse( yk_mt_sc_meal_tracker[ 'dialog-options' ] );
+
     dialog_options.afterClose = function() { yk_mt_dialog_close() };
     dialog_options.beforeOpen = function() { yk_mk_selectize_init() };
 
@@ -119,16 +120,24 @@ jQuery( document ).ready( function( $ ) {
      */
     function yk_mk_selectize_init() {
 
-        yk_mt_meal_selector = $( '#yk-mt-meal-id').selectize({
+        yk_mt_meal_selector = $( '#yk-mt-meal-id' ).selectize({
             preload: true,
             valueField: 'id',
             labelField: 'name',
-            searchField: 'id',
-            load: function(query, callback) {
+            searchField: 'name',
+            options: [],
+            load: function( query, callback ) {
+
+                this.clearOptions();
+
+                // if ( query.length > 0 && query.length < 3 ) {
+                //     return;
+                // } //todo
+
                 $.ajax({
                     url: yk_mt[ 'ajax-url' ],
                     type: 'POST',
-                    data: { action: 'meals', security: yk_mt[ 'ajax-security-nonce' ] },
+                    data: { action: 'meals', security: yk_mt[ 'ajax-security-nonce' ], search: query },
                     error: function() {
                         callback();
                     },
@@ -193,14 +202,24 @@ jQuery( document ).ready( function( $ ) {
      */
     function yk_mt_post_api_add_meal_to_entry( entry_id, meal_id, meal_type, quantity = 1 ) {
 
-        var data = {
-            'entry-id'  : entry_id,
-            'meal-id'   : meal_id,
-            'meal-type' : meal_type,
-            'quantity'  : quantity
-        };
+        if ( meal_id ) {
 
-        yk_mt_post( 'add_meal_to_entry', data,  yk_mt_post_api_add_meal_to_entry_callback);
+            if ( ! quantity ) {
+                quantity = 1;
+            }
+
+            var data = {
+                'entry-id'  : entry_id,
+                'meal-id'   : meal_id,
+                'meal-type' : meal_type,
+                'quantity'  : quantity
+            };
+
+            yk_mt_post( 'add_meal_to_entry', data,  yk_mt_post_api_add_meal_to_entry_callback);
+
+        } else {
+            yk_mt_warn( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-entry-missing-meal' ], '#yk-mt-form-add-meal-to-entry .selectize-control' );
+        }
     }
 
     /**

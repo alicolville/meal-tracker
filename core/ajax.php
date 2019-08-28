@@ -83,7 +83,7 @@ function yk_mt_ajax_add_meal() {
     $post_data = yk_mt_ajax_strip_incoming( $post_data );
 
     // Validate we have all the expected fields
-    yk_mt_ajax_validate_post_data( $post_data, [ 'name', 'description', 'calories', 'quantity', 'unit' ] );
+    yk_mt_ajax_validate_post_data( $post_data, [ 'name', 'calories', 'quantity', 'unit' ] );
 
     $meal_id = yk_mt_db_meal_add( $post_data );
 
@@ -106,14 +106,31 @@ function yk_mt_ajax_meals() {
 
 	check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-	$meals = yk_mt_db_meal_for_user( get_current_user_id() );
+	// If performing a search, set options to look for string. Otherwise load load a max of 20 from DB for user.
+	if ( false === empty( $_POST[ 'search' ] ) ) {
+		$options = [ 'search' => $_POST[ 'search' ] ];
+	} else {
+		$options = [ 'limit' => 20 ];
+	}
+
+	$meals = yk_mt_db_meal_for_user( get_current_user_id(), $options );
 
 	// Compress meal objects to reduce data returned via AJAX
-	$meals = array_map('yk_mt_ajax_prep_meal', $meals);
+	$meals = array_map( 'yk_mt_ajax_prep_meal', $meals );
+
+	// TODO: Do some sort of caching. A lot of processing has occurred here.
 
 	wp_send_json( $meals );
 }
 add_action( 'wp_ajax_meals', 'yk_mt_ajax_meals' );
+
+//todo
+//function t() {
+//	print_r(yk_mt_ajax_meals());
+//	die;
+//
+//}
+//add_action('init', 't');
 
 /**
  * Strip back a meal object ready for transmission via AJAX
@@ -123,10 +140,10 @@ add_action( 'wp_ajax_meals', 'yk_mt_ajax_meals' );
 function yk_mt_ajax_prep_meal( $meal ) {
 
     if ( true === is_array( $meal ) ) {
-        $meal[ 'name' ] = sprintf( '%1$s ( %2$d%3$s / %4$d%5$s )',
+
+    	$meal[ 'name' ] = sprintf( '%1$s ( %2$s / %3$d%4$s )',
                     $meal[ 'name' ],
-                    $meal[ 'quantity' ],
-                    $meal[ 'unit' ],
+		            yk_mt_get_unit_string( $meal ),
                     $meal[ 'calories' ],
                     __( 'kcal', YK_MT_SLUG )
         );

@@ -29,7 +29,7 @@ defined('ABSPATH') or die("Jog on!");
 
 define( 'YK_MT_ABSPATH', plugin_dir_path( __FILE__ ) );
 
-define( 'YK_MT_PLUGIN_VERSION', '0.1-3' );
+define( 'YK_MT_PLUGIN_VERSION', '0.1-1cdb' );
 define( 'YK_MT_SLUG', 'meal-tracker' );
 
 // -----------------------------------------------------------------------------------------

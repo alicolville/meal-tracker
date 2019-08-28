@@ -40,6 +40,8 @@
 
 		$id = $wpdb->insert_id;
 
+		$entry = yk_mt_db_entry_calculate_stats( $entry );
+
 		do_action( 'yk_mt_entry_added', $id, $entry );
 
 		return $id;
@@ -156,6 +158,7 @@
 		}
 
 		if ( $cache = apply_filters( 'yk_mt_db_entry_get', NULL, $id ) ) {
+			$cache[ 'cache' ] = true;
 			return $cache;
 		}
 
@@ -167,14 +170,10 @@
 
 		$entry = ( false === empty( $entry ) ) ? $entry : false;
 
-        $entry[ 'percentage_used' ] = ( $entry[ 'calories_used' ] / $entry[ 'calories_allowed' ] ) * 100;
-        $entry[ 'percentage_used' ] = round( $entry[ 'percentage_used' ], 1);
-
-		$entry[ 'calories_remaining' ] = $entry[ 'calories_allowed' ] - $entry[ 'calories_used' ];
-		$entry[ 'calories_remaining' ] = ( $entry[ 'calories_remaining' ] < 0 ) ? 0 : $entry[ 'calories_remaining' ];
-
-        // If an entry was found, fetch all the meals entered for it.
+        // If an entry was found, fetch all the meals entered for it and additional relevant data
 		if ( $entry !== false ) {
+
+			$entry = yk_mt_db_entry_calculate_stats( $entry );
 
 			$sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity,
                                     em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m 
@@ -207,6 +206,28 @@
 		}
 
 		do_action( 'yk_mt_entry_lookup', $id, $entry );
+
+		return $entry;
+	}
+
+	/**
+	 * Calculate additional data for an entry
+	 *
+	 * @param $entry
+	 *
+	 * @return mixed
+	 */
+	function yk_mt_db_entry_calculate_stats( $entry ) {
+
+		if ( true === isset( $entry[ 'calories_allowed' ], $entry[ 'calories_used' ] ) ) {
+
+			$entry[ 'percentage_used' ] = ( $entry[ 'calories_used' ] / $entry[ 'calories_allowed' ] ) * 100;
+			$entry[ 'percentage_used' ] = round( $entry[ 'percentage_used' ], 1);
+
+			$entry[ 'calories_remaining' ] = $entry[ 'calories_allowed' ] - $entry[ 'calories_used' ];
+			$entry[ 'calories_remaining' ] = ( $entry[ 'calories_remaining' ] < 0 ) ? 0 : $entry[ 'calories_remaining' ];
+
+		}
 
 		return $entry;
 	}
@@ -468,15 +489,19 @@
 		$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
 		$options = wp_parse_args( $options, [
-			'exclude-deleted' => true,
-			'sort' => 'name',
-			'sort-order' => 'asc'
+			'exclude-deleted'       => true,
+			'sort'                  => 'name',
+			'sort-order'            => 'asc',
+			'search'                => NULL,
+			'limit'                 => NULL
 		]);
 
 		$cache_key = md5( json_encode( $options ) );
 
-        if ( $cache = apply_filters( 'yk_mt_db_meals', $user_id, $cache_key ) ) {
-             return $cache;
+		$cache = apply_filters( 'yk_mt_db_meals', [], $user_id, $cache_key );
+
+        if ( false === empty( $cache ) ) {
+        	return $cache;
         }
 
 		global $wpdb;
@@ -488,11 +513,22 @@
 			$sql .= ' and deleted = 0';
 		}
 
+		// Search Name?
+		if ( false === empty( $options[ 'search' ] ) ) {
+			$name = $wpdb->esc_like( $options[ 'search' ] ) . '%';
+			$sql .= ' and `name` like "' . $name . '"';
+		}
+
 		$sort = ( true === in_array( $options[ 'sort' ], [ 'name', 'calories' ] ) ) ?  $options[ 'sort' ] : 'name';
 
 		$sort_order = ( true === in_array( $options[ 'sort-order' ], [ 'asc', 'desc' ] ) ) ? $options[ 'sort-order' ] : 'asc';
 
 		$sql .= sprintf( ' order by %s %s', $sort, $sort_order );
+
+		// Limit
+		if ( false === empty( $options[ 'limit' ] ) ) {
+			$sql .= sprintf( ' limit 0, %d', $options[ 'limit' ] ) ;
+		}
 
 		$meals = $wpdb->get_results( $sql, ARRAY_A );
 
@@ -657,7 +693,7 @@
 					calories float DEFAULT 0 NOT NULL,
 					quantity float DEFAULT 0 NOT NULL,
 					unit varchar(10) DEFAULT 'g' NOT NULL, 
-					description varchar(200) NOT NULL,
+					description varchar(200) NULL,
 					deleted bit DEFAULT 0,
 					favourite bit DEFAULT 0,
 				 UNIQUE KEY id (id)
