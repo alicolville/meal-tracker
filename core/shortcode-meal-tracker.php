@@ -147,7 +147,7 @@
 
 		$top = apply_filters( 'yk_mt_shortcode_dialog_top', 30 );
 
-        $html = sprintf( '<div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-type="0" >
+        $html = sprintf( '<div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-type="0" class="yk-mt-hide">
                              <div class="yk-mt-modal-header">
                                 <h3>%3$s</h3>
                                 <button id="btn-close-modal" class="close-yk-mt-add-meal-dialog yk-mt-button-silent">
