@@ -72,7 +72,12 @@ jQuery( document ).ready( function( $ ) {
     var dialog_options = JSON.parse( yk_mt_sc_meal_tracker[ 'dialog-options' ] );
 
     dialog_options.afterClose = function() { yk_mt_dialog_close() };
-    dialog_options.beforeOpen = function() { yk_mk_selectize_init() };
+    dialog_options.beforeOpen = function() {
+
+        yk_mk_selectize_init()
+
+        $( '#yk-mt-add-meal-dialog' ).removeClass( 'yk-mt-hide' );
+    };
 
     yk_meal_tracker_dialog = $(".yk-mt-add-meal-prompt").animatedModal( dialog_options );
 
