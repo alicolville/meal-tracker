@@ -119,7 +119,7 @@
 	 *
 	 * @return string
 	 */
-	function yk_mt_shortcode_meal_tracker_add_meal_button( $button_text, $meal_type_id = NULL, $default_css_class = 'button' ) {
+	function yk_mt_shortcode_meal_tracker_add_meal_button( $button_text, $meal_type_id = NULL, $default_css_class = 'yk-mt-button-small' ) {
 
 		global $yk_mt_add_meal_button_id;
 
@@ -128,7 +128,7 @@
 		$css_class = apply_filters( 'yk_mt_shortcode_button_meal_add_css', $default_css_class );
 		$button_text = apply_filters( 'yk_mt_shortcode_button_meal_add_text', $button_text );
 
-		return sprintf( '<a href="#yk-mt-add-meal-dialog" class="%1$s yk-mt-add-meal-prompt btn button" id="%3$d" data-meal-type="%2$d">%4$s</a>',
+		return sprintf( '<button href="#yk-mt-add-meal-dialog" class="%1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d">%4$s</button>',
 						esc_attr( $css_class ),
 						(int) $meal_type_id,
 						(int) $yk_mt_add_meal_button_id,

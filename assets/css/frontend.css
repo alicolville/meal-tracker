@@ -215,10 +215,17 @@
 .yk-mt-button-success,
 .yk-mt-button-error,
 .yk-mt-button-warning,
-.yk-mt-button-secondary {
-    color: white;
+.yk-mt-button-secondary
+{
+    font-family: tahoma;
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+.yk-mt-button-success,
+.yk-mt-button-error,
+.yk-mt-button-warning,
+.yk-mt-button-secondary {
+    color: white;
 }
 
 .yk-mt-button-success {
@@ -237,10 +244,14 @@
     background: rgb(66, 184, 221); /* this is a light blue */
 }
 
-.yk-mt-button-silent {
+.yk-mt-button-silent, .yk-mt-button-small {
     background: rgb(220,220,220)
 }
-
+.yk-mt-button-small {
+    font-family: tahoma;
+    font-size: 13px;
+    padding: 3px 10px 3px 10px;
+}
 /**
    Generic styling for forms
  */
