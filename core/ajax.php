@@ -124,14 +124,6 @@ function yk_mt_ajax_meals() {
 }
 add_action( 'wp_ajax_meals', 'yk_mt_ajax_meals' );
 
-//todo
-//function t() {
-//	print_r(yk_mt_ajax_meals());
-//	die;
-//
-//}
-//add_action('init', 't');
-
 /**
  * Strip back a meal object ready for transmission via AJAX
  * @param $meal
