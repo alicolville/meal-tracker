@@ -172,20 +172,22 @@
 
 	        $html .= $add_form;
 
-	        $html .= sprintf('  <div class="yk-mt-quantity-row">
-		                            <label for="%1$s">%2$s:</label>
-		                            <input type="number" id="%1$s" value="1" min="1" max="50" step="1" required />
-		                            <button id="yk-mt-button-add-meal" class="yk-mt-meal-button-add yk-mt-button-silent">%3$s</button>
-		                            <button id="yk-mt-button-add-and-close-meal" class="yk-mt-meal-button-add yk-mt-button-secondary close-yk-mt-add-meal-dialog">%4$s</button>
-		                        </div>',
-		                        'yk-mt-quantity',
-			                    __( 'Quantity', YK_MT_SLUG ),
-		                        __( 'Add', YK_MT_SLUG ),
-		                        __( 'Add & Close', YK_MT_SLUG )
-	        );
+            $html .= sprintf('  <div class="yk-mt-quantity-row"><label>%1$s:</label>', __( 'Add', YK_MT_SLUG ) );
+
+            for ( $i = 1; $i <= 10; $i++ ) {
+                 $html .= sprintf( '<button id="yk-mt-button-add-meal-%1$d" data-quantity="%1$d" class="yk-mt-meal-button-add yk-mt-button-silent">%1$d</button>', $i );
+            }
         }
 
-        $html .= '</form>';
+        $html .= sprintf('    </div>
+                                  </form>
+                                  <div class="yk-mt-auto-close">
+                                        <input type="checkbox" id="%1$s" checked="checked" />
+                                        <label for="%1$s">%2$s</label>
+                                  </div>',
+                                'yk-mt-button-add-meal-close',
+                                __( 'Close screen after adding meal(s)', YK_MT_SLUG )
+        );
 
         $html .= yk_mt_shortcode_meal_tracker_add_new_meal_form();
 

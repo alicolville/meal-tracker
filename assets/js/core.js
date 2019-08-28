@@ -167,13 +167,15 @@ jQuery( document ).ready( function( $ ) {
 
         e.preventDefault();
 
+        var quantity = $( this ).data( 'quantity' );
+
         /**
          * Add meal to today's entry
          */
         yk_mt_post_api_add_meal_to_entry( 0,
             $( '#yk-mt-meal-id' ).val(),
             yk_mt_selected_meal_type,
-            $( '#yk-mt-quantity' ).val()
+            quantity
         );
     });
 
@@ -241,7 +243,11 @@ jQuery( document ).ready( function( $ ) {
 
             yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-entry-added-success' ] );
 
-            yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-entry-added-short' ], '#yk-mt-button-add-meal' );
+            yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-entry-added-short' ], '#yk-mt-button-add-meal-' + data[ 'quantity' ] );
+
+            if ( $( '#yk-mt-button-add-meal-close' ).is( ':checked' ) ) {
+                $('#btn-close-modal').click();
+            }
 
             $( 'body' ).trigger( 'meal-tracker-meal-added' );
         } else {
@@ -622,7 +628,7 @@ jQuery( document ).ready( function( $ ) {
     function yk_mt_chart_render() {
 
         // If the chart is already rendered, then just trigger a refresh. If not, we need to render chart.
-        if ( yk_mt_ctx ) {
+        if ( yk_mt_ctx && yk_mt_chart ) {
 
             yk_mt_chart.data    = yk_mt_chart_data();
             yk_mt_chart.options = yk_mt_chart_options();
