@@ -417,7 +417,7 @@ jQuery( document ).ready( function( $ ) {
                                 ${calories}${yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ]} / ${quantity}g
                             </div>
                             <div class="yk-mt-c yk-mt-o">
-                                <a data-id="${meal_entry_id}" class="yk-mt-act-r" onclick="yk_mt_trigger_meal_entry_delete( ${meal_entry_id} )">${yk_mt_sc_meal_tracker[ 'localise' ][ 'remove-text' ]}</a>
+                                <button data-id="${meal_entry_id}" class="yk-mt-act-r" onclick="yk_mt_trigger_meal_entry_delete( ${meal_entry_id} )"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>`;
 
