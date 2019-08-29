@@ -506,6 +506,10 @@ jQuery( document ).ready( function( $ ) {
 
     function yk_mt_loading_start() {
         $.LoadingOverlay("show");
+
+        setTimeout(function(){
+            yk_mt_loading_stop();
+        }, 3000);
     }
 
     function yk_mt_loading_stop() {
