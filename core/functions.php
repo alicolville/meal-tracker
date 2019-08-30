@@ -341,6 +341,7 @@ function yk_mt_units() {
  */
 function yk_mt_units_raw() {
 	$units = [
+        'n/a'       => [ 'label' => __( 'N/A', YK_MT_SLUG ), 'drop-quantity' => true ],
 		'g'         => [ 'label' => 'g' ],
 		'ml'        => [ 'label' => 'ml' ],
 		'small'     => [ 'label' =>  __( 'Small', YK_MT_SLUG ), 'drop-quantity' => true ],
