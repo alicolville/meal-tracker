@@ -1,4 +1,5 @@
 
+var yk_mt_entry_id              = 0;
 var yk_mt_selected_meal_type    = false;
 var yk_mt_chart_config          = false;
 var yk_mt_ctx                   = false;
@@ -161,7 +162,7 @@ jQuery( document ).ready( function( $ ) {
      */
 
     /**
-     * Add meal today's entry
+     * Add a meal to today's entry
      */
     $( '.yk-mt-meal-button-add' ).click( function( e ) {
 
@@ -172,7 +173,7 @@ jQuery( document ).ready( function( $ ) {
         /**
          * Add meal to today's entry
          */
-        yk_mt_post_api_add_meal_to_entry( 0,
+        yk_mt_post_api_add_meal_to_entry( yk_mt_entry_id,
             $( '#yk-mt-meal-id' ).val(),
             yk_mt_selected_meal_type,
             quantity
@@ -360,7 +361,9 @@ jQuery( document ).ready( function( $ ) {
             'description'   : description,
             'calories'      : calories,
             'quantity'      : quantity,
-            'unit'          : unit
+            'unit'          : unit,
+            'entry-id'      : yk_mt_entry_id,
+            'meal-type'     : yk_mt_selected_meal_type
         };
 
         yk_mt_post( 'add_meal', data,  yk_mt_post_api_add_meal_callback);
@@ -384,6 +387,12 @@ jQuery( document ).ready( function( $ ) {
             yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-entry-added-short' ], '#yk-mt-button-meal-add' );
 
             $('#yk-mt-form-add-new-meal').trigger("reset");
+
+            yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'meal-entry-added-success' ] );
+
+            yk_mt_refresh_entry();
+
+            $('#btn-close-modal').click();
 
             $( 'body' ).trigger( 'meal-tracker-new-meal-added' );
 
