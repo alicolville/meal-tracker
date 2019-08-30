@@ -5,7 +5,7 @@ defined('ABSPATH') or die("Jog on!");
 /**
  * Plugin Name: Meal Tracker
  * Description: // TODO
- * Version: 0.1
+ * Version: 0.2
  * Author: YeKen
  * Author URI: http://www.YeKen.uk
  * License: GPL2
@@ -29,7 +29,7 @@ defined('ABSPATH') or die("Jog on!");
 
 define( 'YK_MT_ABSPATH', plugin_dir_path( __FILE__ ) );
 
-define( 'YK_MT_PLUGIN_VERSION', '0.1-1cdb' );
+define( 'YK_MT_PLUGIN_VERSION', '0.2' );
 define( 'YK_MT_SLUG', 'meal-tracker' );
 
 // -----------------------------------------------------------------------------------------
