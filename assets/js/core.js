@@ -408,16 +408,16 @@ jQuery( document ).ready( function( $ ) {
      * @returns {string}
      * @constructor
      */
-    const MealRow = ({ meal_entry_id, meal_type, name, calories, quantity}) => `
+    const MealRow = ({ meal_entry_id, meal_type, name, calories, quantity, d}) => `
                         <div class="yk-mt-r" data-mt="${meal_type}">
                             <div class="yk-mt-c">
                                  ${name}
                             </div>
                             <div class="yk-mt-c yk-mt-cq">
-                                ${calories}${yk_mt_sc_meal_tracker[ 'localise' ][ 'calorie-unit' ]} / ${quantity}g
+                                ${d}
                             </div>
                             <div class="yk-mt-c yk-mt-o">
-                                <button data-id="${meal_entry_id}" class="yk-mt-act-r" onclick="yk_mt_trigger_meal_entry_delete( ${meal_entry_id} )"><i class="fas fa-trash"></i></button>
+                                <button data-id="${meal_entry_id}" class="yk-mt-act-r" onclick="yk_mt_trigger_meal_entry_delete( ${meal_entry_id} )"><i class="fas fa-trash-alt"></i></button>
                             </div>
                         </div>`;
 

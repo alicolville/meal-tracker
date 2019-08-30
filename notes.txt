@@ -1,10 +1,11 @@
+Rick Feedback:
+
+- When adding a new "Meal" auto add it to entry and close dialog. Add another checkbox that adds meal to DB, then to entry, and then closes?
+
+
 TODO:
 
+- Based on Rick's slow site, add some optimisation.
 - Add a hook to delete all entries when a user is deleted
 - check user's can only edit entries and data belonging to those entries that are theirs
-- hook into wp_Send_json and log an errors?
-- replace "Remove" with foo icon
-- hide quantity from options and strings when unit is a size e.g. large
 - If no existing meals then hide
-- sort ajax search for em,als
-- descrtipion should not be mandatory

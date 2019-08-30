@@ -175,7 +175,7 @@
 
 			$entry = yk_mt_db_entry_calculate_stats( $entry );
 
-			$sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity,
+			$sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity, m.unit, m.description,
                                     em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m 
 									Inner Join ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em
 									on em.meal_id = m.id
@@ -199,6 +199,13 @@
 
 			if ( false === empty( $meals ) ) {
 				foreach ( $meals as $meal ) {
+
+                    $meal[ 'd' ] = sprintf( '%d%s / %s',
+                                            $meal[ 'calories' ],
+                                            __( 'kcal', YK_MT_SLUG ),
+                                            yk_mt_get_unit_string( $meal )
+                    );
+
                     $entry['meals'][ $meal['meal_type'] ][] = $meal;
                     $entry['counts'][ $meal['meal_type'] ] += $meal['calories'];
 				}
