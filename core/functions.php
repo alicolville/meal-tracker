@@ -292,6 +292,7 @@ function yk_mt_ajax_config() {
 
     return [
         'site-url'                          => $site_url,
+        'plugin-url'                        => plugins_url() . '/meal-tracker/',
         'ajax-url'                          => admin_url('admin-ajax.php'),
         'ajax-security-nonce'               => wp_create_nonce( 'yk-mt-nonce' ),
     ];

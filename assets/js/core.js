@@ -426,7 +426,9 @@ jQuery( document ).ready( function( $ ) {
                                 ${d}
                             </div>
                             <div class="yk-mt-c yk-mt-o">
-                                <button data-id="${meal_entry_id}" class="yk-mt-act-r" onclick="yk_mt_trigger_meal_entry_delete( ${meal_entry_id} )"><i class="fas fa-trash-alt"></i></button>
+                                <button data-id="${meal_entry_id}" class="yk-mt-act-r" onclick="yk_mt_trigger_meal_entry_delete( ${meal_entry_id} )">
+                                    <img src="${yk_mt[ 'plugin-url' ]}assets/images/icons/delete.png" alt="${yk_mt_sc_meal_tracker[ 'localise' ][ 'remove-text' ]}" />
+                                </button>
                             </div>
                         </div>`;
 

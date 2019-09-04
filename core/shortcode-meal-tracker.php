@@ -83,7 +83,7 @@
                 // Add the "Add Meal" prompt now
                 $meal_type_html = sprintf( '<p>%s</p>', yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type['id'] ) );
 
-                $meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt-t' );
+                $meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt-t yk-mt-list-of-meals' );
 
                 $localised_strings = yk_mt_localised_strings();
 
@@ -129,7 +129,7 @@
 		$css_class = apply_filters( 'yk_mt_shortcode_button_meal_add_css', $default_css_class );
 		$button_text = apply_filters( 'yk_mt_shortcode_button_meal_add_text', $button_text );
 
-		return sprintf( '<button href="#yk-mt-add-meal-dialog" class="%1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d"><i class="fas fa-plus"></i> %4$s</button>',
+		return sprintf( '<button href="#yk-mt-add-meal-dialog" class="%1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d">%4$s</button>',
 						esc_attr( $css_class ),
 						(int) $meal_type_id,
 						(int) $yk_mt_add_meal_button_id,
@@ -330,17 +330,16 @@
 
         $minified = yk_mt_use_minified();
 
-     //   wp_enqueue_style( 'mt-font-awesome', 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION);
-        wp_enqueue_style( 'mt-meal-tracker-normalize', plugins_url( 'assets/css/normalize.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+       	wp_enqueue_style( 'mt-meal-tracker-normalize', plugins_url( 'assets/css/normalize.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-animate', plugins_url( 'assets/css/animate.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-selectize', 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css', [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'meal-tracker', plugins_url( 'assets/css/frontend' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'mt-forced', plugins_url( 'assets/css/forced' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
         yk_mt_enqueue_front_end_dependencies();
 
 		wp_enqueue_script( 'mt-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-selectize', 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js', [], YK_MT_PLUGIN_VERSION, true );
-        wp_enqueue_script( 'mt-fa', 'https://kit.fontawesome.com/77507d977c.js', [], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-loading-overlay', plugins_url( 'assets/js/loadingoverlay.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION );
         wp_enqueue_script( 'mt-notify', plugins_url( 'assets/js/notify.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );

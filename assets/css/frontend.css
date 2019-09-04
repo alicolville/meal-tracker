@@ -75,13 +75,12 @@ Table styles
 .yk-mt-t button {
     width: 25px;
     height: 25px;
-    padding: 0px 2px 0px 2px;
+    padding: 5px 2px 0px 2px;
     font-size: 11px;
     background: rgb(220,220,220);
     color: #000;
     box-shadow: none;
 }
-
 /*
     Modal
  */
