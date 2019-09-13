@@ -494,23 +494,24 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
  *
  * @return string
  */
-function yk_mt_form_number( $title, $name, $value = '', $step = 1, $min = 1, $max = 99999, $show_label = true, $required = true ) {
+function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step = 1, $min = 1, $max = 99999, $show_label = true, $required = true ) {
 
     $name = 'yk-mt-' . $name;
 
 	$html = '';
 
 	if ( true === $show_label ) {
-		$html .= sprintf( '<label for="%1$s">%2$s</label>', $name, $title );
+		$html .= sprintf( '<label for="%1$s" class="%3$s">%2$s</label>', $name, $title, $css_class );
 	}
 
-	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s />',
+	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s class="%7$s" />',
 		$name,
 		(int) $min,
 		(int) $max,
 		(int) $step,
 		$value,
-        ( true === $required ) ? ' required' : ''
+        ( true === $required ) ? ' required' : '',
+        $css_class
 	);
 
 	return $html;
