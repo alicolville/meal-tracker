@@ -6,6 +6,7 @@ var yk_mt_ctx                   = false;
 var yk_mt_chart                 = false;
 var yk_mt_meal_tracker_found    = ( 'undefined' !== typeof( yk_mt_sc_meal_tracker ) );
 var yk_meal_tracker_dialog      = false;
+var yk_meal_tracker_dialog_mode = 'add';
 var yk_mt_meal_selector         = false;
 
 jQuery( document ).ready( function( $ ) {
@@ -75,18 +76,48 @@ jQuery( document ).ready( function( $ ) {
     dialog_options.afterClose = function() { yk_mt_dialog_close() };
     dialog_options.beforeOpen = function() {
 
-        yk_mk_selectize_init()
+        yk_mk_selectize_init();
+
+        // Depending on the dialog mode, show / hide UI components
+        yk_mt_dialog_set_css_class_for_mode();
 
         $( '#yk-mt-add-meal-dialog' ).removeClass( 'yk-mt-hide' );
     };
 
-    yk_meal_tracker_dialog = $(".yk-mt-add-meal-prompt").animatedModal( dialog_options );
+    yk_meal_tracker_dialog = $(".yk-mt-add-meal-prompt, .yk-mt-edit-meal-prompt").animatedModal( dialog_options );
 
     /**
      * Tidy up after dialog closed
      */
     function yk_mt_dialog_close() {
+
+        yk_meal_tracker_dialog_mode = 'add';
+
         yk_mt_dialog_meal_type_reset();
+
+        $( '#yk-mt-add-meal-dialog' ).removeClass( 'yk-mt-mode-edit');
+        $( '#yk-mt-add-meal-dialog' ).addClass( 'yk-mt-mode-add' );
+    }
+
+    /**
+     * Open dialog box
+     * @param mode
+     */
+    function yk_mt_dialog_open( mode = 'edit' ) {
+
+        yk_meal_tracker_dialog_mode = mode;
+
+        if ( 'edit' === mode ) {
+            $('#yk-mt-open-dialog-edit').click();
+        }
+    }
+
+    /**
+     * Add CSS class to dialog for mode
+     */
+    function yk_mt_dialog_set_css_class_for_mode() {
+        $( '#yk-mt-add-meal-dialog' ).removeClass( 'yk-mt-mode-edit yk-mt-mode-add');
+        $( '#yk-mt-add-meal-dialog' ).addClass( 'yk-mt-mode-' + yk_meal_tracker_dialog_mode );
     }
 
     /**
@@ -96,9 +127,8 @@ jQuery( document ).ready( function( $ ) {
         yk_mt_selected_meal_type = false;
     }
 
-    // Init meal type data attribute
+    // Init meal type data attribute    //TODO. Is this needed? Set to false at top
     yk_mt_dialog_meal_type_reset();
-
 
     /**
      * ---------------------------------------------------------------------------------------
@@ -403,10 +433,54 @@ jQuery( document ).ready( function( $ ) {
 
     /**
      * ------ ---------------------------------------------------------------------------------
-     * HTML Templates and Rendering
+     * Edit Meal
      * ---------------------------------------------------------------------------------------
      */
 
+    function yk_mt_edit_meal_populate_form() {
+
+        console.log(yk_mt_temp_store_get( 'meal-id' ));
+
+    }
+
+
+    /**
+     * ------ ---------------------------------------------------------------------------------
+     * Helper function
+     * ---------------------------------------------------------------------------------------
+     */
+
+    /*
+        Store some temp data against the shortcode div
+     */
+    function yk_mt_temp_store_set( key, value ) {
+        $( '#yk-mt-shortcode-meal-tracker' ).attr( 'yk-mt-' + key, value );
+    }
+
+    /*
+       Fetch some temp data against the shortcode div
+    */
+    function yk_mt_temp_store_get( key ) {
+        return $( '#yk-mt-shortcode-meal-tracker' ).attr( 'yk-mt-' + key );
+    }
+
+    /**
+     * ------ ---------------------------------------------------------------------------------
+     * HTML Templates and Rendering
+     * ---------------------------------------------------------------------------------------
+     */
+    $( '.yk-mt-hide-if-not-pro' ).live( 'click', function( e ) {
+
+        e.preventDefault();
+
+        let meal_id = $( this ).attr( 'data-meal-id' );
+
+        yk_mt_temp_store_set( 'meal-id', meal_id );
+
+        yk_mt_edit_meal_populate_form();
+
+        yk_mt_dialog_open();
+    });
     /**
      * HTML for a Meal row (within data table)
      * @param meal_entry_id
@@ -426,7 +500,7 @@ jQuery( document ).ready( function( $ ) {
                                 ${d}
                             </div>
                             <div class="yk-mt-c yk-mt-o">
-                                <button data-id="${meal_entry_id}" class="yk-mt-act-r yk-mt-hide-if-not-pro" >
+                                <button data-meal-id="${id}" class="yk-mt-act-r yk-mt-hide-if-not-pro yk-mt-meal-button-edit" >
                                     <img src="${yk_mt[ 'plugin-url' ]}assets/images/icons/edit.png" alt="${yk_mt_sc_meal_tracker[ 'localise' ][ 'edit-text' ]}" />
                                 </button>
                                 <button data-id="${meal_entry_id}" class="yk-mt-act-r" onclick="yk_mt_trigger_meal_entry_delete( ${meal_entry_id} )">

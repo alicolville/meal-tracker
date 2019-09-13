@@ -9,6 +9,8 @@
 	 */
 	function yk_mt_shortcode_meal_tracker() {
 
+	    // TODO: Check here to ensure the shortcode has only been placed once!
+
 		if ( true === is_admin() ) {
 			return '';
 		}
@@ -23,12 +25,9 @@
 		// This is used to create an empty entry if one doesn't already exist for this user / day
 		yk_mt_entry_get_id_or_create();
 
-		// TODO
-	//	yk_mt_shortcode_meal_tracker_enqueue_scripts();
-
 		yk_mt_shortcode_meal_tracker_localise();
 
-		$html .= '<div class="yk-mt-shortcode-meal-tracker">';
+		$html .= '<div id="yk-mt-shortcode-meal-tracker" class="yk-mt-shortcode-meal-tracker">';
 
 		$html .= yk_mt_shortcode_meal_tracker_summary();
 
@@ -150,17 +149,20 @@
 
         $html = sprintf( '<div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-type="0" class="yk-mt-hide">
                              <div class="yk-mt-modal-header">
-                                <h3>%3$s</h3>
+                                <h3 class="yk-mt-hide-if-editing">%3$s</h3>
+                                <h3 class="yk-mt-hide-if-adding">%4$s</h3>
                                 <button id="btn-close-modal" class="close-yk-mt-add-meal-dialog yk-mt-button-silent">
                                     %2$s
                                 </button>
                              </div>   
                 			 <div class="yk-mt-modal-content">
+                			    <div class="yk-mt-hide-if-editing">
                 			    <form id="yk-mt-form-add-meal-to-entry">
 				                ',
 				            $top,
                             __( 'Close', YK_MT_SLUG ),
-                            __( 'Log a meal', YK_MT_SLUG )
+                            __( 'Log a meal', YK_MT_SLUG ),
+                            __( 'Edit meal', YK_MT_SLUG )
         );
 
         // Build HTML for "Add Meal" tab
@@ -185,14 +187,17 @@
                                   <div class="yk-mt-auto-close">
                                         <input type="checkbox" id="%1$s" checked="checked" />
                                         <label for="%1$s">%2$s</label>
-                                  </div>',
+                                  </div>
+                                </div>',
                                 'yk-mt-button-add-meal-close',
                                 __( 'Close screen after adding meal(s)', YK_MT_SLUG )
         );
 
         $html .= yk_mt_shortcode_meal_tracker_add_new_meal_form();
 
-        $html .= '</div></div>';
+        $html .= '</div></div>
+                <a id="yk-mt-open-dialog-edit" class="yk-mt-meal-button-edit yk-mt-add-meal-prompt yk-mt-hide"></a>               
+        ';
 
 		return $html;
 	}
@@ -205,7 +210,7 @@
 
 		$html = sprintf( '  <div class="yk-mt-add-new-meal-form">
                                         <form id="yk-mt-form-add-new-meal">
-								<h5>%s</h5>', __( 'Add new meal', YK_MT_SLUG ) );
+								<h5 id="yk-mt-header-meal-add" class="yk-mt-hide-if-editing">%s</h5>', __( 'Add new meal', YK_MT_SLUG ) );
 
 		$html .= yk_mt_form_text( __( 'Name', YK_MT_SLUG ),	'add-meal-name' );
 
@@ -217,9 +222,13 @@
 
 		$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', '', yk_mt_units() );
 
-		$html .= sprintf( ' <button id="yk-mt-button-meal-add" class="yk-mt-button-add-new-meal yk-mt-button-secondary">%1$s</button>',
+		$html .= sprintf( ' <button id="yk-mt-button-meal-add" class="yk-mt-button-add-new-meal yk-mt-button-secondary yk-mt-hide-if-editing">%1$s</button>',
 			__( 'Add a new meal', YK_MT_SLUG )
 		);
+
+        $html .= sprintf( ' <button id="yk-mt-button-meal-edit" class="yk-mt-button-secondary yk-mt-hide-if-adding">%1$s</button>',
+            __( 'Edit meal', YK_MT_SLUG )
+        );
 
 		$html .= '</form></div>';
 

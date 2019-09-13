@@ -165,9 +165,6 @@ Table styles
     margin-bottom: 0px;
     margin-top: 7px;
 }
-.yk-mt-hide {
-    display: none;
-}
 .yk-mt-auto-close {
     margin-top: 15px;
     font-size: 0.8em;
@@ -177,6 +174,14 @@ Table styles
 }
 #btn-close-modal {
     padding: 6px 15px 6px 15px;
+}
+
+/* Some rules to hide elements of the form when editing a meal */
+.yk-mt-mode-edit .yk-mt-hide-if-editing {
+    display: none;
+}
+.yk-mt-mode-add .yk-mt-hide-if-adding {
+    display: none;
 }
 /**
     Add a new meal form
@@ -314,6 +319,10 @@ Table styles
     opacity: 0.4;
 }
 
+.yk-mt-hide {
+    display: none !important;
+}
+
 /*
     CSS rules for Non Pro user
  */
@@ -323,3 +332,4 @@ Table styles
 .yk-mt-not-pro .yk-mt-hide-if-not-pro {
     display: none !important;
 }
+
