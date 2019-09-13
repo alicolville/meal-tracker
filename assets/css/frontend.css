@@ -70,7 +70,7 @@
 Table styles
 */
 .yk-mt-o {
-    width: 25px;
+    width: 60px;
 }
 .yk-mt-t button {
     width: 25px;
@@ -312,4 +312,14 @@ Table styles
 }
 .yk-mt-shortcode-meal-tracker .selectize-control.loading::before {
     opacity: 0.4;
+}
+
+/*
+    CSS rules for Non Pro user
+ */
+.yk-mt-not-pro .yk-mt-o {
+    width: 25px;
+}
+.yk-mt-not-pro .yk-mt-hide-if-not-pro {
+    display: none !important;
 }

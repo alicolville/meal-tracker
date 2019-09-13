@@ -307,6 +307,7 @@ function yk_mt_localised_strings( ) {
         'just-added'                    => __( 'Just Added:', YK_MT_SLUG ),
         'calorie-unit'                  => __( 'kcal', YK_MT_SLUG ),
         'remove-text'                   => __( 'Remove', YK_MT_SLUG ),
+        'edit-text'                   => __( 'Edit', YK_MT_SLUG ),
         'chart-label-used'              => __( 'used', YK_MT_SLUG ),
         'chart-label-remaining'         => __( 'remaining', YK_MT_SLUG ),
         'chart-label-target'            => __( 'Target', YK_MT_SLUG ),
