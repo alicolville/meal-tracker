@@ -51,6 +51,7 @@ function yk_mt_ajax_delete_meal_to_entry() {
 
     // TODO: Check the logged in user is deleting a meal entry of theirs?
 
+    // TODO: Chanage to yk_mt_ajax_get_post_value_int()
     $post_data[ 'meal-entry-id' ]  = ( false === empty( $post_data[ 'meal-entry-id' ] ) ) ? (int) $post_data[ 'meal-entry-id' ]  : false;
     $post_data[ 'entry-id' ]       = ( true === empty( $post_data[ 'entry-id' ] ) ) ? yk_mt_entry_get_id_or_create() : (int) $post_data[ 'entry-id' ];
 
@@ -72,10 +73,10 @@ add_action( 'wp_ajax_delete_meal_to_entry', 'yk_mt_ajax_delete_meal_to_entry' );
  *
  * @return mixed
  */
-function yk_mt_ajax_add_meal() {
+function yk_mt_ajax_meal_add() {
 
     check_ajax_referer( 'yk-mt-nonce', 'security' );
-
+    return wp_send_json( [ 'error' => 'updating-db' ] );
     $post_data = $_POST;
 
     $post_data[ 'added_by' ] = get_current_user_id();
@@ -87,29 +88,62 @@ function yk_mt_ajax_add_meal() {
     // Validate we have all the expected fields
     yk_mt_ajax_validate_post_data( $post_data, [ 'name', 'calories', 'quantity', 'unit' ] );
 
-    $meal_id = yk_mt_db_meal_add( $post_data );
+    // Are we updating a meal?
+    $meal_id = yk_mt_ajax_get_post_value_int( 'id', false );
 
-    if ( false === $meal_id ) {
-        return wp_send_json( [ 'error' => 'updating-db' ] );
-    }
+    if ( false === empty( $meal_id ) ) {
 
-    // If we have an entry / meal type ID, then add the meal to the entry automatically
-    if ( false === empty( $entry_id ) &&
+        if ( false === yk_mt_db_meal_update( $post_data ) ) {
+            return wp_send_json( [ 'error' => 'updating-db' ] );
+        }
+
+        yk_mt_entry_calories_calculate_update_used( $entry_id );
+
+    } else {
+        $meal_id = yk_mt_db_meal_add( $post_data );
+
+        // If we have an entry / meal type ID, then add the meal to the entry automatically
+        if ( false === empty( $entry_id ) &&
             false === empty( $_POST[ 'meal-type' ] ) ) {
 
-        yk_mt_entry_meal_add( $entry_id, $meal_id, (int) $_POST[ 'meal-type' ] );
+            yk_mt_entry_meal_add( $entry_id, $meal_id, (int) $_POST[ 'meal-type' ] );
+        }
+
+        if ( false === $meal_id ) {
+            return wp_send_json( [ 'error' => 'updating-db' ] );
+        }
     }
 
 	$post_data['id'] = $meal_id;
 
     wp_send_json( [ 'error' => false, 'new-meal' => $post_data ] );
 }
-add_action( 'wp_ajax_add_meal', 'yk_mt_ajax_add_meal' );
+add_action( 'wp_ajax_add_meal', 'yk_mt_ajax_meal_add' );
+
+/**
+ * Fetch the data for a meal
+ */
+function yk_mt_ajax_meal() {
+
+    check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+    $post_data = $_POST;
+
+    $post_data[ 'meal-id' ]  = yk_mt_ajax_get_post_value_int( 'meal-id' );
+
+    // Validate we have all the expected fields
+    yk_mt_ajax_validate_post_data( $post_data, [ 'meal-id' ] );
+
+    // TODO: Check this meal belongs to the current user
+
+    $meal = yk_mt_db_meal_get( $post_data[ 'meal-id' ] );
+
+    wp_send_json( [ 'error' => false, 'meal' => $meal ] );
+}
+add_action( 'wp_ajax_meal', 'yk_mt_ajax_meal' );
 
 /**
  * Fetch all meals for a given user
- *
- * TODO: expand to support search
  */
 function yk_mt_ajax_meals() {
 
@@ -184,6 +218,34 @@ function yk_mt_ajax_validate_post_data( $post_data, $keys = [] ) {
             wp_send_json( [ 'error' => 'missing-' . $key ] );
         }
     }
+}
+
+/**
+ * Fetch data from $_POST and force to INT
+ * @param $key
+ * @param null $default
+ * @return bool|int|mixed
+ */
+function yk_mt_ajax_get_post_value_int( $key, $default = NULL ) {
+    return yk_mt_ajax_get_post_value( $key, $default, true );
+}
+
+/**
+ * Fetch data from $_POST
+ * @param $key
+ * @param bool $default
+ * @param bool $force_to_int
+ * @return bool|int|mixed
+ */
+function yk_mt_ajax_get_post_value( $key, $default = NULL, $force_to_int = false ) {
+
+    $value = NULL;
+
+    if ( false === empty( $_POST[ $key ] ) ) {
+        return ( true === $force_to_int ) ? (int) $_POST[ $key ] : $_POST[ $key ];
+    }
+
+    return $default ?: NULL;
 }
 
 /**

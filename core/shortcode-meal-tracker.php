@@ -216,7 +216,11 @@
 
 		$html .= yk_mt_form_text( __( 'Description', YK_MT_SLUG ), 'add-meal-description', '', 200, false );
 
-		$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories', '', 'yk-mt-hide-if-editing' );
+		$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories' );
+
+        $html .= sprintf( ' <p class="yk-mt-info">%1$s</p>',
+            __( 'Calorie counts will automatically be adjusted for today\'s entry if a meal\'s calrie value is changed. Other entries will only be updated if manually amended.', YK_MT_SLUG )
+        );
 
 		$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity' );
 
@@ -345,7 +349,7 @@
         wp_enqueue_style( 'meal-tracker', plugins_url( 'assets/css/frontend' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-forced', plugins_url( 'assets/css/forced' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
-        yk_mt_enqueue_front_end_dependencies();
+       //todo  yk_mt_enqueue_front_end_dependencies();
 
 		wp_enqueue_script( 'mt-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-selectize', 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js', [], YK_MT_PLUGIN_VERSION, true );

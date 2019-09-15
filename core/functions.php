@@ -318,7 +318,8 @@ function yk_mt_localised_strings( ) {
         'meal-entry-added-short'        => __( 'Added', YK_MT_SLUG ),
         'meal-entry-missing-meal'       => __( 'Select a meal', YK_MT_SLUG ),
         'meal-entry-deleted-success'    => __( 'The meal has been removed', YK_MT_SLUG ),
-        'db-error'                      => __( 'There was error saving your changes', YK_MT_SLUG )
+        'db-error'                      => __( 'There was error saving your changes', YK_MT_SLUG ),
+        'db-error-loading'              => __( 'There was error loading your data', YK_MT_SLUG )
     ];
 }
 
@@ -494,7 +495,7 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
  *
  * @return string
  */
-function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step = 1, $min = 1, $max = 99999, $show_label = true, $required = true ) {
+function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step = 1, $min = 1, $max = 99999, $show_label = true, $required = true, $disabled = false ) {
 
     $name = 'yk-mt-' . $name;
 
@@ -504,30 +505,18 @@ function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step =
 		$html .= sprintf( '<label for="%1$s" class="%3$s">%2$s</label>', $name, $title, $css_class );
 	}
 
-	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s class="%7$s" />',
+	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s class="%7$s" %8$s />',
 		$name,
 		(int) $min,
 		(int) $max,
 		(int) $step,
 		$value,
         ( true === $required ) ? ' required' : '',
-        $css_class
+        $css_class,
+        ( true === $disabled ) ? ' disabled' : ''
 	);
 
 	return $html;
-}
-
-/**
- * Enqueue front end JS / CSS
- */
-function yk_mt_enqueue_front_end_dependencies() {
-
-//	$minified = yk_mt_use_minified();
-//
-//	wp_enqueue_script( 'meal-tracker', plugins_url( 'assets/js/core' . $minified . '.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
-//	wp_enqueue_style( 'meal-tracker', plugins_url( 'assets/css/frontend' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-//
-//	wp_localize_script( 'meal-tracker', 'yk_mt', yk_mt_ajax_config() );
 }
 
 /**

@@ -172,6 +172,10 @@ Table styles
 .yk-mt-auto-close label {
     margin-left: 5px;
 }
+.yk-mt-info {
+    font-size: 13px;
+    font-style: italic;
+}
 #btn-close-modal {
     padding: 6px 15px 6px 15px;
 }
