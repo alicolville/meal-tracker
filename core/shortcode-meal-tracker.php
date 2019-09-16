@@ -26,7 +26,10 @@
 
 		$html .= '<div id="yk-mt-shortcode-meal-tracker" class="yk-mt-shortcode-meal-tracker">';
 
-		yk_mt_shortcode_meal_tracker_localise( $shortcode_mode );
+        // This is used to create an empty entry if one doesn't already exist for this user / day
+        yk_mt_entry_get_id_or_create();
+
+        yk_mt_shortcode_meal_tracker_localise( $shortcode_mode );
 
 		// Load settings?
 		if ( 'settings' === $shortcode_mode ) {
@@ -34,9 +37,6 @@
 			$html .= yk_mt_shortcode_meal_tracker_settings();
 
 		} else {
-
-			// This is used to create an empty entry if one doesn't already exist for this user / day
-			yk_mt_entry_get_id_or_create();
 
 			$html .= yk_mt_shortcode_meal_tracker_summary();
 

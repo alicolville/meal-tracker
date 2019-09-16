@@ -166,16 +166,16 @@ function yk_mt_user_calories_target( $user_id = NULL ) {
 	}
 
 	// Has the user specified a preference
-	if ( NULL === $allowed_calories &&
+	if ( true === empty( $allowed_calories ) &&
 			true === $source_user_override_allowed ) {
 		$allowed_calories = yk_mt_settings_get( 'allowed-calories' );
 	}
 
 	// Failing everything, fetch the site default
-	if ( NULL === $allowed_calories ) {
+	if ( true === empty( $allowed_calories ) ) {
 		$allowed_calories = apply_filters( 'yk_mt_default_user_allowed_calories', 2000 );
 	}
-
+    var_dump($allowed_calories);
 	return (int) $allowed_calories;
 }
 
@@ -190,15 +190,15 @@ function yk_mt_user_calories_target_from_wlt( $user_id = NULL ) {
 
 	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
-	$source_wlt_mode    = 'lose';   // TODO: Hook this into Wlt gain, lose or maintain
-
 	// Take Calories from WLT?
 	if ( true === function_exists( 'ws_ls_harris_benedict_calculate_calories' ) ) {
+
+	    $yeken_aim =  ws_ls_get_progress_attribute_from_aim();
+
 		$yeken_wt = ws_ls_harris_benedict_calculate_calories();
 
-		// TODO: We need to have an option to select whether to use / lose / gain / maintain
-		if ( true === isset( $yeken_wt[ $source_wlt_mode ][ 'total' ] ) ) {
-			$allowed_calories = $yeken_wt[ $source_wlt_mode ][ 'total' ];
+		if ( true === isset( $yeken_wt[ $yeken_aim ][ 'total' ] ) ) {
+			$allowed_calories = $yeken_wt[ $yeken_aim ][ 'total' ];
 		}
 
 		return (int) $allowed_calories;
