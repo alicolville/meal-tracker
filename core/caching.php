@@ -351,3 +351,36 @@
 		yk_mt_cache_delete( 'meal-types' );
 	}
 	add_action( 'yk_mt_meal_types_added', 'yk_mt_cache_hook_meal_types_delete' );
+
+	/**
+	 * Clear cache for a given settings
+	 *
+	 * @param $id
+	 */
+	function yk_mt_cache_hook_settings_delete( $user_id ) {
+
+		yk_mt_cache_delete( 'settings-' . $user_id );
+	}
+	add_action( 'yk_mt_db_settings_deleted', 'yk_mt_cache_hook_settings_delete' );
+
+	/**
+	 * Update / Set cache for settings
+	 *
+	 * @param $id
+	 * @param $settings
+	 */
+	function yk_mt_cache_hook_settings_set( $user_id, $settings ) {
+		yk_mt_cache_set( 'settings-' . $user_id, $settings );
+	}
+	add_action( 'yk_mt_db_settings_lookup', 'yk_mt_cache_hook_settings_set', 10, 2 );
+	add_action( 'yk_mt_db_settings_updated', 'yk_mt_cache_hook_settings_set', 10, 2);
+
+	/**
+	 * Get cache for given settings
+	 *
+	 * @param $id
+	 */
+	function yk_mt_cache_filter_settings_get( $default_value, $user_id ) {
+		return yk_mt_cache_get( 'settings-' . $user_id );
+	}
+	add_filter( 'yk_mt_db_settings_get', 'yk_mt_cache_filter_settings_get', 10, 2 );

@@ -22,13 +22,13 @@
 /*----- Section Titles -----*/
 .yk-mt-accordion-section-title {
     width:100%;
-    padding:15px;
+    padding: 5px 5px 10px 10px;
     display:inline-block;
     border-bottom:1px solid #1a1a1a;
     background:#333;
     transition:all linear 0.15s;
     /* Type */
-    font-size:1.200em;
+    font-size:1.100em;
     text-shadow:0px 1px 0px #1a1a1a;
     color:#fff;
 }
@@ -194,9 +194,10 @@ Table styles
     margin-top: 20px;
 }
 
-.yk-mt-add-new-meal-form label,
-    .yk-mt-add-new-meal-form input,
-        .yk-mt-add-new-meal-form select {
+.yk-mt-settings-form label,
+    .yk-mt-add-new-meal-form label,
+        .yk-mt-add-new-meal-form input,
+            .yk-mt-add-new-meal-form select {
     display: block;
     width: 95%;
     margin-bottom: 10px;
@@ -337,3 +338,9 @@ Table styles
     display: none !important;
 }
 
+/*
+    Settings form
+ */
+.yk-mt-button-save-settings {
+    margin-top: 15px;
+}

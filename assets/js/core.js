@@ -8,6 +8,7 @@ var yk_mt_meal_tracker_found    = ( 'undefined' !== typeof( yk_mt_sc_meal_tracke
 var yk_meal_tracker_dialog      = false;
 var yk_meal_tracker_dialog_mode = 'add';
 var yk_mt_meal_selector         = false;
+var yk_mt_meal_tracker_show     = 'default' === yk_mt_sc_meal_tracker[ 'mode' ];
 
 jQuery( document ).ready( function( $ ) {
 
@@ -68,23 +69,28 @@ jQuery( document ).ready( function( $ ) {
         $( 'body' ).attr( 'yk-mt-meal-type', meal_type ); // remove this? Or keep above.
     });
 
-    /**
-     * Initialise dialog
-     */
-    var dialog_options = JSON.parse( yk_mt_sc_meal_tracker[ 'dialog-options' ] );
+    if ( true === yk_mt_meal_tracker_show ) {
 
-    dialog_options.afterClose = function() { yk_mt_dialog_close() };
-    dialog_options.beforeOpen = function() {
+        /**
+         * Initialise dialog
+         */
+        var dialog_options = JSON.parse( yk_mt_sc_meal_tracker[ 'dialog-options' ] );
 
-        yk_mk_selectize_init();
+        dialog_options.afterClose = function() { yk_mt_dialog_close() };
+        dialog_options.beforeOpen = function() {
 
-        // Depending on the dialog mode, show / hide UI components
-        yk_mt_dialog_set_css_class_for_mode();
+            yk_mk_selectize_init();
 
-        $( '#yk-mt-add-meal-dialog' ).removeClass( 'yk-mt-hide' );
-    };
+            // Depending on the dialog mode, show / hide UI components
+            yk_mt_dialog_set_css_class_for_mode();
 
-    yk_meal_tracker_dialog = $(".yk-mt-add-meal-prompt, .yk-mt-edit-meal-prompt").animatedModal( dialog_options );
+            $( '#yk-mt-add-meal-dialog' ).removeClass( 'yk-mt-hide' );
+
+            yk_mt_add_meal_form_show_quantity();
+        };
+
+        yk_meal_tracker_dialog = $(".yk-mt-add-meal-prompt, .yk-mt-edit-meal-prompt").animatedModal( dialog_options );
+    }
 
     /**
      * Tidy up after dialog closed
@@ -107,6 +113,8 @@ jQuery( document ).ready( function( $ ) {
      */
     function yk_mt_dialog_open( mode = 'edit' ) {
 
+        yk_mt_add_meal_form_show_quantity();
+
         yk_meal_tracker_dialog_mode = mode;
 
         if ( 'edit' === mode ) {
@@ -128,9 +136,6 @@ jQuery( document ).ready( function( $ ) {
     function yk_mt_dialog_meal_type_reset() {
         yk_mt_selected_meal_type = false;
     }
-
-    // Init meal type data attribute    //TODO. Is this needed? Set to false at top
-    yk_mt_dialog_meal_type_reset();
 
     /**
      * ---------------------------------------------------------------------------------------
@@ -167,10 +172,6 @@ jQuery( document ).ready( function( $ ) {
             load: function( query, callback ) {
 
                 this.clearOptions();
-
-                // if ( query.length > 0 && query.length < 3 ) {
-                //     return;
-                // } //todo
 
                 $.ajax({
                     url: yk_mt[ 'ajax-url' ],
@@ -456,6 +457,30 @@ jQuery( document ).ready( function( $ ) {
     }
 
     /**
+     * Toggle show / hide of quantity field dependant on unit selected
+     */
+    $( '#yk-mt-add-meal-unit').change( function() {
+        yk_mt_add_meal_form_show_quantity();
+    });
+
+    /**
+     * Show  / Hide quantity field depending on the unit selected
+     */
+    function yk_mt_add_meal_form_show_quantity() {
+
+        let value           = $( '#yk-mt-add-meal-unit' ).val();
+        let quantity_row    = $( '#yk-mt-add-meal-quantity-row' );
+
+        if ( true === yk_mt_hide_quantity( value ) ) {
+            quantity_row.hide( 500 );
+            $( '#yk-mt-add-meal-quantity' ).prop( 'required', false );
+        } else {
+            quantity_row.show( 500 );
+            $( '#yk-mt-add-meal-quantity' ).prop( 'required', true );
+        }
+    }
+
+    /**
      * ------ ---------------------------------------------------------------------------------
      * Edit Meal
      * ---------------------------------------------------------------------------------------
@@ -489,23 +514,13 @@ jQuery( document ).ready( function( $ ) {
 
         if ( false === response[ 'error' ] ) {
 
-            //TODO: Be clever here. Only post back if a change has been made.
-
-          //  console.log(response);
-
             let meal = response[ 'meal' ];
 
             $( '#yk-mt-add-meal-name' ).val( meal[ 'name' ] );
             $( '#yk-mt-add-meal-description' ).val( meal[ 'description' ] );
             $( '#yk-mt-add-meal-calories' ).val( meal[ 'calories' ] );
-            $( '#yk-mt-add-meal-calories' ).val( meal[ 'calories' ] );
+            $( '#yk-mt-add-meal-unit' ).val( meal[ 'unit' ] );
             $( '#yk-mt-add-meal-quantity' ).val( meal[ 'quantity' ] );
-
-            // let name        = $( '#yk-mt-add-meal-name' ).val();
-            // let description = $( '#yk-mt-add-meal-description' ).val();
-            // let calories    = $( '#yk-mt-add-meal-calories' ).val();
-            // let quantity    = $( '#yk-mt-add-meal-quantity' ).val();
-            // let unit        = $( '#yk-mt-add-meal-unit' ).val();
 
             yk_mt_dialog_open();
 
@@ -535,7 +550,7 @@ jQuery( document ).ready( function( $ ) {
             'meal-type'     : yk_mt_selected_meal_type
         };
 
-        yk_mt_post( 'add_meal', data,  yk_mt_post_api_add_meal_callback);
+        yk_mt_post( 'add_meal', data,  yk_mt_post_api_edit_meal_callback);
     }
 
     /**
@@ -556,15 +571,48 @@ jQuery( document ).ready( function( $ ) {
             $( 'body' ).trigger( 'meal-tracker-meal-updated' );
 
         } else {
-
             $( '#btn-close-modal' ).click();
-           // $( 'body' ).trigger( 'meal-tracker-save-error' );
+            $( 'body' ).trigger( 'meal-tracker-save-error' );
         }
     }
 
     /**
      * ------ ---------------------------------------------------------------------------------
-     * Helper function
+     * Save Settings form
+     * ---------------------------------------------------------------------------------------
+     */
+
+    $( '#yk-mt-settings-form' ).submit( function( e ) {
+
+        e.preventDefault();
+
+        let data = {};
+
+        $('#yk-mt-settings-form input[type=number], #yk-mt-settings-form select').each( function(){
+            data[ $( this ).attr('id') ] = $( this ).val();
+        });
+
+        yk_mt_post( 'save_settings', data,  yk_mt_post_api_save_settings_callback );
+    });
+
+    function yk_mt_post_api_save_settings_callback( data, response ) {
+
+        if ( false === response[ 'error' ] ) {
+
+            yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'settings-saved-success' ] );
+
+            setTimeout(function(){
+                window.location.replace( yk_mt[ 'page-url' ] ); // you can pass true to reload function to ignore the client cache and reload from the server
+            }, 600 );
+
+        } else {
+            $( 'body' ).trigger( 'meal-tracker-save-error' );
+        }
+    }
+
+    /**
+     * ------ ---------------------------------------------------------------------------------
+     * Helper functions
      * ---------------------------------------------------------------------------------------
      */
 
@@ -580,6 +628,15 @@ jQuery( document ).ready( function( $ ) {
     */
     function yk_mt_temp_store_get( key ) {
         return $( '#yk-mt-shortcode-meal-tracker' ).attr( 'yk-mt-' + key );
+    }
+
+    /**
+     * Is this a unit that we should hide quantity for?
+     * @param key
+     * @returns bool
+     */
+    function yk_mt_hide_quantity( key ) {
+        return ( -1 !== $.inArray( key, yk_mt[ 'units-hide-quantity' ] ) );
     }
 
     /**
@@ -689,7 +746,7 @@ jQuery( document ).ready( function( $ ) {
     }
 
     // Are we on a shortcode page and have initial data to load?
-    if ( yk_mt_sc_meal_tracker [ 'load-entry' ] ) {
+    if ( true === yk_mt_meal_tracker_show && yk_mt_sc_meal_tracker[ 'load-entry' ] ) {
         yk_mt_render_entry( yk_mt_sc_meal_tracker [ 'todays-entry' ] );
     }
 

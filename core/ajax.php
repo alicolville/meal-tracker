@@ -11,10 +11,7 @@ function yk_mt_ajax_add_meal_to_entry() {
 
     check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-    // TODO: Check the logged in user is adding a meal to an entry of theirs?
-
-	$user_id = NULL;
-	$post_data = $_POST;
+    $post_data = $_POST;
 
     $post_data[ 'user-id' ]     = get_current_user_id();
     $post_data[ 'entry-id' ]    = ( true === empty( $post_data[ 'entry-id' ] ) ) ? yk_mt_entry_get_id_or_create( (int) $post_data[ 'user-id' ]  ) : (int) $post_data[ 'entry-id' ];
@@ -29,6 +26,11 @@ function yk_mt_ajax_add_meal_to_entry() {
     }
 
     $post_data = yk_mt_ajax_strip_incoming( $post_data );
+
+	// Ensure the user is the owner of the entry.
+	if ( false === yk_mt_security_entry_owned_by_user( $post_data[ 'entry-id' ], $post_data[ 'user-id' ] ) ) {
+		return wp_send_json( [ 'error' => 'security' ] );
+	}
 
     for ( $i = 0; $i < $quantity; $i++ ) {
         if ( false === yk_mt_entry_meal_add( (int) $post_data[ 'entry-id' ], (int) $post_data[ 'meal-id' ], (int) $post_data[ 'meal-type' ] ) ) {
@@ -49,14 +51,16 @@ function yk_mt_ajax_delete_meal_to_entry() {
 
     $post_data = $_POST;
 
-    // TODO: Check the logged in user is deleting a meal entry of theirs?
-
-    // TODO: Chanage to yk_mt_ajax_get_post_value_int()
-    $post_data[ 'meal-entry-id' ]  = ( false === empty( $post_data[ 'meal-entry-id' ] ) ) ? (int) $post_data[ 'meal-entry-id' ]  : false;
+    $post_data[ 'meal-entry-id' ]  =  yk_mt_ajax_get_post_value_int( 'meal-entry-id' );
     $post_data[ 'entry-id' ]       = ( true === empty( $post_data[ 'entry-id' ] ) ) ? yk_mt_entry_get_id_or_create() : (int) $post_data[ 'entry-id' ];
 
     // Validate we have all the expected fields
     yk_mt_ajax_validate_post_data( $post_data, [ 'meal-entry-id', 'entry-id' ] );
+
+	// Ensure the user is the owner of the entry.
+	if ( false === yk_mt_security_entry_owned_by_user( $post_data[ 'entry-id' ], get_current_user_id() ) ) {
+		return wp_send_json( [ 'error' => 'security' ] );
+	}
 
     $post_data = yk_mt_ajax_strip_incoming( $post_data );
 
@@ -76,7 +80,7 @@ add_action( 'wp_ajax_delete_meal_to_entry', 'yk_mt_ajax_delete_meal_to_entry' );
 function yk_mt_ajax_meal_add() {
 
     check_ajax_referer( 'yk-mt-nonce', 'security' );
-    return wp_send_json( [ 'error' => 'updating-db' ] );
+
     $post_data = $_POST;
 
     $post_data[ 'added_by' ] = get_current_user_id();
@@ -86,7 +90,15 @@ function yk_mt_ajax_meal_add() {
     $post_data = yk_mt_ajax_strip_incoming( $post_data, [ 'entry-id', 'meal-type' ] );
 
     // Validate we have all the expected fields
-    yk_mt_ajax_validate_post_data( $post_data, [ 'name', 'calories', 'quantity', 'unit' ] );
+    yk_mt_ajax_validate_post_data( $post_data, [ 'name', 'calories', 'unit' ] );
+
+    // If a unit that doesn't expect a quantity, then clear quantity
+	if ( true === in_array( $post_data[ 'unit' ], yk_mt_units_where( 'drop-quantity' ) ) ) {
+		$post_data[ 'quantity' ] = '';
+	} else {
+		// Now check we have it if expected!
+		yk_mt_ajax_validate_post_data( $post_data, [ 'quantity' ] );
+	}
 
     // Are we updating a meal?
     $meal_id = yk_mt_ajax_get_post_value_int( 'id', false );
@@ -134,9 +146,11 @@ function yk_mt_ajax_meal() {
     // Validate we have all the expected fields
     yk_mt_ajax_validate_post_data( $post_data, [ 'meal-id' ] );
 
-    // TODO: Check this meal belongs to the current user
+    $meal = yk_mt_db_meal_get( $post_data[ 'meal-id' ], get_current_user_id() );
 
-    $meal = yk_mt_db_meal_get( $post_data[ 'meal-id' ] );
+    if ( false === $meal ) {
+	    return wp_send_json( [ 'error' => 'loading-meal' ] );
+    }
 
     wp_send_json( [ 'error' => false, 'meal' => $meal ] );
 }
@@ -161,11 +175,57 @@ function yk_mt_ajax_meals() {
 	// Compress meal objects to reduce data returned via AJAX
 	$meals = array_map( 'yk_mt_ajax_prep_meal', $meals );
 
-	// TODO: Do some sort of caching. A lot of processing has occurred here.
-
 	wp_send_json( $meals );
 }
 add_action( 'wp_ajax_meals', 'yk_mt_ajax_meals' );
+
+/**
+ * Save Settings for user
+ */
+function yk_mt_ajax_save_settings() {
+
+	check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+	$updated = false;
+
+	foreach ( $_POST as $key => $value ) {
+
+		$key = str_replace( 'yk-mt-', '', $key );
+
+		if ( false === in_array( $key, yk_mt_settings_allowed_keys() ) ) {
+			continue;
+		}
+
+		yk_mt_settings_set( $key, $value );
+
+		$updated = true;
+	}
+
+	wp_send_json( [ 'error' => ! $updated ] );
+}
+add_action( 'wp_ajax_save_settings', 'yk_mt_ajax_save_settings' );
+
+/**
+ * REST Handler for fetching an entry
+ *
+ * @return WP_REST_Response
+ */
+function yk_mt_ajax_get_entry() {
+
+	check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+	$entry_id = ( false === empty( $_POST[ 'entry-id' ] ) ) ? (int) $_POST[ 'entry-id' ] : false;
+
+    $entry = yk_mt_entry( $entry_id );
+
+    // Ensure the User is requesting their own entry!
+	if ( get_current_user_id() !== (int) $entry[ 'user_id' ] ) {
+		return wp_send_json( [ 'error' => 'security' ] );
+	}
+
+    wp_send_json( $entry );
+}
+add_action( 'wp_ajax_get_entry', 'yk_mt_ajax_get_entry' );
 
 /**
  * Strip back a meal object ready for transmission via AJAX
@@ -246,28 +306,4 @@ function yk_mt_ajax_get_post_value( $key, $default = NULL, $force_to_int = false
     }
 
     return $default ?: NULL;
-}
-
-/**
- * REST Handler for fetching an entry
- *
- * @return WP_REST_Response
- */
-function yk_mt_ajax_get_entry() {
-
-    check_ajax_referer( 'yk-mt-nonce', 'security' );
-
-    $entry_id = ( false === empty( $_POST[ 'entry-id' ] ) ) ? (int) $_POST[ 'entry-id' ] : false;
-
-    $entry = yk_mt_entry( $entry_id );
-
-    wp_send_json( $entry );
-}
-add_action( 'wp_ajax_get_entry', 'yk_mt_ajax_get_entry' );
-
-/**
- * Extra layer to ensure an admin call to the API is allowed.
- */
-function yk_mt_api_admin_allowed() {
-	return true; //TODO! Still needed? If in Admin, ensure they have the correct capability to be editing user records.
 }

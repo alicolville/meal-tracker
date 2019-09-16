@@ -15,6 +15,8 @@
 			return '';
 		}
 
+		$shortcode_mode = yk_mt_shortcode_get_mode();
+
 		$html = '<!-- Meal Tracker Start -->';
 
 		// Is the user logged in?
@@ -22,26 +24,64 @@
 			return yk_mt_shortcode_log_in_prompt();
 		}
 
-		// This is used to create an empty entry if one doesn't already exist for this user / day
-		yk_mt_entry_get_id_or_create();
-
-		yk_mt_shortcode_meal_tracker_localise();
-
 		$html .= '<div id="yk-mt-shortcode-meal-tracker" class="yk-mt-shortcode-meal-tracker">';
 
-		$html .= yk_mt_shortcode_meal_tracker_summary();
+		yk_mt_shortcode_meal_tracker_localise( $shortcode_mode );
 
-		$html .= yk_mt_shortcode_meal_tracker_meal_types();
+		// Load settings?
+		if ( 'settings' === $shortcode_mode ) {
 
+			$html .= yk_mt_shortcode_meal_tracker_settings();
 
-		// Embed hidden form / dialog required for adding a meal
-		$html .= yk_mt_shortcode_meal_tracker_add_meal_dialog();
+		} else {
+
+			// This is used to create an empty entry if one doesn't already exist for this user / day
+			yk_mt_entry_get_id_or_create();
+
+			$html .= yk_mt_shortcode_meal_tracker_summary();
+
+			$html .= yk_mt_shortcode_meal_tracker_meal_types();
+
+			if ( true === yk_mt_is_pro() ) {
+				$html .= sprintf( '<p><a href="%s">%s</a></p>', yk_mt_shortcode_get_current_url( 'settings' ), __( 'Settings', YK_MT_SLUG ) );
+			}
+
+			// Embed hidden form / dialog required for adding a meal
+			$html .= yk_mt_shortcode_meal_tracker_add_meal_dialog();
+
+		}
 
 		$html .= '</div>';
 
 		return $html;
 	}
 	add_shortcode( 'meal-tracker', 'yk_mt_shortcode_meal_tracker' );
+
+	/**
+	 * Get current URL with mode argument added
+	 * @param $mode
+	 *
+	 * @return mixed
+	 */
+	function yk_mt_shortcode_get_current_url( $mode ) {
+		return add_query_arg( 'yk-mt-mode', $mode, get_permalink() );
+	}
+
+	/**
+	 * Get current mode
+	 * @return mixed|null
+	 */
+	function yk_mt_shortcode_get_mode() {
+		$mode = ( false === empty( $_GET[ 'yk-mt-mode' ] ) ) ?
+									$_GET[ 'yk-mt-mode' ] :
+										'default';
+
+		if ( 'default' !== $mode && true !== yk_mt_is_pro() ) {
+			$mode = 'default';
+		}
+
+		return $mode;
+	}
 
     /**
      * Display chart JS and summary data
@@ -56,6 +96,48 @@
 			                        
 			                </div>
 	                    </div>';
+    }
+
+	/**
+	 * Render Settings tab
+	 *
+	 * @return string
+	 */
+    function yk_mt_shortcode_meal_tracker_settings() {
+
+	    $html = yk_mt_html_accordion_open( 'yk-mt-settings' );
+
+	    $html .= '<form id="yk-mt-settings-form" class="yk-mt-settings-form" >';
+
+	    if ( true === yk_mt_site_options( 'allow-calorie-override' ) ) {
+
+		    /**
+		     * Calories Tab
+		     */
+		    $calories_html = yk_mt_form_number( __( 'Specify your own allowed calorie intake for each day. Current: ', YK_MT_SLUG ) .
+		                                            yk_mt_user_calories_target() . __( 'kcal: ', YK_MT_SLUG ),
+			    'allowed-calories',
+			    yk_mt_settings_get( 'allowed-calories' ),
+		        '',
+		        1,
+		        1,
+		        20000
+		    );
+
+		    $html .= yk_mt_html_accordion_section( [    'id' => 1,
+		                                                'title' => __( 'Calorie Intake', YK_MT_SLUG ),
+		                                                'content' => $calories_html,
+		                                                'is-active' => true
+		    ]);
+	    }
+
+	    $html .= yk_mt_html_accordion_close();
+
+	    $html .= sprintf( '<button id="yk-mt-button-save-settings" class="yk-mt-button-save-settings yk-mt-button-secondary">%1$s</button>',
+		    __( 'Save Settings', YK_MT_SLUG )
+	    );
+
+	    return $html . '</form></div>';
     }
 
 	/**
@@ -102,7 +184,6 @@
 			}
 
 			$html .= yk_mt_html_accordion_close();
-
 		}
 
 		return $html;
@@ -218,13 +299,13 @@
 
 		$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories' );
 
-        $html .= sprintf( ' <p class="yk-mt-info">%1$s</p>',
+        $html .= sprintf( ' <p class="yk-mt-info yk-mt-hide-if-adding">%1$s</p>',
             __( 'Calorie counts will automatically be adjusted for today\'s entry if a meal\'s calrie value is changed. Other entries will only be updated if manually amended.', YK_MT_SLUG )
         );
 
-		$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity' );
-
 		$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', '', yk_mt_units() );
+
+		$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity', '', '', 1, 1, 99999, true, false );
 
 		$html .= sprintf( ' <button id="yk-mt-button-meal-add" class="yk-mt-button-add-new-meal yk-mt-button-secondary yk-mt-hide-if-editing">%1$s</button>',
 			__( 'Add a new meal', YK_MT_SLUG )
@@ -369,7 +450,7 @@
 	/**
 	 * Add relevant data into JS object
 	 */
-	function yk_mt_shortcode_meal_tracker_localise() {
+	function yk_mt_shortcode_meal_tracker_localise( $shortcode_mode = '' ) {
 
 		$dialog_options = [
 			'color'         => '#FFFFFF',
@@ -380,6 +461,7 @@
 		$dialog_options = apply_filters( 'yk_mt_shortcode_meal_tracker_dialog_options', $dialog_options );
 
 		wp_localize_script( 'meal-tracker', 'yk_mt_sc_meal_tracker', [
+			'mode'              => $shortcode_mode,
 			'dialog-options'    => json_encode( $dialog_options ),
             'localise'          => yk_mt_localised_strings(),
             'todays-entry'      => yk_mt_entry(),

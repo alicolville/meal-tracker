@@ -29,7 +29,7 @@ defined('ABSPATH') or die("Jog on!");
 
 define( 'YK_MT_ABSPATH', plugin_dir_path( __FILE__ ) );
 
-define( 'YK_MT_PLUGIN_VERSION', '0.2' );
+define( 'YK_MT_PLUGIN_VERSION', '0.3' );
 define( 'YK_MT_SLUG', 'meal-tracker' );
 
 // -----------------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ define( 'YK_MT_SLUG', 'meal-tracker' );
 
 include_once YK_MT_ABSPATH . 'core/functions.php';
 include_once YK_MT_ABSPATH . 'core/license.php';
-include_once YK_MT_ABSPATH . 'core/caching.php'; //TODO
+// include_once YK_MT_ABSPATH . 'core/caching.php'; //TODO
 include_once YK_MT_ABSPATH . 'core/db.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-functions.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-meal-tracker.php';
@@ -46,7 +46,7 @@ include_once YK_MT_ABSPATH . 'core/ajax.php';
 include_once YK_MT_ABSPATH . 'core/activate.php';
 
 // TODO: Remove
-//include_once YK_MT_ABSPATH . 'tests.php';
+include_once YK_MT_ABSPATH . 'tests.php';
 
 // -----------------------------------------------------------------------------------------
 // AC: Load relevant language files
