@@ -158,24 +158,24 @@ function yk_mt_user_calories_target( $user_id = NULL ) {
 
 	$allowed_calories               = NULL;
 	$source_wlt                     = true;             // TODO: Make this an option
-	$source_user_override_allowed   = filter_var( yk_mt_site_options( 'allow-calorie-override' ), FILTER_VALIDATE_BOOLEAN );
+	$source_user_override_allowed   = yk_mt_site_options( 'allow-calorie-override' );
+
+    // Has the user set their own calorie allowance
+    if ( true === $source_user_override_allowed ) {
+        $allowed_calories = yk_mt_settings_get( 'allowed-calories' );
+    }
 
 	// Shout out to Weight Tracker by YeKen
-	if ( true === $source_wlt ) {
-		$allowed_calories = yk_mt_user_calories_target_from_wlt( $user_id );
-	}
-
-	// Has the user specified a preference
 	if ( true === empty( $allowed_calories ) &&
-			true === $source_user_override_allowed ) {
-		$allowed_calories = yk_mt_settings_get( 'allowed-calories' );
+            true === $source_wlt ) {
+		$allowed_calories = yk_mt_user_calories_target_from_wlt( $user_id );
 	}
 
 	// Failing everything, fetch the site default
 	if ( true === empty( $allowed_calories ) ) {
 		$allowed_calories = apply_filters( 'yk_mt_default_user_allowed_calories', 2000 );
 	}
-    var_dump($allowed_calories);
+
 	return (int) $allowed_calories;
 }
 
