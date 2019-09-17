@@ -10,6 +10,16 @@
 			return;
 		}
 
+		//$t = yk_mt_db_settings_update( 1, ['name' => 'ali'] );
+
+		//yk_mt_settings_set( rand(0,100), 'teating');
+
+		//$t = yk_mt_db_settings_get( 1 );
+
+		$t = yk_mt_user_calories_target();
+
+		var_dump( $t );
+
 		//$entry = yk_mt_db_entry_get( 5 );
 
 
@@ -43,8 +53,8 @@
 
 		//[ 'added_by', 'name', 'calories', 'quantity' ]
 
-		yk_mt_db_meal_add( [ 'added_by' => 1, 'name' => __( 'Rice', YK_MT_SLUG ), 'calories' => 31, 'quantity' => 130, 'description' => 'Rice' ] );
-		yk_mt_db_meal_add( [ 'added_by' => 1, 'name' => __( 'Salad', YK_MT_SLUG ), 'calories' => 80, 'quantity' => 2, 'description' => 'Fresh salad' ] );
+	//	yk_mt_db_meal_add( [ 'added_by' => 1, 'name' => __( 'Rice', YK_MT_SLUG ), 'calories' => 31, 'quantity' => 130, 'description' => 'Rice' ] );
+	//	yk_mt_db_meal_add( [ 'added_by' => 1, 'name' => __( 'Salad', YK_MT_SLUG ), 'calories' => 80, 'quantity' => 2, 'description' => 'Fresh salad' ] );
 		//$t = yk_mt_meal_types_all();
 
 		//print_r( $t );

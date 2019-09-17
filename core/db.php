@@ -6,6 +6,58 @@
 	define( 'YK_WT_DB_ENTRY', 'yk_mt_entry');                   // Store all entries for the given user
 	define( 'YK_WT_DB_ENTRY_MEAL', 'yk_mt_entry_meals');        // Store all meals for given entry
 	define( 'YK_WT_DB_MEAL_TYPES', 'yk_mt_meal_types');         // Store all meal types
+	define( 'YK_WT_DB_SETTINGS', 'yk_mt_settings');             // Store all settings for the given user
+
+	/**
+	 * Get settings
+	 *
+	 * @param $key
+	 */
+	function yk_mt_db_settings_get( $user_id ) {
+
+		$cache = apply_filters( 'yk_mt_db_settings_get', NULL, $user_id );
+
+		if ( true === is_array( $cache ) ) {
+			return $cache;
+		}
+
+		global $wpdb;
+
+		$sql        = $wpdb->prepare('Select json from ' . $wpdb->prefix . YK_WT_DB_SETTINGS . ' where user_id = %d limit 0, 1', $user_id );
+		$settings   = $wpdb->get_var( $sql );
+		$settings   = ( false === empty( $settings ) ) ? json_decode( $settings, true ) : [];
+
+		do_action( 'yk_mt_db_settings_lookup', $user_id, $settings );
+
+		return $settings;
+	}
+
+	/**
+	 * Add settings for the user
+	 * @param $user_id
+	 * @param array $settings
+	 *
+	 * @return bool
+	 */
+	function yk_mt_db_settings_update( $user_id, $settings = [] ) {
+
+		global $wpdb;
+
+		$settings = ( true === is_array( $settings ) ) ? json_encode( $settings ) : [];
+
+		$result = $wpdb->replace(   $wpdb->prefix . YK_WT_DB_SETTINGS ,
+									[ 'user_id' => $user_id, 'json' => $settings ],
+									[ '%d', '%s' ]
+		);
+
+		if ( false === $result ) {
+			return false;
+		}
+
+		do_action( 'yk_mt_db_settings_deleted', $user_id );
+
+		return true;
+	}
 
 	/**
 	 * Add an entry
@@ -143,6 +195,21 @@
 	}
 
 	/**
+	 * Return User ID for entry ID
+	 * @param $entry_id
+	 *
+	 * @return mixed
+	 */
+	function yk_mt_db_entry_user_id( $entry_id ) {
+
+		global $wpdb;
+
+		$sql = $wpdb->prepare( 'Select user_id from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where id = %d', $entry_id );
+
+		return $wpdb->get_var( $sql );
+	}
+
+	/**
 	 * Get details for an entry
 	 *
 	 * @param $key
@@ -164,7 +231,7 @@
 
 		global $wpdb;
 
-		$sql = $wpdb->prepare('Select * from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where id = %d limit 0, 1', $id );
+		$sql = $wpdb->prepare( 'Select * from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where id = %d limit 0, 1', $id );
 
 		$entry = $wpdb->get_row( $sql, ARRAY_A );
 
@@ -464,15 +531,26 @@
 	 *
 	 * @param $key
 	 */
-	function yk_mt_db_meal_get( $id ) {
+	function yk_mt_db_meal_get( $id, $added_by = false ) {
 
 		if ( $cache = apply_filters( 'yk_mt_db_meal_get', NULL, $id ) ) {
+
+			// Ensure, if user ID specified, that we are only letting cache through for that user
+			if ( false !== $added_by && (int) $cache[ 'added_by' ] !== (int) $added_by ) {
+				return false;
+			}
+
 			return $cache;
 		}
 
 		global $wpdb;
 
-		$sql = $wpdb->prepare('Select * from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where id = %d limit 0, 1', $id );
+		if ( false !== $added_by ) {
+			$sql = $wpdb->prepare(  'Select * from ' . $wpdb->prefix . YK_WT_DB_MEALS .
+			                        ' where id = %d and added_by = %d limit 0, 1', $id, $added_by );
+		} else {
+			$sql = $wpdb->prepare('Select * from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where id = %d limit 0, 1', $id );
+		}
 
 		$meal = $wpdb->get_row( $sql, ARRAY_A );
 
@@ -645,24 +723,25 @@
 	function yk_mt_db_mysql_formats( $data ) {
 
 		$formats = [
-			'id' => '%d',
-			'name' => '%s',
-			'added_by' => '%d',
-			'entry_id' => '%d',
-			'gain_loss' => '%s',
-			'calories' => '%f',
-			'quantity' => '%f',
-			'description' => '%s',
-			'user_id' => '%d',
-			'calories_allowed' => '%f',
-			'calories_used' => '%f',
-			'meal_type' => '%d',
-			'meal_id' => '%d',
-			'date' => '%s',
-			'value' => '%s',
-			'deleted' => '%d',
-			'favourite' => '%d',
-            'unit' => '%s'
+			'id'                    => '%d',
+			'name'                  => '%s',
+			'added_by'              => '%d',
+			'entry_id'              => '%d',
+			'gain_loss'             => '%s',
+			'calories'              => '%f',
+			'quantity'              => '%f',
+			'description'           => '%s',
+			'user_id'               => '%d',
+			'calories_allowed'      => '%f',
+			'calories_used'         => '%f',
+			'meal_type'             => '%d',
+			'meal_id'               => '%d',
+			'date'                  => '%s',
+			'value'                 => '%s',
+			'deleted'               => '%d',
+			'favourite'             => '%d',
+            'unit'                  => '%s',
+			'json'                  => '%s'
 		];
 
 		$return = [];
@@ -714,8 +793,6 @@
 
 		$table_name = $wpdb->prefix . YK_WT_DB_ENTRY;
 
-		$charset_collate = $wpdb->get_charset_collate();
-
 		$sql = "CREATE TABLE $table_name (
 					id mediumint(9) NOT NULL AUTO_INCREMENT,
 					user_id int NOT NULL,
@@ -733,8 +810,6 @@
 
 		$table_name = $wpdb->prefix . YK_WT_DB_ENTRY_MEAL;
 
-		$charset_collate = $wpdb->get_charset_collate();
-
 		$sql = "CREATE TABLE $table_name (
 					id mediumint(9) NOT NULL AUTO_INCREMENT,
 					meal_type int NOT NULL,
@@ -751,14 +826,26 @@
 
 		$table_name = $wpdb->prefix . YK_WT_DB_MEAL_TYPES;
 
-		$charset_collate = $wpdb->get_charset_collate();
-
 		$sql = "CREATE TABLE $table_name (
 					id mediumint(9) NOT NULL AUTO_INCREMENT,
 					name varchar(60) NOT NULL, 
 					sort int DEFAULT 100 NOT NULL,
 					deleted bit DEFAULT 0,
 				  UNIQUE KEY id (id)
+				) $charset_collate;";
+
+		dbDelta( $sql );
+
+		// -------------------------------------------------
+		// Settings
+		// -------------------------------------------------
+
+		$table_name = $wpdb->prefix . YK_WT_DB_SETTINGS;
+
+		$sql = "CREATE TABLE $table_name (
+					user_id int NOT NULL,
+					json varchar(2000) NOT NULL,
+				  UNIQUE KEY user_id (user_id)
 				) $charset_collate;";
 
 		dbDelta( $sql );

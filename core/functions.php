@@ -156,23 +156,57 @@ function yk_mt_user_calories_target( $user_id = NULL ) {
 
 	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
-	// TODO: We need to store this locally unless there is an override by another system
-	$allowed_calories = 2000;
+	$allowed_calories               = NULL;
+	$source_wlt                     = true;             // TODO: Make this an option
+	$source_user_override_allowed   = yk_mt_site_options( 'allow-calorie-override' );
 
-	// Take Calories from WLT?
-    if ( true === function_exists( 'ws_ls_harris_benedict_calculate_calories' ) ) {
-        $yeken_wt = ws_ls_harris_benedict_calculate_calories();
-
-        // TODO: We need to have an option to select whether to use / lose / gain / maintain
-        if ( true === isset( $yeken_wt[ 'lose' ][ 'total' ] ) ) {
-            $allowed_calories = $yeken_wt[ 'lose' ][ 'total' ];
-        }
+    // Has the user set their own calorie allowance
+    if ( true === $source_user_override_allowed ) {
+        $allowed_calories = yk_mt_settings_get( 'allowed-calories' );
     }
 
-	$allowed_calories = apply_filters( 'yk_mt_user_allowed_calories', $allowed_calories, $user_id );
+	// Shout out to Weight Tracker by YeKen
+	if ( true === empty( $allowed_calories ) &&
+            true === $source_wlt ) {
+		$allowed_calories = yk_mt_user_calories_target_from_wlt( $user_id );
+	}
+
+	// Failing everything, fetch the site default
+	if ( true === empty( $allowed_calories ) ) {
+		$allowed_calories = apply_filters( 'yk_mt_default_user_allowed_calories', 2000 );
+	}
 
 	return (int) $allowed_calories;
 }
+
+/**
+ * If plugin is enabled and allowed as an admin option, then fetch allowed calories from Weight Tracker (by YeKen.uk)
+ *
+ * @param null $user_id
+ *
+ * @return int
+ */
+function yk_mt_user_calories_target_from_wlt( $user_id = NULL ) {
+
+	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+	// Take Calories from WLT?
+	if ( true === function_exists( 'ws_ls_harris_benedict_calculate_calories' ) ) {
+
+	    $yeken_aim =  ws_ls_get_progress_attribute_from_aim();
+
+		$yeken_wt = ws_ls_harris_benedict_calculate_calories();
+
+		if ( true === isset( $yeken_wt[ $yeken_aim ][ 'total' ] ) ) {
+			$allowed_calories = $yeken_wt[ $yeken_aim ][ 'total' ];
+		}
+
+		return (int) $allowed_calories;
+	}
+
+	return NULL;
+}
+
 
 /**
  * Helper function to ensure all fields have expected keys
@@ -264,6 +298,20 @@ function yk_mt_post_values_exist( $keys ) {
 }
 
 /**
+ * Does the user ID passed match the one associated with the entry
+ * @param $entry_id
+ * @param $user_id
+ *
+ * @return bool
+ */
+function yk_mt_security_entry_owned_by_user( $entry_id, $user_id ) {
+
+	$db_user_id = yk_mt_db_entry_user_id( $entry_id );
+
+	return ( (int) $db_user_id === (int) $user_id );
+}
+
+/**
  * Return an array that represents the entry
  *
  * @param null $entry_id
@@ -287,13 +335,12 @@ function yk_mt_entry( $entry_id = NULL ) {
  * @return array
  */
 function yk_mt_ajax_config() {
-
-    $site_url = site_url();
-
     return [
-        'site-url'                          => $site_url,
+        'page-url'                          => get_permalink(),
+        'plugin-url'                        => plugins_url() . '/meal-tracker/',
         'ajax-url'                          => admin_url('admin-ajax.php'),
         'ajax-security-nonce'               => wp_create_nonce( 'yk-mt-nonce' ),
+	    'units-hide-quantity'               => yk_mt_units_where( 'drop-quantity', true, true )
     ];
 }
 
@@ -306,6 +353,7 @@ function yk_mt_localised_strings( ) {
         'just-added'                    => __( 'Just Added:', YK_MT_SLUG ),
         'calorie-unit'                  => __( 'kcal', YK_MT_SLUG ),
         'remove-text'                   => __( 'Remove', YK_MT_SLUG ),
+        'edit-text'                     => __( 'Edit', YK_MT_SLUG ),
         'chart-label-used'              => __( 'used', YK_MT_SLUG ),
         'chart-label-remaining'         => __( 'remaining', YK_MT_SLUG ),
         'chart-label-target'            => __( 'Target', YK_MT_SLUG ),
@@ -316,7 +364,9 @@ function yk_mt_localised_strings( ) {
         'meal-entry-added-short'        => __( 'Added', YK_MT_SLUG ),
         'meal-entry-missing-meal'       => __( 'Select a meal', YK_MT_SLUG ),
         'meal-entry-deleted-success'    => __( 'The meal has been removed', YK_MT_SLUG ),
-        'db-error'                      => __( 'There was error saving your changes', YK_MT_SLUG )
+        'db-error'                      => __( 'There was error saving your changes', YK_MT_SLUG ),
+        'db-error-loading'              => __( 'There was error loading your data', YK_MT_SLUG ),
+	    'settings-saved-success'        => __( 'Your settings have been saved', YK_MT_SLUG )
     ];
 }
 
@@ -341,6 +391,7 @@ function yk_mt_units() {
  */
 function yk_mt_units_raw() {
 	$units = [
+        'na'        => [ 'label' => __( 'N/A', YK_MT_SLUG ), 'drop-quantity' => true ],
 		'g'         => [ 'label' => 'g' ],
 		'ml'        => [ 'label' => 'ml' ],
 		'small'     => [ 'label' =>  __( 'Small', YK_MT_SLUG ), 'drop-quantity' => true ],
@@ -464,7 +515,8 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
 
     $name = 'yk-mt-' . $name;
 
-	$html = sprintf( '<label for="%1$s">%2$s</label>
+	$html = sprintf( '<div id="%1$s-row">
+						<label for="%1$s">%2$s</label>
 							<select name="%1$s" id="%1$s" class="" %s>', $name, $title, $placeholder );
 
 	if ( false === empty( $placeholder ) ) {
@@ -475,7 +527,7 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
 		$html .= sprintf( '<option value="%1$s" %3$s>%2$s</option>', esc_attr( $key ), esc_attr( $value ), selected( $previous_value, $value, false ) );
 	}
 
-	$html .= '</select>';
+	$html .= '</select></div>';
 
 	return $html;
 }
@@ -491,39 +543,28 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
  *
  * @return string
  */
-function yk_mt_form_number( $title, $name, $value = '', $step = 1, $min = 1, $max = 99999, $show_label = true, $required = true ) {
+function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step = 1, $min = 1, $max = 99999, $show_label = true, $required = true, $disabled = false ) {
 
     $name = 'yk-mt-' . $name;
 
-	$html = '';
+	$html = sprintf( '<div id="%1$s-row">', $name );
 
 	if ( true === $show_label ) {
-		$html .= sprintf( '<label for="%1$s">%2$s</label>', $name, $title );
+		$html .= sprintf( '<label for="%1$s" class="%3$s">%2$s</label>', $name, $title, $css_class );
 	}
 
-	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s />',
+	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s class="%7$s" %8$s />',
 		$name,
 		(int) $min,
 		(int) $max,
 		(int) $step,
 		$value,
-        ( true === $required ) ? ' required' : ''
+        ( true === $required ) ? ' required' : '',
+        $css_class,
+        ( true === $disabled ) ? ' disabled' : ''
 	);
 
-	return $html;
-}
-
-/**
- * Enqueue front end JS / CSS
- */
-function yk_mt_enqueue_front_end_dependencies() {
-
-//	$minified = yk_mt_use_minified();
-//
-//	wp_enqueue_script( 'meal-tracker', plugins_url( 'assets/js/core' . $minified . '.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
-//	wp_enqueue_style( 'meal-tracker', plugins_url( 'assets/css/frontend' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-//
-//	wp_localize_script( 'meal-tracker', 'yk_mt', yk_mt_ajax_config() );
+	return $html . '</div>';
 }
 
 /**
@@ -543,4 +584,73 @@ function yk_mt_array_strip_keys( $array, $keys ) {
 	}
 
 	return $array;
+}
+
+/**
+ * Fetch a setting for a user
+ * @param $key
+ * @param null $default
+ * @param null $user_id
+ *
+ * @return |null
+ */
+function yk_mt_settings_get( $key, $default = NULL, $user_id = NULL ) {
+
+	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+	$user_settings = yk_mt_db_settings_get( $user_id );
+
+	if ( true === isset( $user_settings[ $key ] ) ) {
+		return $user_settings[ $key ];
+	}
+
+	return $default ?: NULL;
+}
+
+/**
+ * Save a user setting
+ * @param $key
+ * @param $value
+ * @param null $user_id
+ *
+ * @return bool
+ */
+function yk_mt_settings_set( $key, $value, $user_id = NULL ) {
+
+	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+	if ( false === in_array( $key, yk_mt_settings_allowed_keys() ) ) {
+		return false;
+	}
+
+	$user_settings = yk_mt_db_settings_get( $user_id );
+
+	if ( false === is_array( $user_settings ) ) {
+		$user_settings = [];
+	}
+
+    $user_settings[ $key ] = $value;
+
+	return yk_mt_db_settings_update( $user_id, $user_settings );
+}
+
+/**
+ * Allowed setting keys
+ * @return array
+ */
+function yk_mt_settings_allowed_keys() {
+	return [ 'allowed-calories' ];
+}
+/**
+ * Fetch a site option
+ * @param $key
+ */
+function yk_mt_site_options( $key ) {
+
+	// TODO: Tie this into an admins setting page
+	if ( 'allow-calorie-override' === $key ) {
+		return true;
+	}
+
+	return false;
 }

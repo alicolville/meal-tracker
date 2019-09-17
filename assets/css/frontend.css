@@ -22,13 +22,13 @@
 /*----- Section Titles -----*/
 .yk-mt-accordion-section-title {
     width:100%;
-    padding:15px;
+    padding: 5px 5px 10px 10px;
     display:inline-block;
     border-bottom:1px solid #1a1a1a;
     background:#333;
     transition:all linear 0.15s;
     /* Type */
-    font-size:1.200em;
+    font-size:1.100em;
     text-shadow:0px 1px 0px #1a1a1a;
     color:#fff;
 }
@@ -70,18 +70,17 @@
 Table styles
 */
 .yk-mt-o {
-    width: 25px;
+    width: 60px;
 }
 .yk-mt-t button {
     width: 25px;
     height: 25px;
-    padding: 0px 2px 0px 2px;
+    padding: 5px 2px 0px 2px;
     font-size: 11px;
     background: rgb(220,220,220);
     color: #000;
     box-shadow: none;
 }
-
 /*
     Modal
  */
@@ -166,9 +165,6 @@ Table styles
     margin-bottom: 0px;
     margin-top: 7px;
 }
-.yk-mt-hide {
-    display: none;
-}
 .yk-mt-auto-close {
     margin-top: 15px;
     font-size: 0.8em;
@@ -176,8 +172,20 @@ Table styles
 .yk-mt-auto-close label {
     margin-left: 5px;
 }
+.yk-mt-info {
+    font-size: 13px;
+    font-style: italic;
+}
 #btn-close-modal {
     padding: 6px 15px 6px 15px;
+}
+
+/* Some rules to hide elements of the form when editing a meal */
+.yk-mt-mode-edit .yk-mt-hide-if-editing {
+    display: none;
+}
+.yk-mt-mode-add .yk-mt-hide-if-adding {
+    display: none;
 }
 /**
     Add a new meal form
@@ -186,9 +194,10 @@ Table styles
     margin-top: 20px;
 }
 
-.yk-mt-add-new-meal-form label,
-    .yk-mt-add-new-meal-form input,
-        .yk-mt-add-new-meal-form select {
+.yk-mt-settings-form label,
+    .yk-mt-add-new-meal-form label,
+        .yk-mt-add-new-meal-form input,
+            .yk-mt-add-new-meal-form select {
     display: block;
     width: 95%;
     margin-bottom: 10px;
@@ -231,8 +240,8 @@ Table styles
 .yk-mt-button-success,
 .yk-mt-button-error,
 .yk-mt-button-warning,
-.yk-mt-button-secondary
-{
+.yk-mt-button-secondary,
+.yk-mt-button-cancel {
     font-family: tahoma;
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -240,7 +249,8 @@ Table styles
 .yk-mt-button-success,
 .yk-mt-button-error,
 .yk-mt-button-warning,
-.yk-mt-button-secondary {
+.yk-mt-button-secondary,
+.yk-mt-button-cancel {
     color: white;
 }
 
@@ -258,6 +268,10 @@ Table styles
 
 .yk-mt-button-secondary {
     background: rgb(66, 184, 221); /* this is a light blue */
+}
+
+.yk-mt-button-cancel {
+    background: rgb(204, 204, 204); /* this is a light grey */
 }
 
 .yk-mt-button-silent, .yk-mt-button-small {
@@ -313,4 +327,25 @@ Table styles
 }
 .yk-mt-shortcode-meal-tracker .selectize-control.loading::before {
     opacity: 0.4;
+}
+
+.yk-mt-hide {
+    display: none !important;
+}
+
+/*
+    CSS rules for Non Pro user
+ */
+.yk-mt-not-pro .yk-mt-o {
+    width: 25px;
+}
+.yk-mt-not-pro .yk-mt-hide-if-not-pro {
+    display: none !important;
+}
+
+/*
+    Settings form
+ */
+.yk-mt-button-save-settings {
+    margin-top: 15px;
 }

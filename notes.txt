@@ -1,7 +1,5 @@
 Rick Feedback:
 
-- When adding a new "Meal" auto add it to entry and close dialog. Add another checkbox that adds meal to DB, then to entry, and then closes?
-
 
 TODO:
 
