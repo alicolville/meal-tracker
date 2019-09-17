@@ -43,7 +43,7 @@
 			$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
 			if ( true === yk_mt_is_pro() ) {
-				$html .= sprintf( '<p><a href="%s">%s</a></p>', yk_mt_shortcode_get_current_url( 'settings' ), __( 'Settings', YK_MT_SLUG ) );
+				$html .= sprintf( '<br /><button href="%s" class="yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">%s</button>', yk_mt_shortcode_get_current_url( 'settings' ), __( 'Settings', YK_MT_SLUG ) );
 			}
 
 			// Embed hidden form / dialog required for adding a meal
@@ -63,7 +63,7 @@
 	 *
 	 * @return mixed
 	 */
-	function yk_mt_shortcode_get_current_url( $mode ) {
+	function yk_mt_shortcode_get_current_url( $mode = '' ) {
 		return add_query_arg( 'yk-mt-mode', $mode, get_permalink() );
 	}
 
@@ -115,7 +115,7 @@
 		     * Calories Tab
 		     */
 		    $calories_html = yk_mt_form_number( __( 'Specify your own allowed calorie intake for each day. Current: ', YK_MT_SLUG ) .
-		                                            yk_mt_user_calories_target() . __( 'kcal: ', YK_MT_SLUG ),
+		                                            yk_mt_user_calories_target() . __( 'kcal', YK_MT_SLUG ),
 			    'allowed-calories',
 			    yk_mt_settings_get( 'allowed-calories' ),
 		        '',
@@ -133,11 +133,15 @@
 
 	    $html .= yk_mt_html_accordion_close();
 
-	    $html .= sprintf( '<button id="yk-mt-button-save-settings" class="yk-mt-button-save-settings yk-mt-button-secondary">%1$s</button>',
-		    __( 'Save Settings', YK_MT_SLUG )
+	    $html .= sprintf( '<br /><button id="yk-mt-button-save-settings" class="yk-mt-button-secondary">%1$s</button>
+                                    &nbsp;<button href="%2$s" class="yk-mt-button-cancel yk-mt-clickable">%3$s</button>
+                                    </form></div>',
+            __( 'Save Settings', YK_MT_SLUG ),
+            yk_mt_shortcode_get_current_url(),
+            __( 'Cancel', YK_MT_SLUG )
 	    );
 
-	    return $html . '</form></div>';
+	    return $html;
     }
 
 	/**

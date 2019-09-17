@@ -640,6 +640,18 @@ jQuery( document ).ready( function( $ ) {
     }
 
     /**
+     * Add yk-mt-clickable to a button to make it clickable
+     */
+    $( '.yk-mt-clickable' ).click( function( e ) {
+
+        e.preventDefault();
+
+        let url = $( this ).attr( 'href' );
+
+        window.location.replace( url );
+    });
+
+    /**
      * ------ ---------------------------------------------------------------------------------
      * HTML Templates and Rendering
      * ---------------------------------------------------------------------------------------
