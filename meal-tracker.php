@@ -45,6 +45,7 @@ include_once YK_MT_ABSPATH . 'core/shortcode-functions.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-meal-tracker.php';
 include_once YK_MT_ABSPATH . 'core/ajax.php';
 include_once YK_MT_ABSPATH . 'core/activate.php';
+include_once YK_MT_ABSPATH . 'core/hooks.php';
 
 // TODO: Remove
 include_once YK_MT_ABSPATH . 'tests.php';

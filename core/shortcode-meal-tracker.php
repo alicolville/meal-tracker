@@ -124,7 +124,11 @@
 		        20000
 		    );
 
-		    $html .= yk_mt_html_accordion_section( [    'id' => 1,
+            $calories_html .= sprintf( ' <p class="yk-mt-info yk-mt-hide-if-adding">%1$s</p>',
+                __( 'Changing this value shall update your allowed calories for today and any future entries. The allowed calories for older entries shall remain as is.', YK_MT_SLUG )
+            );
+
+            $html .= yk_mt_html_accordion_section( [    'id' => 1,
 		                                                'title' => __( 'Calorie Intake', YK_MT_SLUG ),
 		                                                'content' => $calories_html,
 		                                                'is-active' => true

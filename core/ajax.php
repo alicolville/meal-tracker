@@ -201,6 +201,8 @@ function yk_mt_ajax_save_settings() {
 		$updated = true;
 	}
 
+    do_action( 'yk_mt_settings_saved' );
+
 	wp_send_json( [ 'error' => ! $updated ] );
 }
 add_action( 'wp_ajax_save_settings', 'yk_mt_ajax_save_settings' );
