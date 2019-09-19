@@ -5,7 +5,7 @@ defined('ABSPATH') or die("Jog on!");
 /**
  * Plugin Name: Meal Tracker
  * Description: // TODO
- * Version: 0.2
+ * Version: 0.3
  * Author: YeKen
  * Author URI: http://www.YeKen.uk
  * License: GPL2
