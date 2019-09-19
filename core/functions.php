@@ -337,7 +337,7 @@ function yk_mt_entry( $entry_id = NULL ) {
 function yk_mt_ajax_config() {
     return [
         'page-url'                          => get_permalink(),
-        'plugin-url'                        => plugins_url() . '/meal-tracker/',
+        'plugin-url'                        => YK_MT_PLUGIN_URL,
         'ajax-url'                          => admin_url('admin-ajax.php'),
         'ajax-security-nonce'               => wp_create_nonce( 'yk-mt-nonce' ),
 	    'units-hide-quantity'               => yk_mt_units_where( 'drop-quantity', true, true )
