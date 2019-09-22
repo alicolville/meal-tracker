@@ -327,7 +327,16 @@ function yk_mt_entry( $entry_id = NULL ) {
         return false;
     }
 
-    return yk_mt_db_entry_get( $entry_id );
+    $entry = yk_mt_db_entry_get( $entry_id );
+
+    $entry[ 'chart_title' ] = sprintf( '%1$d%2$s (%3$s %4$d)',
+        $entry[ 'calories_used'],
+        __( 'kcal used', YK_MT_SLUG ),
+        __( 'out of', YK_MT_SLUG ),
+        $entry[ 'calories_allowed']
+    );
+
+    return $entry;
 }
 
 /**

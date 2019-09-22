@@ -750,7 +750,8 @@ jQuery( document ).ready( function( $ ) {
         yk_mt_chart_data_set( entry[ 'calories_allowed' ],
             entry[ 'calories_remaining' ],
             entry[ 'calories_used' ],
-            entry[ 'percentage_used' ]
+            entry[ 'percentage_used' ],
+            entry[ 'chart_title' ]
         );
 
         yk_mt_chart_render();
@@ -874,21 +875,23 @@ jQuery( document ).ready( function( $ ) {
     });
 
     /**
+     * TODO: Re-looking at this function, needs some refactoring. Do we need to assign to a variable again?
+     *
      * Set chart data
      * @param calories_allowed
      * @param calories_remaining
      * @param calories_used
      * @param percentage_used
      */
-    function yk_mt_chart_data_set( calories_allowed, calories_remaining, calories_used, percentage_used ) {
+    function yk_mt_chart_data_set( calories_allowed, calories_remaining, calories_used, percentage_used, chart_title ) {
 
         yk_mt_chart_config = {
             calories_allowed:   calories_allowed,
             calories_remaining: calories_remaining,
             calories_used:      calories_used,
-            percentage_used:    percentage_used
+            percentage_used:    percentage_used,
+            chart_title:        chart_title
         };
-
     }
 
     /**
@@ -942,7 +945,7 @@ jQuery( document ).ready( function( $ ) {
                 fontSize: 15,
                 fontStyle: 'normal',
                 padding: 20,
-                text: '1200 calories used (out of 1500)'
+                text: yk_mt_chart_config[ 'chart_title' ]
             },
             legend: {
                 display: true,
