@@ -8,7 +8,7 @@ var yk_mt_meal_tracker_found    = ( 'undefined' !== typeof( yk_mt_sc_meal_tracke
 var yk_meal_tracker_dialog      = false;
 var yk_meal_tracker_dialog_mode = 'add';
 var yk_mt_meal_selector         = false;
-var yk_mt_meal_tracker_show     = 'default' === yk_mt_sc_meal_tracker[ 'mode' ];
+var yk_mt_meal_tracker_show     = yk_mt_meal_tracker_found && 'default' === yk_mt_sc_meal_tracker[ 'mode' ];
 
 jQuery( document ).ready( function( $ ) {
 
