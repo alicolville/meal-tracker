@@ -468,15 +468,16 @@ jQuery( document ).ready( function( $ ) {
      */
     function yk_mt_add_meal_form_show_quantity() {
 
-        let value           = $( '#yk-mt-add-meal-unit' ).val();
-        let quantity_row    = $( '#yk-mt-add-meal-quantity-row' );
+        let value = $( '#yk-mt-add-meal-unit' ).val();
+        let quantity_row = $( '#yk-mt-add-meal-quantity-row' );
 
-        if ( true === yk_mt_hide_quantity( value ) ) {
+        if (true === yk_mt_hide_quantity(value)) {
             quantity_row.hide( 500 );
-            $( '#yk-mt-add-meal-quantity' ).prop( 'required', false );
+            $('#yk-mt-add-meal-quantity').prop( 'required', false );
         } else {
             quantity_row.show( 500 );
-            $( '#yk-mt-add-meal-quantity' ).prop( 'required', true );
+            $('#yk-mt-add-meal-quantity').prop( 'required', true );
+            $('#yk-mt-add-meal-quantity').val( 1 );                     // Set a dummy value so we can get past validation
         }
     }
 
