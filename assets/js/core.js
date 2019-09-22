@@ -938,7 +938,11 @@ jQuery( document ).ready( function( $ ) {
         return {
             cutoutPercentage: 70,
             title: {
-                display: false
+                display: true,
+                fontSize: 15,
+                fontStyle: 'normal',
+                padding: 20,
+                text: '1200 calories used (out of 1500)'
             },
             legend: {
                 display: true,
