@@ -90,7 +90,12 @@ function yk_mt_ajax_meal_add() {
     $post_data = yk_mt_ajax_strip_incoming( $post_data, [ 'entry-id', 'meal-type' ] );
 
     // Validate we have all the expected fields
-    yk_mt_ajax_validate_post_data( $post_data, [ 'name', 'calories', 'unit' ] );
+    yk_mt_ajax_validate_post_data( $post_data, [ 'name', 'unit' ] );
+
+    // Ensure we have a calorie value (can be 0)
+    if ( false === isset( $post_data[ 'calories'] ) ) {
+        return wp_send_json( [ 'error' => 'missing-calories' ] );
+    }
 
     // If a unit that doesn't expect a quantity, then clear quantity
 	if ( true === in_array( $post_data[ 'unit' ], yk_mt_units_where( 'drop-quantity' ) ) ) {
@@ -200,6 +205,8 @@ function yk_mt_ajax_save_settings() {
 
 		$updated = true;
 	}
+
+    do_action( 'yk_mt_settings_saved' );
 
 	wp_send_json( [ 'error' => ! $updated ] );
 }

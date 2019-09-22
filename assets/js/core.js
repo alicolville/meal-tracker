@@ -8,7 +8,7 @@ var yk_mt_meal_tracker_found    = ( 'undefined' !== typeof( yk_mt_sc_meal_tracke
 var yk_meal_tracker_dialog      = false;
 var yk_meal_tracker_dialog_mode = 'add';
 var yk_mt_meal_selector         = false;
-var yk_mt_meal_tracker_show     = 'default' === yk_mt_sc_meal_tracker[ 'mode' ];
+var yk_mt_meal_tracker_show     = yk_mt_meal_tracker_found && 'default' === yk_mt_sc_meal_tracker[ 'mode' ];
 
 jQuery( document ).ready( function( $ ) {
 
@@ -468,15 +468,16 @@ jQuery( document ).ready( function( $ ) {
      */
     function yk_mt_add_meal_form_show_quantity() {
 
-        let value           = $( '#yk-mt-add-meal-unit' ).val();
-        let quantity_row    = $( '#yk-mt-add-meal-quantity-row' );
+        let value = $( '#yk-mt-add-meal-unit' ).val();
+        let quantity_row = $( '#yk-mt-add-meal-quantity-row' );
 
-        if ( true === yk_mt_hide_quantity( value ) ) {
+        if (true === yk_mt_hide_quantity(value)) {
             quantity_row.hide( 500 );
-            $( '#yk-mt-add-meal-quantity' ).prop( 'required', false );
+            $('#yk-mt-add-meal-quantity').prop( 'required', false );
         } else {
             quantity_row.show( 500 );
-            $( '#yk-mt-add-meal-quantity' ).prop( 'required', true );
+            $('#yk-mt-add-meal-quantity').prop( 'required', true );
+            $('#yk-mt-add-meal-quantity').val( 1 );                     // Set a dummy value so we can get past validation
         }
     }
 
@@ -713,7 +714,7 @@ jQuery( document ).ready( function( $ ) {
 
         let html = yk_mt_sc_meal_tracker[ 'localise' ][ 'no-data' ] + '.';
 
-        if ( 0 !== total ) {
+        if ( 0 !== meals.length ) {
 
             // Get HTML for all meal rows
             html_meals = meals.map( MealRow ).join('');
@@ -749,7 +750,8 @@ jQuery( document ).ready( function( $ ) {
         yk_mt_chart_data_set( entry[ 'calories_allowed' ],
             entry[ 'calories_remaining' ],
             entry[ 'calories_used' ],
-            entry[ 'percentage_used' ]
+            entry[ 'percentage_used' ],
+            entry[ 'chart_title' ]
         );
 
         yk_mt_chart_render();
@@ -873,21 +875,23 @@ jQuery( document ).ready( function( $ ) {
     });
 
     /**
+     * TODO: Re-looking at this function, needs some refactoring. Do we need to assign to a variable again?
+     *
      * Set chart data
      * @param calories_allowed
      * @param calories_remaining
      * @param calories_used
      * @param percentage_used
      */
-    function yk_mt_chart_data_set( calories_allowed, calories_remaining, calories_used, percentage_used ) {
+    function yk_mt_chart_data_set( calories_allowed, calories_remaining, calories_used, percentage_used, chart_title ) {
 
         yk_mt_chart_config = {
             calories_allowed:   calories_allowed,
             calories_remaining: calories_remaining,
             calories_used:      calories_used,
-            percentage_used:    percentage_used
+            percentage_used:    percentage_used,
+            chart_title:        chart_title
         };
-
     }
 
     /**
@@ -937,7 +941,11 @@ jQuery( document ).ready( function( $ ) {
         return {
             cutoutPercentage: 70,
             title: {
-                display: false
+                display: true,
+                fontSize: 15,
+                fontStyle: 'normal',
+                padding: 20,
+                text: yk_mt_chart_config[ 'chart_title' ]
             },
             legend: {
                 display: true,

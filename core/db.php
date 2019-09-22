@@ -216,6 +216,9 @@
 	 */
 	function yk_mt_db_entry_get( $id = NULL ) {
 
+	    // If this is never the case, we need to deal with this value being true or false in caching.
+        $compress_multiple_meals = true;
+
 		if ( NULL === $id ) {
 			$id = yk_mt_db_entry_get_id_for_today();
 		}
@@ -267,15 +270,46 @@
 			if ( false === empty( $meals ) ) {
 				foreach ( $meals as $meal ) {
 
-                    $meal[ 'd' ] = sprintf( '%d%s / %s',
-                                            $meal[ 'calories' ],
-                                            __( 'kcal', YK_MT_SLUG ),
-                                            yk_mt_get_unit_string( $meal )
-                    );
+				    // Compress meals that are the same into one row?
+                    if ( true === $compress_multiple_meals ) {
 
-                    $entry['meals'][ $meal['meal_type'] ][] = $meal;
+                        // Does the meal need to be initially added to the array for this meal type?
+                        if ( true === empty(  $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ] ) ) {
+                            $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ] = $meal;
+                        }
+
+                        $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'entry_meal_ids' ][] = $meal[ 'meal_entry_id' ];
+
+                        $meal_count = count( $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'entry_meal_ids' ] );
+
+                        $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'd' ] = sprintf( '%4$s%1$d%2$s / %3$s',
+                            $meal[ 'calories' ] * $meal_count,
+                            __( 'kcal', YK_MT_SLUG ),
+                            yk_mt_get_unit_string( $meal ),
+                            ( $meal_count > 1 ) ? $meal_count . ' x ' : ''
+                        );
+
+                    } else {
+
+                        // Note: This ELSE at the moment shall never be hit. Left in for now just in case!
+
+                        $meal[ 'd' ] = sprintf( '%d%s / %s',
+                            $meal[ 'calories' ],
+                            __( 'kcal', YK_MT_SLUG ),
+                            yk_mt_get_unit_string( $meal )
+                        );
+
+                        $entry['meals'][ $meal['meal_type'] ][ $meal[ 'meal_entry_id' ] ] = $meal;
+                    }
+
+                    // Update calorie count for meal type
                     $entry['counts'][ $meal['meal_type'] ] += $meal['calories'];
 				}
+
+				// Remove keys from meal arrays (saves extra effort in jQuery)
+                foreach ( $entry[ 'meals' ] as &$meal_types ) {
+                    $meal_types = array_values( $meal_types );
+                }
 			}
 		}
 

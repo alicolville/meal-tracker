@@ -114,7 +114,7 @@
 		    /**
 		     * Calories Tab
 		     */
-		    $calories_html = yk_mt_form_number( __( 'Specify your own allowed calorie intake for each day. Current: ', YK_MT_SLUG ) .
+		    $calories_html = yk_mt_form_number( __( 'Specify your own allowed calorie for each day. Current: ', YK_MT_SLUG ) .
 		                                            yk_mt_user_calories_target() . __( 'kcal', YK_MT_SLUG ),
 			    'allowed-calories',
 			    yk_mt_settings_get( 'allowed-calories' ),
@@ -124,7 +124,11 @@
 		        20000
 		    );
 
-		    $html .= yk_mt_html_accordion_section( [    'id' => 1,
+            $calories_html .= sprintf( ' <p class="yk-mt-info yk-mt-hide-if-adding">%1$s</p>',
+                __( 'Changing this value shall update your allowed calories for today and any future entries. The allowed calories for older entries shall remain as is.', YK_MT_SLUG )
+            );
+
+            $html .= yk_mt_html_accordion_section( [    'id' => 1,
 		                                                'title' => __( 'Calorie Intake', YK_MT_SLUG ),
 		                                                'content' => $calories_html,
 		                                                'is-active' => true
@@ -301,10 +305,10 @@
 
 		$html .= yk_mt_form_text( __( 'Description', YK_MT_SLUG ), 'add-meal-description', '', 200, false );
 
-		$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories' );
+		$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories', '', '', 1,0 );
 
         $html .= sprintf( ' <p class="yk-mt-info yk-mt-hide-if-adding">%1$s</p>',
-            __( 'Calorie counts will automatically be adjusted for today\'s entry if a meal\'s calrie value is changed. Other entries will only be updated if manually amended.', YK_MT_SLUG )
+            __( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
         );
 
 		$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', '', yk_mt_units() );
