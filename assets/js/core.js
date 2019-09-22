@@ -713,7 +713,7 @@ jQuery( document ).ready( function( $ ) {
 
         let html = yk_mt_sc_meal_tracker[ 'localise' ][ 'no-data' ] + '.';
 
-        if ( 0 !== total ) {
+        if ( 0 !== meals.length ) {
 
             // Get HTML for all meal rows
             html_meals = meals.map( MealRow ).join('');
