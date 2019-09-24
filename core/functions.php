@@ -180,6 +180,23 @@ function yk_mt_user_calories_target( $user_id = NULL ) {
 }
 
 /**
+ * Return a list of the sources we can fetch the allowed calories
+ * @return mixed
+ */
+function yk_mt_user_calories_external_sources() {
+
+    $source_wlt = true; // TODO: Make this an option or apply the filter below
+
+    $sources = [];
+
+    if ( true === $source_wlt ) {
+        $sources['wlt']   = [ 'func' => 'yk_mt_user_calories_target_from_wlt', 'value' => __( 'Weight Tracker', YK_MT_SLUG ) ];
+    }
+
+    return apply_filters( 'yk_mt_external_sources', $sources );
+}
+
+/**
  * If plugin is enabled and allowed as an admin option, then fetch allowed calories from Weight Tracker (by YeKen.uk)
  *
  * @param null $user_id
@@ -520,7 +537,7 @@ function yk_mt_form_text( $title, $name, $value ='', $max_length = 60, $required
  *
  * @return string
  */
-function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $placeholder = '' ) {
+function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $placeholder = '', $previous_value_is_key = false ) {
 
     $name = 'yk-mt-' . $name;
 
@@ -533,7 +550,16 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
     }
 
 	foreach ( $options as $key => $value ) {
-		$html .= sprintf( '<option value="%1$s" %3$s>%2$s</option>', esc_attr( $key ), esc_attr( $value ), selected( $previous_value, $value, false ) );
+
+	    if ( true === is_array( $value ) ) {
+            $value = $value[ 'value' ];
+        }
+
+	    $compare_against = ( true === $previous_value_is_key ) ? $key : $value;
+
+        $selected = selected( $previous_value, $compare_against, false );
+
+		$html .= sprintf( '<option value="%1$s" %3$s>%2$s</option>', esc_attr( $key ), esc_attr( $value ), $selected );
 	}
 
 	$html .= '</select></div>';
@@ -552,7 +578,11 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
  *
  * @return string
  */
-function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step = 1, $min = 1, $max = 99999, $show_label = true, $required = true, $disabled = false ) {
+// TODO: Refactor this to expect an array for arguments
+function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step = 1, $min = 1,
+                                $max = 99999, $show_label = true, $required = true, $disabled = false,
+                                    $trailing_html = NULL
+                                ) {
 
     $name = 'yk-mt-' . $name;
 
@@ -572,6 +602,10 @@ function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step =
         $css_class,
         ( true === $disabled ) ? ' disabled' : ''
 	);
+
+	if ( false === empty( $trailing_html) ) {
+	    $html .= $trailing_html;
+    }
 
 	return $html . '</div>';
 }
@@ -648,7 +682,7 @@ function yk_mt_settings_set( $key, $value, $user_id = NULL ) {
  * @return array
  */
 function yk_mt_settings_allowed_keys() {
-	return [ 'allowed-calories' ];
+	return [ 'allowed-calories', 'calorie-source' ];
 }
 /**
  * Fetch a site option

@@ -583,6 +583,8 @@ jQuery( document ).ready( function( $ ) {
      * ---------------------------------------------------------------------------------------
      */
 
+    // TODO: Add localise variable for calling all this
+
     $( '#yk-mt-settings-form' ).submit( function( e ) {
 
         e.preventDefault();
@@ -603,13 +605,31 @@ jQuery( document ).ready( function( $ ) {
             yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'settings-saved-success' ] );
 
             setTimeout(function(){
-                window.location.replace( yk_mt[ 'page-url' ] ); // you can pass true to reload function to ignore the client cache and reload from the server
+       //         window.location.replace( yk_mt[ 'page-url' ] ); // you can pass true to reload function to ignore the client cache and reload from the server
             }, 600 );
 
         } else {
             $( 'body' ).trigger( 'meal-tracker-save-error' );
         }
     }
+
+    $( '#yk-mt-calorie-source').change( function() {
+        yk_mt_settings_show_hide();
+    });
+
+    /**
+     * Show  / Hide setting fields dependant on selected fields
+     */
+    function yk_mt_settings_show_hide() {
+
+        if ( 'meal-tracker' === $( '#yk-mt-calorie-source' ).val() ) {
+            $( '#yk-mt-allowed-calories-row' ).show( 200 );
+        } else {
+            $( '#yk-mt-allowed-calories-row' ).hide( 200 );
+        }
+    }
+
+    yk_mt_settings_show_hide();
 
     /**
      * ------ ---------------------------------------------------------------------------------

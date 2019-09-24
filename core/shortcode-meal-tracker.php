@@ -111,10 +111,30 @@
 
 	    if ( true === yk_mt_site_options( 'allow-calorie-override' ) ) {
 
+            $calories_html = '';
+
+            /**
+             * If we have any external sources, then let the user select one
+             */
+	        $external_sources = yk_mt_user_calories_external_sources();
+
+	        if ( false === empty( $external_sources ) ) {
+
+                $external_sources[ 'meal-tracker' ] = [ 'value' => 'Your own target' ];
+
+                $calories_html .= yk_mt_form_select( __( 'Where should your calorie target be taken from? ', YK_MT_SLUG ),
+                                                    'calorie-source',
+                                                            yk_mt_settings_get( 'calorie-source' ),
+                                                            $external_sources,
+                                                            '',
+                                                            true
+                );
+            }
+
 		    /**
 		     * Calories Tab
 		     */
-		    $calories_html = yk_mt_form_number( __( 'Specify your own allowed calorie for each day. Current: ', YK_MT_SLUG ) .
+		    $calories_html .= yk_mt_form_number( __( 'Specify your own allowed calorie for each day. Current: ', YK_MT_SLUG ) .
 		                                            yk_mt_user_calories_target() . __( 'kcal', YK_MT_SLUG ),
 			    'allowed-calories',
 			    yk_mt_settings_get( 'allowed-calories' ),
