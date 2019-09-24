@@ -845,8 +845,18 @@ jQuery( document ).ready( function( $ ) {
                 var color = centerConfig.color || '#000';
                 var sidePadding = centerConfig.sidePadding || 20;
                 var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
-                //Start with a base font of 30px
-                ctx.font = "30px " + fontStyle;
+
+                let window_width = $( window ).width();
+
+                let font_size = 30;
+
+                if ( window_width < 460 ) {
+                    font_size = 15;
+                } else if ( window_width < 540 ) {
+                    font_size = 20;
+                }
+
+                ctx.font = font_size + "px " + fontStyle;
 
                 //Get the width of the string and also the width of the element minus 10 to give it 5px side padding
                 var stringWidth = ctx.measureText(txt).width;
