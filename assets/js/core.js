@@ -605,7 +605,7 @@ jQuery( document ).ready( function( $ ) {
             yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'settings-saved-success' ] );
 
             setTimeout(function(){
-       //         window.location.replace( yk_mt[ 'page-url' ] ); // you can pass true to reload function to ignore the client cache and reload from the server
+                window.location.replace( yk_mt[ 'page-url' ] );
             }, 600 );
 
         } else {
