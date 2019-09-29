@@ -46,6 +46,7 @@ include_once YK_MT_ABSPATH . 'core/shortcode-meal-tracker.php';
 include_once YK_MT_ABSPATH . 'core/ajax.php';
 include_once YK_MT_ABSPATH . 'core/activate.php';
 include_once YK_MT_ABSPATH . 'core/hooks.php';
+include_once YK_MT_ABSPATH . 'core/sources-weight-tracker.php';
 
 // TODO: Remove
 include_once YK_MT_ABSPATH . 'tests.php';

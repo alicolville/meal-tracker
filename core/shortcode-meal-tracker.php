@@ -109,51 +109,51 @@
 
 	    $html .= '<form id="yk-mt-settings-form" class="yk-mt-settings-form" >';
 
-	    if ( true === yk_mt_site_options( 'allow-calorie-override' ) ) {
+	    $calories_html = '';
 
-            $calories_html = '';
+        /**
+         * Do we have an sources to fetch calorie allowances from?
+         * */
+	    $calorie_sources = yk_mt_user_calories_sources();
 
-            /**
-             * If we have any external sources, then let the user select one
-             */
-	        $external_sources = yk_mt_user_calories_external_sources();
+	    $calories_html .= '<p>' . sprintf(  __( 'Your current daily allowance is: %1$dkcal.', YK_MT_SLUG ), yk_mt_user_calories_target() ) . '</p>';
 
-	        if ( false === empty( $external_sources ) ) {
+        if ( true === empty( $calorie_sources ) ) {
 
-                $external_sources[ 'meal-tracker' ] = [ 'value' => 'Your own target' ];
+	        $calories_html .= '<p>' . __( 'Your calorie allowance has been set by an administrator and can not be changed.', YK_MT_SLUG ) . '</p>';
 
-                $calories_html .= yk_mt_form_select( __( 'Where should your calorie target be taken from? ', YK_MT_SLUG ),
-                                                    'calorie-source',
-                                                            yk_mt_settings_get( 'calorie-source' ),
-                                                            $external_sources,
-                                                            '',
-                                                            true
-                );
-            }
+        } else {
 
-		    /**
-		     * Calories Tab
-		     */
-		    $calories_html .= yk_mt_form_number( __( 'Specify your own allowed calorie for each day. Current: ', YK_MT_SLUG ) .
-		                                            yk_mt_user_calories_target() . __( 'kcal', YK_MT_SLUG ),
-			    'allowed-calories',
-			    yk_mt_settings_get( 'allowed-calories' ),
+            $calories_html .= yk_mt_form_select( __( 'Calorie target source', YK_MT_SLUG ),
+                                                'calorie-source',
+                                                        yk_mt_settings_get( 'calorie-source' ),
+                                                        $calorie_sources,
+                                                        '',
+                                                        true
+            );
+
+	        $calories_html .= yk_mt_form_number( __( 'Specify your own target: ', YK_MT_SLUG ),
+		        'allowed-calories',
+		        yk_mt_settings_get( 'allowed-calories' ),
 		        '',
 		        1,
 		        1,
 		        20000
-		    );
+	        );
 
-            $calories_html .= sprintf( ' <p class="yk-mt-info yk-mt-hide-if-adding">%1$s</p>',
-                __( 'Changing this value shall update your allowed calories for today and any future entries. The allowed calories for older entries shall remain as is.', YK_MT_SLUG )
-            );
+	        $calories_html .= sprintf( ' <p class="yk-mt-info yk-mt-hide-if-adding">%1$s</p>',
+		        __( 'Changes to these settings will adjust today\'s entry and future entries. Historic entries shall not be changed.', YK_MT_SLUG )
+	        );
+        }
 
-            $html .= yk_mt_html_accordion_section( [    'id' => 1,
-		                                                'title' => __( 'Calorie Intake', YK_MT_SLUG ),
-		                                                'content' => $calories_html,
-		                                                'is-active' => true
-		    ]);
-	    }
+
+
+        $html .= yk_mt_html_accordion_section( [    'id' => 1,
+	                                                'title' => __( 'Calorie Intake', YK_MT_SLUG ),
+	                                                'content' => $calories_html,
+	                                                'is-active' => true
+	    ]);
+
 
 	    $html .= yk_mt_html_accordion_close();
 

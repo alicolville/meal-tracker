@@ -622,7 +622,7 @@ jQuery( document ).ready( function( $ ) {
      */
     function yk_mt_settings_show_hide() {
 
-        if ( 'meal-tracker' === $( '#yk-mt-calorie-source' ).val() ) {
+        if ( 'own' === $( '#yk-mt-calorie-source' ).val() ) {
             $( '#yk-mt-allowed-calories-row' ).show( 200 );
         } else {
             $( '#yk-mt-allowed-calories-row' ).hide( 200 );
