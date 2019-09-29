@@ -173,6 +173,7 @@ Table styles
     margin-left: 5px;
 }
 .yk-mt-info {
+    margin-top: 10px;
     font-size: 13px;
     font-style: italic;
 }
@@ -232,6 +233,12 @@ Table styles
 }
 .yk-mt-summary-details .yk-mt-figure {
     font-size: 30px;
+}
+/**
+    Settings
+ */
+#yk-mt-settings-form .yk-mt-form-row {
+    margin-bottom: 10px
 }
 
 /**

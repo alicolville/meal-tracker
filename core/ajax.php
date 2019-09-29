@@ -203,6 +203,8 @@ function yk_mt_ajax_save_settings() {
 
 		yk_mt_settings_set( $key, $value );
 
+        do_action( 'yk_mt_settings_saved_' . $key, $value );
+
 		$updated = true;
 	}
 

@@ -10,7 +10,7 @@ function yk_mt_actions_settings_post_save() {
     /*
      * Update the allowed calories for today's entry
      */
-    $allowed_calories   = yk_mt_settings_get( 'allowed-calories' );
+    $allowed_calories   = yk_mt_user_calories_target();
     $todays_entry_id    = yk_mt_db_entry_get_id_for_today();
 
     if ( false === empty( $todays_entry_id ) ) {

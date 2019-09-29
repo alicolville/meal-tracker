@@ -156,57 +156,72 @@ function yk_mt_user_calories_target( $user_id = NULL ) {
 
 	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
-	$allowed_calories               = NULL;
-	$source_wlt                     = true;             // TODO: Make this an option
-	$source_user_override_allowed   = yk_mt_site_options( 'allow-calorie-override' );
+	$allowed_calories = NULL;
 
-    // Has the user set their own calorie allowance
-    if ( true === $source_user_override_allowed ) {
-        $allowed_calories = yk_mt_settings_get( 'allowed-calories' );
-    }
+	$selected_source = yk_mt_settings_get( 'calorie-source' );
 
-	// Shout out to Weight Tracker by YeKen
-	if ( true === empty( $allowed_calories ) &&
-            true === $source_wlt ) {
-		$allowed_calories = yk_mt_user_calories_target_from_wlt( $user_id );
-	}
+	if ( false === empty( $selected_source ) ) {
 
-	// Failing everything, fetch the site default
-	if ( true === empty( $allowed_calories ) ) {
-		$allowed_calories = apply_filters( 'yk_mt_default_user_allowed_calories', 2000 );
+		$calorie_sources = yk_mt_user_calories_sources();
+
+		if ( true === array_key_exists( $selected_source, $calorie_sources ) ) {
+			$function = $calorie_sources[ $selected_source ][ 'func' ];
+
+			$allowed_calories = $function();
+		}
 	}
 
 	return (int) $allowed_calories;
 }
 
 /**
- * If plugin is enabled and allowed as an admin option, then fetch allowed calories from Weight Tracker (by YeKen.uk)
+ * Return a list of the sources we can fetch the allowed calories
+ * @return mixed
+ */
+function yk_mt_user_calories_sources() {
+
+	$sources = apply_filters( 'yk_mt_calories_sources_pre', [] );;
+
+	if ( true === yk_mt_site_options( 'allow-calorie-override' ) ) {
+		$sources[ 'own' ] = [ 'value' => 'Your own target', 'func' => 'yk_mt_user_calories_target_user_specified' ];
+	}
+
+	if ( true === yk_mt_site_options( 'allow-calorie-override-admin' ) ) {
+		$sources[ 'admin' ] = [ 'value' => 'As specified by Admin', 'func' => 'yk_mt_user_calories_target_admin_specified' ];
+	}
+
+    $sources = apply_filters( 'yk_mt_calories_sources', $sources );
+
+	return $sources;
+}
+
+/**
+ * Get allowed calories as specified by admin
  *
  * @param null $user_id
  *
  * @return int
  */
-function yk_mt_user_calories_target_from_wlt( $user_id = NULL ) {
+function yk_mt_user_calories_target_admin_specified( $user_id = NULL ) {
 
 	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
-	// Take Calories from WLT?
-	if ( true === function_exists( 'ws_ls_harris_benedict_calculate_calories' ) ) {
-
-	    $yeken_aim =  ws_ls_get_progress_attribute_from_aim();
-
-		$yeken_wt = ws_ls_harris_benedict_calculate_calories();
-
-		if ( true === isset( $yeken_wt[ $yeken_aim ][ 'total' ] ) ) {
-			$allowed_calories = $yeken_wt[ $yeken_aim ][ 'total' ];
-		}
-
-		return (int) $allowed_calories;
-	}
-
-	return NULL;
+	return 2000;
 }
 
+/**
+ * Get allowed calories as specified by user
+ *
+ * @param null $user_id
+ *
+ * @return int
+ */
+function yk_mt_user_calories_target_user_specified( $user_id = NULL ) {
+
+	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+	return (int) yk_mt_settings_get( 'allowed-calories', 0,  $user_id );
+}
 
 /**
  * Helper function to ensure all fields have expected keys
@@ -520,11 +535,11 @@ function yk_mt_form_text( $title, $name, $value ='', $max_length = 60, $required
  *
  * @return string
  */
-function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $placeholder = '' ) {
+function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $placeholder = '', $previous_value_is_key = false ) {
 
     $name = 'yk-mt-' . $name;
 
-	$html = sprintf( '<div id="%1$s-row">
+	$html = sprintf( '<div id="%1$s-row" class="yk-mt-form-row">
 						<label for="%1$s">%2$s</label>
 							<select name="%1$s" id="%1$s" class="" %s>', $name, $title, $placeholder );
 
@@ -533,7 +548,16 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
     }
 
 	foreach ( $options as $key => $value ) {
-		$html .= sprintf( '<option value="%1$s" %3$s>%2$s</option>', esc_attr( $key ), esc_attr( $value ), selected( $previous_value, $value, false ) );
+
+	    if ( true === is_array( $value ) ) {
+            $value = $value[ 'value' ];
+        }
+
+	    $compare_against = ( true === $previous_value_is_key ) ? $key : $value;
+
+        $selected = selected( $previous_value, $compare_against, false );
+
+		$html .= sprintf( '<option value="%1$s" %3$s>%2$s</option>', esc_attr( $key ), esc_attr( $value ), $selected );
 	}
 
 	$html .= '</select></div>';
@@ -552,11 +576,15 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
  *
  * @return string
  */
-function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step = 1, $min = 1, $max = 99999, $show_label = true, $required = true, $disabled = false ) {
+// TODO: Refactor this to expect an array for arguments
+function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step = 1, $min = 1,
+                                $max = 99999, $show_label = true, $required = true, $disabled = false,
+                                    $trailing_html = NULL
+                                ) {
 
     $name = 'yk-mt-' . $name;
 
-	$html = sprintf( '<div id="%1$s-row">', $name );
+	$html = sprintf( '<div id="%1$s-row" class="yk-mt-form-row">', $name );
 
 	if ( true === $show_label ) {
 		$html .= sprintf( '<label for="%1$s" class="%3$s">%2$s</label>', $name, $title, $css_class );
@@ -572,6 +600,10 @@ function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step =
         $css_class,
         ( true === $disabled ) ? ' disabled' : ''
 	);
+
+	if ( false === empty( $trailing_html) ) {
+	    $html .= $trailing_html;
+    }
 
 	return $html . '</div>';
 }
@@ -648,18 +680,28 @@ function yk_mt_settings_set( $key, $value, $user_id = NULL ) {
  * @return array
  */
 function yk_mt_settings_allowed_keys() {
-	return [ 'allowed-calories' ];
+	return [ 'allowed-calories', 'calorie-source' ];
 }
 /**
  * Fetch a site option
  * @param $key
  */
-function yk_mt_site_options( $key ) {
+function yk_mt_site_options( $key, $default = false ) {
 
 	// TODO: Tie this into an admins setting page
 	if ( 'allow-calorie-override' === $key ) {
 		return true;
 	}
+
+    // TODO: Tie this into an admins setting page
+    if ( 'allow-calorie-override-admin' === $key ) {
+        return false;
+    }
+
+    // TODO: Tie this into an admins setting page
+    if ( 'allow-calorie-external-wlt' === $key ) {
+        return true;
+    }
 
 	return false;
 }

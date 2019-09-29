@@ -583,6 +583,8 @@ jQuery( document ).ready( function( $ ) {
      * ---------------------------------------------------------------------------------------
      */
 
+    // TODO: Add localise variable for calling all this
+
     $( '#yk-mt-settings-form' ).submit( function( e ) {
 
         e.preventDefault();
@@ -603,13 +605,31 @@ jQuery( document ).ready( function( $ ) {
             yk_mt_success( yk_mt_sc_meal_tracker[ 'localise' ][ 'settings-saved-success' ] );
 
             setTimeout(function(){
-                window.location.replace( yk_mt[ 'page-url' ] ); // you can pass true to reload function to ignore the client cache and reload from the server
+                window.location.replace( yk_mt[ 'page-url' ] );
             }, 600 );
 
         } else {
             $( 'body' ).trigger( 'meal-tracker-save-error' );
         }
     }
+
+    $( '#yk-mt-calorie-source').change( function() {
+        yk_mt_settings_show_hide();
+    });
+
+    /**
+     * Show  / Hide setting fields dependant on selected fields
+     */
+    function yk_mt_settings_show_hide() {
+
+        if ( 'own' === $( '#yk-mt-calorie-source' ).val() ) {
+            $( '#yk-mt-allowed-calories-row' ).show( 200 );
+        } else {
+            $( '#yk-mt-allowed-calories-row' ).hide( 200 );
+        }
+    }
+
+    yk_mt_settings_show_hide();
 
     /**
      * ------ ---------------------------------------------------------------------------------
@@ -845,8 +865,18 @@ jQuery( document ).ready( function( $ ) {
                 var color = centerConfig.color || '#000';
                 var sidePadding = centerConfig.sidePadding || 20;
                 var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
-                //Start with a base font of 30px
-                ctx.font = "30px " + fontStyle;
+
+                let window_width = $( window ).width();
+
+                let font_size = 30;
+
+                if ( window_width < 460 ) {
+                    font_size = 15;
+                } else if ( window_width < 540 ) {
+                    font_size = 20;
+                }
+
+                ctx.font = font_size + "px " + fontStyle;
 
                 //Get the width of the string and also the width of the element minus 10 to give it 5px side padding
                 var stringWidth = ctx.measureText(txt).width;

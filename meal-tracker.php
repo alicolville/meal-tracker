@@ -5,7 +5,7 @@ defined('ABSPATH') or die("Jog on!");
 /**
  * Plugin Name: Meal Tracker
  * Description: // TODO
- * Version: 0.3
+ * Version: 0.3.1
  * Author: YeKen
  * Author URI: http://www.YeKen.uk
  * License: GPL2
@@ -29,7 +29,7 @@ defined('ABSPATH') or die("Jog on!");
 
 define( 'YK_MT_ABSPATH', plugin_dir_path( __FILE__ ) );
 
-define( 'YK_MT_PLUGIN_VERSION', '0.3' );
+define( 'YK_MT_PLUGIN_VERSION', '0.3.1' );
 define( 'YK_MT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'YK_MT_SLUG', 'meal-tracker' );
 
@@ -39,13 +39,14 @@ define( 'YK_MT_SLUG', 'meal-tracker' );
 
 include_once YK_MT_ABSPATH . 'core/functions.php';
 include_once YK_MT_ABSPATH . 'core/license.php';
-include_once YK_MT_ABSPATH . 'core/caching.php'; 
+include_once YK_MT_ABSPATH . 'core/caching.php';
 include_once YK_MT_ABSPATH . 'core/db.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-functions.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-meal-tracker.php';
 include_once YK_MT_ABSPATH . 'core/ajax.php';
 include_once YK_MT_ABSPATH . 'core/activate.php';
 include_once YK_MT_ABSPATH . 'core/hooks.php';
+include_once YK_MT_ABSPATH . 'core/sources-weight-tracker.php';
 
 // TODO: Remove
 include_once YK_MT_ABSPATH . 'tests.php';
