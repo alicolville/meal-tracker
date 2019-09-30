@@ -634,7 +634,7 @@
 
 		// Search Name?
 		if ( false === empty( $options[ 'search' ] ) ) {
-			$name = $wpdb->esc_like( $options[ 'search' ] ) . '%';
+			$name = '%' . $wpdb->esc_like( $options[ 'search' ] ) . '%';
 			$sql .= ' and `name` like "' . $name . '"';
 		}
 
