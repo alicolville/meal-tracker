@@ -177,8 +177,10 @@ function yk_mt_ajax_meals() {
 
 	$meals = yk_mt_db_meal_for_user( get_current_user_id(), $options );
 
-	// Compress meal objects to reduce data returned via AJAX
-	$meals = array_map( 'yk_mt_ajax_prep_meal', $meals );
+    // Compress meal objects to reduce data returned via AJAX
+    if ( false === empty( $meals ) ) {
+        $meals = array_map( 'yk_mt_ajax_prep_meal', $meals );
+    }
 
 	wp_send_json( $meals );
 }

@@ -329,7 +329,7 @@
 
 		if ( true === isset( $entry[ 'calories_allowed' ], $entry[ 'calories_used' ] ) ) {
 
-			$entry[ 'percentage_used' ] = ( $entry[ 'calories_used' ] / $entry[ 'calories_allowed' ] ) * 100;
+			$entry[ 'percentage_used' ] = ( 0 !== (int) $entry[ 'calories_allowed' ] ) ? ( $entry[ 'calories_used' ] / $entry[ 'calories_allowed' ] ) * 100 : 0;
 			$entry[ 'percentage_used' ] = round( $entry[ 'percentage_used' ], 1);
 
 			$entry[ 'calories_remaining' ] = $entry[ 'calories_allowed' ] - $entry[ 'calories_used' ];
@@ -634,7 +634,7 @@
 
 		// Search Name?
 		if ( false === empty( $options[ 'search' ] ) ) {
-			$name = $wpdb->esc_like( $options[ 'search' ] ) . '%';
+			$name = '%' . $wpdb->esc_like( $options[ 'search' ] ) . '%';
 			$sql .= ' and `name` like "' . $name . '"';
 		}
 

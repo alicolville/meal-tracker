@@ -335,6 +335,12 @@ Table styles
 .yk-mt-shortcode-meal-tracker .selectize-control.loading::before {
     opacity: 0.4;
 }
+/**
+    Forcing input fields to 16px to stop iOS / Safari zooming in
+*/
+#yk-mt-add-meal-dialog input, .selectize-input input {
+    font-size: 16px;
+}
 
 .yk-mt-hide {
     display: none !important;
