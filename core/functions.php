@@ -160,11 +160,18 @@ function yk_mt_user_calories_target( $user_id = NULL ) {
 
 	$selected_source = yk_mt_settings_get( 'calorie-source' );
 
+	// TODO:    This is a temp hack. New user's don't have a calorie source specified in their settings yet.
+    //          Therefore, we will need to determine where we should get their calorie source from. From now, hard code to Weight Tracker.
+    if ( true === empty( $selected_source ) ) {
+        $selected_source = 'wlt';
+    }
+
 	if ( false === empty( $selected_source ) ) {
 
 		$calorie_sources = yk_mt_user_calories_sources();
 
 		if ( true === array_key_exists( $selected_source, $calorie_sources ) ) {
+
 			$function = $calorie_sources[ $selected_source ][ 'func' ];
 
 			$allowed_calories = $function();
