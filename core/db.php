@@ -329,7 +329,7 @@
 
 		if ( true === isset( $entry[ 'calories_allowed' ], $entry[ 'calories_used' ] ) ) {
 
-			$entry[ 'percentage_used' ] = ( $entry[ 'calories_used' ] / $entry[ 'calories_allowed' ] ) * 100;
+			$entry[ 'percentage_used' ] = ( 0 !== $entry[ 'calories_allowed' ] ) ? ( $entry[ 'calories_used' ] / $entry[ 'calories_allowed' ] ) * 100 : 0;
 			$entry[ 'percentage_used' ] = round( $entry[ 'percentage_used' ], 1);
 
 			$entry[ 'calories_remaining' ] = $entry[ 'calories_allowed' ] - $entry[ 'calories_used' ];
