@@ -337,10 +337,10 @@ jQuery( document ).ready( function( $ ) {
      * Refresh entry UI
      * @param entry_id
      */
-    function yk_mt_refresh_entry( entry_id = false ) {
+    function yk_mt_refresh_entry() {
 
         var data = {
-            'entry-id'  : entry_id
+            'entry-id'  : yk_mt_entry_id
         };
 
         yk_mt_post( 'get_entry', data,  yk_mt_refresh_entry_callback);
