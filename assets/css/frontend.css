@@ -47,9 +47,10 @@
 /*----- Section Content -----*/
 .yk-mt-accordion-section-content {
     padding:15px;
-    display:none;
 }
-
+.yk-mt-accordion-enabled .yk-mt-accordion-section-content {
+     display:none;
+}
 /*
     Tables with div
  */

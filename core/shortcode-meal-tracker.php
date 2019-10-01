@@ -490,6 +490,7 @@
 
 		wp_localize_script( 'meal-tracker', 'yk_mt_sc_meal_tracker', [
 			'mode'              => $shortcode_mode,
+			'accordion-enabled' => yk_mt_site_options_for_js_bool( 'accordion-enabled' ),
 			'dialog-options'    => json_encode( $dialog_options ),
             'localise'          => yk_mt_localised_strings(),
             'todays-entry'      => yk_mt_entry(),

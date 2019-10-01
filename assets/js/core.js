@@ -18,33 +18,36 @@ jQuery( document ).ready( function( $ ) {
      * ---------------------------------------------------------------------------------------
      */
 
-    // Close all sections (probably none open in the first place)
-    yk_mt_accordion_close_sections();
+    if ( yk_mt_meal_tracker_found && 'true' === yk_mt_sc_meal_tracker[ 'accordion-enabled' ] ) {
 
-    $( '.yk-mt-accordion-section .initial-active' ).each( function() {
-        var currentAttrValue = $( this ).attr( 'href' );
-        $( this ).addClass( 'active' );
-        $( '.yk-mt-accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
-    });
+        // Close all sections (probably none open in the first place)
+        yk_mt_accordion_close_sections();
 
-    $( '.yk-mt-accordion-section-title' ).click( function( e ) {
-
-        // Grab current anchor value
-        var currentAttrValue = $( this ).attr( 'href' );
-
-        if( $( e.target ).is( '.active' ) ) {
-            yk_mt_accordion_close_sections();
-        } else {
-            yk_mt_accordion_close_sections();
-
-            // Add active class to section title
+        $( '.yk-mt-accordion-section .initial-active' ).each( function() {
+            var currentAttrValue = $( this ).attr( 'href' );
             $( this ).addClass( 'active' );
-            // Open up the hidden content panel
             $( '.yk-mt-accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
-        }
+        });
 
-        e.preventDefault();
-    });
+        $( '.yk-mt-accordion-section-title' ).click( function( e ) {
+
+            // Grab current anchor value
+            var currentAttrValue = $( this ).attr( 'href' );
+
+            if( $( e.target ).is( '.active' ) ) {
+                yk_mt_accordion_close_sections();
+            } else {
+                yk_mt_accordion_close_sections();
+
+                // Add active class to section title
+                $( this ).addClass( 'active' );
+                // Open up the hidden content panel
+                $( '.yk-mt-accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
+            }
+
+            e.preventDefault();
+        });
+    }
 
     function yk_mt_accordion_close_sections() {
         $( '.yk-mt-accordion .yk-mt-accordion-section-title' ).removeClass( 'active' );
