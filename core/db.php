@@ -217,7 +217,7 @@
 	function yk_mt_db_entry_get( $id = NULL ) {
 
 	    // If this is never the case, we need to deal with this value being true or false in caching.
-        $compress_multiple_meals = true;
+        $compress_multiple_meals = yk_mt_is_pro();
 
 		if ( NULL === $id ) {
 			$id = yk_mt_db_entry_get_id_for_today();
