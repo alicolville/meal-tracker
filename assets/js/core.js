@@ -477,7 +477,7 @@ jQuery( document ).ready( function( $ ) {
         } else {
             quantity_row.show( 500 );
             $('#yk-mt-add-meal-quantity').prop( 'required', true );
-            $('#yk-mt-add-meal-quantity').val( 1 );                     // Set a dummy value so we can get past validation
+            //TODO:$('#yk-mt-add-meal-quantity').val( 1 );                     // Set a dummy value so we can get past validation
         }
     }
 
