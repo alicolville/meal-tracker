@@ -24,12 +24,14 @@
 			return yk_mt_shortcode_log_in_prompt();
 		}
 
+		$entry_id = yk_mt_entry_id_from_qs();
+
 		$html .= '<div id="yk-mt-shortcode-meal-tracker" class="yk-mt-shortcode-meal-tracker">';
 
         // This is used to create an empty entry if one doesn't already exist for this user / day
         yk_mt_entry_get_id_or_create();
 
-        yk_mt_shortcode_meal_tracker_localise( $shortcode_mode );
+        yk_mt_shortcode_meal_tracker_localise( [ 'mode' => $shortcode_mode, 'entry-id' => $entry_id ] );
 
 		// Load settings?
 		if ( 'settings' === $shortcode_mode ) {
@@ -478,7 +480,12 @@
 	/**
 	 * Add relevant data into JS object
 	 */
-	function yk_mt_shortcode_meal_tracker_localise( $shortcode_mode = '' ) {
+	function yk_mt_shortcode_meal_tracker_localise( $args = [] ) {
+
+		$args = wp_parse_args( $args, [
+											'mode'      => '',
+                                            'entry-id'  => NULL
+		]);
 
 		$dialog_options = [
 			'color'         => '#FFFFFF',
@@ -489,11 +496,11 @@
 		$dialog_options = apply_filters( 'yk_mt_shortcode_meal_tracker_dialog_options', $dialog_options );
 
 		wp_localize_script( 'meal-tracker', 'yk_mt_sc_meal_tracker', [
-			'mode'              => $shortcode_mode,
+			'mode'              => $args[ 'mode' ],
 			'accordion-enabled' => yk_mt_site_options_for_js_bool( 'accordion-enabled' ),
 			'dialog-options'    => json_encode( $dialog_options ),
             'localise'          => yk_mt_localised_strings(),
-            'todays-entry'      => yk_mt_entry(),
+            'todays-entry'      => yk_mt_entry( $args[ 'entry-id' ] ),
             'load-entry'        => true
 		] );
 	}

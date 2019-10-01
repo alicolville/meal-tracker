@@ -290,6 +290,18 @@ function yk_mt_use_minified() {
 }
 
 /**
+ * Fetch a value from the $_GET array
+ *
+ * @param $key
+ * @param null $default
+ *
+ * @return null
+ */
+function yk_mt_get_value( $key, $default = NULL ) {
+	return ( false === empty( $_GET[ $key ] ) ) ? $_GET[ $key ] : $default;
+}
+
+/**
  * Fetch a value from the $_POST array
  *
  * @param $key
@@ -712,7 +724,7 @@ function yk_mt_site_options( $key, $default = false ) {
 
 	// TODO: Tie this into an admins setting page
 	if ( 'accordion-enabled' === $key ) {
-		return false;
+		return true;
 	}
 
 	return false;
@@ -730,30 +742,23 @@ function yk_mt_site_options_for_js_bool( $key ) {
 }
 
 /**
- * For the given entry, if today's allowed calorie does not match then update entry.
- * @param bool $entry_id
- * @return bool
+ * Fetch entry ID from QS and ensure it belongs to the logged in user
+ *
+ * @param bool $ensure_belongs_to_current_user
+ * @return null
  */
-function yk_mt_allowed_calories_refresh( $entry_id = false ) {
+function yk_mt_entry_id_from_qs( $ensure_belongs_to_current_user = true ) {
 
-    $entry_id = ( false !== $entry_id ) ? (int) $entry_id : yk_mt_db_entry_get_id_for_today();
+    $entry_id = yk_mt_get_value( 'entry-id' );
 
-    $entry = yk_mt_db_entry_get( $entry_id );
-
-    if ( true === empty( $entry ) ) {
-        return false;
+    if ( true === empty( $entry_id ) ) {
+        return NULL;
     }
 
-    $allowed_calories = yk_mt_user_calories_target();
-
-    // Only bother to update DB if we have a difference
-    if( (int) $allowed_calories === (int) $entry[ 'calories_allowed' ] ) {
-        return false;
+    if ( true === $ensure_belongs_to_current_user &&
+            false === yk_mt_security_entry_owned_by_user( $entry_id, get_current_user_id() ) ) {
+        return NULL;
     }
 
-    yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_allowed' => $allowed_calories ] );
-
-    yk_mt_entry_calories_calculate_update_used( $entry_id );
-
-    return true;
+    return (int) $entry_id;
 }
