@@ -12,6 +12,11 @@ var yk_mt_meal_tracker_show     = yk_mt_meal_tracker_found && 'default' === yk_m
 
 jQuery( document ).ready( function( $ ) {
 
+    // Load config for shortcode
+    if ( true === yk_mt_meal_tracker_found ) {
+        yk_mt_entry_id = yk_mt_sc_meal_tracker['todays-entry']['id'];
+    }
+
     /**
      * ---------------------------------------------------------------------------------------
      * Accordion ( based on https://inspirationalpixels.com/accordion-html-css-jquery/#css )
