@@ -307,7 +307,8 @@ jQuery( document ).ready( function( $ ) {
     function yk_mt_post_api_delete_meal_to_entry( meal_entry_id ) {
 
         var data = {
-            'meal-entry-id'  : meal_entry_id
+            'meal-entry-id'     : meal_entry_id,
+            'entry-id'          : yk_mt_entry_id
         };
 
         yk_mt_post( 'delete_meal_to_entry', data,  yk_mt_post_api_delete_meal_to_entry_callback);

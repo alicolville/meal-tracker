@@ -70,7 +70,7 @@ function yk_mt_ajax_delete_meal_to_entry() {
 
     wp_send_json( [ 'error' => false, 'entry' => yk_mt_entry( $post_data[ 'entry-id' ] ) ] );
 }
-add_action( 'wp_ajax_delete_meal_to_entry', 'yk_mt_ajax_delete_meal_to_entry' );
+add_action( 'wp_ajax_delete_meal_to_entry', 'yk_mt_ajax_delete_meal_to_entry' ); //TODO: Rename delete_meal_to_entry to meal_form_entry
 
 /**
  * Add a new meal
