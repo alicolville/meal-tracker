@@ -43,6 +43,10 @@
 
 			$html .= yk_mt_shortcode_meal_tracker_summary();
 
+			if ( true === $is_pro ) {
+                $html .= yk_mt_shortcode_meal_tracker_navigation();
+            }
+
 			$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
 			if ( true === $is_pro ) {
@@ -59,31 +63,14 @@
 	}
 	add_shortcode( 'meal-tracker', 'yk_mt_shortcode_meal_tracker' );
 
-	/**
-	 * Get current URL with mode argument added
-	 * @param $mode
-	 *
-	 * @return mixed
-	 */
-	function yk_mt_shortcode_get_current_url( $mode = '' ) {
-		return add_query_arg( 'yk-mt-mode', $mode, get_permalink() );
-	}
+    /**
+     * Return HTML for entry navigation
+     * @return string
+     */
+	function yk_mt_shortcode_meal_tracker_navigation() {
 
-	/**
-	 * Get current mode
-	 * @return mixed|null
-	 */
-	function yk_mt_shortcode_get_mode() {
-		$mode = ( false === empty( $_GET[ 'yk-mt-mode' ] ) ) ?
-									$_GET[ 'yk-mt-mode' ] :
-										'default';
-
-		if ( 'default' !== $mode && true !== yk_mt_is_pro() ) {
-			$mode = 'default';
-		}
-
-		return $mode;
-	}
+	    return '123';
+    }
 
     /**
      * Display chart JS and summary data
@@ -504,3 +491,29 @@
             'load-entry'        => true
 		] );
 	}
+
+	/**
+     * Get current URL with mode argument added
+     * @param $mode
+     *
+     * @return mixed
+     */
+	function yk_mt_shortcode_get_current_url( $mode = '' ) {
+        return add_query_arg( 'yk-mt-mode', $mode, get_permalink() );
+    }
+
+	/**
+     * Get current mode
+     * @return mixed|null
+     */
+	function yk_mt_shortcode_get_mode() {
+        $mode = ( false === empty( $_GET[ 'yk-mt-mode' ] ) ) ?
+            $_GET[ 'yk-mt-mode' ] :
+            'default';
+
+        if ( 'default' !== $mode && true !== yk_mt_is_pro() ) {
+            $mode = 'default';
+        }
+
+        return $mode;
+    }
