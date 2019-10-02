@@ -762,3 +762,32 @@ function yk_mt_entry_id_from_qs( $ensure_belongs_to_current_user = true ) {
 
     return (int) $entry_id;
 }
+
+/**
+ * For the given entry, if today's allowed calorie does not match then update entry.
+ * @param bool $entry_id
+ * @return bool
+ */
+function yk_mt_allowed_calories_refresh( $entry_id = false ) {
+
+    $entry_id = ( false !== $entry_id ) ? (int) $entry_id : yk_mt_db_entry_get_id_for_today();
+
+    $entry = yk_mt_db_entry_get( $entry_id );
+
+    if ( true === empty( $entry ) ) {
+        return false;
+    }
+
+    $allowed_calories = yk_mt_user_calories_target();
+
+    // Only bother to update DB if we have a difference
+    if( (int) $allowed_calories === (int) $entry[ 'calories_allowed' ] ) {
+        return false;
+    }
+
+    yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_allowed' => $allowed_calories ] );
+
+    yk_mt_entry_calories_calculate_update_used( $entry_id );
+
+    return true;
+}
