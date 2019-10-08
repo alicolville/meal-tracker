@@ -135,14 +135,11 @@
 	        );
         }
 
-
-
         $html .= yk_mt_html_accordion_section( [    'id' => 1,
 	                                                'title' => __( 'Calorie Intake', YK_MT_SLUG ),
 	                                                'content' => $calories_html,
 	                                                'is-active' => true
 	    ]);
-
 
 	    $html .= yk_mt_html_accordion_close();
 
