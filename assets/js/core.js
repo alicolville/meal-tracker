@@ -472,12 +472,10 @@ jQuery( document ).ready( function( $ ) {
         let quantity_row = $( '#yk-mt-add-meal-quantity-row' );
 
         if (true === yk_mt_hide_quantity(value)) {
-            quantity_row.hide( 500 );
-            $('#yk-mt-add-meal-quantity').prop( 'required', false );
+            $('#yk-mt-add-meal-quantity').prop( 'disabled', true );
+            $('#yk-mt-add-meal-quantity').val('');
         } else {
-            quantity_row.show( 500 );
-            $('#yk-mt-add-meal-quantity').prop( 'required', true );
-            //TODO:$('#yk-mt-add-meal-quantity').val( 1 );                     // Set a dummy value so we can get past validation
+            $('#yk-mt-add-meal-quantity').prop( 'disabled', false );
         }
     }
 
