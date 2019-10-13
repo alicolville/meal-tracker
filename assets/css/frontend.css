@@ -346,7 +346,9 @@ Table styles
 .yk-mt-hide {
     display: none !important;
 }
-
+.yk-mt-selected {
+    font-weight: bold !important;
+}
 /*
     CSS rules for Non Pro user
  */
@@ -362,4 +364,11 @@ Table styles
  */
 .yk-mt-button-save-settings {
     margin-top: 15px;
+}
+
+/*
+    Navigation bar
+ */
+.yk-mt-navigation-table {
+    margin-bottom: 7px;
 }

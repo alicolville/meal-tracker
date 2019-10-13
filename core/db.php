@@ -209,6 +209,39 @@
 		return $wpdb->get_var( $sql );
 	}
 
+    /**
+     * Get Entry IDs and Dates for a user
+     *
+     * @param null $user_id
+     *
+     * @return null|string
+     */
+    function yk_mt_db_entry_get_ids_and_dates( $user_id = NULL ) {
+
+        $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+        //TODO: Add caching here. Clear this cache when a user adds a new Entry or deletes.
+        if ( $cache = apply_filters( 'yk_mt_db_entry_ids_and_dates', NULL, $user_id ) ) {
+            return $cache;
+        }
+
+        global $wpdb;
+
+        $sql = $wpdb->prepare( 'Select id, date from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where user_id = %d order by date asc', $user_id );
+
+        $results = $wpdb->get_results( $sql, ARRAY_A );
+
+        if ( false === empty( $results ) ) {
+            $results = wp_list_pluck( $results, 'date', 'id' );
+        } else {
+            $results = [];
+        }
+
+        do_action( 'yk_mt_db_entry_ids_and_dates', $user_id, $results );
+
+        return $results;
+    }
+
 	/**
 	 * Get details for an entry
 	 *

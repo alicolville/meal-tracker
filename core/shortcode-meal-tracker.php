@@ -44,7 +44,7 @@
 			$html .= yk_mt_shortcode_meal_tracker_summary();
 
 			if ( true === $is_pro ) {
-                $html .= yk_mt_shortcode_meal_tracker_navigation();
+                $html .= yk_mt_shortcode_meal_tracker_navigation( $entry_id );
             }
 
 			$html .= yk_mt_shortcode_meal_tracker_meal_types();
@@ -67,9 +67,37 @@
      * Return HTML for entry navigation
      * @return string
      */
-	function yk_mt_shortcode_meal_tracker_navigation() {
+	function yk_mt_shortcode_meal_tracker_navigation( $todays_entry_id = NULL ) {
 
-	    return '123';
+        $todays_entry_id = ( NULL === $todays_entry_id ) ? yk_mt_entry_get_id_or_create() : (int) $todays_entry_id;
+
+        $links = yk_mt_navigation_links( $todays_entry_id );
+
+	    $html = '<div class="yk-mt-t yk-mt-navigation-table">
+                    <div class="yk-mt-r">
+                        <div class="yk-mt-c">';
+
+	                    $i = 0;
+
+	                    foreach ( $links[ 'nav' ] as $link ) {
+	                        $html .= sprintf( '%4$s<a href="%1$s" class="%2$s">%3$s</a>',
+                                                        yk_mt_entry_url( $link[ 'id' ] ),
+                                                        ( $todays_entry_id === $link[ 'id' ] ) ? 'yk-mt-selected' : '',
+                                                        $link[ 'label' ],
+                                                        ( 0 !== $i ) ? ' &middot; ' : ''
+                            );
+
+                            $i++;
+                        }
+
+        $html .=       '</div>
+                        <div class="yk-mt-c">
+                            
+                        </div>
+                   </div>
+                 </div>';
+
+	    return $html;
     }
 
     /**
