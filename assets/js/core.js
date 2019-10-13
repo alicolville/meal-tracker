@@ -304,14 +304,14 @@ jQuery( document ).ready( function( $ ) {
      * Delete meal from entry
      * @param meal_entry_id
      */
-    function yk_mt_post_api_delete_meal_to_entry( meal_entry_id ) {
+    function yk_mt_post_api_delete_meal_from_entry( meal_entry_id ) {
 
         var data = {
             'meal-entry-id'     : meal_entry_id,
             'entry-id'          : yk_mt_entry_id
         };
 
-        yk_mt_post( 'delete_meal_to_entry', data,  yk_mt_post_api_delete_meal_to_entry_callback);
+        yk_mt_post( 'delete_meal_from_entry', data,  yk_mt_post_api_delete_meal_from_entry_callback);
     }
 
     /**
@@ -319,7 +319,7 @@ jQuery( document ).ready( function( $ ) {
      * @param data
      * @param response
      */
-    function yk_mt_post_api_delete_meal_to_entry_callback( data, response ) {
+    function yk_mt_post_api_delete_meal_from_entry_callback( data, response ) {
 
         if ( false === response[ 'error' ] ) {
 
@@ -373,7 +373,7 @@ jQuery( document ).ready( function( $ ) {
      * Listen for trigger to delete meal from an entry
      */
     $( 'body' ).on( 'meal-tracker-meal-entry-delete', function( event, meal_entry_id ) {
-        yk_mt_post_api_delete_meal_to_entry( meal_entry_id );
+        yk_mt_post_api_delete_meal_from_entry( meal_entry_id );
     });
 
     /**
