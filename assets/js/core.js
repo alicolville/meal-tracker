@@ -12,39 +12,47 @@ var yk_mt_meal_tracker_show     = yk_mt_meal_tracker_found && 'default' === yk_m
 
 jQuery( document ).ready( function( $ ) {
 
+    // Load config for shortcode
+    if ( true === yk_mt_meal_tracker_found ) {
+        yk_mt_entry_id = yk_mt_sc_meal_tracker['todays-entry']['id'];
+    }
+
     /**
      * ---------------------------------------------------------------------------------------
      * Accordion ( based on https://inspirationalpixels.com/accordion-html-css-jquery/#css )
      * ---------------------------------------------------------------------------------------
      */
 
-    // Close all sections (probably none open in the first place)
-    yk_mt_accordion_close_sections();
+    if ( yk_mt_meal_tracker_found && 'true' === yk_mt_sc_meal_tracker[ 'accordion-enabled' ] ) {
 
-    $( '.yk-mt-accordion-section .initial-active' ).each( function() {
-        var currentAttrValue = $( this ).attr( 'href' );
-        $( this ).addClass( 'active' );
-        $( '.yk-mt-accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
-    });
+        // Close all sections (probably none open in the first place)
+        yk_mt_accordion_close_sections();
 
-    $( '.yk-mt-accordion-section-title' ).click( function( e ) {
-
-        // Grab current anchor value
-        var currentAttrValue = $( this ).attr( 'href' );
-
-        if( $( e.target ).is( '.active' ) ) {
-            yk_mt_accordion_close_sections();
-        } else {
-            yk_mt_accordion_close_sections();
-
-            // Add active class to section title
+        $( '.yk-mt-accordion-section .initial-active' ).each( function() {
+            var currentAttrValue = $( this ).attr( 'href' );
             $( this ).addClass( 'active' );
-            // Open up the hidden content panel
             $( '.yk-mt-accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
-        }
+        });
 
-        e.preventDefault();
-    });
+        $( '.yk-mt-accordion-section-title' ).click( function( e ) {
+
+            // Grab current anchor value
+            var currentAttrValue = $( this ).attr( 'href' );
+
+            if( $( e.target ).is( '.active' ) ) {
+                yk_mt_accordion_close_sections();
+            } else {
+                yk_mt_accordion_close_sections();
+
+                // Add active class to section title
+                $( this ).addClass( 'active' );
+                // Open up the hidden content panel
+                $( '.yk-mt-accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
+            }
+
+            e.preventDefault();
+        });
+    }
 
     function yk_mt_accordion_close_sections() {
         $( '.yk-mt-accordion .yk-mt-accordion-section-title' ).removeClass( 'active' );
@@ -299,7 +307,8 @@ jQuery( document ).ready( function( $ ) {
     function yk_mt_post_api_delete_meal_to_entry( meal_entry_id ) {
 
         var data = {
-            'meal-entry-id'  : meal_entry_id
+            'meal-entry-id'     : meal_entry_id,
+            'entry-id'          : yk_mt_entry_id
         };
 
         yk_mt_post( 'delete_meal_to_entry', data,  yk_mt_post_api_delete_meal_to_entry_callback);
@@ -328,10 +337,10 @@ jQuery( document ).ready( function( $ ) {
      * Refresh entry UI
      * @param entry_id
      */
-    function yk_mt_refresh_entry( entry_id = false ) {
+    function yk_mt_refresh_entry() {
 
         var data = {
-            'entry-id'  : entry_id
+            'entry-id'  : yk_mt_entry_id
         };
 
         yk_mt_post( 'get_entry', data,  yk_mt_refresh_entry_callback);

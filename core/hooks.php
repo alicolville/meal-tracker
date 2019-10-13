@@ -14,30 +14,16 @@ function yk_mt_actions_settings_post_save() {
 add_action( 'yk_mt_settings_saved', 'yk_mt_actions_settings_post_save' );
 
 /**
- * For the given entry, if today's allowed calorie does not match then update entry.
- * @param bool $entry_id
- * @return bool
+ * Add a CSS classes to the <body>
+ * @param $classes
+ * @return array
  */
-function yk_mt_allowed_calories_refresh( $entry_id = false ) {
+function yk_mt_body_class( $classes ) {
 
-    $entry_id = ( false !== $entry_id ) ? (int) $entry_id : yk_mt_db_entry_get_id_for_today();
-
-    $entry = yk_mt_db_entry_get( $entry_id );
-
-    if ( true === empty( $entry ) ) {
-        return false;
+    if ( true === yk_mt_site_options( 'accordion-enabled' ) ) {
+        $classes[] = 'yk-mt-accordion-enabled';
     }
 
-    $allowed_calories = yk_mt_user_calories_target();
-
-    // Only bother to update DB if we have a difference
-    if( (int) $allowed_calories === (int) $entry[ 'calories_allowed' ] ) {
-        return false;
-    }
-
-    yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_allowed' => $allowed_calories ] );
-
-    yk_mt_entry_calories_calculate_update_used( $entry_id );
-
-    return true;
+    return $classes;
 }
+add_filter( 'body_class','yk_mt_body_class' );

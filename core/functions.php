@@ -1,25 +1,46 @@
 <?php
 
 /**
+ * Get the URL to view / edit a certain entry ID
+ * @param $entry_id
+ * @return mixed
+ */
+function yk_mt_entry_url( $entry_id, $esc_url = true ) {
+    $url = add_query_arg( 'entry-id', $entry_id, get_permalink() );
+
+    return ( true === $esc_url ) ? esc_url( $url ) : $url;
+}
+
+/**
  * Fetch the entry ID for today if it already exists, otherwise create it!
  *
  * @return null|int
  */
-function yk_mt_entry_get_id_or_create( $user_id = NULL ) {
+function yk_mt_entry_get_id_or_create( $user_id = NULL, $date = NULL ) {
 
 	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
-	$entry_id = yk_mt_db_entry_get_id_for_today( $user_id );
+    $entry_id = NULL;
 
-	if ( NULL !== $entry_id ) {
-		return $entry_id;
-	}
+    // If no date passed, we're only interested in today's date
+	if ( NULL === $date || false === yk_mt_date_is_valid_iso( $date ) ) {
+        $date       = yk_mt_date_iso_today();
+        $entry_id   = yk_mt_db_entry_get_id_for_today($user_id);
+    } else {
+	    $entry_id   = yk_mt_entry_for_given_date( $date );
+
+    }
+
+	// If we have an entry ID for the given date then just return.
+    if ( false === empty( $entry_id ) ) {
+        return $entry_id;
+    }
 
 	$entry = [
 		'user_id'               => $user_id,
 		'calories_allowed'      => yk_mt_user_calories_target(),
 		'calories_used'         => 0,
-		'date'                  => yk_mt_date_iso_today()
+		'date'                  => $date
 	];
 
 	$id = yk_mt_db_entry_add( $entry );
@@ -116,7 +137,9 @@ function yk_mt_entry_calories_calculate_update_used( $entry_id ) {
 
 	$result = yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_used' => $calories ] );
 
-	do_action( 'yk_mt_entry_cache_clear', $entry_id );
+    $user_id = yk_mt_db_entry_user_id( $entry_id );
+
+	do_action( 'yk_mt_entry_cache_clear', $entry_id, $user_id );
 
 	return $result;
 }
@@ -290,6 +313,18 @@ function yk_mt_use_minified() {
 }
 
 /**
+ * Fetch a value from the $_GET array
+ *
+ * @param $key
+ * @param null $default
+ *
+ * @return null
+ */
+function yk_mt_get_value( $key, $default = NULL ) {
+	return ( false === empty( $_GET[ $key ] ) ) ? $_GET[ $key ] : $default;
+}
+
+/**
  * Fetch a value from the $_POST array
  *
  * @param $key
@@ -326,11 +361,13 @@ function yk_mt_post_values_exist( $keys ) {
  *
  * @return bool
  */
-function yk_mt_security_entry_owned_by_user( $entry_id, $user_id ) {
+function yk_mt_security_entry_owned_by_user( $entry_id, $user_id = NULL ) {
 
-	$db_user_id = yk_mt_db_entry_user_id( $entry_id );
+    $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
-	return ( (int) $db_user_id === (int) $user_id );
+    $all_entries = yk_mt_db_entry_get_ids_and_dates( $user_id );
+
+	return ( true === array_key_exists( (int) $entry_id, $all_entries ) );
 }
 
 /**
@@ -710,5 +747,174 @@ function yk_mt_site_options( $key, $default = false ) {
         return true;
     }
 
+	// TODO: Tie this into an admins setting page
+	if ( 'accordion-enabled' === $key ) {
+		return true;
+	}
+
 	return false;
+}
+
+/**
+ * Get a site option ready for JS embed
+ *
+ * @param $key
+ *
+ * @return bool|string
+ */
+function yk_mt_site_options_for_js_bool( $key ) {
+	return ( true === yk_mt_site_options( $key ) ) ? 'true' : 'false';
+}
+
+/**
+ * Fetch entry ID from QS and ensure it belongs to the logged in user
+ *
+ * @param bool $ensure_belongs_to_current_user
+ * @return null
+ */
+function yk_mt_entry_id_from_qs( $ensure_belongs_to_current_user = true,
+                                    $create_entry_for_missing_date = true ) {
+
+    $entry_id = yk_mt_get_value( 'entry-id' );
+
+    if ( true === empty( $entry_id ) ) {
+        return NULL;
+    }
+
+    // The entry-id can also store a date. If so, let's see if the user has an entry for this date. If so, use this entry ID, if not, we
+    // need to create an entry for that date.
+    if ( false === is_numeric( $entry_id ) ) {
+
+        $date       = $entry_id;
+        $entry_id   = yk_mt_entry_for_given_date( $date );
+
+        if ( false === $entry_id &&
+                true === $create_entry_for_missing_date ) {
+
+            $entry_id = yk_mt_entry_get_id_or_create( NULL, $date );
+        }
+    }
+
+    if ( true === $ensure_belongs_to_current_user &&
+            false === yk_mt_security_entry_owned_by_user( $entry_id, get_current_user_id() ) ) {
+        return NULL;
+    }
+
+    return (int) $entry_id;
+}
+
+/**
+ * For the given entry, if today's allowed calorie does not match then update entry.
+ * @param bool $entry_id
+ * @return bool
+ */
+function yk_mt_allowed_calories_refresh( $entry_id = false ) {
+
+    $entry_id = ( false !== $entry_id ) ? (int) $entry_id : yk_mt_db_entry_get_id_for_today();
+
+    $entry = yk_mt_db_entry_get( $entry_id );
+
+    if ( true === empty( $entry ) ) {
+        return false;
+    }
+
+    $allowed_calories = yk_mt_user_calories_target();
+
+    // Only bother to update DB if we have a difference
+    if( (int) $allowed_calories === (int) $entry[ 'calories_allowed' ] ) {
+        return false;
+    }
+
+    yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_allowed' => $allowed_calories ] );
+
+    yk_mt_entry_calories_calculate_update_used( $entry_id );
+
+    return true;
+}
+
+/**
+ * Fetch navigation links around the current entry ID
+ * @param null $entry_id
+ */
+function yk_mt_navigation_links() {
+
+    $todays_entry_id    =  yk_mt_entry_get_id_or_create();
+    $links              = [];
+    $links[ 'all' ]     = yk_mt_db_entry_get_ids_and_dates();
+    $links[ 'nav' ]     = [];
+
+    $links[ 'nav' ][ 'yesterday' ]  =  [ 'id' => date('Y-m-d', strtotime('-1 day' ) ), 'label' =>  __( 'Yesterday', YK_MT_SLUG  ) ];
+
+    // Do we already have an entry for yesterday? IF so, swap in entry ID
+    if ( $existing_id =  yk_mt_entry_for_given_date( $links[ 'nav' ][ 'yesterday' ][ 'id' ] ) ) {
+        $links[ 'nav' ][ 'yesterday' ][ 'id' ] = $existing_id;
+    }
+
+    $links[ 'nav' ][ 'today' ]      =  [ 'id' => $todays_entry_id, 'label' =>  __( 'Today', YK_MT_SLUG )  ];
+    $links[ 'nav' ][ 'tomorrow' ]   =  [ 'id' => date('Y-m-d', strtotime('+1 day' ) ), 'label' =>  __( 'Tomorrow', YK_MT_SLUG ) ];
+
+    // Do we already have an entry for tomorrow? IF so, swap in entry ID
+    if ( $existing_id =  yk_mt_entry_for_given_date( $links[ 'nav' ][ 'tomorrow' ][ 'id' ] ) ) {
+        $links[ 'nav' ][ 'tomorrow' ][ 'id' ] = $existing_id;
+    }
+
+    return $links;
+}
+
+/**
+ * //TODO: Still needed?
+ * Get label for entry
+ * @param $date
+ * @return mixed
+ */
+function yk_mt_navigation_links_get_label( $date ) {
+
+    if ( true === empty( $date ) ) {
+        return $date;
+    }
+
+    if ( $date === date('Y-m-d' ) ) {
+        return __( 'Today', YK_MT_SLUG );
+    }
+
+    if( $date === date('Y-m-d', strtotime('-1 day' ) ) ) {
+        return __( 'Yesterday', YK_MT_SLUG );
+    }
+
+    if( $date === date('Y-m-d', strtotime('+1 day' ) ) ) {
+        return __( 'Tomorrow', YK_MT_SLUG );
+    }
+
+    return yk_mt_date_format( $date );
+}
+
+/**
+ * Look through the user's entries and see if they have an entry ID for that date
+ *
+ * @param $date
+ * @param null $user_id
+ * @return bool|false|int|string
+ */
+function yk_mt_entry_for_given_date( $date, $user_id = NULL ) {
+
+    $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+    if ( false === yk_mt_date_is_valid_iso( $date ) ) {
+        return false;
+    }
+
+    $all_dates = yk_mt_db_entry_get_ids_and_dates( $user_id );
+
+    return array_search( $date, $all_dates );
+}
+
+/*
+ * Format an ISO date
+ */
+function yk_mt_date_format( $iso_date ) {
+
+    $time = strtotime( $iso_date );
+
+    // TODO: Look up user option to render date
+    return date('d/m/Y', $time );
 }

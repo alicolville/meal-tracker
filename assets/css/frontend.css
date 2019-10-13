@@ -47,9 +47,10 @@
 /*----- Section Content -----*/
 .yk-mt-accordion-section-content {
     padding:15px;
-    display:none;
 }
-
+.yk-mt-accordion-enabled .yk-mt-accordion-section-content {
+     display:none;
+}
 /*
     Tables with div
  */
@@ -345,7 +346,9 @@ Table styles
 .yk-mt-hide {
     display: none !important;
 }
-
+.yk-mt-selected {
+    font-weight: bold !important;
+}
 /*
     CSS rules for Non Pro user
  */
@@ -361,4 +364,14 @@ Table styles
  */
 .yk-mt-button-save-settings {
     margin-top: 15px;
+}
+
+/*
+    Navigation bar
+ */
+.yk-mt-navigation-table {
+    margin-bottom: 7px;
+}
+.yk-mt-datepicker-cell {
+    text-align: right;
 }

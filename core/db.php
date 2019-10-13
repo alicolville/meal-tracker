@@ -94,7 +94,7 @@
 
 		$entry = yk_mt_db_entry_calculate_stats( $entry );
 
-		do_action( 'yk_mt_entry_added', $id, $entry );
+		do_action( 'yk_mt_entry_added', $id, $entry, $entry[ 'user_id' ] );
 
 		return $id;
 	}
@@ -142,6 +142,8 @@
 
 		global $wpdb;
 
+		$user_id = yk_mt_db_entry_user_id( $id );
+
 		do_action( 'yk_mt_entry_deleting', $id );
 
 		$result = $wpdb->delete( $wpdb->prefix . YK_WT_DB_ENTRY, [ 'id' => $id ], [ '%d' ] );
@@ -150,7 +152,7 @@
 			return false;
 		}
 
-		do_action( 'yk_mt_entry_deleted', $id );
+		do_action( 'yk_mt_entry_deleted', $id, $user_id );
 
 		return true;
 	}
@@ -209,6 +211,38 @@
 		return $wpdb->get_var( $sql );
 	}
 
+    /**
+     * Get Entry IDs and Dates for a user
+     *
+     * @param null $user_id
+     *
+     * @return null|string
+     */
+    function yk_mt_db_entry_get_ids_and_dates( $user_id = NULL ) {
+
+        $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+        if ( $cache = apply_filters( 'yk_mt_db_entry_ids_and_dates_get', NULL, $user_id ) ) {
+            return $cache;
+        }
+
+        global $wpdb;
+
+        $sql = $wpdb->prepare( 'Select id, date from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where user_id = %d order by date asc', $user_id );
+
+        $results = $wpdb->get_results( $sql, ARRAY_A );
+
+        if ( false === empty( $results ) ) {
+            $results = wp_list_pluck( $results, 'date', 'id' );
+        } else {
+            $results = [];
+        }
+
+        do_action( 'yk_mt_db_entry_ids_and_dates', $user_id, $results );
+
+        return $results;
+    }
+
 	/**
 	 * Get details for an entry
 	 *
@@ -217,7 +251,7 @@
 	function yk_mt_db_entry_get( $id = NULL ) {
 
 	    // If this is never the case, we need to deal with this value being true or false in caching.
-        $compress_multiple_meals = true;
+        $compress_multiple_meals = yk_mt_is_pro();
 
 		if ( NULL === $id ) {
 			$id = yk_mt_db_entry_get_id_for_today();
@@ -387,7 +421,10 @@
 		$id = $wpdb->insert_id;
 
 		do_action( 'yk_mt_entry_meal_added', $id, $entry_meal );
-		do_action( 'yk_mt_entry_cache_clear', $entry_meal[ 'entry_id' ] );
+
+		$user_id = yk_mt_db_entry_user_id( $entry_meal[ 'entry_id' ] );
+
+		do_action( 'yk_mt_entry_cache_clear', $entry_meal[ 'entry_id' ], $user_id );
 
 		return $id;
 	}

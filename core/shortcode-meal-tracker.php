@@ -15,8 +15,6 @@
 			return '';
 		}
 
-		$shortcode_mode = yk_mt_shortcode_get_mode();
-
 		$html = '<!-- Meal Tracker Start -->';
 
 		// Is the user logged in?
@@ -24,12 +22,17 @@
 			return yk_mt_shortcode_log_in_prompt();
 		}
 
+        $is_pro         = yk_mt_is_pro();
+        $shortcode_mode = yk_mt_shortcode_get_mode();
+
+		$entry_id = ( true === $is_pro ) ? yk_mt_entry_id_from_qs() : NULL;
+
 		$html .= '<div id="yk-mt-shortcode-meal-tracker" class="yk-mt-shortcode-meal-tracker">';
 
         // This is used to create an empty entry if one doesn't already exist for this user / day
         yk_mt_entry_get_id_or_create();
 
-        yk_mt_shortcode_meal_tracker_localise( $shortcode_mode );
+        yk_mt_shortcode_meal_tracker_localise( [ 'mode' => $shortcode_mode, 'entry-id' => $entry_id ] );
 
 		// Load settings?
 		if ( 'settings' === $shortcode_mode ) {
@@ -40,15 +43,21 @@
 
 			$html .= yk_mt_shortcode_meal_tracker_summary();
 
+			if ( true === $is_pro ) {
+                $html .= yk_mt_shortcode_meal_tracker_navigation( $entry_id );
+            }
+
 			$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
-			if ( true === yk_mt_is_pro() ) {
-				$html .= sprintf( '<br /><button href="%s" class="yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">%s</button>', yk_mt_shortcode_get_current_url( 'settings' ), __( 'Settings', YK_MT_SLUG ) );
+			if ( true === $is_pro ) {
+				$html .= sprintf( '<br /><button href="%s" class="yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">%s</button>',
+                                    yk_mt_shortcode_get_current_url( 'settings' ),
+                                    __( 'Settings', YK_MT_SLUG )
+                );
 			}
 
 			// Embed hidden form / dialog required for adding a meal
 			$html .= yk_mt_shortcode_meal_tracker_add_meal_dialog();
-
 		}
 
 		$html .= '</div>';
@@ -57,31 +66,44 @@
 	}
 	add_shortcode( 'meal-tracker', 'yk_mt_shortcode_meal_tracker' );
 
-	/**
-	 * Get current URL with mode argument added
-	 * @param $mode
-	 *
-	 * @return mixed
-	 */
-	function yk_mt_shortcode_get_current_url( $mode = '' ) {
-		return add_query_arg( 'yk-mt-mode', $mode, get_permalink() );
-	}
+    /**
+     * Return HTML for entry navigation
+     * @return string
+     */
+	function yk_mt_shortcode_meal_tracker_navigation( $todays_entry_id = NULL ) {
 
-	/**
-	 * Get current mode
-	 * @return mixed|null
-	 */
-	function yk_mt_shortcode_get_mode() {
-		$mode = ( false === empty( $_GET[ 'yk-mt-mode' ] ) ) ?
-									$_GET[ 'yk-mt-mode' ] :
-										'default';
+        $todays_entry_id = ( NULL === $todays_entry_id ) ? yk_mt_entry_get_id_or_create() : (int) $todays_entry_id;
 
-		if ( 'default' !== $mode && true !== yk_mt_is_pro() ) {
-			$mode = 'default';
-		}
+        $links = yk_mt_navigation_links( $todays_entry_id );
 
-		return $mode;
-	}
+	    $html = '<div class="yk-mt-t yk-mt-navigation-table">
+                    <div class="yk-mt-r">
+                        <div class="yk-mt-c">';
+
+	                    $i = 0;
+
+	                    foreach ( $links[ 'nav' ] as $link ) {
+	                        $html .= sprintf( '%4$s<a href="%1$s" class="%2$s">%3$s</a>',
+                                                        yk_mt_entry_url( $link[ 'id' ] ),
+                                                        ( $todays_entry_id === $link[ 'id' ] ) ? 'yk-mt-selected' : '',
+                                                        $link[ 'label' ],
+                                                        ( 0 !== $i ) ? ' &middot; ' : ''
+                            );
+
+                            $i++;
+                        }
+
+        $html .=       sprintf('</div>
+                                                <div class="yk-mt-c yk-mt-datepicker-cell">
+                                                    <a class="mt-datepicker">%1$s</a>
+                                                </div>
+                                           </div>
+                                        </div>',
+                                        __( 'Select a date', YK_MT_SLUG )
+        );
+
+	    return $html;
+    }
 
     /**
      * Display chart JS and summary data
@@ -146,14 +168,11 @@
 	        );
         }
 
-
-
         $html .= yk_mt_html_accordion_section( [    'id' => 1,
 	                                                'title' => __( 'Calorie Intake', YK_MT_SLUG ),
 	                                                'content' => $calories_html,
 	                                                'is-active' => true
 	    ]);
-
 
 	    $html .= yk_mt_html_accordion_close();
 
@@ -458,8 +477,6 @@
         wp_enqueue_style( 'meal-tracker', plugins_url( 'assets/css/frontend' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-forced', plugins_url( 'assets/css/forced' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
-       //todo  yk_mt_enqueue_front_end_dependencies();
-
 		wp_enqueue_script( 'mt-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-selectize', 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js', [], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-loading-overlay', plugins_url( 'assets/js/loadingoverlay.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
@@ -468,6 +485,14 @@
 
         wp_enqueue_script( 'meal-tracker', plugins_url( 'assets/js/core' . $minified . '.js', __DIR__ ),
                         [ 'mt-modal', 'mt-selectize', 'mt-loading-overlay', 'mt-chart-js', 'mt-notify' ], YK_MT_PLUGIN_VERSION, true );
+
+        // Include relevant JS for Pro users
+        if ( true === yk_mt_is_pro() ) {
+            wp_enqueue_script( 'mt-datepicker', plugins_url( 'assets/js/zebra_datepicker.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+            wp_enqueue_style( 'mt-datepicker', plugins_url( 'assets/css/zebra/zebra_datepicker.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+
+            wp_enqueue_script( 'mt-pro', plugins_url( 'assets/js/pro.js', __DIR__ ), [ 'meal-tracker', 'mt-datepicker' ], YK_MT_PLUGIN_VERSION, true );
+        }
 
         wp_localize_script( 'meal-tracker', 'yk_mt', yk_mt_ajax_config() );
 
@@ -478,7 +503,12 @@
 	/**
 	 * Add relevant data into JS object
 	 */
-	function yk_mt_shortcode_meal_tracker_localise( $shortcode_mode = '' ) {
+	function yk_mt_shortcode_meal_tracker_localise( $args = [] ) {
+
+		$args = wp_parse_args( $args, [
+											'mode'      => '',
+                                            'entry-id'  => NULL
+		]);
 
 		$dialog_options = [
 			'color'         => '#FFFFFF',
@@ -489,10 +519,37 @@
 		$dialog_options = apply_filters( 'yk_mt_shortcode_meal_tracker_dialog_options', $dialog_options );
 
 		wp_localize_script( 'meal-tracker', 'yk_mt_sc_meal_tracker', [
-			'mode'              => $shortcode_mode,
+			'mode'              => $args[ 'mode' ],
+			'accordion-enabled' => yk_mt_site_options_for_js_bool( 'accordion-enabled' ),
 			'dialog-options'    => json_encode( $dialog_options ),
             'localise'          => yk_mt_localised_strings(),
-            'todays-entry'      => yk_mt_entry(),
+            'todays-entry'      => yk_mt_entry( $args[ 'entry-id' ] ),
             'load-entry'        => true
 		] );
 	}
+
+	/**
+     * Get current URL with mode argument added
+     * @param $mode
+     *
+     * @return mixed
+     */
+	function yk_mt_shortcode_get_current_url( $mode = '' ) {
+        return add_query_arg( 'yk-mt-mode', $mode, get_permalink() );
+    }
+
+	/**
+     * Get current mode
+     * @return mixed|null
+     */
+	function yk_mt_shortcode_get_mode() {
+        $mode = ( false === empty( $_GET[ 'yk-mt-mode' ] ) ) ?
+            $_GET[ 'yk-mt-mode' ] :
+            'default';
+
+        if ( 'default' !== $mode && true !== yk_mt_is_pro() ) {
+            $mode = 'default';
+        }
+
+        return $mode;
+    }
