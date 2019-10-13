@@ -137,7 +137,9 @@ function yk_mt_entry_calories_calculate_update_used( $entry_id ) {
 
 	$result = yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_used' => $calories ] );
 
-	do_action( 'yk_mt_entry_cache_clear', $entry_id );
+    $user_id = yk_mt_db_entry_user_id( $entry_id );
+
+	do_action( 'yk_mt_entry_cache_clear', $entry_id, $user_id );
 
 	return $result;
 }
@@ -359,11 +361,13 @@ function yk_mt_post_values_exist( $keys ) {
  *
  * @return bool
  */
-function yk_mt_security_entry_owned_by_user( $entry_id, $user_id ) {
-//TODO: Refactor this to use: yk_mt_db_entry_get_ids_and_dates
-	$db_user_id = yk_mt_db_entry_user_id( $entry_id );
+function yk_mt_security_entry_owned_by_user( $entry_id, $user_id = NULL ) {
 
-	return ( (int) $db_user_id === (int) $user_id );
+    $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+    $all_entries = yk_mt_db_entry_get_ids_and_dates( $user_id );
+
+	return ( true === array_key_exists( (int) $entry_id, $all_entries ) );
 }
 
 /**
