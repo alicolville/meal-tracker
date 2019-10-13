@@ -48,9 +48,6 @@ include_once YK_MT_ABSPATH . 'core/activate.php';
 include_once YK_MT_ABSPATH . 'core/hooks.php';
 include_once YK_MT_ABSPATH . 'core/sources-weight-tracker.php';
 
-// TODO: Remove
-include_once YK_MT_ABSPATH . 'tests.php';
-
 // -----------------------------------------------------------------------------------------
 // AC: Load relevant language files
 // -----------------------------------------------------------------------------------------
