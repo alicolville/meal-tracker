@@ -2,14 +2,6 @@
 
 defined('ABSPATH') or die("Jog on!");
 
-/** TODO:
- * Is Weight Tracker Pro enabled
- * @return bool
- */
-//function yk_mt_wlt_enabled() {
-//    return function_exists( 'ws_ls_harris_benedict_calculate_calories' );
-//}
-
 /**
  * Is Weight Tracker enabled to be used with Meal Tracker?
  * @return bool
