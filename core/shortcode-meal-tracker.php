@@ -50,7 +50,10 @@
 			$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
 			if ( true === $is_pro ) {
-				$html .= sprintf( '<br /><button href="%s" class="yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">%s</button>', yk_mt_shortcode_get_current_url( 'settings' ), __( 'Settings', YK_MT_SLUG ) );
+				$html .= sprintf( '<br /><button href="%s" class="yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">%s</button>',
+                                    yk_mt_shortcode_get_current_url( 'settings' ),
+                                    __( 'Settings', YK_MT_SLUG )
+                );
 			}
 
 			// Embed hidden form / dialog required for adding a meal
@@ -90,12 +93,14 @@
                             $i++;
                         }
 
-        $html .=       '</div>
-                        <div class="yk-mt-c">
-                            
-                        </div>
-                   </div>
-                 </div>';
+        $html .=       sprintf('</div>
+                                                <div class="yk-mt-c yk-mt-datepicker-cell">
+                                                    <a class="mt-datepicker">%1$s</a>
+                                                </div>
+                                           </div>
+                                        </div>',
+                                        __( 'Select a date', YK_MT_SLUG )
+        );
 
 	    return $html;
     }
@@ -482,6 +487,14 @@
 
         wp_enqueue_script( 'meal-tracker', plugins_url( 'assets/js/core' . $minified . '.js', __DIR__ ),
                         [ 'mt-modal', 'mt-selectize', 'mt-loading-overlay', 'mt-chart-js', 'mt-notify' ], YK_MT_PLUGIN_VERSION, true );
+
+        // Include relevant JS for Pro users
+        if ( true === yk_mt_is_pro() ) {
+            wp_enqueue_script( 'mt-datepicker', plugins_url( 'assets/js/zebra_datepicker.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+            wp_enqueue_style( 'mt-datepicker', plugins_url( 'assets/css/zebra/zebra_datepicker.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+
+            wp_enqueue_script( 'mt-pro', plugins_url( 'assets/js/pro.js', __DIR__ ), [ 'meal-tracker', 'mt-datepicker' ], YK_MT_PLUGIN_VERSION, true );
+        }
 
         wp_localize_script( 'meal-tracker', 'yk_mt', yk_mt_ajax_config() );
 

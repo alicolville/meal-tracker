@@ -372,3 +372,6 @@ Table styles
 .yk-mt-navigation-table {
     margin-bottom: 7px;
 }
+.yk-mt-datepicker-cell {
+    text-align: right;
+}
