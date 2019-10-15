@@ -918,3 +918,92 @@ function yk_mt_date_format( $iso_date ) {
     // TODO: Look up user option to render date
     return date('d/m/Y', $time );
 }
+
+/**
+ * Display an upgrade button
+ */
+function yk_mt_upgrade_button( $css_class = '', $link = NULL ) {
+
+    $link = ( false === empty( $link ) ) ? $link : YK_MT_UPGRADE_LINK . '?hash=' . yk_mt_generate_site_hash() ;
+
+    echo sprintf('<a href="%s" class="button-primary sh-cd-upgrade-button%s"><i class="far fa-credit-card"></i> %s £%d %s</a>',
+        esc_url( $link ),
+        esc_attr( ' ' . $css_class ),
+        __( 'Upgrade to Premium for ', YK_MT_SLUG ),
+        esc_html( yk_mt_license_price() ),
+        __( 'a year ', YK_MT_SLUG )
+    );
+}
+/**
+ * Display message in admin UI
+ *
+ * @param $text
+ * @param bool $error
+ */
+function yk_mt_message_display( $text, $error = false ) {
+
+    if ( true === empty( $text ) ) {
+        return;
+    }
+
+    printf( '<div class="%s"><p>%s</p></div>',
+        true === $error ? 'error' : 'updated',
+        esc_html( $text )
+    );
+}
+
+/**
+ * Render features array into HTML
+ * @param $features
+ */
+function yk_mt_features_display() {
+
+    $features = yk_mt_features_list();
+
+    $html = '';
+
+    if ( false === empty( $features ) ) {
+
+        $class  = '';
+        $html   = '<table class="form-table" >';
+
+        foreach ( $features as $title => $description ) {
+
+            if ( false === empty( $title ) ) {
+
+                $class = ('alternate' == $class) ? '' : 'alternate';
+
+                $html .= sprintf( '<tr valign="top" class="%1$s">
+                                            <td scope="row" style="padding-left:30px"><label for="tablecell">
+                                                    &middot; <strong>%2$s:</strong> %3$s.
+                                                </label></td>
+                            
+                                        </tr>',
+                    $class,
+                    esc_html( $title ),
+                    esc_html( $description )
+                );
+            }
+        }
+
+        $html .= '</table>';
+    }
+    return $html;
+}
+
+/**
+ * Return an array of all features
+ */
+function yk_mt_features_list() {
+
+    return [
+                __( 'Create and view entries', YK_MT_SLUG )     => __( 'Allow your users to create and view entries for any day', YK_MT_SLUG ),
+                __( 'Edit entries', YK_MT_SLUG )                => __( 'Allow your users to edit their entries for any given day', YK_MT_SLUG ),
+                __( 'Edit meals', YK_MT_SLUG )                  => __( 'Allow your users to edit their stored meals', YK_MT_SLUG ),
+                __( 'Calorie sources', YK_MT_SLUG )             => __( 'Fetch daily calorie limits from other sources e.g. YeKen\'s Weight Tracker', YK_MT_SLUG ),
+                __( 'Compress meal items', YK_MT_SLUG )         => __( 'Compress multiple meal lines for an entry into one line', YK_MT_SLUG ),
+                __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
+                __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
+                __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
+     ];
+}

@@ -28,7 +28,6 @@ defined('ABSPATH') or die("Jog on!");
 */
 
 define( 'YK_MT_ABSPATH', plugin_dir_path( __FILE__ ) );
-
 define( 'YK_MT_PLUGIN_VERSION', '0.4-beta2' );
 define( 'YK_MT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'YK_MT_SLUG', 'meal-tracker' );
@@ -37,6 +36,7 @@ define( 'YK_MT_SLUG', 'meal-tracker' );
 // AC: Include all relevant PHP files
 // -----------------------------------------------------------------------------------------
 
+include_once YK_MT_ABSPATH . 'core/globals.php';
 include_once YK_MT_ABSPATH . 'core/functions.php';
 include_once YK_MT_ABSPATH . 'core/license.php';
 include_once YK_MT_ABSPATH . 'core/caching.php';
@@ -48,6 +48,8 @@ include_once YK_MT_ABSPATH . 'core/activate.php';
 include_once YK_MT_ABSPATH . 'core/hooks.php';
 include_once YK_MT_ABSPATH . 'core/sources-weight-tracker.php';
 
+// Admin pages
+include_once YK_MT_ABSPATH . 'core/admin-pages/pages.license.php';
 // -----------------------------------------------------------------------------------------
 // AC: Load relevant language files
 // -----------------------------------------------------------------------------------------
