@@ -169,6 +169,20 @@ function yk_mt_meal_types_ids() {
 }
 
 /**
+ * Return the number of meals added for the user
+ * @param null $user_id
+ * @return int
+ */
+function yk_mt_meal_count( $user_id = NULL ) {
+
+    $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+    $meals = yk_mt_db_meal_for_user( $user_id );
+
+    return ( false === empty( $meals ) ) ? count( $meals ) : 0;
+}
+
+/**
  * Get the allowed calories for the given user
  *
  * @param null $user_id
@@ -1002,7 +1016,7 @@ function yk_mt_features_list() {
                 __( 'Edit meals', YK_MT_SLUG )                  => __( 'Allow your users to edit their stored meals', YK_MT_SLUG ),
                 __( 'Calorie sources', YK_MT_SLUG )             => __( 'Fetch daily calorie limits from other sources e.g. YeKen\'s Weight Tracker', YK_MT_SLUG ),
                 __( 'Compress meal items', YK_MT_SLUG )         => __( 'Compress multiple meal lines for an entry into one line', YK_MT_SLUG ),
-                __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
+                __( 'Unlimited meals per user', YK_MT_SLUG )    => __( 'Your users are no longer limited to a maximum of 40 meals and may add as many as they wish', YK_MT_SLUG ),
                 __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
                 __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
      ];

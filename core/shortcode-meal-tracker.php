@@ -22,7 +22,7 @@
 			return yk_mt_shortcode_log_in_prompt();
 		}
 
-        $is_pro         = yk_mt_is_pro();
+        $is_pro         = yk_mt_license_is_premium();
         $shortcode_mode = yk_mt_shortcode_get_mode();
 
 		$entry_id = ( true === $is_pro ) ? yk_mt_entry_id_from_qs() : NULL;
@@ -321,7 +321,12 @@
                                 __( 'Close screen after adding meal(s)', YK_MT_SLUG )
         );
 
-        $html .= yk_mt_shortcode_meal_tracker_add_new_meal_form();
+        // Form to add a new meal
+        if ( true === yk_mt_license_is_premium() || yk_mt_meal_count() < 40 ) {
+            $html .= yk_mt_shortcode_meal_tracker_add_new_meal_form();
+        } else {
+            $html .= sprintf( '<br /><p>%1$s</p>', __( 'Unfortunately you have reached the maximum of 40 meals and are unable to add anymore.', YK_MT_SLUG ) );
+        }
 
         $html .= '</div></div>
                 <a id="yk-mt-open-dialog-edit" class="yk-mt-meal-button-edit yk-mt-add-meal-prompt yk-mt-hide"></a>               
@@ -487,7 +492,7 @@
                         [ 'mt-modal', 'mt-selectize', 'mt-loading-overlay', 'mt-chart-js', 'mt-notify' ], YK_MT_PLUGIN_VERSION, true );
 
         // Include relevant JS for Pro users
-        if ( true === yk_mt_is_pro() ) {
+        if ( true === yk_mt_license_is_premium() ) {
             wp_enqueue_script( 'mt-datepicker', plugins_url( 'assets/js/zebra_datepicker.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
             wp_enqueue_style( 'mt-datepicker', plugins_url( 'assets/css/zebra/zebra_datepicker.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
@@ -547,7 +552,7 @@
             $_GET[ 'yk-mt-mode' ] :
             'default';
 
-        if ( 'default' !== $mode && true !== yk_mt_is_pro() ) {
+        if ( 'default' !== $mode && true !== yk_mt_license_is_premium() ) {
             $mode = 'default';
         }
 

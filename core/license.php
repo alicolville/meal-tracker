@@ -3,14 +3,6 @@
 defined('ABSPATH') or die("Jog on!");
 
 /**
- * Pro user?
- * @return bool
- */
-function yk_mt_is_pro() {
-    return true; //TODO
-}
-
-/**
  * Premium license?
  *
  * @return bool
@@ -26,7 +18,7 @@ function yk_mt_license_is_premium() {
  */
 function yk_mt_license_upgrade_link() {
 
-    $link = admin_url('admin.php?page=sh-cd-shortcode-variables-license');
+    $link = admin_url('admin.php?page=yk-mt-license');
 
     return esc_url( $link );
 }
@@ -53,7 +45,7 @@ function yk_mt_license_validate( $license ) {
     }
 
     // Match this site hash?
-    if ( yk_mt_generate_site_hash() !== $license['site-hash']) {
+    if ( yk_mt_generate_site_hash() !== $license['site-hash'] ) {
         return 'This license doesn\'t appear to be for this site (no match on site hash).';
     }
 
@@ -236,7 +228,7 @@ if ( false === function_exists( 'yeken_license_api_fetch_licenses' ) ) {
  */
 function yk_mt_license_body_class( $classes ) {
 
-    $class = ( true === yk_mt_is_pro() ) ? 'pro' : 'not-pro';
+    $class = ( true === yk_mt_license_is_premium() ) ? 'pro' : 'not-pro';
 
     $classes[] = 'yk-mt-' . $class;
 
