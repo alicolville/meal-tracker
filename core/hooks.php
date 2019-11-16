@@ -35,16 +35,12 @@ function yk_mt_build_admin_menu() {
 
     add_menu_page( YK_MT_PLUGIN_NAME, YK_MT_PLUGIN_NAME, 'manage_options', 'yk-mt-main-menu', '', 'dashicons-chart-pie' );
 
-//    // Hide duplicated sub menu (wee hack!)
-   add_submenu_page( 'yk-mt-main-menu', '', '', 'manage_options', 'yk-mt-main-menu', 'sh_cd_pages_your_shortcodes');
-//
-//    // Add sub menus
-//    add_submenu_page( 'sh-cd-shortcode-variables-main-menu', __( 'Your Shortcodes', SH_CD_SLUG ),  __('Your shortcodes'), 'manage_options', 'sh-cd-shortcode-variables-your-shortcodes', 'sh_cd_pages_your_shortcodes');
-//    add_submenu_page( 'sh-cd-shortcode-variables-main-menu', __( 'Premade Shortcodes', SH_CD_SLUG ),  __('Premade shortcodes'), 'manage_options', 'sh-cd-shortcode-variables-sub-premade', 'sh_cd_premade_shortcodes_page');
-//
-    $menu_text = ( true === yk_mt_license_is_premium() ) ? __('Your License', SH_CD_SLUG ) : __('Upgrade to Pro', YK_MT_SLUG );
-//
-    add_submenu_page( 'yk-mt-main-menu', $menu_text,  $menu_text, 'manage_options', 'yk-mt-license', 'yk_mt_advertise_pro');
+    // Hide duplicated sub menu (wee hack!)
+    add_submenu_page( 'yk-mt-main-menu', '', '', 'manage_options', 'yk-mt-main-menu', '');
 
+    $menu_text = ( true === yk_mt_license_is_premium() ) ? __( 'Your License', SH_CD_SLUG ) : __( 'Upgrade to Pro', YK_MT_SLUG );
+
+    add_submenu_page( 'yk-mt-main-menu', $menu_text,  $menu_text, 'manage_options', 'yk-mt-license', 'yk_mt_advertise_pro');
+    add_submenu_page( 'yk-mt-main-menu', __( 'Help', YK_MT_SLUG ),  __( 'Help', YK_MT_SLUG ), 'manage_options', 'yk-mt-help', 'yk_mt_help_page');
 }
 add_action( 'admin_menu', 'yk_mt_build_admin_menu' );

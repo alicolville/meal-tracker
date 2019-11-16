@@ -50,7 +50,9 @@ include_once YK_MT_ABSPATH . 'core/sources-weight-tracker.php';
 include_once YK_MT_ABSPATH . 'core/cron.php';
 
 // Admin pages
-include_once YK_MT_ABSPATH . 'core/admin-pages/pages.license.php';
+include_once YK_MT_ABSPATH . 'core/admin-pages/page.license.php';
+include_once YK_MT_ABSPATH . 'core/admin-pages/page.help.php';
+
 // -----------------------------------------------------------------------------------------
 // AC: Load relevant language files
 // -----------------------------------------------------------------------------------------

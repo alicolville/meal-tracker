@@ -1021,3 +1021,18 @@ function yk_mt_features_list() {
                 __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
      ];
 }
+
+/**
+ * HTML for mention of custom work
+ */
+function yk_mt_custom_notification_html() {
+    ?>
+
+    <p><img src="<?php echo plugins_url( 'admin-pages/assets/images/yeken-logo.png', __FILE__ ); ?>" width="100" height="100" style="margin-right:20px" align="left" /><?php echo __( 'If require plugin modifications to Meal Tracker, or need a new plugin built, or perhaps you need a developer to help you with your website then please don\'t hesitate get in touch!', YK_MT_SLUG ); ?></p>
+    <p><strong><?php echo __( 'We provide fixed priced quotes.', WE_LS_SLUG); ?></strong></p>
+    <p><a href="https://www.yeken.uk" rel="noopener noreferrer" target="_blank">YeKen.uk</a> /
+        <a href="https://profiles.wordpress.org/aliakro" rel="noopener noreferrer" target="_blank">WordPress Profile</a> /
+        <a href="mailto:email@yeken.uk" >email@yeken.uk</a></p>
+    <br clear="both"/>
+    <?php
+}
