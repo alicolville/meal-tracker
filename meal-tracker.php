@@ -40,7 +40,12 @@ include_once YK_MT_ABSPATH . 'core/globals.php';
 include_once YK_MT_ABSPATH . 'core/functions.php';
 include_once YK_MT_ABSPATH . 'core/functions.settings.php';
 include_once YK_MT_ABSPATH . 'core/license.php';
-include_once YK_MT_ABSPATH . 'core/caching.php';
+
+// Caching enabled?
+if ( true === yk_mt_site_options_as_bool('caching-enabled' ) ) {
+    include_once YK_MT_ABSPATH . 'core/caching.php';
+}
+
 include_once YK_MT_ABSPATH . 'core/db.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-functions.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-meal-tracker.php';

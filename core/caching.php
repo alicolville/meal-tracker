@@ -1,5 +1,7 @@
 <?php
 
+    defined('ABSPATH') or die("Jog on!");
+
 	/**
 	 *  See bottom of file for hook listeners that clear cache.
 	 */
