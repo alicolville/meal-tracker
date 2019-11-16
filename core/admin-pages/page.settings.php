@@ -25,10 +25,12 @@ function yk_mt_settings_page_generic() {
                 <div class="meta-box-sortables ui-sortable">
 
                     <div class="postbox">
-                        <h3 class="hndle"><span><?php echo __( YK_MT_PLUGIN_NAME . ' Settings', YK_MT_SLUG); ?></span></h3>
-
+                        <h3 class="hndle">
+                            <span>
+                                <?php echo __( YK_MT_PLUGIN_NAME . ' Settings', YK_MT_SLUG); ?>
+                            </span>
+                        </h3>
                         <div class="inside">
-
                             <form method="post" action="options.php">
                                 <?php
 
@@ -36,7 +38,7 @@ function yk_mt_settings_page_generic() {
                                 do_settings_sections( 'yk-mt-options-group' );
 
                                 ?>
-                                <div class="yk-mt-tabs">
+                                <div id="yk-mt-tabs">
                                     <ul>
                                         <li><a><?php echo __( 'General', YK_MT_SLUG ); ?><span><?php echo __( 'General settings', YK_MT_SLUG ); ?></span></a></li>
                                         <li><a><?php echo __( 'Test', YK_MT_SLUG ); ?><span><?php echo __( 'To Do', YK_MT_SLUG ); ?></span></a></li>
@@ -76,18 +78,16 @@ function yk_mt_settings_page_generic() {
                                                 </tr>
                                             </table>
                                         </div>
-                                    </div>
-                                    <div>
                                         <div>
-                                            Test
+
+                                                Test
+
                                         </div>
-                                    </div>
-                                    <div>
                                         <div>
                                             <?php
-                                            if ( false === $is_premium ) {
-                                                yk_mt_display_pro_upgrade_notice();
-                                            }
+                                                if ( false === $is_premium ) {
+                                                    yk_mt_display_pro_upgrade_notice();
+                                                }
                                             ?>
                                             <h3><?php echo __( 'Meal Tracker Shortcode' , YK_MT_SLUG); ?></h3>
                                             <table class="form-table">
@@ -111,22 +111,9 @@ function yk_mt_settings_page_generic() {
                                 <?php submit_button(); ?>
                             </form>
                         </div>
-                        <!-- .inside -->
-
                     </div>
-                    <!-- .postbox -->
-
-                    <div class="postbox">
-                    </div>
-                    <!-- .meta-box-sortables .ui-sortable -->
-
-                </div>
-                <!-- post-body-content -->
-
+                 </div>
             </div>
-            <!-- #post-body .metabox-holder .columns-2 -->
-
-            <br class="clear">
         </div>
         <!-- #poststuff -->
 

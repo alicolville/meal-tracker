@@ -1,7 +1,7 @@
 jQuery( document ).ready(function ($) {
 
     if ( $.fn.zozoTabs ) {
-        $( '.yk-mt-tabs' ).zozoTabs({
+        $( '#yk-mt-tabs' ).zozoTabs({
             rounded: false,
             multiline: true,
             theme: "silver",
