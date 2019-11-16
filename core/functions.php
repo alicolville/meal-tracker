@@ -226,6 +226,8 @@ function yk_mt_user_calories_sources() {
 
 	$sources = apply_filters( 'yk_mt_calories_sources_pre', [] );;
 
+	// TODO: Consider here, which sources are premium
+
 	if ( true === yk_mt_site_options_as_bool( 'allow-calorie-override' ) ) {
 		$sources[ 'own' ] = [ 'value' => 'Your own target', 'func' => 'yk_mt_user_calories_target_user_specified' ];
 	}
