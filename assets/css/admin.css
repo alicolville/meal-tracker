@@ -1,0 +1,35 @@
+/*
+Color Pallete
+HEX: #92a8d1
+HEX: #034f84
+HEX: #ef8988
+HEX: #f7786b
+
+ */
+
+.yk-mt-hide, .yk-mt-hide-if-admin {
+    display: none !important;
+}
+.yk-mt-disabled *, .yk-mt-disabled-premium *
+{
+    color: #CCCCCC !important;
+}
+.yk-mt-disabled th::after {
+    content: "\A(Premium version)";
+    color: #ef8988;
+    font-weight: bold;
+    clear: both;
+    width:100%;
+    white-space: pre;
+}
+.yk-mt-advertise-premium .hndle {
+    background-color: #92a8d1;
+    color: #FFFFFF;
+}
+.yk-mt-settings h3 {
+    color: #034f84 !important;
+    font-size: 15px;
+}
+.yk-mt-settings th {
+    font-weight: 300;
+}

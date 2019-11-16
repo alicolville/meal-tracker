@@ -7,7 +7,7 @@
         $site_hash = yk_mt_generate_site_hash();
 
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+            wp_die( __( 'You do not have sufficient permissions to access this page.', YK_MT_SLUG ) );
         }
 
         // Remove existing license?
@@ -25,9 +25,9 @@
                     $valid_license = yk_mt_license_apply( $_POST['license-key'] );
 
                     if ( $valid_license ) {
-                        yk_mt_message_display( __('Your license has been applied!', yk_mt_SLUG ) );
+                        yk_mt_message_display( __('Your license has been applied!', YK_MT_SLUG ) );
                     } else {
-                        yk_mt_message_display(__('There was an error applying your license. ', yk_mt_SLUG ), true);
+                        yk_mt_message_display(__('There was an error applying your license. ', YK_MT_SLUG ), true);
                     }
                 }
 
@@ -113,7 +113,7 @@
 
                                                         echo esc_html( $formatted );
                                                     } else {
-                                                        echo __('No active license', yk_mt_SLUG);
+                                                        echo __('No active license', YK_MT_SLUG );
                                                     }
 
                                                 ?>
@@ -122,7 +122,7 @@
 
                                         <?php if ( false === empty( $existing_license ) ): ?>
                                             <tr class="last">
-                                                <th colspan="2"><?php echo __('Your Existing License', yk_mt_SLUG ); ?></th>
+                                                <th colspan="2"><?php echo __('Your Existing License', YK_MT_SLUG ); ?></th>
                                             </tr>
                                             <tr class="last">
                                                 <td colspan="2"><textarea rows="5" style="width:100%"><?php echo esc_textarea( $existing_license ); ?></textarea></td>

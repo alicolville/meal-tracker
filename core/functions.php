@@ -226,11 +226,11 @@ function yk_mt_user_calories_sources() {
 
 	$sources = apply_filters( 'yk_mt_calories_sources_pre', [] );;
 
-	if ( true === yk_mt_site_options( 'allow-calorie-override' ) ) {
+	if ( true === yk_mt_site_options_as_bool( 'allow-calorie-override' ) ) {
 		$sources[ 'own' ] = [ 'value' => 'Your own target', 'func' => 'yk_mt_user_calories_target_user_specified' ];
 	}
 
-	if ( true === yk_mt_site_options( 'allow-calorie-override-admin' ) ) {
+	if ( true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ) {
 		$sources[ 'admin' ] = [ 'value' => 'As specified by Admin', 'func' => 'yk_mt_user_calories_target_admin_specified' ];
 	}
 
@@ -686,101 +686,6 @@ function yk_mt_array_strip_keys( $array, $keys ) {
 }
 
 /**
- * Fetch a setting for a user
- * @param $key
- * @param null $default
- * @param null $user_id
- *
- * @return |null
- */
-function yk_mt_settings_get( $key, $default = NULL, $user_id = NULL ) {
-
-	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
-
-	$user_settings = yk_mt_db_settings_get( $user_id );
-
-	if ( true === isset( $user_settings[ $key ] ) ) {
-		return $user_settings[ $key ];
-	}
-
-	return $default ?: NULL;
-}
-
-/**
- * Save a user setting
- * @param $key
- * @param $value
- * @param null $user_id
- *
- * @return bool
- */
-function yk_mt_settings_set( $key, $value, $user_id = NULL ) {
-
-	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
-
-	if ( false === in_array( $key, yk_mt_settings_allowed_keys() ) ) {
-		return false;
-	}
-
-	$user_settings = yk_mt_db_settings_get( $user_id );
-
-	if ( false === is_array( $user_settings ) ) {
-		$user_settings = [];
-	}
-
-    $user_settings[ $key ] = $value;
-
-	return yk_mt_db_settings_update( $user_id, $user_settings );
-}
-
-/**
- * Allowed setting keys
- * @return array
- */
-function yk_mt_settings_allowed_keys() {
-	return [ 'allowed-calories', 'calorie-source' ];
-}
-/**
- * Fetch a site option
- * @param $key
- */
-function yk_mt_site_options( $key, $default = false ) {
-
-	// TODO: Tie this into an admins setting page
-	if ( 'allow-calorie-override' === $key ) {
-		return true;
-	}
-
-    // TODO: Tie this into an admins setting page
-    if ( 'allow-calorie-override-admin' === $key ) {
-        return false;
-    }
-
-    // TODO: Tie this into an admins setting page
-    if ( 'allow-calorie-external-wlt' === $key ) {
-        return true;
-    }
-
-	// TODO: Tie this into an admins setting page
-	if ( 'accordion-enabled' === $key ) {
-		return true;
-	}
-
-	return false;
-}
-
-/**
- * Get a site option ready for JS embed
- *
- * @param $key
- *
- * @return bool|string
- */
-function yk_mt_site_options_for_js_bool( $key ) {
-	return ( true === yk_mt_site_options( $key ) ) ? 'true' : 'false';
-}
-
-/**
  * Fetch entry ID from QS and ensure it belongs to the logged in user
  *
  * @param bool $ensure_belongs_to_current_user
@@ -1034,5 +939,24 @@ function yk_mt_custom_notification_html() {
         <a href="https://profiles.wordpress.org/aliakro" rel="noopener noreferrer" target="_blank">WordPress Profile</a> /
         <a href="mailto:email@yeken.uk" >email@yeken.uk</a></p>
     <br clear="both"/>
+    <?php
+}
+
+/**
+ * Display upgrade notice
+ *
+ * @param bool $pro_plus
+ */
+function yk_mt_display_pro_upgrade_notice( ) {
+    ?>
+
+    <div class="postbox yk-mt-advertise-premium">
+        <h3 class="hndle"><span><?php echo __( 'Upgrade Meal Tracker and get more features!', WE_LS_SLUG); ?> </span></h3>
+        <div style="padding: 0px 15px 0px 15px">
+            <p><?php echo __( 'Upgrade to the Premium version of this plugin to view your user\'s data, record entries for multiple days, extrernal data sources and much more!', WE_LS_SLUG); ?></p>
+            <p><a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-license') ); ?>" class="button-primary"><?php echo __( 'Read more and upgrade to Premium Version', WE_LS_SLUG); ?></a></p>
+        </div>
+    </div>
+
     <?php
 }

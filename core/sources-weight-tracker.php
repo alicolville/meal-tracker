@@ -8,7 +8,7 @@ defined('ABSPATH') or die("Jog on!");
  */
 function yk_mt_wlt_enabled() {
     return function_exists( 'ws_ls_harris_benedict_calculate_calories' ) &&
-                yk_mt_site_options('allow-calorie-external-wlt' );
+            yk_mt_site_options_as_bool('allow-calorie-external-wlt' );
 }
 
 /**
@@ -24,7 +24,7 @@ function yk_mt_wlt_sources_add( $sources ) {
         return $sources;
     }
 
-    if ( true === yk_mt_site_options('allow-calorie-external-wlt' ) ) {
+    if ( true === yk_mt_site_options_as_bool('allow-calorie-external-wlt' ) ) {
         $sources['wlt']   = [ 'value' => __( 'Weight Tracker', YK_MT_SLUG ), 'func' => 'yk_mt_user_calories_target_from_wlt' ];
     }
 

@@ -38,6 +38,7 @@ define( 'YK_MT_SLUG', 'meal-tracker' );
 
 include_once YK_MT_ABSPATH . 'core/globals.php';
 include_once YK_MT_ABSPATH . 'core/functions.php';
+include_once YK_MT_ABSPATH . 'core/functions.settings.php';
 include_once YK_MT_ABSPATH . 'core/license.php';
 include_once YK_MT_ABSPATH . 'core/caching.php';
 include_once YK_MT_ABSPATH . 'core/db.php';
@@ -51,6 +52,7 @@ include_once YK_MT_ABSPATH . 'core/cron.php';
 
 // Admin pages
 include_once YK_MT_ABSPATH . 'core/admin-pages/page.license.php';
+include_once YK_MT_ABSPATH . 'core/admin-pages/page.settings.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/page.help.php';
 
 // -----------------------------------------------------------------------------------------

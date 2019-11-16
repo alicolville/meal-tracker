@@ -20,7 +20,7 @@ add_action( 'yk_mt_settings_saved', 'yk_mt_actions_settings_post_save' );
  */
 function yk_mt_body_class( $classes ) {
 
-    if ( true === yk_mt_site_options( 'accordion-enabled' ) ) {
+    if ( true === yk_mt_site_options_as_bool( 'accordion-enabled' ) ) {
         $classes[] = 'yk-mt-accordion-enabled';
     }
 
@@ -38,9 +38,43 @@ function yk_mt_build_admin_menu() {
     // Hide duplicated sub menu (wee hack!)
     add_submenu_page( 'yk-mt-main-menu', '', '', 'manage_options', 'yk-mt-main-menu', '');
 
-    $menu_text = ( true === yk_mt_license_is_premium() ) ? __( 'Your License', SH_CD_SLUG ) : __( 'Upgrade to Pro', YK_MT_SLUG );
-
+    $menu_text = ( true === yk_mt_license_is_premium() ) ? __( 'Your License', YK_MT_SLUG ) : __( 'Upgrade to Pro', YK_MT_SLUG );
     add_submenu_page( 'yk-mt-main-menu', $menu_text,  $menu_text, 'manage_options', 'yk-mt-license', 'yk_mt_advertise_pro');
-    add_submenu_page( 'yk-mt-main-menu', __( 'Help', YK_MT_SLUG ),  __( 'Help', YK_MT_SLUG ), 'manage_options', 'yk-mt-help', 'yk_mt_help_page');
+
+    add_submenu_page( 'yk-mt-main-menu', __( 'Settings', YK_MT_SLUG ),  __( 'Settings', YK_MT_SLUG ), 'manage_options', 'yk-mt-settings', 'yk_mt_settings_page_generic' );
+    add_submenu_page( 'yk-mt-main-menu', __( 'Help', YK_MT_SLUG ),  __( 'Help', YK_MT_SLUG ), 'manage_options', 'yk-mt-help', 'yk_mt_help_page' );
 }
 add_action( 'admin_menu', 'yk_mt_build_admin_menu' );
+
+/**
+ * Enqueue admin JS / CSS
+ */
+function yk_mt_enqueue_admin_files() {
+
+    wp_enqueue_style('yk-mt-admin', plugins_url( '../assets/css/admin.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION);
+
+    // Enqueue admin.js regardless (needed to dismiss notices)
+    wp_enqueue_script('yk-mt-admin', plugins_url( '../assets/js/admin.js', __FILE__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION);
+
+    // Settings page
+    if( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], [ 'yk-mt-settings' ] ) ) {
+        wp_enqueue_script( 'jquery-tabs', plugins_url( '../assets/js/tabs.min.js', __FILE__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'wlt-tabs', plugins_url( '../assets/css/tabs.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style('wlt-tabs-flat', plugins_url( '../assets/css/tabs.flat.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
+    }
+
+//    if( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], ['ws-ls-data-home', 'ws-ls-license', 'ws-ls-data-setup-wizard' ] ) ) {
+//
+//        wp_enqueue_style('wlt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', array(), WE_LS_CURRENT_VERSION);
+//    }
+
+    // Include relevant JS for admin "Manage User data" pages
+//    if(false === empty($_GET['page']) && 'ws-ls-data-home' == $_GET['page'] &&
+//        false === empty($_GET['mode']) && 'user-settings' == $_GET['mode']) {
+//
+//        wp_enqueue_script('ws-ls-admin-user-pref', plugins_url( '../assets/js/admin.user-preferences' . 	$minified . '.js', __FILE__ ), array('jquery'), WE_LS_CURRENT_VERSION);
+//        wp_localize_script('ws-ls-admin-user-pref', 'ws_ls_user_pref_config', ws_ls_admin_config());
+//    }
+
+}
+add_action( 'admin_enqueue_scripts', 'yk_mt_enqueue_admin_files');
