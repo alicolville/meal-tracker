@@ -83,5 +83,5 @@ function yk_mt_site_options_as_bool( $key, $default = true ) {
  * @return bool|string
  */
 function yk_mt_site_options_for_js_bool( $key ) {
-    return ( true === yk_mt_site_options( $key ) ) ? 'true' : 'false';
+    return ( true === yk_mt_site_options_as_bool( $key, false ) ) ? 'true' : 'false';
 }

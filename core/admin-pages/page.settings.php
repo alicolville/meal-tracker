@@ -97,9 +97,9 @@ function yk_mt_settings_page_generic() {
                                                         <?php
                                                             $accordion_enabled = yk_mt_site_options_as_bool('accordion-enabled' );
                                                         ?>
-                                                        <select id="yk-mt-accordion-enabled" name="yk-mt-accordion-enabled">
+                                                        <select id="accordion-enabled" name="accordion-enabled">
                                                             <option value="true" <?php selected( $accordion_enabled, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
-                                                            <option value="false" ><?php echo __( 'No', YK_MT_SLUG )?></option>
+                                                            <option value="false" <?php selected( $accordion_enabled, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
                                                         </select>
                                                         <p><?php echo __( 'If set to "Yes", the main meal tracker will use accordions to display meal data.', YK_MT_SLU )?></p>
                                                     </td>
