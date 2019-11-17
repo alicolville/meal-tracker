@@ -335,7 +335,7 @@ function yk_mt_use_minified() {
  *
  * @return null
  */
-function yk_mt_get_value( $key, $default = NULL ) {
+function yk_mt_querystring_value($key, $default = NULL ) {
 	return ( false === empty( $_GET[ $key ] ) ) ? $_GET[ $key ] : $default;
 }
 
@@ -695,7 +695,7 @@ function yk_mt_array_strip_keys( $array, $keys ) {
 function yk_mt_entry_id_from_qs( $ensure_belongs_to_current_user = true,
                                     $create_entry_for_missing_date = true ) {
 
-    $entry_id = yk_mt_get_value( 'entry-id' );
+    $entry_id = yk_mt_querystring_value( 'entry-id' );
 
     if ( true === empty( $entry_id ) ) {
         return NULL;
