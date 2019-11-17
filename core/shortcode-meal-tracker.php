@@ -24,6 +24,7 @@
 
         $is_pro         = YK_MT_IS_PREMIUM;
         $shortcode_mode = yk_mt_shortcode_get_mode();
+        $target         = yk_mt_user_calories_target();
 
 		$entry_id = ( true === $is_pro ) ? yk_mt_entry_id_from_qs() : NULL;
 
@@ -32,12 +33,17 @@
         // This is used to create an empty entry if one doesn't already exist for this user / day
         yk_mt_entry_get_id_or_create();
 
+        // Check the user actually has a calorie allowance. If not, we need to push them to the settings page.
+        if ( true === empty( $target ) ) {
+            $shortcode_mode = 'settings';
+        }
+
         yk_mt_shortcode_meal_tracker_localise( [ 'mode' => $shortcode_mode, 'entry-id' => $entry_id ] );
 
-		// Load settings?
+        // Load settings?
 		if ( 'settings' === $shortcode_mode ) {
 
-			$html .= yk_mt_shortcode_meal_tracker_settings();
+			$html .= yk_mt_shortcode_meal_tracker_settings( $target );
 
 		} else {
 
@@ -123,9 +129,25 @@
 	 *
 	 * @return string
 	 */
-    function yk_mt_shortcode_meal_tracker_settings() {
+    function yk_mt_shortcode_meal_tracker_settings( $target = NULL ) {
 
-	    $html = yk_mt_html_accordion_open( 'yk-mt-settings' );
+        // Look up user's target if needed
+        if ( NULL === $target ) {
+            $target = yk_mt_user_calories_target();
+        }
+        $html = '';
+
+        $html .= yk_mt_html_accordion_open( 'yk-mt-information' );
+
+        $html .= yk_mt_html_accordion_section( [    'id' => 0,
+            'title' => __( 'Getting started', YK_MT_SLUG ),
+            'content' => '<p>' . __( 'Before you can start recording your calorie intake, you must set your calorie allowance for the day. You can achieve this by completing the following form.', YK_MT_SLUG ) . '</p>',
+            'is-active' => true
+        ]);
+
+        $html .= yk_mt_html_accordion_close();
+
+        $html .= yk_mt_html_accordion_open( 'yk-mt-settings' );
 
 	    $html .= '<form id="yk-mt-settings-form" class="yk-mt-settings-form" >';
 
@@ -136,7 +158,9 @@
          * */
 	    $calorie_sources = yk_mt_user_calories_sources();
 
-	    $calories_html .= '<p>' . sprintf(  __( 'Your current daily allowance is: %1$dkcal.', YK_MT_SLUG ), yk_mt_user_calories_target() ) . '</p>';
+	    if ( false === empty( $target ) ) {
+            $calories_html .= '<p>' . sprintf(  __( 'Your current daily allowance is: %1$dkcal.', YK_MT_SLUG ), $target ) . '</p>';
+        }
 
         if ( true === empty( $calorie_sources ) ) {
 
