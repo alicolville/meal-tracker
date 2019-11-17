@@ -79,3 +79,20 @@ function yk_mt_enqueue_admin_files() {
 
 }
 add_action( 'admin_enqueue_scripts', 'yk_mt_enqueue_admin_files');
+
+
+/**
+ * Add view link alongside WP action links
+ * @param $actions
+ * @param $user_object
+ * @return mixed
+ */
+function yk_mt_user_action_links( $actions, $user_object ) {
+    $actions[ 'meal-tracker' ] = sprintf(  '<a href="%s">%s</a>',
+        yk_mt_link_admin_page_user( $user_object->ID ),
+        __( 'Meal entries', YK_MT_SLUG )
+    );
+
+    return $actions;
+}
+add_filter( 'user_row_actions', 'yk_mt_user_action_links', 10, 2 );
