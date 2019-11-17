@@ -41,6 +41,10 @@ include_once YK_MT_ABSPATH . 'core/functions.php';
 include_once YK_MT_ABSPATH . 'core/functions.settings.php';
 include_once YK_MT_ABSPATH . 'core/license.php';
 
+$is_premium = yk_mt_license_is_premium();
+
+define( 'YK_MT_IS_PREMIUM', $is_premium );
+
 // Caching enabled?
 if ( true === yk_mt_site_options_as_bool('caching-enabled' ) ) {
     include_once YK_MT_ABSPATH . 'core/caching.php';

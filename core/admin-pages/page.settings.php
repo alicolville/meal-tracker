@@ -10,7 +10,7 @@ function yk_mt_settings_page_generic() {
 
     $is_premium = yk_mt_license_is_premium();
 
-    $disable_if_not_premium_class = ( $is_premium ) ? '' : 'yk-mt-disabled';
+    $disable_if_not_premium_class = ( YK_MT_IS_PREMIUM ) ? '' : 'yk-mt-disabled';
 
     ?>
     <div id="icon-options-general" class="icon32"></div>
@@ -79,23 +79,11 @@ function yk_mt_settings_page_generic() {
                                             </table>
                                         </div>
                                         <div>
-                                            <p><?php echo __('Specify the methods in which a user\'s daily allowance can be determined:', YK_MT_SLUG )?></p>
+                                            <p><?php echo __('Specify the methods in which a user\'s daily allowance can be determined. ', YK_MT_SLUG )?></p>
                                             <table class="form-table">
+
                                                 <tr class="<?php echo $disable_if_not_premium_class; ?>">
-                                                    <th scope="row"><?php echo __( 'User specified' , YK_MT_SLUG ); ?></th>
-                                                    <td>
-                                                        <?php
-                                                            $allow_calorie = yk_mt_site_options_as_bool('allow-calorie-override' );
-                                                        ?>
-                                                        <select id="allow-calorie-override" name="allow-calorie-override">
-                                                            <option value="true" <?php selected( $allow_calorie, true ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
-                                                            <option value="false" <?php selected( $allow_calorie, false ); ?>><?php echo __('No', YK_MT_SLUG )?></option>
-                                                        </select>
-                                                        <p><?php echo __('Allow a user to specify their own daily calorie intake.', YK_MT_SLUG )?></p>
-                                                    </td>
-                                                </tr>
-                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
-                                                    <th scope="row"><?php echo __( 'Admin specified' , YK_MT_SLUG ); ?></th>
+                                                    <th scope="row">1. <?php echo __( 'Admin specified' , YK_MT_SLUG ); ?></th>
                                                     <td>
                                                         <?php
                                                         $allow_calorie = yk_mt_site_options_as_bool('allow-calorie-override-admin' );
@@ -104,11 +92,24 @@ function yk_mt_settings_page_generic() {
                                                             <option value="true" <?php selected( $allow_calorie, true ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
                                                             <option value="false" <?php selected( $allow_calorie, false ); ?>><?php echo __('No', YK_MT_SLUG )?></option>
                                                         </select>
-                                                        <p><?php echo __('Admins can specify a user\'s daily calorie intake.', YK_MT_SLUG )?></p>
+                                                        <p><?php echo __('Admins can specify a user\'s daily calorie intake. If an admin value is set, it will override an allowance set by a user and those below.', YK_MT_SLUG )?></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2. <?php echo __( 'User specified' , YK_MT_SLUG ); ?></th>
+                                                    <td>
+                                                        <?php
+                                                        $allow_calorie = yk_mt_site_options_as_bool('allow-calorie-override' );
+                                                        ?>
+                                                        <select id="allow-calorie-override" name="allow-calorie-override">
+                                                            <option value="true" <?php selected( $allow_calorie, true ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
+                                                            <option value="false" <?php selected( $allow_calorie, false ); ?>><?php echo __('No', YK_MT_SLUG )?></option>
+                                                        </select>
+                                                        <p><?php echo __('Allow a user to specify their own daily calorie intake. If a user value is set, it will override allowances determined from options below.', YK_MT_SLUG )?></p>
                                                     </td>
                                                 </tr>
                                                 <tr class="<?php echo $disable_if_not_premium_class; ?>">
-                                                    <th scope="row">
+                                                    <th scope="row">3.
                                                         <a href="https://weight.yeken.uk" target="_blank" rel="noopener">
                                                             <?php echo __( 'YeKen: Weight Tracker' , YK_MT_SLUG ); ?>
                                                         </a>
@@ -144,7 +145,7 @@ function yk_mt_settings_page_generic() {
                                                             <option value="true" <?php selected( $accordion_enabled, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
                                                             <option value="false" <?php selected( $accordion_enabled, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
                                                         </select>
-                                                        <p><?php echo __( 'If set to "Yes", the main meal tracker will use accordions to display meal data.', YK_MT_SLU )?></p>
+                                                        <p><?php echo __( 'If set to "Yes", the main meal tracker will use accordions to display meal data.', YK_MT_SLUG )?></p>
                                                     </td>
                                                 </tr>
                                             </table>
