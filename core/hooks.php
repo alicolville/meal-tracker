@@ -96,3 +96,19 @@ function yk_mt_user_action_links( $actions, $user_object ) {
     return $actions;
 }
 add_filter( 'user_row_actions', 'yk_mt_user_action_links', 10, 2 );
+
+/**
+ * Add MT profile button to WT header link
+ * @param $links
+ * @return string
+ */
+function yk_mt_wlt_user_profile_add_header_link( $links ) {
+
+    $links .= sprintf( '<a href="%1$s" class="button-secondary"><i class="fa fa-pie-chart"></i> %2$s</a>',
+        yk_mt_link_admin_page_user( get_current_user_id() ),
+        __('Meal Tracker Record', YK_MT_SLUG )
+    );
+
+    return $links;
+}
+add_filter( 'wt_ls_user_profile_header_links', 'yk_mt_wlt_user_profile_add_header_link' );
