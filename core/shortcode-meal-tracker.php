@@ -22,7 +22,7 @@
 			return yk_mt_shortcode_log_in_prompt();
 		}
 
-        $is_pro         = yk_mt_license_is_premium();
+        $is_pro         = YK_MT_IS_PREMIUM;
         $shortcode_mode = yk_mt_shortcode_get_mode();
 
 		$entry_id = ( true === $is_pro ) ? yk_mt_entry_id_from_qs() : NULL;
@@ -49,12 +49,10 @@
 
 			$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
-			if ( true === $is_pro ) {
-				$html .= sprintf( '<br /><button href="%s" class="yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">%s</button>',
-                                    yk_mt_shortcode_get_current_url( 'settings' ),
-                                    __( 'Settings', YK_MT_SLUG )
-                );
-			}
+            $html .= sprintf( '<br /><button href="%s" class="yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">%s</button>',
+                                yk_mt_shortcode_get_current_url( 'settings' ),
+                                __( 'Settings', YK_MT_SLUG )
+            );
 
 			// Embed hidden form / dialog required for adding a meal
 			$html .= yk_mt_shortcode_meal_tracker_add_meal_dialog();

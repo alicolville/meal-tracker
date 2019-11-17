@@ -226,12 +226,12 @@ function yk_mt_user_calories_sources() {
 
 	$sources = apply_filters( 'yk_mt_calories_sources_pre', [] );;
 
-	if ( true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ) {
+	if ( true === YK_MT_IS_PREMIUM &&
+            true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ) {
 		$sources[ 'admin' ] = [ 'value' => 'As specified by Admin', 'func' => 'yk_mt_user_calories_target_admin_specified' ];
 	}
 
-    if ( true === YK_MT_IS_PREMIUM &&
-            true === yk_mt_site_options_as_bool( 'allow-calorie-override' ) ) {
+    if ( true === yk_mt_site_options_as_bool( 'allow-calorie-override' ) ) {
         $sources[ 'own' ] = [ 'value' => 'Your own target', 'func' => 'yk_mt_user_calories_target_user_specified' ];
     }
 
@@ -250,7 +250,7 @@ function yk_mt_user_calories_sources() {
 function yk_mt_user_calories_target_admin_specified( $user_id = NULL ) {
 
 	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
-
+//TODO: Built into admin interface
 	return 2000;
 }
 

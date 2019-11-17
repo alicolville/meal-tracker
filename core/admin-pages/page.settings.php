@@ -79,7 +79,8 @@ function yk_mt_settings_page_generic() {
                                             </table>
                                         </div>
                                         <div>
-                                            <p><?php echo __('Specify the methods in which a user\'s daily allowance can be determined. ', YK_MT_SLUG )?></p>
+                                            <p><?php echo __('Specify the methods in which a user\'s daily allowance can be determined', YK_MT_SLUG )?>.
+                                                <strong><?php echo __('Ensure you specify at least one option or your users will not be able to use Meal Tracker as no allowance will be set.', YK_MT_SLUG )?>.</strong></p>
                                             <table class="form-table">
 
                                                 <tr class="<?php echo $disable_if_not_premium_class; ?>">
@@ -92,7 +93,7 @@ function yk_mt_settings_page_generic() {
                                                             <option value="true" <?php selected( $allow_calorie, true ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
                                                             <option value="false" <?php selected( $allow_calorie, false ); ?>><?php echo __('No', YK_MT_SLUG )?></option>
                                                         </select>
-                                                        <p><?php echo __('Admins can specify a user\'s daily calorie intake. If an admin value is set, it will override an allowance set by a user and those below.', YK_MT_SLUG )?></p>
+                                                        <p><?php echo __('Admins can specify a user\'s daily calorie intake.', YK_MT_SLUG )?></p>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -105,7 +106,7 @@ function yk_mt_settings_page_generic() {
                                                             <option value="true" <?php selected( $allow_calorie, true ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
                                                             <option value="false" <?php selected( $allow_calorie, false ); ?>><?php echo __('No', YK_MT_SLUG )?></option>
                                                         </select>
-                                                        <p><?php echo __('Allow a user to specify their own daily calorie intake. If a user value is set, it will override allowances determined from options below.', YK_MT_SLUG )?></p>
+                                                        <p><?php echo __('Allow a user to specify their own daily calorie intake.', YK_MT_SLUG )?></p>
                                                     </td>
                                                 </tr>
                                                 <tr class="<?php echo $disable_if_not_premium_class; ?>">
