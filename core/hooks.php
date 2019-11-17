@@ -36,7 +36,9 @@ function yk_mt_build_admin_menu() {
     add_menu_page( YK_MT_PLUGIN_NAME, YK_MT_PLUGIN_NAME, 'manage_options', 'yk-mt-main-menu', '', 'dashicons-chart-pie' );
 
     // Hide duplicated sub menu (wee hack!)
-    add_submenu_page( 'yk-mt-main-menu', '', '', 'manage_options', 'yk-mt-main-menu', '');
+    add_submenu_page( 'yk-mt-main-menu', '', '', 'manage_options', 'yk-mt-main-menu', 'yk_mt_admin_page_data_home');
+
+    add_submenu_page( 'yk-mt-main-menu', __( 'User Data', YK_MT_SLUG ),  __( 'User Data', YK_MT_SLUG ), 'manage_options', 'yk-mt-user', 'yk_mt_admin_page_data_home' );
 
     $menu_text = ( true === yk_mt_license_is_premium() ) ? __( 'Your License', YK_MT_SLUG ) : __( 'Upgrade to Pro', YK_MT_SLUG );
     add_submenu_page( 'yk-mt-main-menu', $menu_text,  $menu_text, 'manage_options', 'yk-mt-license', 'yk_mt_advertise_pro');
@@ -63,10 +65,9 @@ function yk_mt_enqueue_admin_files() {
         wp_enqueue_style('wlt-tabs-flat', plugins_url( '../assets/css/tabs.flat.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
     }
 
-//    if( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], ['ws-ls-data-home', 'ws-ls-license', 'ws-ls-data-setup-wizard' ] ) ) {
-//
-//        wp_enqueue_style('wlt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', array(), WE_LS_CURRENT_VERSION);
-//    }
+    if( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], [ 'yk-mt-user' ] ) ) {
+        wp_enqueue_style('wlt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
+    }
 
     // Include relevant JS for admin "Manage User data" pages
 //    if(false === empty($_GET['page']) && 'ws-ls-data-home' == $_GET['page'] &&

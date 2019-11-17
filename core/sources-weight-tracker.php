@@ -3,10 +3,18 @@
 defined('ABSPATH') or die("Jog on!");
 
 /**
- * Is Weight Tracker enabled to be used with Meal Tracker?
+ * Has Weight Tracker been enabled?
  * @return bool
  */
 function yk_mt_wlt_enabled() {
+    return function_exists( 'ws_ls_activate' );
+}
+
+/**
+ * Is Weight Tracker enabled to be used with Meal Tracker?
+ * @return bool
+ */
+function yk_mt_wlt_pro_plus_enabled() {
     return function_exists( 'ws_ls_harris_benedict_calculate_calories' ) &&
             yk_mt_site_options_as_bool('allow-calorie-external-wlt' );
 }
@@ -20,7 +28,7 @@ function yk_mt_wlt_enabled() {
 function yk_mt_wlt_sources_add( $sources ) {
 
     // Weight Tracker activated on this site?
-    if ( false === yk_mt_wlt_enabled() ) {
+    if ( false === yk_mt_wlt_pro_plus_enabled() ) {
         return $sources;
     }
 
@@ -39,7 +47,7 @@ add_filter( 'yk_mt_calories_sources_pre', 'yk_mt_wlt_sources_add' );
 function yk_mt_wlt_calories_allowed_refresh( $dummy ) {
 
     // Weight Tracker activated on this site?
-    if ( false === yk_mt_wlt_enabled() ) {
+    if ( false === yk_mt_wlt_pro_plus_enabled() ) {
         return;
     }
 
@@ -62,7 +70,7 @@ function yk_mt_user_calories_target_from_wlt( $user_id = NULL ) {
     $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
     // Take Calories from WLT?
-    if ( true === yk_mt_wlt_enabled() ) {
+    if ( true === yk_mt_wlt_pro_plus_enabled() ) {
 
         $yeken_aim =  ws_ls_get_progress_attribute_from_aim();
 

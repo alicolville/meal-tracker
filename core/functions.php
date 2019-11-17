@@ -1021,3 +1021,40 @@ function yk_mt_create_dialog_jquery_code( $title, $message, $class_used_to_promp
     );
 
 }
+
+/**
+ * Fetch the user's ID from the querystring key user-id
+ *
+ * @return int
+ */
+function yk_mt_get_user_id_from_qs(){
+    return (int) yk_mt_querystring_value( 'user-id' );
+}
+
+/**
+ * Helper function to determine if the user exists in WP
+ *
+ * @param $user_id
+ * @return bool
+ */
+function yk_mt_user_exist( $user_id ) {
+
+    if( false === is_numeric( $user_id ) ) {
+        return false;
+    }
+
+    return ( false === get_userdata( $user_id ) ) ? false : true;
+}
+
+/**
+ * Helper function to check if user ID exists, if not throws wp_die()
+ *
+ * @param $user_id
+ * @return bool
+ */
+function yk_mt_exist_check( $user_id ) {
+
+    if(false === yk_mt_user_exist( $user_id ) ) {
+        wp_die( __( 'Error: The user does not appear to exist' , YK_MT_SLUG ) );
+    }
+}
