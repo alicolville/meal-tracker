@@ -135,17 +135,23 @@
         if ( NULL === $target ) {
             $target = yk_mt_user_calories_target();
         }
+
+        $target_missing = empty( $target );
+
         $html = '';
 
-        $html .= yk_mt_html_accordion_open( 'yk-mt-information' );
+        if ( true === $target_missing ) {
 
-        $html .= yk_mt_html_accordion_section( [    'id' => 0,
-            'title' => __( 'Getting started', YK_MT_SLUG ),
-            'content' => '<p>' . __( 'Before you can start recording your calorie intake, you must set your calorie allowance for the day. You can achieve this by completing the following form.', YK_MT_SLUG ) . '</p>',
-            'is-active' => true
-        ]);
+            $html .= yk_mt_html_accordion_open( 'yk-mt-information' );
 
-        $html .= yk_mt_html_accordion_close();
+            $html .= yk_mt_html_accordion_section( [ 'id' => 0,
+                'title' => __( 'Getting started', YK_MT_SLUG ),
+                'content' => '<p>' . __( 'Before you can start recording your calorie intake, you must set your calorie allowance for the day. You can achieve this by completing the following form.', YK_MT_SLUG ) . '</p>',
+                'is-active' => true
+            ]);
+
+            $html .= yk_mt_html_accordion_close();
+        }
 
         $html .= yk_mt_html_accordion_open( 'yk-mt-settings' );
 
@@ -158,7 +164,7 @@
          * */
 	    $calorie_sources = yk_mt_user_calories_sources();
 
-	    if ( false === empty( $target ) ) {
+	    if ( false === $target_missing ) {
             $calories_html .= '<p>' . sprintf(  __( 'Your current daily allowance is: %1$dkcal.', YK_MT_SLUG ), $target ) . '</p>';
         }
 
