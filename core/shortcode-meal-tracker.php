@@ -80,6 +80,8 @@
 
         $links = yk_mt_navigation_links( $todays_entry_id );
 
+        $entry = yk_mt_db_entry_get( $todays_entry_id );
+
 	    $html = '<div class="yk-mt-t yk-mt-navigation-table">
                     <div class="yk-mt-r">
                         <div class="yk-mt-c">';
@@ -99,10 +101,13 @@
 
         $html .=       sprintf('</div>
                                                 <div class="yk-mt-c yk-mt-datepicker-cell">
-                                                    <a class="mt-datepicker">%1$s</a>
+                                                    %1$s
+                                                    &middot;
+                                                    <a class="mt-datepicker">%2$s</a>
                                                 </div>
                                            </div>
                                         </div>',
+                                        yk_mt_date_format( $entry[ 'date' ]),
                                         __( 'Select a date', YK_MT_SLUG )
         );
 
