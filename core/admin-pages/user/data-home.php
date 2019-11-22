@@ -14,6 +14,9 @@ function yk_mt_admin_page_data_home() {
         case 'user':
             yk_mt_admin_page_user_summary();
             break;
+        case 'entry':
+            yk_mt_admin_page_entry_view();
+            break;
         case 'settings':
             // Call settings page
             break;
