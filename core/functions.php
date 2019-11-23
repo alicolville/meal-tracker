@@ -833,6 +833,10 @@ function yk_mt_entry_for_given_date( $date, $user_id = NULL ) {
  */
 function yk_mt_date_format( $iso_date ) {
 
+    if ( true === empty( $iso_date ) ) {
+        return '-';
+    }
+
     $time = strtotime( $iso_date );
 
     // TODO: Look up user option to render date

@@ -18,15 +18,7 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
 
     $stats = yk_mt_user_stats( $user_id );
 
-    ?>
-    <div class="postbox">
-        <h2 class="hndle"><?php echo __( 'User Search', YK_MT_SLUG ); ?></h2>
-        <div class="inside">
-            <?php yk_mt_user_search_form(); ?>
-        </div>
-    </div>
-
-    <?php if ( NULL !== $entry ): ?>
+    if ( NULL !== $entry ): ?>
         <div class="postbox">
             <h2 class="hndle"><?php echo __( 'Entry summary', YK_MT_SLUG ); ?></h2>
             <div class="inside">
@@ -84,6 +76,12 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
                     <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-meals' ] ); ?></td>
                 </tr>
             </table>
+        </div>
+    </div>
+    <div class="postbox">
+        <h2 class="hndle"><?php echo __( 'User Search', YK_MT_SLUG ); ?></h2>
+        <div class="inside">
+            <?php yk_mt_user_search_form(); ?>
         </div>
     </div>
     <div class="postbox yk-mt-user-data">
@@ -230,10 +228,11 @@ function yk_mt_user_stats( $user_id ) {
     $entries            = yk_mt_db_entry_get_ids_and_dates( $user_id );
     $number_of_entries  = count( $entries );
     $entry_dates        = array_values( $entries );
+    $meal_count         = yk_mt_db_meal_for_user( $user_id, [ 'count-only' => true ] );
 
     return [
                 'user-id'       => $user_id,
-                'count-meals'   => yk_mt_db_meal_for_user( $user_id, [ 'count-only' => true ] ),
+                'count-meals'   => ( false === empty( $meal_count ) ) ? $meal_count : 0,
                 'count-entries' => $number_of_entries,
                 'date-first'    => ( false === empty( $entry_dates[ 0 ] ) ) ? $entry_dates[ 0 ] : NULL,
                 'date-last'     => ( false === empty( $entry_dates[ $number_of_entries - 1 ] ) ) ? $entry_dates[ $number_of_entries - 1 ] : NULL
