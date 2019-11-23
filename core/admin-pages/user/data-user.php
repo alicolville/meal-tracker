@@ -13,9 +13,10 @@ function yk_mt_admin_page_user_summary() {
 
     $user_data = get_userdata( $user_id );
 
+    $entry = yk_mt_db_entry_get();
+
     //TODO: Handle no data?
     ?>
-
     <div class="wrap ws-ls-user-data ws-ls-admin-page">
     <div id="poststuff">
         <?php yk_mt_user_header( $user_id ); ?>
@@ -65,7 +66,7 @@ function yk_mt_admin_page_user_summary() {
             </div>
             <div id="postbox-container-1" class="postbox-container">
                 <div class="meta-box-sortables">
-                    <?php yk_mt_user_side_bar( $user_id ); ?>
+                    <?php yk_mt_user_side_bar( $user_id, $entry ); ?>
                 </div>
             </div>
         </div>

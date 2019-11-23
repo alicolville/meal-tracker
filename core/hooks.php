@@ -53,6 +53,10 @@ add_action( 'admin_menu', 'yk_mt_build_admin_menu' );
  */
 function yk_mt_enqueue_admin_files() {
 
+    if ( false === in_array( $_GET['page'], [ 'yk-mt-user' ] ) ) {
+        return;
+    }
+
     wp_enqueue_style( 'yk-mt-admin', plugins_url('../assets/css/admin.css', __FILE__), [], YK_MT_PLUGIN_VERSION );
 
     // Enqueue admin.js regardless (needed to dismiss notices)
@@ -74,8 +78,7 @@ function yk_mt_enqueue_admin_files() {
         yk_mt_enqueue_scripts_footable();
 
         yk_mt_admin_localise();
-}
-
+    }
 }
 add_action( 'admin_enqueue_scripts', 'yk_mt_enqueue_admin_files');
 
