@@ -40,4 +40,10 @@ function yk_mt_blur_text( $text, $number_format = true ) {
 
     return $text;
 }
-
+/**
+ * Return base URL for user data
+ * @return string
+ */
+function yk_mt_link_user_data() {
+    return admin_url( 'admin.php?page=yk-mt-user' );
+}

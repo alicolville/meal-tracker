@@ -71,8 +71,8 @@ HEX: #f7786b
     height: 40px !important;
 }
 .yk-mt-footable tr {
-     height: 26px;
- }
+    height: 26px;
+}
 .yk-mt-footable td {
     border-bottom: 1px dotted #CCC;
 }

@@ -23,9 +23,9 @@ function yk_mt_admin_page_user_summary() {
             <div id="post-body-content">
                 <div class="meta-box-sortables ui-sortable">
                     <?php
-                    if ( false === YK_MT_IS_PREMIUM ) {
-                        yk_mt_display_pro_upgrade_notice();
-                    }
+                        if ( false === YK_MT_IS_PREMIUM ) {
+                            yk_mt_display_pro_upgrade_notice();
+                        }
                     ?>
                     <div class="postbox">
                         <h2 class="hndle"><span><?php echo __( 'Chart', YK_MT_SLUG ); ?></span></h2>

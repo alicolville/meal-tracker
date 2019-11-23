@@ -22,7 +22,7 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
     <div class="postbox">
         <h2 class="hndle"><?php echo __( 'User Search', YK_MT_SLUG ); ?></h2>
         <div class="inside">
-            <?php // yk_mt_box_user_search_form(); ?>
+            <?php yk_mt_user_search_form(); ?>
         </div>
     </div>
 
@@ -238,4 +238,20 @@ function yk_mt_user_stats( $user_id ) {
                 'date-first'    => ( false === empty( $entry_dates[ 0 ] ) ) ? $entry_dates[ 0 ] : NULL,
                 'date-last'     => ( false === empty( $entry_dates[ $number_of_entries - 1 ] ) ) ? $entry_dates[ $number_of_entries - 1 ] : NULL
     ];
+}
+
+// ------------------------------------------------------------------------------
+// User search Search box
+// ------------------------------------------------------------------------------
+
+function yk_mt_user_search_form( $ajax_mode = false ) {
+
+    ?>	<p><?php echo __( 'Enter a user\'s email, display name or username then click "Search".', YK_MT_SLUG ); ?></p>
+    <form id="yk-mt-user-search" class="yk-mt-user-search-ajax" >
+        <input type="text" name="search" placeholder="" id="yk-mt-search-field" />
+        <input type="hidden" name="page" value="yk-mt-user"  />
+        <input type="hidden" name="mode" value="search-results"  />
+        <input type="submit" class="button" value="Search" id="yk-mt-search-button" />
+    </form>
+    <?php
 }
