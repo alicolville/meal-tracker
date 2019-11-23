@@ -42,19 +42,19 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
                     </tr>
                     <tr>
                         <th><?php echo __( 'Calories Used', YK_MT_SLUG ); ?></th>
-                        <td class="<?php echo yk_mt_blur(); ?>"><?php echo yk_mt_blur_text( $entry[ 'calories_used' ] ); ?></td>
+                        <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'calories_used' ] ); ?></td>
                     </tr>
                     <tr>
                         <th><?php echo __( 'Calories Remaining', YK_MT_SLUG ); ?></th>
-                        <td class="<?php echo yk_mt_blur(); ?>"><?php echo yk_mt_blur_text( $entry[ 'calories_remaining' ] ); ?></td>
+                        <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'calories_remaining' ] ); ?></td>
                     </tr>
                     <tr>
                         <th><?php echo __( 'Percentage used', YK_MT_SLUG ); ?></th>
-                        <td class="<?php echo yk_mt_blur(); ?>"><?php echo yk_mt_blur_text( $entry[ 'percentage_used' ] ); ?>%</td>
+                        <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'percentage_used' ] ); ?>%</td>
                     </tr>
                     <tr>
                         <th><?php echo __( 'Meals', YK_MT_SLUG ); ?></th>
-                        <td class="<?php echo yk_mt_blur(); ?>"><?php echo yk_mt_blur_text( $entry[ 'counts' ][ 'total-meals' ] ); ?></td>
+                        <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'counts' ][ 'total-meals' ] ); ?></td>
                     </tr>
                 </table>
             </div>
@@ -75,11 +75,15 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
                 </tr>
                 <tr>
                     <th><?php echo __( 'Oldest Entry', YK_MT_SLUG ); ?></th>
-                    <td class="<?php echo yk_mt_blur(); ?>">TODO</td>
+                    <td class="yk-mt-blur">TODO</td>
                 </tr>
                 <tr>
                     <th><?php echo __( 'Number of Entries', YK_MT_SLUG ); ?></th>
-                    <td class="<?php echo yk_mt_blur(); ?>">TODO</td>
+                    <td class="yk-mt-blur">TODO</td>
+                </tr>
+                <tr>
+                    <th><?php echo __( 'Number of Meals', YK_MT_SLUG ); ?></th>
+                    <td class="yk-mt-blur">TODO</td>
                 </tr>
             </table>
         </div>

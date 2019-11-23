@@ -49,7 +49,7 @@ HEX: #f7786b
 .yk-mt-sidebar-stats .last th, .yk-mt-sidebar-stats .last td {
     border: none !important;
 }
-.yk-mt-blur {
+.yk-mt-not-premium .yk-mt-blur {
     filter:url(#wherearemyglasses);
     /* ^ for Firefox */
     -webkit-filter: blur(2px);
@@ -58,4 +58,24 @@ HEX: #f7786b
 }
 .yk-mt-blur th {
     display: inline-block;
+}
+.yk-mt-footable .footable-disabled .fooicon {
+    display: none !important;
+}
+.yk-mt-footable th {
+    text-align: left;
+    color: #92a8d1;
+}
+.yk-mt-entry-table-group {
+    font-weight: bold;
+    height: 40px !important;
+}
+.yk-mt-footable tr {
+     height: 26px;
+ }
+.yk-mt-footable td {
+    border-bottom: 1px dotted #CCC;
+}
+.yk-mt-entry-table-no-meal {
+    font-style: italic;
 }

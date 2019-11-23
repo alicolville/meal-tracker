@@ -30,16 +30,60 @@ function yk_mt_admin_page_entry_view() {
                     }
                     ?>
                     <div class="postbox">
-                        <h2 class="hndle"><span><?php echo __( 'Summary', YK_MT_SLUG ); ?></span></h2>
-                        <div class="inside">
-
-                        </div>
-                    </div>
-                    <div class="postbox">
                         <h2 class="hndle"><span><?php echo __('Data', YK_MT_SLUG ); ?></span></h2>
                         <div class="inside">
-                            <? print_r( $entry ); ?>
+                            <table class="yk-mt-footable yk-mt-footable-basic">
+                                <thead>
+                                    <tr>
+                                        <th><?php echo __( 'Meal', YK_MT_SLUG ); ?></th>
+                                        <th data-breakpoints="xs"><?php echo __( 'Detail', YK_MT_SLUG ); ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        foreach ( yk_mt_db_meal_types_all() as $meal_type ) {
 
+                                            $total_calories = yk_mt_blur_text( $entry[ 'counts' ][ $meal_type[ 'id' ] ] );
+
+
+
+                                          //      sprintf(  __( 'Your current daily allowance is: %1$dkcal.', YK_MT_SLUG ;
+
+                                            printf( '<tr class="yk-mt-entry-table-group footable-disabled">
+                                                                <td>%1$s</td>
+                                                                <td><span class="yk-mt-blur">%2$s</span>kcal</td>
+                                                             </tr>',
+                                                            esc_html( $meal_type[ 'name' ] ),
+                                                            $total_calories
+                                            );
+
+                                            if ( true === empty( $entry[ 'meals' ][ $meal_type[ 'id' ] ] ) ) {
+                                                printf( '<tr class="yk-mt-entry-table-no-meals footable-disabled"><td colspan="2">%s</td></tr>',__('No meals', YK_MT_SLUG ) );
+                                            } else {
+
+                                                $i = 0;
+
+                                                // Print all meals out
+                                                foreach(  $entry[ 'meals' ][ $meal_type[ 'id' ] ] as $meal ) {
+
+                                                    $meal[ 'd' ] = yk_mt_blur_text( $meal[ 'd' ] );
+
+                                                    printf ( '<tr>
+                                                                    <td class="%1$s">%2$s</td>
+                                                                    <td data-breakpoints="xs" class="yk-mt-blur">%3$s</td>
+                                                                </tr>',
+                                                        ( $i < 3 ) ? '' : 'yk-mt-blur',
+                                                        esc_html( $meal[ 'name' ] ),
+                                                        esc_html( $meal[ 'd' ] )
+                                                    );
+
+                                                    $i++;
+                                                }
+                                            }
+                                        }
+                                    ?>
+                                  </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

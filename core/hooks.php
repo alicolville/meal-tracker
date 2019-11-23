@@ -61,20 +61,32 @@ function yk_mt_enqueue_admin_files() {
     // Settings page
     if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], ['yk-mt-settings'] ) ) {
         wp_enqueue_script( 'jquery-tabs', plugins_url( '../assets/js/tabs.min.js', __FILE__ ), ['jquery'], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_style( 'wlt-tabs', plugins_url( '../assets/css/tabs.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_style( 'wlt-tabs-flat', plugins_url( '../assets/css/tabs.flat.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'mt-tabs', plugins_url( '../assets/css/tabs.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'mt-tabs-flat', plugins_url( '../assets/css/tabs.flat.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
     }
 
     if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], ['yk-mt-user'] ) ) {
-        wp_enqueue_style( 'wlt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
+
+        wp_enqueue_style( 'mt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_script( 'mt-chart-js', YK_MT_CHART_JS, [ 'jquery' ], YK_MT_PLUGIN_VERSION );
         wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
 
+        yk_mt_enqueue_scripts_footable();
+
         yk_mt_admin_localise();
-    }
+}
 
 }
 add_action( 'admin_enqueue_scripts', 'yk_mt_enqueue_admin_files');
+
+/**
+ * Enqueue Footable scripts
+ */
+function yk_mt_enqueue_scripts_footable() {
+
+    wp_enqueue_style( 'mt-footable', plugins_url( '/assets/css/footable.standalone.min.css', __DIR__  ), [], YK_MT_PLUGIN_VERSION );
+    wp_enqueue_script( 'mt-footable', plugins_url( '/assets/js/footable.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+}
 
 
 /**
@@ -108,3 +120,16 @@ function yk_mt_wlt_user_profile_add_header_link( $links ) {
     return $links;
 }
 add_filter( 'wt_ls_user_profile_header_links', 'yk_mt_wlt_user_profile_add_header_link' );
+
+/**
+ * Add class to admin body if Premium or not
+ * @param $classes
+ * @return array
+ */
+function yk_mt_admin_add_body_classes( $existing_classes ) {
+
+    $class = ( true === YK_MT_IS_PREMIUM ) ? 'yk-mt-is-premium' : 'yk-mt-not-premium' ;
+
+    return sprintf('%1$s %2$s', $existing_classes, $class );
+}
+add_filter( 'admin_body_class', 'yk_mt_admin_add_body_classes' );

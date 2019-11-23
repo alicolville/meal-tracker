@@ -23,27 +23,6 @@ function yk_mt_admin_localise() {
 }
 
 /**
- * Return a Blur CSS class if not valid license
- *
- * @param bool $pro_plus
- * @return string
- */
-function yk_mt_blur( $space_before = true ) {
-
-    $class = 'yk-mt-blur';
-
-    if ( true === $space_before ) {
-        $class = ' ' . $class;
-    }
-
-    if ( false === YK_MT_IS_PREMIUM ) {
-        return $class;
-    }
-
-    return '';
-}
-
-/**
  * Blur string if incorrect license
  *
  * @param $text
