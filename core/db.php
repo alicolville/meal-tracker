@@ -263,7 +263,7 @@
 
 		if ( $cache = apply_filters( 'yk_mt_db_entry_get', NULL, $id ) ) {
 			$cache[ 'cache' ] = true;
-		//	return $cache; //TODO:
+			return $cache;
 		}
 
 		global $wpdb;
@@ -652,7 +652,8 @@
 			'sort'                  => 'name',
 			'sort-order'            => 'asc',
 			'search'                => NULL,
-			'limit'                 => NULL
+			'limit'                 => NULL,
+            'count-only'            => false
 		]);
 
 		$cache_key = md5( json_encode( $options ) );
@@ -660,36 +661,43 @@
 		$cache = apply_filters( 'yk_mt_db_meals', [], $user_id, $cache_key );
 
         if ( false === empty( $cache ) ) {
-        	return $cache;
+            return $cache;
         }
 
 		global $wpdb;
 
-		$sql = $wpdb->prepare('Select * from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where added_by = %d', $user_id );
+        $sql = ( true === $options[ 'count-only' ] ) ? 'Select count( id )' : 'select *';
+
+		$sql = $wpdb->prepare( $sql .' from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where added_by = %d', $user_id );
 
 		// Exclude deleted?
 		if ( true === $options[ 'exclude-deleted' ] ) {
 			$sql .= ' and deleted = 0';
 		}
 
-		// Search Name?
-		if ( false === empty( $options[ 'search' ] ) ) {
-			$name = '%' . $wpdb->esc_like( $options[ 'search' ] ) . '%';
-			$sql .= ' and `name` like "' . $name . '"';
-		}
+		if ( true === $options[ 'count-only' ] ) {
+            $meals = $wpdb->get_var( $sql );
+        } else {
 
-		$sort = ( true === in_array( $options[ 'sort' ], [ 'name', 'calories' ] ) ) ?  $options[ 'sort' ] : 'name';
+            // Search Name?
+            if ( false === empty( $options[ 'search' ] ) ) {
+                $name = '%' . $wpdb->esc_like( $options[ 'search' ] ) . '%';
+                $sql .= ' and `name` like "' . $name . '"';
+            }
 
-		$sort_order = ( true === in_array( $options[ 'sort-order' ], [ 'asc', 'desc' ] ) ) ? $options[ 'sort-order' ] : 'asc';
+            $sort = ( true === in_array( $options[ 'sort' ], [ 'name', 'calories' ] ) ) ?  $options[ 'sort' ] : 'name';
 
-		$sql .= sprintf( ' order by %s %s', $sort, $sort_order );
+            $sort_order = ( true === in_array( $options[ 'sort-order' ], [ 'asc', 'desc' ] ) ) ? $options[ 'sort-order' ] : 'asc';
 
-		// Limit
-		if ( false === empty( $options[ 'limit' ] ) ) {
-			$sql .= sprintf( ' limit 0, %d', $options[ 'limit' ] ) ;
-		}
+            $sql .= sprintf( ' order by %s %s', $sort, $sort_order );
 
-		$meals = $wpdb->get_results( $sql, ARRAY_A );
+            // Limit
+            if ( false === empty( $options[ 'limit' ] ) ) {
+                $sql .= sprintf( ' limit 0, %d', $options[ 'limit' ] ) ;
+            }
+
+            $meals = $wpdb->get_results( $sql, ARRAY_A );
+        }
 
 		$meals = ( false === empty( $meals ) ) ? $meals : false;
 

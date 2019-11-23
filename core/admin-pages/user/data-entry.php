@@ -45,10 +45,6 @@ function yk_mt_admin_page_entry_view() {
 
                                             $total_calories = yk_mt_blur_text( $entry[ 'counts' ][ $meal_type[ 'id' ] ] );
 
-
-
-                                          //      sprintf(  __( 'Your current daily allowance is: %1$dkcal.', YK_MT_SLUG ;
-
                                             printf( '<tr class="yk-mt-entry-table-group footable-disabled">
                                                                 <td>%1$s</td>
                                                                 <td><span class="yk-mt-blur">%2$s</span>kcal</td>
@@ -66,7 +62,7 @@ function yk_mt_admin_page_entry_view() {
                                                 // Print all meals out
                                                 foreach(  $entry[ 'meals' ][ $meal_type[ 'id' ] ] as $meal ) {
 
-                                                    $meal[ 'd' ] = yk_mt_blur_text( $meal[ 'd' ] );
+                                                    $meal[ 'd' ] = yk_mt_blur_text( $meal[ 'd' ], false );
 
                                                     printf ( '<tr>
                                                                     <td class="%1$s">%2$s</td>

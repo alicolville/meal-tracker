@@ -16,6 +16,8 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
         return;
     }
 
+    $stats = yk_mt_user_stats( $user_id );
+
     ?>
     <div class="postbox">
         <h2 class="hndle"><?php echo __( 'User Search', YK_MT_SLUG ); ?></h2>
@@ -65,25 +67,21 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
         <h2 class="hndle"><span><?php echo __( 'User Information', YK_MT_SLUG ); ?></span></h2>
         <div class="inside">
             <table class="yk-mt-sidebar-stats">
-                <tr>
-                    <th><?php echo __( 'Average Difference', YK_MT_SLUG ); ?></th>
-                    <td>TODO</td>
-                </tr>
-                <tr>
+               <tr>
                     <th><?php echo __( 'Latest Entry', YK_MT_SLUG ); ?></th>
-                    <td>TODO</td>
+                    <td><?php echo yk_mt_date_format( $stats[ 'date-last' ] ); ?></td>
                 </tr>
                 <tr>
                     <th><?php echo __( 'Oldest Entry', YK_MT_SLUG ); ?></th>
-                    <td class="yk-mt-blur">TODO</td>
+                    <td class="yk-mt-blur"><?php echo yk_mt_date_format( $stats[ 'date-first' ] ); ?></td>
                 </tr>
                 <tr>
                     <th><?php echo __( 'Number of Entries', YK_MT_SLUG ); ?></th>
-                    <td class="yk-mt-blur">TODO</td>
+                    <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-entries' ] ); ?></td>
                 </tr>
                 <tr>
                     <th><?php echo __( 'Number of Meals', YK_MT_SLUG ); ?></th>
-                    <td class="yk-mt-blur">TODO</td>
+                    <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-meals' ] ); ?></td>
                 </tr>
             </table>
         </div>
@@ -219,4 +217,25 @@ function yk_mt_link_admin_page_user_render( $user_id, $display_text = NULL ) {
  */
 function yk_mt_link_render( $link, $label ) {
     return sprintf( '<a href="%s">%s</a>', esc_url( $link ), esc_html( $label ) );
+}
+
+/**
+ * Build some summary stats for the given suser
+ * @param $user_id
+ * @return array
+ */
+function yk_mt_user_stats( $user_id ) {
+
+    $user_id            = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+    $entries            = yk_mt_db_entry_get_ids_and_dates( $user_id );
+    $number_of_entries  = count( $entries );
+    $entry_dates        = array_values( $entries );
+
+    return [
+                'user-id'       => $user_id,
+                'count-meals'   => yk_mt_db_meal_for_user( $user_id, [ 'count-only' => true ] ),
+                'count-entries' => $number_of_entries,
+                'date-first'    => ( false === empty( $entry_dates[ 0 ] ) ) ? $entry_dates[ 0 ] : NULL,
+                'date-last'     => ( false === empty( $entry_dates[ $number_of_entries - 1 ] ) ) ? $entry_dates[ $number_of_entries - 1 ] : NULL
+    ];
 }
