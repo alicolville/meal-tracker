@@ -564,7 +564,8 @@
 			'dialog-options'    => json_encode( $dialog_options ),
             'localise'          => yk_mt_localised_strings(),
             'todays-entry'      => yk_mt_entry( $args[ 'entry-id' ] ),
-            'load-entry'        => true
+            'load-entry'        => true,
+            'is-admin'          => false
 		] );
 	}
 

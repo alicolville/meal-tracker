@@ -1,7 +1,8 @@
 
-var yk_mt_chart_config          = false;
-var yk_mt_ctx                   = false;
-var yk_mt_chart                 = false;
+var yk_mt_chart_config      = false;
+var yk_mt_ctx               = false;
+var yk_mt_chart             = false;
+var yk_mt_chart_is_admin    = ( 'undefined' !== typeof( yk_mt_sc_meal_tracker ) && '1' === yk_mt_sc_meal_tracker[ 'is-admin' ] );
 
 /**
  * ------ ---------------------------------------------------------------------------------
@@ -129,24 +130,27 @@ function yk_mt_chart_data() {
  */
 function yk_mt_chart_options() {
 
-    return {
+    let options = {
         cutoutPercentage: 70,
         title: {
-            display: true,
+            display: ! yk_mt_chart_is_admin,
             fontSize: 15,
             fontStyle: 'normal',
             padding: 20,
             text: yk_mt_chart_config[ 'chart_title' ]
         },
         legend: {
-            display: true,
+            display: ! yk_mt_chart_is_admin,
             position: 'right',
             labels: {
                 fontSize: 17,
                 boxWidth: 20
             }
-        },
-        elements: {
+        }
+    };
+
+    if ( false === yk_mt_chart_is_admin ) {
+        options[ 'elements' ] = {
             center: {
                 text: yk_mt_chart_config[ 'percentage_used' ] + '%',
                 color: 'rgb(255, 99, 132)',
@@ -154,5 +158,7 @@ function yk_mt_chart_options() {
                 sidePadding: 125
             }
         }
-    };
+    }
+
+    return options;
 }

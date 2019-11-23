@@ -8,8 +8,9 @@ defined('ABSPATH') or die("Jog on!");
 
 /**
  * @param $user_id
+ * @param $entry
  */
-function yk_mt_user_side_bar( $user_id ) {
+function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
 
     if( true === empty( $user_id ) )  {
         return;
@@ -23,20 +24,67 @@ function yk_mt_user_side_bar( $user_id ) {
         </div>
     </div>
 
-    <div class="postbox ws-ls-user-data">
+    <?php if ( NULL !== $entry ): ?>
+        <div class="postbox">
+            <h2 class="hndle"><?php echo __( 'Entry summary', YK_MT_SLUG ); ?></h2>
+            <div class="inside">
+                <div class="yk-mt-summary-chart-slot">
+                    <canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
+                </div>
+                <table class="yk-mt-sidebar-stats">
+                    <tr>
+                        <th><?php echo __( 'Date', YK_MT_SLUG ); ?></th>
+                        <td><?php echo yk_mt_date_format( $entry[ 'date' ] ); ?></td>
+                    </tr>
+                    <tr>
+                        <th><?php echo __( 'Calories Allowed', YK_MT_SLUG ); ?></th>
+                        <td><?php echo yk_mt_format_number( $entry[ 'calories_allowed' ] ); ?></td>
+                    </tr>
+                    <tr>
+                        <th><?php echo __( 'Calories Used', YK_MT_SLUG ); ?></th>
+                        <td class="<?php echo yk_mt_blur(); ?>"><?php echo yk_mt_blur_text( $entry[ 'calories_used' ] ); ?></td>
+                    </tr>
+                    <tr>
+                        <th><?php echo __( 'Calories Remaining', YK_MT_SLUG ); ?></th>
+                        <td class="<?php echo yk_mt_blur(); ?>"><?php echo yk_mt_blur_text( $entry[ 'calories_remaining' ] ); ?></td>
+                    </tr>
+                    <tr>
+                        <th><?php echo __( 'Percentage used', YK_MT_SLUG ); ?></th>
+                        <td class="<?php echo yk_mt_blur(); ?>"><?php echo yk_mt_blur_text( $entry[ 'percentage_used' ] ); ?>%</td>
+                    </tr>
+                    <tr>
+                        <th><?php echo __( 'Meals', YK_MT_SLUG ); ?></th>
+                        <td class="<?php echo yk_mt_blur(); ?>"><?php echo yk_mt_blur_text( $entry[ 'counts' ][ 'total-meals' ] ); ?></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <div class="postbox yk-mt-user-data">
         <h2 class="hndle"><span><?php echo __( 'User Information', YK_MT_SLUG ); ?></span></h2>
         <div class="inside">
-            <table class="ws-ls-sidebar-stats">
-
+            <table class="yk-mt-sidebar-stats">
                 <tr>
-                    <th><?php echo __( 'No. of Entries', YK_MT_SLUG ); ?></th>
-                    <td>123</td>
+                    <th><?php echo __( 'Average Difference', YK_MT_SLUG ); ?></th>
+                    <td>TODO</td>
                 </tr>
-
+                <tr>
+                    <th><?php echo __( 'Latest Entry', YK_MT_SLUG ); ?></th>
+                    <td>TODO</td>
+                </tr>
+                <tr>
+                    <th><?php echo __( 'Oldest Entry', YK_MT_SLUG ); ?></th>
+                    <td class="<?php echo yk_mt_blur(); ?>">TODO</td>
+                </tr>
+                <tr>
+                    <th><?php echo __( 'Number of Entries', YK_MT_SLUG ); ?></th>
+                    <td class="<?php echo yk_mt_blur(); ?>">TODO</td>
+                </tr>
             </table>
         </div>
     </div>
-    <div class="postbox ws-ls-user-data">
+    <div class="postbox yk-mt-user-data">
         <h2 class="hndle"><span><?php echo __( 'Settings', YK_MT_SLUG ); ?></span></h2>
         <div class="inside">
             <a class="button-secondary" href="#">
@@ -74,7 +122,7 @@ function yk_mt_user_header( $user_id, $previous_url = false ) {
 
     printf('
         <h3>%s %s</h3>
-        <div class="postbox ws-ls-user-data">
+        <div class="postbox yk-mt-user-data">
             <div class="inside">
                 <a href="%s" class="button-secondary"><i class="fa fa-arrow-left"></i> %s</a>
                 <a href="%s" class="button-secondary"><i class="fa fa-wordpress"></i> %s</a>

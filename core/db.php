@@ -263,7 +263,7 @@
 
 		if ( $cache = apply_filters( 'yk_mt_db_entry_get', NULL, $id ) ) {
 			$cache[ 'cache' ] = true;
-			return $cache;
+		//	return $cache; //TODO:
 		}
 
 		global $wpdb;
@@ -292,6 +292,7 @@
 
             $entry['meals'] = [];
             $entry['counts'] = [];
+            $entry['counts']['total-meals'] = 0;
 
             // Initiate an empty array
             foreach ( $meal_type_ids as $id ) {
@@ -303,6 +304,8 @@
 
 			if ( false === empty( $meals ) ) {
 				foreach ( $meals as $meal ) {
+
+                    $entry['counts']['total-meals']++;
 
 				    // Compress meals that are the same into one row?
                     if ( true === $compress_multiple_meals ) {

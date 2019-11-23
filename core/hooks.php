@@ -51,35 +51,27 @@ add_action( 'admin_menu', 'yk_mt_build_admin_menu' );
 /**
  * Enqueue admin JS / CSS
  */
-function yk_mt_enqueue_admin_files()
-{
+function yk_mt_enqueue_admin_files() {
 
-    wp_enqueue_style('yk-mt-admin', plugins_url('../assets/css/admin.css', __FILE__), [], YK_MT_PLUGIN_VERSION);
+    wp_enqueue_style( 'yk-mt-admin', plugins_url('../assets/css/admin.css', __FILE__), [], YK_MT_PLUGIN_VERSION );
 
     // Enqueue admin.js regardless (needed to dismiss notices)
-    wp_enqueue_script('yk-mt-admin', plugins_url('../assets/js/admin.js', __FILE__), ['jquery'], YK_MT_PLUGIN_VERSION);
+    wp_enqueue_script( 'yk-mt-admin', plugins_url('../assets/js/admin.js', __FILE__), ['jquery'], YK_MT_PLUGIN_VERSION );
 
     // Settings page
-    if (false === empty($_GET['page']) && true === in_array($_GET['page'], ['yk-mt-settings'])) {
-        wp_enqueue_script('jquery-tabs', plugins_url('../assets/js/tabs.min.js', __FILE__), ['jquery'], YK_MT_PLUGIN_VERSION);
-        wp_enqueue_style('wlt-tabs', plugins_url('../assets/css/tabs.min.css', __FILE__), [], YK_MT_PLUGIN_VERSION);
-        wp_enqueue_style('wlt-tabs-flat', plugins_url('../assets/css/tabs.flat.min.css', __FILE__), [], YK_MT_PLUGIN_VERSION);
+    if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], ['yk-mt-settings'] ) ) {
+        wp_enqueue_script( 'jquery-tabs', plugins_url( '../assets/js/tabs.min.js', __FILE__ ), ['jquery'], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'wlt-tabs', plugins_url( '../assets/css/tabs.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'wlt-tabs-flat', plugins_url( '../assets/css/tabs.flat.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
     }
 
-    if (false === empty($_GET['page']) && true === in_array($_GET['page'], ['yk-mt-user'])) {
-        wp_enqueue_style('wlt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION);
+    if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], ['yk-mt-user'] ) ) {
+        wp_enqueue_style( 'wlt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_script( 'mt-chart-js', YK_MT_CHART_JS, [ 'jquery' ], YK_MT_PLUGIN_VERSION );
         wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
+
+        yk_mt_admin_localise();
     }
-
-
-    // Include relevant JS for admin "Manage User data" pages
-//    if(false === empty($_GET['page']) && 'ws-ls-data-home' == $_GET['page'] &&
-//        false === empty($_GET['mode']) && 'user-settings' == $_GET['mode']) {
-//
-//        wp_enqueue_script('ws-ls-admin-user-pref', plugins_url( '../assets/js/admin.user-preferences' . 	$minified . '.js', __FILE__ ), array('jquery'), WE_LS_CURRENT_VERSION);
-//        wp_localize_script('ws-ls-admin-user-pref', 'ws_ls_user_pref_config', ws_ls_admin_config());
-//    }
 
 }
 add_action( 'admin_enqueue_scripts', 'yk_mt_enqueue_admin_files');

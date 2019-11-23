@@ -1058,3 +1058,12 @@ function yk_mt_exist_check( $user_id ) {
         wp_die( __( 'Error: The user does not appear to exist' , YK_MT_SLUG ) );
     }
 }
+
+/**
+ * Helper function for formatting numbers
+ * @param $number
+ * @return string
+ */
+function yk_mt_format_number( $number ) {
+    return number_format( $number );
+}

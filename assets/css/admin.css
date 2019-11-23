@@ -33,3 +33,29 @@ HEX: #f7786b
 .yk-mt-settings th {
     font-weight: 300;
 }
+.yk-mt-sidebar-stats {
+    width: 100%;
+    text-align: left;
+}
+.yk-mt-sidebar-stats th {
+    font-weight: 600;
+
+}
+.yk-mt-sidebar-stats th, .yk-mt-sidebar-stats td  {
+    border-bottom: 1px dotted #CCCCCC;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.yk-mt-sidebar-stats .last th, .yk-mt-sidebar-stats .last td {
+    border: none !important;
+}
+.yk-mt-blur {
+    filter:url(#wherearemyglasses);
+    /* ^ for Firefox */
+    -webkit-filter: blur(2px);
+    /* ^ Webkit browsers */
+    filter: blur(2px);
+}
+.yk-mt-blur th {
+    display: inline-block;
+}

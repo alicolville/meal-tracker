@@ -36,9 +36,9 @@ function yk_mt_admin_page_entry_view() {
                         </div>
                     </div>
                     <div class="postbox">
-                        <h2 class="hndle"><span><?php echo __('Entries for this user', YK_MT_SLUG ); ?></span></h2>
+                        <h2 class="hndle"><span><?php echo __('Data', YK_MT_SLUG ); ?></span></h2>
                         <div class="inside">
-
+                            <? print_r( $entry ); ?>
 
                         </div>
                     </div>
@@ -46,7 +46,7 @@ function yk_mt_admin_page_entry_view() {
             </div>
             <div id="postbox-container-1" class="postbox-container">
                 <div class="meta-box-sortables">
-                    <?php yk_mt_user_side_bar( $user_id ); ?>
+                    <?php yk_mt_user_side_bar(  $entry[ 'user_id' ], $entry ); ?>
                 </div>
             </div>
         </div>
