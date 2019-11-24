@@ -44,7 +44,9 @@ function yk_mt_admin_page_user_summary() {
                     <div class="postbox">
                         <h2 class="hndle"><span><?php echo __('Entries for this user', YK_MT_SLUG ); ?></span></h2>
                         <div class="inside">
-
+                            <?php
+                                yk_mt_table_user_entries( [ 'entries'   => $entries ] );
+                            ?>
                         </div>
                     </div>
                 </div>

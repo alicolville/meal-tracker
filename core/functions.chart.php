@@ -18,6 +18,7 @@ function yk_mt_chart_placeholder( $args = [] ) {
     $args = wp_parse_args( $args, [
         'id'        => sprintf( 'yk_mt_chart_%s', uniqid() ),
         'type'      => 'line',
+        'height'    => 50,
         'labels'    => [],
         'options'   => $default_options,
         'datasets'  => [],
@@ -32,7 +33,7 @@ function yk_mt_chart_placeholder( $args = [] ) {
 
     wp_localize_script( 'mt-chart', $args[ 'id' ] . '_data', $args );
 
-    printf( '<canvas id="%s" class="yk-mt-line-chart" style="height:200px"></canvas>', esc_attr( $args[ 'id' ] ) );
+    printf( '<canvas id="%1$s" class="yk-mt-line-chart" height="%2$d" style="height: %2$dpx"></canvas>', esc_attr( $args[ 'id' ] ), $args[ 'height' ] );
 }
 
 /**
@@ -45,7 +46,7 @@ function yk_mt_chart_line_allowed_versus_used( $args ) {
                                         'user-id'   => get_current_user_id(),
                                         'entries'   => NULL,
                                         'max'       => NULL,
-                                        'title'     => '123'
+                                        'title'     => ''
     ]);
 
     // Fetch entries if non specified

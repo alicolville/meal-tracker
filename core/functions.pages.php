@@ -191,7 +191,22 @@ function yk_mt_link_admin_page_user( $user_id, $mode = 'user' ) {
 
     return esc_url( $url );
 }
+/**
+ * Get a link to an admin entry page
+ * @param $user_id
+ * @param string $mode
+ * @return string
+ */
+function yk_mt_link_admin_page_entry( $entry_id ) {
 
+    if ( false === is_numeric( $entry_id ) ) {
+        return '#';
+    }
+
+    $url = admin_url( 'admin.php?page=yk-mt-user&mode=entry&entry-id=' . (int) $entry_id );
+
+    return esc_url( $url );
+}
 /**
  * Given a user ID, return a link to the user's profile
  * @param int $user_id User ID

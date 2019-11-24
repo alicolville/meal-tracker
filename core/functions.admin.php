@@ -12,6 +12,7 @@ function yk_mt_admin_localise() {
 
     if ( false === $entry ) {
 
+
         // Try and get user ID from QS
         $user_id = yk_mt_querystring_value( 'user-id', false );
 
@@ -60,4 +61,59 @@ function yk_mt_blur_text( $text, $number_format = true ) {
  */
 function yk_mt_link_user_data() {
     return admin_url( 'admin.php?page=yk-mt-user' );
+}
+
+/**
+ * Display all user's entries in a data table
+ */
+function yk_mt_table_user_entries( $args ) {
+
+    $args = wp_parse_args( $args, [
+        'user-id'   => get_current_user_id(),
+        'entries'   => NULL
+    ]);
+
+    // Fetch entries if non specified
+    if ( NULL === $args[ 'entries' ] ) {
+        $args[ 'entries' ] = yk_mt_db_entries_summary( $args[ 'user-id' ] );
+    }
+
+    ?>
+    <table class="yk-mt-footable yk-mt-footable-basic widefat" data-paging="true" data-sorting="true">
+        <thead>
+            <tr>
+                <th data-type="date" data-format-string="D/M/Y"><?php echo __( 'Date', YK_MT_SLUG ); ?></th>
+                <th data-breakpoints="xs" data-type="number"><?php echo __( 'Calories Allowed', YK_MT_SLUG ); ?></th>
+                <th data-breakpoints="xs" data-type="number"><?php echo __( 'Calories Used', YK_MT_SLUG ); ?></th>
+                <th data-breakpoints="xs" data-type="number"><?php echo __( 'Calories Remaining', YK_MT_SLUG ); ?></th>
+                <th data-breakpoints="xs" data-sortable="false" width="20"><?php echo __( 'Percentage', YK_MT_SLUG ); ?></th>
+                <th></th>
+            </tr>
+        </thead>
+            <?php
+                foreach ( $args[ 'entries' ] as $entry ) {
+
+                    $class = ( $entry[ 'calories_used' ] > $entry[ 'calories_allowed' ] ) ? 'yk-mt-error' : 'yk-mt-ok';
+
+                    printf ( '    <tr class="%6$s">
+                                                <td>%1$s</td>
+                                                <td class="yk-mt-blur">%2$s</td>
+                                                <td class="yk-mt-blur">%3$s</td>
+                                                <td class="yk-mt-blur">%4$s</td>
+                                                <td class="yk-mt-blur">%5$s</td>
+                                                <td><a href="%7$s" class="btn btn-default footable-edit"><i class="fa fa-eye"></i></a></td>
+                                            </tr>',
+                        yk_mt_date_format( $entry['date' ] ),
+                        $entry[ 'calories_allowed' ],
+                        $entry[ 'calories_used' ],
+                        $entry[ 'calories_remaining' ],
+                        $entry[ 'percentage_used' ] . '%',
+                        $class,
+                        yk_mt_link_admin_page_entry( $entry[ 'id' ] )
+                    );
+                }
+            ?>
+        </tbody>
+    </table>
+<?php
 }

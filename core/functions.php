@@ -939,7 +939,7 @@ function yk_mt_custom_notification_html() {
     ?>
 
     <p><img src="<?php echo plugins_url( 'admin-pages/assets/images/yeken-logo.png', __FILE__ ); ?>" width="100" height="100" style="margin-right:20px" align="left" /><?php echo __( 'If require plugin modifications to Meal Tracker, or need a new plugin built, or perhaps you need a developer to help you with your website then please don\'t hesitate get in touch!', YK_MT_SLUG ); ?></p>
-    <p><strong><?php echo __( 'We provide fixed priced quotes.', WE_LS_SLUG); ?></strong></p>
+    <p><strong><?php echo __( 'We provide fixed priced quotes.', YK_MT_SLUG ); ?></strong></p>
     <p><a href="https://www.yeken.uk" rel="noopener noreferrer" target="_blank">YeKen.uk</a> /
         <a href="https://profiles.wordpress.org/aliakro" rel="noopener noreferrer" target="_blank">WordPress Profile</a> /
         <a href="mailto:email@yeken.uk" >email@yeken.uk</a></p>
@@ -956,10 +956,10 @@ function yk_mt_display_pro_upgrade_notice( ) {
     ?>
 
     <div class="postbox yk-mt-advertise-premium">
-        <h3 class="hndle"><span><?php echo __( 'Upgrade Meal Tracker and get more features!', WE_LS_SLUG); ?> </span></h3>
+        <h3 class="hndle"><span><?php echo __( 'Upgrade Meal Tracker and get more features!', YK_MT_SLUG ); ?> </span></h3>
         <div style="padding: 0px 15px 0px 15px">
-            <p><?php echo __( 'Upgrade to the Premium version of this plugin to view your user\'s data, record entries for multiple days, extrernal data sources and much more!', WE_LS_SLUG); ?></p>
-            <p><a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-license') ); ?>" class="button-primary"><?php echo __( 'Read more and upgrade to Premium Version', WE_LS_SLUG); ?></a></p>
+            <p><?php echo __( 'Upgrade to the Premium version of this plugin to view your user\'s data, record entries for multiple days, extrernal data sources and much more!', YK_MT_SLUG ); ?></p>
+            <p><a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-license') ); ?>" class="button-primary"><?php echo __( 'Read more and upgrade to Premium Version', YK_MT_SLUG ); ?></a></p>
         </div>
     </div>
 
@@ -1071,4 +1071,13 @@ function yk_mt_exist_check( $user_id ) {
  */
 function yk_mt_format_number( $number, $decimals = 0 ) {
     return number_format( $number, $decimals );
+}
+
+/**
+ * Helper function for formatting calories
+ * @param $number
+ * @return string
+ */
+function yk_mt_format_calories( $number ) {
+    return sprintf( '%s%s', number_format( $number ), __( 'kcal', YK_MT_SLUG ) );
 }

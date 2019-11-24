@@ -66,6 +66,9 @@ HEX: #f7786b
     text-align: left;
     color: #92a8d1;
 }
+.yk-mt-footable .btn {
+    padding: 2px 5px !important;
+}
 .yk-mt-entry-table-group {
     font-weight: bold;
     height: 40px !important;
@@ -83,4 +86,13 @@ HEX: #f7786b
     .yk-mt-user-data a span {
         display: none !important;
     }
+}
+.yk-mt-footable th, td {
+    font-size: 12px;
+}
+.yk-mt-footable .yk-mt-ok td {
+    background-color: #e3ffde;
+}
+.yk-mt-footable .yk-mt-error td {
+    background-color: #ffdede;
 }
