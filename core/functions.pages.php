@@ -44,7 +44,7 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
                     </tr>
                     <tr>
                         <th><?php echo __( 'Percentage used', YK_MT_SLUG ); ?></th>
-                        <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'percentage_used' ] ); ?>%</td>
+                        <td class="yk-mt-blur"><?php echo yk_mt_format_number( $entry[ 'percentage_used' ], 1 ); ?>%</td>
                     </tr>
                     <tr>
                         <th><?php echo __( 'Meals', YK_MT_SLUG ); ?></th>

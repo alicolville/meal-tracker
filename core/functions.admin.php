@@ -10,8 +10,22 @@ function yk_mt_admin_localise() {
     // Do we have an entry ID in the URL?
     $entry = yk_mt_querystring_value( 'entry-id', false );
 
-    if ( false !== $entry ) {
-        $entry =  yk_mt_entry( $entry );
+    if ( false === $entry ) {
+
+        // Try and get user ID from QS
+        $user_id = yk_mt_querystring_value( 'user-id', false );
+
+        if ( false !== $user_id ) {
+
+            $entry_id_for_today = yk_mt_db_entry_get_id_for_today( $user_id );
+
+            if ( false === empty( $entry_id_for_today ) ) {
+                $entry = yk_mt_entry( $entry );
+            }
+        }
+
+    } else {
+        $entry = yk_mt_entry( $entry );
     }
 
     wp_localize_script( 'yk-mt-admin', 'yk_mt_sc_meal_tracker', [

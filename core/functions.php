@@ -1066,8 +1066,9 @@ function yk_mt_exist_check( $user_id ) {
 /**
  * Helper function for formatting numbers
  * @param $number
+ * @param $decimals
  * @return string
  */
-function yk_mt_format_number( $number ) {
-    return number_format( $number );
+function yk_mt_format_number( $number, $decimals = 0 ) {
+    return number_format( $number, $decimals );
 }
