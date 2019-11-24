@@ -79,3 +79,8 @@ HEX: #f7786b
 .yk-mt-entry-table-no-meal {
     font-style: italic;
 }
+@media only screen and (max-width: 600px) {
+    .yk-mt-user-data a span {
+        display: none !important;
+    }
+}

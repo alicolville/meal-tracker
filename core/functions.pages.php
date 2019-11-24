@@ -124,9 +124,9 @@ function yk_mt_user_header( $user_id, $previous_url = false ) {
         <h3>%s %s</h3>
         <div class="postbox yk-mt-user-data">
             <div class="inside">
-                <a href="%s" class="button-secondary"><i class="fa fa-arrow-left"></i> %s</a>
-                <a href="%s" class="button-secondary"><i class="fa fa-wordpress"></i> %s</a>
-                <a href="%s" class="button-secondary"><i class="fa fa-pie-chart"></i> %s</a>
+                <a href="%s" class="button-secondary"><i class="fa fa-arrow-left"></i><span> %s</span></a>
+                <a href="%s" class="button-secondary"><i class="fa fa-wordpress"></i> <span>%s</span></a>
+                <a href="%s" class="button-secondary"><i class="fa fa-pie-chart"></i> <span>%s</span></a>
                 %s
             </div>
         </div>',
