@@ -22,14 +22,17 @@ jQuery( document ).ready(function ($) {
     }
 
     // Are we on a shortcode page and have initial data to load?
-    if ( yk_mt_sc_meal_tracker[ 'load-entry' ] ) {
+    if ( 'undefined' !== typeof yk_mt_sc_meal_tracker &&
+            yk_mt_sc_meal_tracker[ 'load-entry' ] ) {
         yk_mt_render_entry( yk_mt_sc_meal_tracker [ 'todays-entry' ] );
     }
 
     /**
      * Foo table
      */
-    $( '.yk-mt-footable-basic' ).footable();
+    if ( 'object' === typeof FooTable ) {
+        $( '.yk-mt-footable-basic' ).footable();
+    }
 
     /**
      * Zozo Tabs
