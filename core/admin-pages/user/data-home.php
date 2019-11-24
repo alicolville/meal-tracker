@@ -24,7 +24,7 @@ function yk_mt_admin_page_data_home() {
             // Call settings page
             break;
 		default:
-            // Dashboard
+            yk_mt_admin_page_dashboard();
 			break;
 	}
 }

@@ -95,7 +95,21 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
         </div>
     </div>
     <?php
+}
 
+/**
+ * Display sidebar for dashboard
+ */
+function yk_mt_dashboard_side_bar() {
+?>
+     <div class="postbox">
+        <h2 class="hndle"><?php echo __( 'User Search', YK_MT_SLUG ); ?></h2>
+        <div class="inside">
+            <?php yk_mt_user_search_form(); ?>
+        </div>
+    </div>
+
+    <?php
 }
 
 /**
@@ -188,7 +202,7 @@ function yk_mt_link_admin_page_user( $user_id, $mode = 'user' ) {
 
     $url = admin_url( $url );
 
-    return esc_url( $url );
+    return $url;
 }
 /**
  * Get a link to an admin entry page
@@ -219,6 +233,7 @@ function yk_mt_link_admin_page_entry( $entry_id, $add_back_link = true ) {
 function yk_mt_link_admin_page_user_render( $user_id, $display_text = NULL ) {
 
     $profile_url = yk_mt_link_admin_page_user( $user_id );
+    $profile_url = yk_mt_link_add_back_link( $profile_url );
 
     return ( false === empty( $display_text ) ) ?
         yk_mt_link_render( $profile_url, $display_text ) :
@@ -233,6 +248,24 @@ function yk_mt_link_admin_page_user_render( $user_id, $display_text = NULL ) {
  */
 function yk_mt_link_render( $link, $label ) {
     return sprintf( '<a href="%s">%s</a>', esc_url( $link ), esc_html( $label ) );
+}
+
+/**
+ * Given a user ID, generate a <a> / URL to their profile
+ * @param $user_id
+ * @return string
+ */
+function yk_mt_link_profile_display_name_link( $user_id ) {
+
+    $user = get_user_by( 'ID', $user_id );
+
+    if ( false === $user ) {
+        return '-';
+    }
+
+    $label = ( false === empty( $user->display_name ) ) ? $user->display_name : $user->user_login;
+
+    return yk_mt_link_admin_page_user_render( $user_id, $label );
 }
 
 /**

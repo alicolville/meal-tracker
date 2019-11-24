@@ -63,6 +63,7 @@ include_once YK_MT_ABSPATH . 'core/sources-weight-tracker.php';
 include_once YK_MT_ABSPATH . 'core/cron.php';
 
 // Admin pages
+include_once YK_MT_ABSPATH . 'core/admin-pages/user/data-dashboard.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/user/data-entry.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/user/data-home.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/user/data-user.php';

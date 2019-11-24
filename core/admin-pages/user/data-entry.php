@@ -32,7 +32,7 @@ function yk_mt_admin_page_entry_view() {
                     <div class="postbox">
                         <h2 class="hndle"><span><?php echo __('Entry for', YK_MT_SLUG ); ?> <?php echo yk_mt_date_format( $entry[ 'date' ] ); ?></span></h2>
                         <div class="inside">
-                            <table class="yk-mt-footable yk-mt-footable-basic">
+                            <table class="yk-mt-footable yk-mt-footable-basic" data-state="true">
                                 <thead>
                                     <tr>
                                         <th><?php echo __( 'Meal', YK_MT_SLUG ); ?></th>

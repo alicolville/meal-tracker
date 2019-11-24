@@ -250,28 +250,33 @@
      *
      * @return null|string
      */
-    function yk_mt_db_entries_summary( $user_id = NULL ) {
+    function yk_mt_db_entries_summary( $args ) {
 
-        $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+        $args = wp_parse_args( $args, [
+            'user-id'   => NULL,
+            'limit'     => NULL
+        ]);
 
-        if ( $cache = apply_filters( '!"£yk_mt_db_entry_ids_and_dates_get', NULL, $user_id ) ) {
-
-            //TODO: Caching
-            // return $cache;
-        }
+        // TODO: Cache this function for 1 min
 
         global $wpdb;
 
-        $sql = $wpdb->prepare( 'Select id, user_id, calories_allowed, calories_used, date 
-                                    from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where user_id = %d order by date asc', $user_id );
+        $sql = 'Select id, user_id, calories_allowed, calories_used, date from ' . $wpdb->prefix . YK_WT_DB_ENTRY;
+
+        if ( false === empty( $args[ 'user-id' ] ) ) {
+            $sql .= sprintf( ' where user_id = %d order by date asc', $args[ 'user-id' ] );
+        }
+
+        // Limit
+        if ( false === empty( $args[ 'limit' ] ) ) {
+            $sql .= sprintf( ' limit 0, %d', $args[ 'limit' ] ) ;
+        }
 
         $results = $wpdb->get_results( $sql, ARRAY_A );
 
         if ( false === empty( $results ) ) {
             $results = array_map( 'yk_mt_db_entry_calculate_stats', $results );
         }
-
-        // do_action( 'yk_mt_db_entry_ids_and_dates', $user_id, $results ); //TODO
 
         return $results;
     }

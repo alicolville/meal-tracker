@@ -69,20 +69,24 @@ function yk_mt_link_user_data() {
 function yk_mt_table_user_entries( $args ) {
 
     $args = wp_parse_args( $args, [
-        'user-id'   => get_current_user_id(),
-        'entries'   => NULL
+        'user-id'       => get_current_user_id(),
+        'entries'       => NULL,
+        'show-username' => false
     ]);
 
     // Fetch entries if non specified
     if ( NULL === $args[ 'entries' ] ) {
-        $args[ 'entries' ] = yk_mt_db_entries_summary( $args[ 'user-id' ] );
+        $args[ 'entries' ] = yk_mt_db_entries_summary( [ 'user-id' =>  $args[ 'user-id' ] ] );
     }
 
     ?>
-    <table class="yk-mt-footable yk-mt-footable-basic widefat" data-paging="true" data-sorting="true">
+    <table class="yk-mt-footable yk-mt-footable-basic widefat" data-paging="true" data-sorting="true" data-state="true">
         <thead>
             <tr>
                 <th data-type="date" data-format-string="D/M/Y"><?php echo __( 'Date', YK_MT_SLUG ); ?></th>
+                <th data-type="text" data-breakpoints="sm"  data-visible="<?php echo ( true == $args[ 'show-username' ] ) ? 'true' : 'false'; ?>">
+                    <?php echo __( 'User', YK_MT_SLUG ); ?>
+                </th>
                 <th data-breakpoints="xs" data-type="number"><?php echo __( 'Calories Allowed', YK_MT_SLUG ); ?></th>
                 <th data-breakpoints="sm" data-type="number"><?php echo __( 'Calories Used', YK_MT_SLUG ); ?></th>
                 <th data-breakpoints="xs" data-type="number"><?php echo __( 'Calories Remaining', YK_MT_SLUG ); ?></th>
@@ -97,6 +101,7 @@ function yk_mt_table_user_entries( $args ) {
 
                     printf ( '    <tr class="%6$s">
                                                 <td>%1$s</td>
+                                                <td class="yk-mt-blur">%8$s</td>
                                                 <td class="yk-mt-blur">%2$s</td>
                                                 <td class="yk-mt-blur">%3$s</td>
                                                 <td class="yk-mt-blur">%4$s</td>
@@ -109,7 +114,8 @@ function yk_mt_table_user_entries( $args ) {
                         $entry[ 'calories_remaining' ],
                         $entry[ 'percentage_used' ] . '%',
                         $class,
-                        yk_mt_link_admin_page_entry( $entry[ 'id' ] )
+                        yk_mt_link_admin_page_entry( $entry[ 'id' ] ),
+                        yk_mt_link_profile_display_name_link( $entry[ 'user_id' ] )
                     );
                 }
             ?>

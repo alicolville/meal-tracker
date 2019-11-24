@@ -108,8 +108,12 @@ function yk_mt_enqueue_scripts_chart() {
  * @return mixed
  */
 function yk_mt_user_action_links( $actions, $user_object ) {
+
+    $profile_url = yk_mt_link_admin_page_user( $user_object->ID );
+    $profile_url = yk_mt_link_add_back_link( $profile_url );
+
     $actions[ 'meal-tracker' ] = sprintf(  '<a href="%s">%s</a>',
-        yk_mt_link_admin_page_user( $user_object->ID ),
+        $profile_url,
         __( 'Meal entries', YK_MT_SLUG )
     );
 

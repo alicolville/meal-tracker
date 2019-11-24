@@ -51,7 +51,7 @@ function yk_mt_chart_line_allowed_versus_used( $args ) {
 
     // Fetch entries if non specified
     if ( NULL === $args[ 'entries' ] ) {
-        $args[ 'entries' ] = yk_mt_db_entries_summary( $args[ 'user-id' ] );
+        $args[ 'entries' ] = yk_mt_db_entries_summary( [ 'user-id' => $args[ 'user-id' ] ] );
     }
 
     if ( true === is_numeric( $args[ 'max' ] ) ) {
