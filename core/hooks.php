@@ -53,7 +53,7 @@ add_action( 'admin_menu', 'yk_mt_build_admin_menu' );
  */
 function yk_mt_enqueue_admin_files() {
 
-    if ( false === in_array( $_GET['page'], [ 'yk-mt-user' ] ) ) {
+    if ( false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu' ] ) ) {
         return;
     }
 
@@ -69,7 +69,7 @@ function yk_mt_enqueue_admin_files() {
         wp_enqueue_style( 'mt-tabs-flat', plugins_url( '../assets/css/tabs.flat.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
     }
 
-    if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], ['yk-mt-user'] ) ) {
+    if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu' ] ) ) {
 
         wp_enqueue_style( 'mt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
 

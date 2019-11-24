@@ -101,7 +101,7 @@ function yk_mt_table_user_entries( $args ) {
 
                     printf ( '    <tr class="%6$s">
                                                 <td>%1$s</td>
-                                                <td class="yk-mt-blur">%8$s</td>
+                                                <td>%8$s</td>
                                                 <td class="yk-mt-blur">%2$s</td>
                                                 <td class="yk-mt-blur">%3$s</td>
                                                 <td class="yk-mt-blur">%4$s</td>
