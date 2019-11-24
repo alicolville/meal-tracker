@@ -41,6 +41,7 @@ include_once YK_MT_ABSPATH . 'core/functions.php';
 include_once YK_MT_ABSPATH . 'core/functions.pages.php';
 include_once YK_MT_ABSPATH . 'core/functions.admin.php';
 include_once YK_MT_ABSPATH . 'core/functions.settings.php';
+include_once YK_MT_ABSPATH . 'core/functions.chart.php';
 include_once YK_MT_ABSPATH . 'core/license.php';
 
 $is_premium = yk_mt_license_is_premium();

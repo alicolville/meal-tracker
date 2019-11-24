@@ -72,8 +72,8 @@ function yk_mt_enqueue_admin_files() {
     if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], ['yk-mt-user'] ) ) {
 
         wp_enqueue_style( 'mt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_script( 'mt-chart-js', YK_MT_CHART_JS, [ 'jquery' ], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
+
+        yk_mt_enqueue_scripts_chart();
 
         yk_mt_enqueue_scripts_footable();
 
@@ -89,6 +89,15 @@ function yk_mt_enqueue_scripts_footable() {
 
     wp_enqueue_style( 'mt-footable', plugins_url( '/assets/css/footable.standalone.min.css', __DIR__  ), [], YK_MT_PLUGIN_VERSION );
     wp_enqueue_script( 'mt-footable', plugins_url( '/assets/js/footable.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+}
+
+/**
+ * Enqueue Chart scripts
+ */
+function yk_mt_enqueue_scripts_chart() {
+
+    wp_enqueue_script( 'mt-chart-js', YK_MT_CHART_JS, [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+    wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
 }
 
 

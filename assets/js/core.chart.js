@@ -162,3 +162,23 @@ function yk_mt_chart_options() {
 
     return options;
 }
+
+jQuery( document ).ready( function ( $ ) {
+
+    /**
+     * Render a line chart
+     */
+    $( '.yk-mt-line-chart' ).each( function( index ) {
+
+        let id          =  $( this ).attr( 'id' );
+        let yk_mt_ctx   = $( '#' + id );
+        let chart_data  = window[ id + '_data' ];
+
+        let yk_mt_chart = new Chart( yk_mt_ctx, {
+            type:       chart_data[ 'type' ],
+            data:       { labels: chart_data[ 'labels' ], datasets: chart_data[ 'data' ] },
+            options:    chart_data[ 'options' ]
+        });
+    });
+});
+

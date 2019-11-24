@@ -11,9 +11,10 @@ function yk_mt_admin_page_user_summary() {
     // Ensure this WP user ID exists!
     yk_mt_exist_check( $user_id );
 
-    $user_data = get_userdata( $user_id );
+    //$user_data = get_userdata( $user_id );
 
-    $entry = yk_mt_db_entry_get();
+    $todays_entry   = yk_mt_db_entry_get();
+    $entries        = yk_mt_db_entries_summary( $user_id );
 
     //TODO: Handle no data?
     ?>
@@ -32,41 +33,25 @@ function yk_mt_admin_page_user_summary() {
                         <h2 class="hndle"><span><?php echo __( 'Chart', YK_MT_SLUG ); ?></span></h2>
                         <div class="inside">
                             <?php
-
-//                            // Fetch last 25 weight entries
-//                            $weight_data = ws_ls_get_weights($user_id, 25, -1, 'desc');
-//
-//                            // Reverse array so in cron order
-//                            if($weight_data) {
-//                                $weight_data = array_reverse($weight_data);
-//                            }
-//
-//                            if ( true !== WS_LS_IS_PRO ) {
-//
-//                                echo sprintf('<p><a href="%s">%s</a> %s.</p>',
-//                                    ws_ls_upgrade_link(),
-//                                    __('Upgrade to Pro', WE_LS_SLUG),
-//                                    __('to view the a chart of the user\'s weight entries.' , WE_LS_SLUG)
-//                                );
-//
-//                            } else {
-//                                echo ws_ls_display_chart($weight_data, ['type' => 'line', 'max-points' => 25, 'user-id' => $user_id]);
-//                            }
-
+                                yk_mt_chart_line_allowed_versus_used( [
+                                                                            'entries'   => $entries,
+                                                                            'max'       => 15,
+                                                                            'title'     => __( 'Latest 15 entries', YK_MT_SLUG )
+                                ]);
                             ?>
                         </div>
                     </div>
                     <div class="postbox">
                         <h2 class="hndle"><span><?php echo __('Entries for this user', YK_MT_SLUG ); ?></span></h2>
                         <div class="inside">
-                            <?php // echo ws_ls_data_table_placeholder($user_id, false, true); ?>
+
                         </div>
                     </div>
                 </div>
             </div>
             <div id="postbox-container-1" class="postbox-container">
                 <div class="meta-box-sortables">
-                    <?php yk_mt_user_side_bar( $user_id, $entry ); ?>
+                    <?php yk_mt_user_side_bar( $user_id, $todays_entry ); ?>
                 </div>
             </div>
         </div>
