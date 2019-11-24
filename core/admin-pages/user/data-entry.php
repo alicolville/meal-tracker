@@ -7,7 +7,7 @@ defined('ABSPATH') or die('Naw ya dinnie!');
  */
 function yk_mt_admin_page_entry_view() {
 
-    // TODO: Add role permission check here
+    yk_mt_admin_permission_check();
 
     $entry_id = yk_mt_querystring_value( 'entry-id', false );
 

@@ -123,3 +123,28 @@ function yk_mt_table_user_entries( $args ) {
     </table>
 <?php
 }
+
+/**
+ * Helper function to disable admin page if the user doesn't have the correct user role.
+ */
+function yk_mt_admin_permission_check() {
+
+    $permission_level = yk_mt_admin_permission_check_setting();
+
+    if ( ! current_user_can( $permission_level ) )  {
+        wp_die( __( 'You do not have sufficient permissions to access this page.' , YK_MT_SLUG ) );
+    }
+}
+
+/**
+ * Fetch the current permission level needed to view user data
+ * @return mixed
+ */
+function yk_mt_admin_permission_check_setting() {
+
+    if ( false === YK_MT_IS_PREMIUM ) {
+        return 'manage_options';
+    }
+
+    return get_option( 'yk-mt-edit-permissions', 'manage_options' );
+}

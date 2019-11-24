@@ -7,7 +7,7 @@ defined('ABSPATH') or die('Naw ya dinnie!');
  */
 function yk_mt_admin_page_data_home() {
 
-    // TODO: Add role permission check here
+    yk_mt_admin_permission_check();
 
 	// Call relevant page function
 	switch ( yk_mt_querystring_value( 'mode', 'dashboard' ) ) {

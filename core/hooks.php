@@ -33,18 +33,20 @@ add_filter( 'body_class','yk_mt_body_class' );
  */
 function yk_mt_build_admin_menu() {
 
-    add_menu_page( YK_MT_PLUGIN_NAME, YK_MT_PLUGIN_NAME, 'manage_options', 'yk-mt-main-menu', '', 'dashicons-chart-pie' );
+    $permission_level = yk_mt_admin_permission_check_setting();
+
+    add_menu_page( YK_MT_PLUGIN_NAME, YK_MT_PLUGIN_NAME, $permission_level, 'yk-mt-main-menu', '', 'dashicons-chart-pie' );
 
     // Hide duplicated sub menu (wee hack!)
-    add_submenu_page( 'yk-mt-main-menu', '', '', 'manage_options', 'yk-mt-main-menu', 'yk_mt_admin_page_data_home');
+    add_submenu_page( 'yk-mt-main-menu', '', '', $permission_level, 'yk-mt-main-menu', 'yk_mt_admin_page_data_home');
 
-    add_submenu_page( 'yk-mt-main-menu', __( 'User Data', YK_MT_SLUG ),  __( 'User Data', YK_MT_SLUG ), 'manage_options', 'yk-mt-user', 'yk_mt_admin_page_data_home' );
+    add_submenu_page( 'yk-mt-main-menu', __( 'User Data', YK_MT_SLUG ),  __( 'User Data', YK_MT_SLUG ), $permission_level, 'yk-mt-user', 'yk_mt_admin_page_data_home' );
 
     $menu_text = ( true === yk_mt_license_is_premium() ) ? __( 'Your License', YK_MT_SLUG ) : __( 'Upgrade to Pro', YK_MT_SLUG );
     add_submenu_page( 'yk-mt-main-menu', $menu_text,  $menu_text, 'manage_options', 'yk-mt-license', 'yk_mt_advertise_pro');
 
     add_submenu_page( 'yk-mt-main-menu', __( 'Settings', YK_MT_SLUG ),  __( 'Settings', YK_MT_SLUG ), 'manage_options', 'yk-mt-settings', 'yk_mt_settings_page_generic' );
-    add_submenu_page( 'yk-mt-main-menu', __( 'Help', YK_MT_SLUG ),  __( 'Help', YK_MT_SLUG ), 'manage_options', 'yk-mt-help', 'yk_mt_help_page' );
+    add_submenu_page( 'yk-mt-main-menu', __( 'Help', YK_MT_SLUG ),  __( 'Help', YK_MT_SLUG ), $permission_level, 'yk-mt-help', 'yk_mt_help_page' );
 }
 add_action( 'admin_menu', 'yk_mt_build_admin_menu' );
 
@@ -53,7 +55,7 @@ add_action( 'admin_menu', 'yk_mt_build_admin_menu' );
  */
 function yk_mt_enqueue_admin_files() {
 
-    if ( false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu' ] ) ) {
+    if ( false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-settings' ] ) ) {
         return;
     }
 
@@ -63,7 +65,7 @@ function yk_mt_enqueue_admin_files() {
     wp_enqueue_script( 'yk-mt-admin', plugins_url('../assets/js/admin.js', __FILE__), ['jquery'], YK_MT_PLUGIN_VERSION );
 
     // Settings page
-    if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], ['yk-mt-settings'] ) ) {
+    if ( false === empty( $_GET['page'] ) && true === in_array( $_GET[ 'page' ], [ 'yk-mt-settings' ] ) ) {
         wp_enqueue_script( 'jquery-tabs', plugins_url( '../assets/js/tabs.min.js', __FILE__ ), ['jquery'], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-tabs', plugins_url( '../assets/css/tabs.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-tabs-flat', plugins_url( '../assets/css/tabs.flat.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );

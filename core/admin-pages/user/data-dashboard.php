@@ -4,7 +4,7 @@ defined('ABSPATH') or die('Naw ya dinnie!');
 
 function yk_mt_admin_page_dashboard() {
 
-    // TODO: Add role permission check here
+    yk_mt_admin_permission_check();
 
     ?>
     <div class="wrap ws-ls-user-data ws-ls-admin-page">

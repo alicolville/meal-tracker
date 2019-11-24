@@ -4,7 +4,7 @@ defined('ABSPATH') or die('Naw ya dinnie!');
 
 function yk_mt_admin_page_search_results() {
 
-    // TODO: Permission checks
+    yk_mt_admin_permission_check();
 
     ?>
     <div class="wrap">

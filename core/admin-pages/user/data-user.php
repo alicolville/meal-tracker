@@ -4,7 +4,7 @@ defined('ABSPATH') or die('Naw ya dinnie!');
 
 function yk_mt_admin_page_user_summary() {
 
-    // TODO: Add role permission check here
+    yk_mt_admin_permission_check();
 
     $user_id = yk_mt_get_user_id_from_qs();
 

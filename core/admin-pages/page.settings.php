@@ -77,6 +77,23 @@ function yk_mt_settings_page_generic() {
                                                     </td>
                                                 </tr>
                                             </table>
+                                            <h3><?php echo __( 'Security' , YK_MT_SLUG); ?></h3>
+                                            <table class="form-table">
+                                                <tr  class="<?php echo $disable_if_not_premium_class; ?>" >
+                                                    <th scope="row"><?php echo __( 'Who can view and modify user data?' , YK_MT_SLUG ); ?></th>
+                                                    <td>
+                                                        <?php
+                                                            $permission_level = yk_mt_admin_permission_check_setting();
+                                                        ?>
+                                                        <select id="yk-mt-edit-permissions" name="yk-mt-edit-permissions">
+                                                            <option value="manage_options" <?php selected( $permission_level, 'manage_options' ); ?>><?php echo __( 'Administrators Only', YK_MT_SLUG )?></option>
+                                                            <option value="read_private_posts" <?php selected( $permission_level, 'read_private_posts' ); ?>><?php echo __( 'Editors and above', YK_MT_SLUG )?></option>
+                                                            <option value="publish_posts" <?php selected( $permission_level, 'publish_posts' ); ?>><?php echo __( 'Authors and above', YK_MT_SLUG )?></option>
+                                                        </select>
+                                                        <p><?php echo __('Specify the minimum level of user role that maybe view or edit user data', YK_MT_SLUG ); ?>.</p>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
                                         <div>
                                             <p><?php echo __('Specify the methods in which a user\'s daily allowance can be determined', YK_MT_SLUG )?>.
@@ -181,6 +198,7 @@ function yk_mt_register_settings(){
         register_setting( 'yk-mt-options-group', 'allow-calorie-override-admin' );
         register_setting( 'yk-mt-options-group', 'allow-calorie-override' );
         register_setting( 'yk-mt-options-group', 'allow-calorie-external-wlt' );
+        register_setting( 'yk-mt-options-group', 'yk-mt-edit-permissions' );
     }
 }
 add_action( 'admin_init', 'yk_mt_register_settings' );
