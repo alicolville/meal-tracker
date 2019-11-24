@@ -44,7 +44,6 @@ include_once YK_MT_ABSPATH . 'core/functions.settings.php';
 include_once YK_MT_ABSPATH . 'core/license.php';
 
 $is_premium = yk_mt_license_is_premium();
-
 $is_premium = true;
 define( 'YK_MT_IS_PREMIUM', $is_premium );
 
@@ -66,6 +65,7 @@ include_once YK_MT_ABSPATH . 'core/cron.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/user/data-entry.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/user/data-home.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/user/data-user.php';
+include_once YK_MT_ABSPATH . 'core/admin-pages/user/data-search-results.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/page.license.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/page.settings.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/page.help.php';
