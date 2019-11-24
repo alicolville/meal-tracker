@@ -102,9 +102,8 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
  * Displays a navigational header at top of user data page
  *
  * @param $user_id
- * @param bool $previous_url
  */
-function yk_mt_user_header( $user_id, $previous_url = false ) {
+function yk_mt_user_header( $user_id ) {
 
     if( false === is_numeric($user_id)) {
         return;
@@ -116,7 +115,7 @@ function yk_mt_user_header( $user_id, $previous_url = false ) {
         return;
     }
 
-    $previous_url = ( true === empty( $previous_url ) ) ? yk_mt_link_admin_page_user_dashboard() : $previous_url;
+    $previous_url = yk_mt_link_previous_url( yk_mt_link_admin_page_user_dashboard() );
 
     $additional_links = apply_filters( 'yk_mt_user_profile_header_links', '' );
 
@@ -194,16 +193,20 @@ function yk_mt_link_admin_page_user( $user_id, $mode = 'user' ) {
 /**
  * Get a link to an admin entry page
  * @param $user_id
- * @param string $mode
+ * @param bool $add_back_link
  * @return string
  */
-function yk_mt_link_admin_page_entry( $entry_id ) {
+function yk_mt_link_admin_page_entry( $entry_id, $add_back_link = true ) {
 
     if ( false === is_numeric( $entry_id ) ) {
         return '#';
     }
 
     $url = admin_url( 'admin.php?page=yk-mt-user&mode=entry&entry-id=' . (int) $entry_id );
+
+    if ( true === $add_back_link ) {
+        $url = yk_mt_link_add_back_link( $url );
+    }
 
     return esc_url( $url );
 }
@@ -230,6 +233,54 @@ function yk_mt_link_admin_page_user_render( $user_id, $display_text = NULL ) {
  */
 function yk_mt_link_render( $link, $label ) {
     return sprintf( '<a href="%s">%s</a>', esc_url( $link ), esc_html( $label ) );
+}
+
+/**
+ * Add a back link to the given URL
+ * @param $link
+ * @return mixed
+ */
+function yk_mt_link_add_back_link( $link ) {
+
+    if ( true === empty( $link ) ) {
+        return $link;
+    }
+
+    $current_url = yk_mt_link_current_url();
+    $current_url = base64_encode( $current_url );
+
+    return add_query_arg( 'yk-mt-prev-url', $current_url, $link );
+}
+
+/**
+ * Current URL
+ * @return string
+ */
+function yk_mt_link_current_url() {
+
+    $protocol = (
+        ( isset($_SERVER['HTTPS']) && 'on' == $_SERVER['HTTPS']) ||
+        ( isset($_SERVER['SERVER_PORT'] ) && 443 == $_SERVER['SERVER_PORT'] )
+    ) ? 'https://' : 'http://';
+
+    $base_url = $protocol . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+    return esc_url_raw( $base_url );
+}
+
+/**
+ * Look in querystring for a previous link
+ * @return bool
+ */
+function yk_mt_link_previous_url( $default = '#' ) {
+
+    $previous_url = yk_mt_querystring_value( 'yk-mt-prev-url', false );
+
+    if ( false !== $previous_url ) {
+        $previous_url = base64_decode( $previous_url );
+        return esc_url( $previous_url );
+    }
+
+    return $default;
 }
 
 /**
