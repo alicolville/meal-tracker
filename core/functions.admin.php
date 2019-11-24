@@ -84,9 +84,9 @@ function yk_mt_table_user_entries( $args ) {
             <tr>
                 <th data-type="date" data-format-string="D/M/Y"><?php echo __( 'Date', YK_MT_SLUG ); ?></th>
                 <th data-breakpoints="xs" data-type="number"><?php echo __( 'Calories Allowed', YK_MT_SLUG ); ?></th>
-                <th data-breakpoints="xs" data-type="number"><?php echo __( 'Calories Used', YK_MT_SLUG ); ?></th>
+                <th data-breakpoints="sm" data-type="number"><?php echo __( 'Calories Used', YK_MT_SLUG ); ?></th>
                 <th data-breakpoints="xs" data-type="number"><?php echo __( 'Calories Remaining', YK_MT_SLUG ); ?></th>
-                <th data-breakpoints="xs" data-sortable="false" width="20"><?php echo __( 'Percentage', YK_MT_SLUG ); ?></th>
+                <th data-breakpoints="xs" data-sortable="false" width="20"><?php echo __( 'Percentage Used', YK_MT_SLUG ); ?></th>
                 <th></th>
             </tr>
         </thead>
