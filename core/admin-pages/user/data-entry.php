@@ -47,7 +47,7 @@ function yk_mt_admin_page_entry_view() {
 
                                             printf( '<tr class="yk-mt-entry-table-group footable-disabled">
                                                                 <td>%1$s</td>
-                                                                <td><span class="yk-mt-blur">%2$s</span>kcal</td>
+                                                                <td class="yk-mt-blur">%2$skcal</td>
                                                              </tr>',
                                                             esc_html( $meal_type[ 'name' ] ),
                                                             $total_calories
@@ -68,7 +68,7 @@ function yk_mt_admin_page_entry_view() {
                                                                     <td class="%1$s">%2$s</td>
                                                                     <td data-breakpoints="xs" class="yk-mt-blur">%3$s</td>
                                                                 </tr>',
-                                                        ( $i < 3 ) ? '' : 'yk-mt-blur',
+                                                        ( $i < 2 ) ? '' : 'yk-mt-blur',
                                                         esc_html( $meal[ 'name' ] ),
                                                         esc_html( $meal[ 'd' ] )
                                                     );
