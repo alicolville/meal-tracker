@@ -161,16 +161,6 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
             <?php yk_mt_user_search_form(); ?>
         </div>
     </div>
-    <div class="postbox yk-mt-user-data">
-        <h2 class="hndle"><span><?php echo __( 'Settings', YK_MT_SLUG ); ?></span></h2>
-        <div class="inside">
-            <a class="button-secondary" href="#">
-                <i class="fa fa-cog"></i>
-                <?php echo __( 'Preferences', YK_MT_SLUG ); ?>
-            </a>
-            <a href="<?php echo esc_url( get_edit_user_link( $user_id ) ); ?>" class="button-secondary"><i class="fa fa-wordpress"></i> WordPress Record</a>
-        </div>
-    </div>
     <?php
 }
 
