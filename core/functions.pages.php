@@ -226,7 +226,7 @@ function yk_mt_dashboard_side_bar() {
  */
 function yk_mt_user_header( $user_id ) {
 
-    if( false === is_numeric($user_id)) {
+    if( false === is_numeric( $user_id )) {
         return;
     }
 
@@ -238,7 +238,7 @@ function yk_mt_user_header( $user_id ) {
 
     $previous_url = yk_mt_link_previous_url( yk_mt_link_admin_page_user_dashboard() );
 
-    $additional_links = apply_filters( 'yk_mt_user_profile_header_links', '' );
+    $additional_links = apply_filters( 'yk_mt_user_profile_header_links', '', $user_id );
 
     printf('
         <h3>%s %s</h3>

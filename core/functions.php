@@ -197,7 +197,7 @@ function yk_mt_user_calories_target( $user_id = NULL, $include_source = false ) 
 
 	$allowed_calories = NULL;
 
-	$selected_source = yk_mt_settings_get( 'calorie-source' );
+	$selected_source = yk_mt_settings_get( 'calorie-source', NULL, $user_id );
 
 	// If the user has no source selected and WT is enabled then use it
     if ( true === empty( $selected_source ) && yk_mt_wlt_pro_plus_enabled() ) {
@@ -212,7 +212,7 @@ function yk_mt_user_calories_target( $user_id = NULL, $include_source = false ) 
 
 			$function = $calorie_sources[ $selected_source ][ 'func' ];
 
-			$allowed_calories = $function();
+			$allowed_calories = $function( $user_id );
 
 			if  ( true === $include_source ) {
 			    return  [ 'source' => $calorie_sources[ $selected_source ], 'value' => (int) $allowed_calories, 'key' => $selected_source ];
