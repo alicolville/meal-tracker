@@ -134,7 +134,7 @@ function yk_mt_settings_page_generic() {
                                                     </th>
                                                     <td>
                                                         <?php
-                                                        $allow_calorie = yk_mt_site_options_as_bool('allow-calorie-external-wlt' );
+                                                            $allow_calorie = yk_mt_wlt_pro_plus_enabled();
                                                         ?>
                                                         <select id="allow-calorie-external-wlt" name="allow-calorie-external-wlt">
                                                             <option value="true" <?php selected( $allow_calorie, true ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
