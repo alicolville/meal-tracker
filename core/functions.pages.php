@@ -18,6 +18,8 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
 
     $stats = yk_mt_user_stats( $user_id );
 
+    $current_url = yk_mt_link_current_url();
+
     if ( NULL !== $entry ): ?>
         <div class="postbox">
             <h2 class="hndle"><?php echo ( false === empty( $_GET[ 'mode' ] ) && 'entry' === $_GET[ 'mode' ] ) ? __( 'Entry summary', YK_MT_SLUG ) : __( 'Today\'s entry', YK_MT_SLUG ) ; ?></h2>
@@ -84,23 +86,51 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
         <div class="inside">
             <p><?php echo __( 'When a new entry is created for this user, their allowed calories will be set in the following way', YK_MT_SLUG ); ?>:</p>
             <?php
-                $source = yk_mt_user_calories_target( $user_id, true );
+                $selected_source = yk_mt_user_calories_target( $user_id, true );
 
-                if ( false === empty( $source ) ) :
                 ?>
                     <table class="yk-mt-sidebar-stats">
                         <tr>
-                            <th><?php echo __( 'Source', YK_MT_SLUG ); ?></th>
-                            <td><?php echo esc_html( $source[ 'source' ][ 'admin-message' ] ); ?></td>
+                            <th colspan="2"><?php echo __( 'Source', YK_MT_SLUG ); ?></th>
                         </tr>
                         <tr>
-                            <th><?php echo __( 'Allowance', YK_MT_SLUG ); ?></th>
-                            <td><?php echo yk_mt_format_calories( $source[ 'value' ] ); ?></td>
+                            <td colspan="2">
+                                <?php
+                                    $sources = yk_mt_user_calories_sources();
+
+                                    if ( false === empty( $sources ) ) {
+
+                                        printf( ' <form class="yk-mt-admin-form" method="post" action="%1$s">
+                                                            <select name="%2$s" id="%2$s">', yk_mt_link_current_url(), 'yk-mt-calorie-source' );
+
+                                        foreach ( yk_mt_user_calories_sources() as $key => $source ) {
+
+                                            printf( '<option value="%1$s" %3$s >%2$s</option>',
+                                                            esc_attr( $key ),
+                                                            esc_html( $source[ 'admin-message' ] ),
+                                                            selected( $key, $selected_source[ 'key' ] )
+                                            );
+
+                                        }
+
+                                        printf( '</select>
+                                               <input type="submit" class="button" value="%1$s" />
+                                               </form>',
+                                               __( 'Save', YK_MT_SLUG )
+                                        );
+
+                                    } else {
+                                        printf( '<p class="yk-mt-error">%s</p>', __( 'You must specify one or more calorie sources in settings.', YK_MT_SLUG ) );
+                                    }
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><?php echo __( 'Current allowance', YK_MT_SLUG ); ?></th>
+                            <td><?php echo yk_mt_format_calories( $selected_source[ 'value' ] ); ?></td>
                         </tr>
                     </table>
-                <?php else:
-                    printf( '<p><strong>%s</strong></p>', __( 'No allowance source has yet been set by the user.', YK_MT_SLUG ) );
-                endif;
+                <?php
                 ?>
                 <?php if ( true === YK_MT_IS_PREMIUM &&
                         true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ): ?>

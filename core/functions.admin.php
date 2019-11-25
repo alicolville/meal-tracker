@@ -165,11 +165,19 @@ function yk_mt_admin_update_admin_allowance( $user_id = NULL ) {
         return;
     }
 
+    // New user allowance specified?
+    $calorie_source = yk_mt_post_value( 'yk-mt-calorie-source', false );
+
+    if ( false === empty( $calorie_source ) ) {
+        yk_mt_settings_set( 'calorie-source', $calorie_source,  $user_id );
+    }
+
+    // New user allowance specified?
     $admin_allowance = yk_mt_post_value( 'yk-mt-allowed-calories-admin', false );
 
     if ( false === empty( $admin_allowance ) ) {
         yk_mt_settings_set( 'allowed-calories-admin', $admin_allowance,  $user_id );
-        yk_mt_settings_set( 'calorie-source', 'admin',  $user_id );
-        do_action( 'yk_mt_settings_admin_saved' );
     }
+
+    do_action( 'yk_mt_settings_admin_saved' );
 }

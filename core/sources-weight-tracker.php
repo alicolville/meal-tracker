@@ -35,7 +35,7 @@ function yk_mt_wlt_sources_add( $sources ) {
     if ( true === yk_mt_site_options_as_bool('allow-calorie-external-wlt' ) ) {
         $sources['wlt']   = [
             'value'         => __( 'Weight Tracker', YK_MT_SLUG ),
-            'admin-message' => __( 'From Yeken\'s Weight Tracker', YK_MT_SLUG ),
+            'admin-message' => __( 'from Weight Tracker', YK_MT_SLUG ),
             'func'          => 'yk_mt_user_calories_target_from_wlt'
         ];
     }

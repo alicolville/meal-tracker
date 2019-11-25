@@ -97,6 +97,9 @@ HEX: #f7786b
 .yk-mt-footable .yk-mt-error td {
     background-color: #ffdede;
 }
+.yk-mt-error {
+    color: #ffdede;
+}
 .yk-mt-sidebar-stats .small, .yk-mt-admin-form .small {
     font-style: italic;
     font-size: 12px;

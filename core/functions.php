@@ -215,7 +215,7 @@ function yk_mt_user_calories_target( $user_id = NULL, $include_source = false ) 
 			$allowed_calories = $function();
 
 			if  ( true === $include_source ) {
-			    return  [ 'source' => $calorie_sources[ $selected_source ], 'value' => (int) $allowed_calories ];
+			    return  [ 'source' => $calorie_sources[ $selected_source ], 'value' => (int) $allowed_calories, 'key' => $selected_source ];
             }
 		}
 	}
@@ -235,7 +235,7 @@ function yk_mt_user_calories_sources() {
             true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ) {
 		$sources[ 'admin' ] = [
 		                            'value'         => __( 'As specified by Admin', YK_MT_SLUG ),
-                                    'admin-message' => __( 'Defined by admin', YK_MT_SLUG ),
+                                    'admin-message' => __( 'by Admin', YK_MT_SLUG ),
                                     'func'          => 'yk_mt_user_calories_target_admin_specified'
         ];
 	}
@@ -243,7 +243,7 @@ function yk_mt_user_calories_sources() {
     if ( true === yk_mt_site_options_as_bool( 'allow-calorie-override' ) ) {
         $sources[ 'own' ] = [
                                 'value'         => __( 'Your own target', YK_MT_SLUG ),
-                                'admin-message' => __( 'Defined by user', YK_MT_SLUG ),
+                                'admin-message' => __( 'by User', YK_MT_SLUG ),
                                 'func'          => 'yk_mt_user_calories_target_user_specified'
         ];
     }
