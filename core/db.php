@@ -816,23 +816,63 @@
 		return $meal_types;
 	}
 
-	/**
-	 * @param null $table
-	 *
-	 * @return null|string
-	 */
-	function yk_mt_db_mysql_count_table( $table = NULL ) {
+    /**
+     * @param null $table
+     *
+     * @param bool $use_cache
+     * @return null|string
+     */
+	function yk_mt_db_mysql_count_table( $table = YK_WT_DB_ENTRY, $use_cache = true ) {
 
 		global $wpdb;
 
-		if ( false === in_array( $table, [ YK_WT_DB_MEALS, YK_WT_DB_ENTRY, YK_WT_DB_ENTRY_MEAL ] ) ) {
+		if ( false === in_array( $table, [ YK_WT_DB_MEALS, YK_WT_DB_ENTRY, YK_WT_DB_ENTRY_MEAL, 'users' ] ) ) {
 			$table = YK_WT_DB_MEALS;
 		}
 
+		if ( true === $use_cache &&
+		        $cache = yk_mt_cache_temp_get( 'db-count-' . $table ) ) {
+		    return $cache;
+        }
+
 		$result = $wpdb->get_var( 'Select count( id ) from ' . $wpdb->prefix . $table );
+
+        yk_mt_cache_temp_set( 'db-count-' . $table, $result );
 
 		return (int) $result;
 	}
+
+/**
+ * Fetch the count of users that have made an entry
+ * @param string $mode
+ * @param bool $use_cache
+ * @return int|mixed
+ */
+    function yk_mt_db_mysql_count( $mode = 'unique-users', $use_cache = true ) {
+
+        global $wpdb;
+
+        $sql_statements = [
+                                'unique-users'          => 'Select count( distinct( user_id ) ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY,
+                                'successful-entries'    => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where calories_used <= calories_allowed',
+                                'failed-entries'        => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where calories_used > calories_allowed'
+        ];
+
+        if ( false === array_key_exists( $mode, $sql_statements ) ) {
+            return -1;
+        }
+
+        if ( true === $use_cache &&
+            $cache = yk_mt_cache_temp_get( 'sql-count-' . $mode ) ) {
+            return $cache;
+        }
+
+        $result = $wpdb->get_var( $sql_statements[ $mode ] );
+
+        yk_mt_cache_temp_set( 'unique-users', $result );
+
+        return (int) $result;
+    }
 
 	/**
 	 * Return data formats

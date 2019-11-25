@@ -101,12 +101,52 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
  * Display sidebar for dashboard
  */
 function yk_mt_dashboard_side_bar() {
-?>
+
+     $stats = yk_mt_stats();
+
+    ?>
      <div class="postbox">
         <h2 class="hndle"><?php echo __( 'User Search', YK_MT_SLUG ); ?></h2>
         <div class="inside">
             <?php yk_mt_user_search_form(); ?>
         </div>
+    </div>
+    <div class="postbox">
+        <h2 class="hndle"><?php echo __( 'Summary Counts', YK_MT_SLUG ); ?></h2>
+        <div class="inside">
+             <table class="yk-mt-sidebar-stats">
+                 <tr>
+                     <th><?php echo __( 'Entries', YK_MT_SLUG ); ?></th>
+                     <td><?php echo yk_mt_format_number( $stats[ 'yk_mt_entry' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'Meals', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'yk_mt_meals' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'Meals added to entries', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'yk_mt_entry_meals' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'WordPress users', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'wp-users' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'Users with an entry', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'unique-users' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'Entries on target', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'successful-entries' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'Entries over target', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'failed-entries' ] ); ?></td>
+                 </tr>
+                  <tr>
+                     <td colspan="2" class="small"><?php printf( '%s %s', __( 'last updated at ', YK_MT_SLUG ), $stats[ 'last-updated' ] ); ?></td>
+                 </tr>
+             </table>
     </div>
 
     <?php
@@ -336,6 +376,32 @@ function yk_mt_user_stats( $user_id ) {
                 'date-first'    => ( false === empty( $entry_dates[ 0 ] ) ) ? $entry_dates[ 0 ] : NULL,
                 'date-last'     => ( false === empty( $entry_dates[ $number_of_entries - 1 ] ) ) ? $entry_dates[ $number_of_entries - 1 ] : NULL
     ];
+}
+
+/**
+ * Return some stats about the plugin on this site
+ */
+function yk_mt_stats() {
+
+    if ( $cache = yk_mt_cache_temp_get( 'dashboard-stats' ) ) {
+       return $cache;
+    }
+
+    $stats = [
+        YK_WT_DB_MEALS          => yk_mt_db_mysql_count_table( YK_WT_DB_MEALS, false ),
+        YK_WT_DB_ENTRY          => yk_mt_db_mysql_count_table( YK_WT_DB_ENTRY, false ),
+        YK_WT_DB_ENTRY_MEAL     => yk_mt_db_mysql_count_table( YK_WT_DB_ENTRY_MEAL, false ),
+        'wp-users'              => yk_mt_db_mysql_count_table( 'users', false ),
+        'unique-users'          => yk_mt_db_mysql_count( 'unique-users', false ),
+        'successful-entries'    => yk_mt_db_mysql_count( 'successful-entries', false ),
+        'failed-entries'        => yk_mt_db_mysql_count( 'failed-entries', false ),
+        'last-updated'          => date('g:ia' ),
+        'last-updated-iso'      => date("Y-m-d H:i:s")
+    ];
+
+    yk_mt_cache_temp_set( 'dashboard-stats', $stats );
+
+    return $stats;
 }
 
 // ------------------------------------------------------------------------------

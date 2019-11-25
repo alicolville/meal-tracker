@@ -1081,3 +1081,22 @@ function yk_mt_format_number( $number, $decimals = 0 ) {
 function yk_mt_format_calories( $number ) {
     return sprintf( '%s%s', number_format( $number ), __( 'kcal', YK_MT_SLUG ) );
 }
+
+/**
+ * Handy function for temp caching (if caching.php included)
+ * @param $key
+ * @return mixed
+ */
+function yk_mt_cache_temp_get( $key ) {
+    return apply_filters( 'yk_mt_cache_temp_get', NULL, $key );
+}
+
+/**
+ * Handy function for temp caching (if caching.php included)
+ * @param $key
+ * @param $value
+ */
+function yk_mt_cache_temp_set( $key, $value ) {
+    do_action( 'yk_mt_cache_temp_set', $key, $value );
+}
+
