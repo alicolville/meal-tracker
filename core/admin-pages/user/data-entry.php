@@ -17,6 +17,8 @@ function yk_mt_admin_page_entry_view() {
         return;
     }
 
+    yk_mt_admin_update_admin_allowance( $entry[ 'user_id' ] );
+
     ?>
     <div class="wrap ws-ls-user-data ws-ls-admin-page">
     <div id="poststuff">

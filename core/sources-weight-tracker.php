@@ -33,7 +33,11 @@ function yk_mt_wlt_sources_add( $sources ) {
     }
 
     if ( true === yk_mt_site_options_as_bool('allow-calorie-external-wlt' ) ) {
-        $sources['wlt']   = [ 'value' => __( 'Weight Tracker', YK_MT_SLUG ), 'func' => 'yk_mt_user_calories_target_from_wlt' ];
+        $sources['wlt']   = [
+            'value'         => __( 'Weight Tracker', YK_MT_SLUG ),
+            'admin-message' => __( 'From Yeken\'s Weight Tracker', YK_MT_SLUG ),
+            'func'          => 'yk_mt_user_calories_target_from_wlt'
+        ];
     }
 
     return $sources;
@@ -53,7 +57,7 @@ function yk_mt_wlt_calories_allowed_refresh( $dummy ) {
 
     yk_mt_allowed_calories_refresh();
 }
-add_action( 'ws-ls-hook-user-preference-saved', 'yk_mt_wlt_calories_allowed_refresh' );      // When a user changes their user preferences in WT
+add_action( 'ws-ls-hook-user-preference-saved', 'yk_mt_wlt_calories_allowed_refresh' );             // When a user changes their user preferences in WT
 add_action( 'wlt-hook-data-added-edited','yk_mt_wlt_calories_allowed_refresh' );                    // When a user adds / edits an entry
 add_action( 'wlt-hook-data-entry-deleted','yk_mt_wlt_calories_allowed_refresh' );                   // When deletes an entry
 

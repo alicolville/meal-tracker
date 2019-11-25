@@ -12,6 +12,7 @@ function yk_mt_actions_settings_post_save() {
 
 }
 add_action( 'yk_mt_settings_saved', 'yk_mt_actions_settings_post_save' );
+add_action( 'yk_mt_settings_admin_saved', 'yk_mt_actions_settings_post_save' );
 
 /**
  * Add a CSS classes to the <body>

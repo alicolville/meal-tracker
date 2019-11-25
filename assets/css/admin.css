@@ -90,14 +90,20 @@ HEX: #f7786b
 .yk-mt-footable th, td {
     font-size: 12px;
 }
+.
 .yk-mt-footable .yk-mt-ok td {
     background-color: #e3ffde;
 }
 .yk-mt-footable .yk-mt-error td {
     background-color: #ffdede;
 }
-.yk-mt-sidebar-stats .small {
+.yk-mt-sidebar-stats .small, .yk-mt-admin-form .small {
     font-style: italic;
     font-size: 12px;
+}
+.yk-mt-sidebar-stats .small {
     text-align: right;
+}
+.yk-mt-side-bar-admin-allowance div, .yk-mt-side-bar-admin-allowance .button {
+    display: inline;
 }

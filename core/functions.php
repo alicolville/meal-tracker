@@ -191,7 +191,7 @@ function yk_mt_meal_count( $user_id = NULL ) {
  *
  * @return int
  */
-function yk_mt_user_calories_target( $user_id = NULL ) {
+function yk_mt_user_calories_target( $user_id = NULL, $include_source = false ) {
 
 	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
@@ -199,9 +199,8 @@ function yk_mt_user_calories_target( $user_id = NULL ) {
 
 	$selected_source = yk_mt_settings_get( 'calorie-source' );
 
-	// TODO:    This is a temp hack. New user's don't have a calorie source specified in their settings yet.
-    //          Therefore, we will need to determine where we should get their calorie source from. From now, hard code to Weight Tracker.
-    if ( true === empty( $selected_source ) ) {
+	// If the user has no source selected and WT is enabled then use it
+    if ( true === empty( $selected_source ) && yk_mt_wlt_pro_plus_enabled() ) {
         $selected_source = 'wlt';
     }
 
@@ -214,6 +213,10 @@ function yk_mt_user_calories_target( $user_id = NULL ) {
 			$function = $calorie_sources[ $selected_source ][ 'func' ];
 
 			$allowed_calories = $function();
+
+			if  ( true === $include_source ) {
+			    return  [ 'source' => $calorie_sources[ $selected_source ], 'value' => (int) $allowed_calories ];
+            }
 		}
 	}
 
@@ -230,11 +233,19 @@ function yk_mt_user_calories_sources() {
 
 	if ( true === YK_MT_IS_PREMIUM &&
             true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ) {
-		$sources[ 'admin' ] = [ 'value' => 'As specified by Admin', 'func' => 'yk_mt_user_calories_target_admin_specified' ];
+		$sources[ 'admin' ] = [
+		                            'value'         => __( 'As specified by Admin', YK_MT_SLUG ),
+                                    'admin-message' => __( 'Defined by admin', YK_MT_SLUG ),
+                                    'func'          => 'yk_mt_user_calories_target_admin_specified'
+        ];
 	}
 
     if ( true === yk_mt_site_options_as_bool( 'allow-calorie-override' ) ) {
-        $sources[ 'own' ] = [ 'value' => 'Your own target', 'func' => 'yk_mt_user_calories_target_user_specified' ];
+        $sources[ 'own' ] = [
+                                'value'         => __( 'Your own target', YK_MT_SLUG ),
+                                'admin-message' => __( 'Defined by user', YK_MT_SLUG ),
+                                'func'          => 'yk_mt_user_calories_target_user_specified'
+        ];
     }
 
     $sources = apply_filters( 'yk_mt_calories_sources', $sources );
@@ -251,9 +262,9 @@ function yk_mt_user_calories_sources() {
  */
 function yk_mt_user_calories_target_admin_specified( $user_id = NULL ) {
 
-	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
-//TODO: Built into admin interface
-	return 2000;
+    $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+    return yk_mt_settings_get( 'allowed-calories-admin', NULL,  $user_id );
 }
 
 /**

@@ -148,3 +148,28 @@ function yk_mt_admin_permission_check_setting() {
 
     return get_option( 'yk-mt-edit-permissions', 'manage_options' );
 }
+
+/**
+ * If a new admin allowance is specified then update user's settings
+ * @param null $user_id
+ */
+function yk_mt_admin_update_admin_allowance( $user_id = NULL ) {
+
+    if ( false === YK_MT_IS_PREMIUM ) {
+        return;
+    }
+
+    $user_id = ( null === $user_id ) ? yk_mt_get_user_id_from_qs() : $user_id;
+
+    if ( true === empty( $user_id ) ) {
+        return;
+    }
+
+    $admin_allowance = yk_mt_post_value( 'yk-mt-allowed-calories-admin', false );
+
+    if ( false === empty( $admin_allowance ) ) {
+        yk_mt_settings_set( 'allowed-calories-admin', $admin_allowance,  $user_id );
+        yk_mt_settings_set( 'calorie-source', 'admin',  $user_id );
+        do_action( 'yk_mt_settings_admin_saved' );
+    }
+}

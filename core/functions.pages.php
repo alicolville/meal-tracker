@@ -20,7 +20,7 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
 
     if ( NULL !== $entry ): ?>
         <div class="postbox">
-            <h2 class="hndle"><?php echo __( 'Today\'s entry', YK_MT_SLUG ); ?></h2>
+            <h2 class="hndle"><?php echo ( false === empty( $_GET[ 'mode' ] ) && 'entry' === $_GET[ 'mode' ] ) ? __( 'Entry summary', YK_MT_SLUG ) : __( 'Today\'s entry', YK_MT_SLUG ) ; ?></h2>
             <div class="inside">
                 <div class="yk-mt-summary-chart-slot">
                     <canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
@@ -78,6 +78,53 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
             </table>
         </div>
     </div>
+
+     <div class="postbox yk-mt-user-data">
+        <h2 class="hndle"><span><?php echo __( 'Allowed calories source', YK_MT_SLUG ); ?></span></h2>
+        <div class="inside">
+            <p><?php echo __( 'When a new entry is created for this user, their allowed calories will be set in the following way', YK_MT_SLUG ); ?>:</p>
+            <?php
+                $source = yk_mt_user_calories_target( $user_id, true );
+
+                if ( false === empty( $source ) ) :
+                ?>
+                    <table class="yk-mt-sidebar-stats">
+                        <tr>
+                            <th><?php echo __( 'Source', YK_MT_SLUG ); ?></th>
+                            <td><?php echo esc_html( $source[ 'source' ][ 'admin-message' ] ); ?></td>
+                        </tr>
+                        <tr>
+                            <th><?php echo __( 'Allowance', YK_MT_SLUG ); ?></th>
+                            <td><?php echo yk_mt_format_calories( $source[ 'value' ] ); ?></td>
+                        </tr>
+                    </table>
+                <?php else:
+                    printf( '<p><strong>%s</strong></p>', __( 'No allowance source has yet been set by the user.', YK_MT_SLUG ) );
+                endif;
+                ?>
+                <?php if ( true === YK_MT_IS_PREMIUM &&
+                        true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ): ?>
+                    <form class="yk-mt-admin-form yk-mt-side-bar-admin-allowance" method="post" action="<?php echo yk_mt_link_current_url(); ?>">
+                        <p><strong><?php echo __( 'Specify admin allowance for the user', YK_MT_SLUG ); ?></strong></p>
+                        <p class="small"><?php echo __( 'Please be aware that the user can override this value if other calories sources have been enabled within the plugin\'s settings.', YK_MT_SLUG ); ?></p>
+                        <?php
+
+                            echo yk_mt_form_number( __( 'Set Target: ', YK_MT_SLUG ),
+                                'allowed-calories-admin',
+                                yk_mt_user_calories_target_admin_specified( $user_id ),
+                                '',
+                                1,
+                                1,
+                                20000
+                            );
+
+                        ?>
+                        <input type="submit" class="button" value="<?php echo __( 'Save', YK_MT_SLUG ); ?>" />
+                    </form>
+                <?php endif; ?>
+        </div>
+    </div>
+
     <div class="postbox">
         <h2 class="hndle"><?php echo __( 'User Search', YK_MT_SLUG ); ?></h2>
         <div class="inside">

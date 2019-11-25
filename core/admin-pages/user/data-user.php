@@ -11,6 +11,8 @@ function yk_mt_admin_page_user_summary() {
     // Ensure this WP user ID exists!
     yk_mt_exist_check( $user_id );
 
+    yk_mt_admin_update_admin_allowance( $user_id );
+
     $entries            = yk_mt_db_entries_summary( [ 'user-id' => $user_id ] );
     $todays_entry_id    = yk_mt_db_entry_get_id_for_today( $user_id );
     $todays_entry       = ( false === empty( $todays_entry_id ) ) ? yk_mt_db_entry_get( $todays_entry_id ) : NULL;
