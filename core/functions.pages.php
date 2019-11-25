@@ -20,7 +20,7 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
 
     if ( NULL !== $entry ): ?>
         <div class="postbox">
-            <h2 class="hndle"><?php echo __( 'Entry summary', YK_MT_SLUG ); ?></h2>
+            <h2 class="hndle"><?php echo __( 'Today\'s entry', YK_MT_SLUG ); ?></h2>
             <div class="inside">
                 <div class="yk-mt-summary-chart-slot">
                     <canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>

@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or die('Naw ya dinnie!');
+
 /**
  * Get the URL to view / edit a certain entry ID
  * @param $entry_id
@@ -25,7 +27,7 @@ function yk_mt_entry_get_id_or_create( $user_id = NULL, $date = NULL ) {
     // If no date passed, we're only interested in today's date
 	if ( NULL === $date || false === yk_mt_date_is_valid_iso( $date ) ) {
         $date       = yk_mt_date_iso_today();
-        $entry_id   = yk_mt_db_entry_get_id_for_today($user_id);
+        $entry_id   = yk_mt_db_entry_get_id_for_today( $user_id );
     } else {
 	    $entry_id   = yk_mt_entry_for_given_date( $date );
 
@@ -1099,4 +1101,3 @@ function yk_mt_cache_temp_get( $key ) {
 function yk_mt_cache_temp_set( $key, $value ) {
     do_action( 'yk_mt_cache_temp_set', $key, $value );
 }
-
