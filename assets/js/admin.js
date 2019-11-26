@@ -1,4 +1,11 @@
+var is_premium = false;
+
 jQuery( document ).ready(function ($) {
+
+    if ( 'undefined' !== typeof yk_mt_settings &&
+        yk_mt_settings[ 'premium' ] ) {
+        is_premium = true;
+    }
 
     /**
      * Take an entry in JSON format and render into UI
@@ -51,4 +58,29 @@ jQuery( document ).ready(function ($) {
             }
         });
     }
+
+    // Show / Hide Admin allowance form.
+    if ( true === is_premium ) {
+
+        $( '#yk-mt-calorie-source' ).change( function()  {
+
+            yk_mt_calorie_source_form_update( $( '#yk-mt-calorie-source' ).val() );
+        });
+    }
+
+    /**
+     * Toggle admin allowance form in admin ui
+     * @param source
+     */
+    function yk_mt_calorie_source_form_update( source ) {
+
+        if ( 'admin' === source ) {
+            $( '#yk-mt-admin-allowance' ).removeClass( 'yk-mt-hide' );
+        } else {
+            $( '#yk-mt-admin-allowance' ).addClass( 'yk-mt-hide' );
+        }
+
+    }
+
+    // yk-mt-side-bar-admin-allowance
 });

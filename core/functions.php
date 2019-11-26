@@ -766,6 +766,34 @@ function yk_mt_allowed_calories_refresh( $entry_id = false ) {
 }
 
 /**
+ * Update an entry's allowance
+ * @param $new_allowance
+ * @param bool $entry_id
+ * @return bool
+ */
+function yk_mt_allowed_calories_update_entry( $new_allowance, $entry_id = false ) {
+
+    $entry_id = ( false !== $entry_id ) ? (int) $entry_id : yk_mt_db_entry_get_id_for_today();
+
+    $entry = yk_mt_db_entry_get( $entry_id );
+
+    if ( true === empty( $entry ) ) {
+        return false;
+    }
+
+    // Only bother to update DB if we have a difference
+    if( (int) $new_allowance === (int) $entry[ 'calories_allowed' ] ) {
+        return false;
+    }
+
+    yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_allowed' => $new_allowance ] );
+
+    yk_mt_entry_calories_calculate_update_used( $entry_id );
+
+    return true;
+}
+
+/**
  * Fetch navigation links around the current entry ID
  * @param null $entry_id
  */

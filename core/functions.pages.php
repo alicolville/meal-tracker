@@ -34,7 +34,25 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
                     </tr>
                     <tr>
                         <th><?php echo __( 'Calories Allowed', YK_MT_SLUG ); ?></th>
-                        <td><?php echo yk_mt_format_number( $entry[ 'calories_allowed' ] ); ?></td>
+                        <td>
+                            <form class="yk-mt-admin-form" id="yk-mt-admin-calories-allowed" method="post" action="<?php echo esc_url( $current_url ); ?>">
+                                <input type="hidden" name="yk-mt-update-allowance" value="<?php echo (int) $entry[ 'id' ]; ?>" />
+                               <?php
+
+                                    echo yk_mt_form_number( __( 'Calories allowed: ', YK_MT_SLUG ),
+                                        'calories_allowed',
+                                        (int) $entry[ 'calories_allowed' ],
+                                        '',
+                                        1,
+                                        1,
+                                        20000
+                                    );
+
+                                ?>
+                             <input type="submit" class="button" value="<?php echo __( 'Save', YK_MT_SLUG ); ?>" />
+                            </form>
+
+                        </td>
                     </tr>
                     <tr>
                         <th><?php echo __( 'Calories Used', YK_MT_SLUG ); ?></th>
@@ -134,7 +152,7 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
                 ?>
                 <?php if ( true === YK_MT_IS_PREMIUM &&
                         true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ): ?>
-                    <form class="yk-mt-admin-form yk-mt-side-bar-admin-allowance" method="post" action="<?php echo yk_mt_link_current_url(); ?>">
+                    <form class="yk-mt-admin-form yk-mt-side-bar-admin-allowance<?php echo ( 'admin' !== $selected_source[ 'key' ] ) ? ' yk-mt-hide' : ''; ?>" id="yk-mt-admin-allowance" method="post" action="<?php echo esc_url( $current_url ); ?>">
                         <p><strong><?php echo __( 'Specify admin allowance for the user', YK_MT_SLUG ); ?></strong></p>
                         <p class="small"><?php echo __( 'Please be aware that the user can override this value if other calories sources have been enabled within the plugin\'s settings.', YK_MT_SLUG ); ?></p>
                         <?php

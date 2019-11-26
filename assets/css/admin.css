@@ -118,3 +118,21 @@ HEX: #f7786b
 .yk-mt-side-bar-admin-allowance div, .yk-mt-side-bar-admin-allowance .button {
     display: inline;
 }
+#yk-mt-admin-calories-allowed label {
+    display: none;
+}
+#yk-mt-admin-calories-allowed input[type="number"] {
+    padding: 1px;
+    width: 60px;
+    display: inline-block;
+}
+#yk-mt-admin-calories-allowed input[type="submit"] {
+    padding: 0px 2px;
+    display: inline-block;
+}
+#yk-mt-admin-calories-allowed #yk-mt-calories_allowed-row {
+    display: inline-block;
+}
+#yk-mt-admin-calories-allowed #yk-mt-calories_allowed {
+
+}

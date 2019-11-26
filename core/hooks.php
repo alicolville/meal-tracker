@@ -63,7 +63,9 @@ function yk_mt_enqueue_admin_files() {
     wp_enqueue_style( 'yk-mt-admin', plugins_url('../assets/css/admin.css', __FILE__), [], YK_MT_PLUGIN_VERSION );
 
     // Enqueue admin.js regardless (needed to dismiss notices)
-    wp_enqueue_script( 'yk-mt-admin', plugins_url('../assets/js/admin.js', __FILE__), ['jquery'], YK_MT_PLUGIN_VERSION );
+    wp_enqueue_script( 'yk-mt-admin', plugins_url('../assets/js/admin.js', __FILE__), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+
+    wp_localize_script( 'yk-mt-admin', 'yk_mt_settings', [ 'premium' => YK_MT_IS_PREMIUM ] );
 
     // Settings page
     if ( false === empty( $_GET['page'] ) && true === in_array( $_GET[ 'page' ], [ 'yk-mt-settings' ] ) ) {

@@ -11,13 +11,13 @@ function yk_mt_admin_page_entry_view() {
 
     $entry_id = yk_mt_querystring_value( 'entry-id', false );
 
+    yk_mt_admin_process_post_updates();
+
     $entry = yk_mt_db_entry_get( $entry_id );
 
     if( true === empty( $entry ) ) {
         return;
     }
-
-    yk_mt_admin_update_admin_allowance( $entry[ 'user_id' ] );
 
     ?>
     <div class="wrap ws-ls-user-data ws-ls-admin-page">
