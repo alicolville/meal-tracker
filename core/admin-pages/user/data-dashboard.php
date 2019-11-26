@@ -21,7 +21,7 @@ function yk_mt_admin_page_dashboard() {
                         <h2 class="hndle"><span><?php echo __('Latest 100 entries', YK_MT_SLUG ); ?></span></h2>
                         <div class="inside">
                             <?php
-                                $entries  = yk_mt_db_entries_summary( [ 'limit' => 100 ] );
+                                $entries  = yk_mt_db_entries_summary( [ 'limit' => 100, 'sort-order' => 'desc' ] );
 
                                 yk_mt_table_user_entries( [ 'entries'   => $entries, 'show-username' => true ] );
                             ?>

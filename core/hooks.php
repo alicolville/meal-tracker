@@ -90,8 +90,9 @@ add_action( 'admin_enqueue_scripts', 'yk_mt_enqueue_admin_files');
  */
 function yk_mt_enqueue_scripts_footable() {
 
+    wp_enqueue_script( 'mt-moment', plugins_url( '/assets/js/moment.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
     wp_enqueue_style( 'mt-footable', plugins_url( '/assets/css/footable.standalone.min.css', __DIR__  ), [], YK_MT_PLUGIN_VERSION );
-    wp_enqueue_script( 'mt-footable', plugins_url( '/assets/js/footable.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+    wp_enqueue_script( 'mt-footable', plugins_url( '/assets/js/footable.min.js', __DIR__ ), [ 'jquery', 'mt-moment' ], YK_MT_PLUGIN_VERSION, true );
 }
 
 /**

@@ -253,8 +253,10 @@
     function yk_mt_db_entries_summary( $args ) {
 
         $args = wp_parse_args( $args, [
-            'user-id'   => NULL,
-            'limit'     => NULL
+            'user-id'       => NULL,
+            'limit'         => NULL,
+            'sort-order'    => 'asc',
+            'sort'          => 'date'
         ]);
 
         // TODO: Cache this function for 1 min
@@ -264,8 +266,14 @@
         $sql = 'Select id, user_id, calories_allowed, calories_used, date from ' . $wpdb->prefix . YK_WT_DB_ENTRY;
 
         if ( false === empty( $args[ 'user-id' ] ) ) {
-            $sql .= sprintf( ' where user_id = %d order by date asc', $args[ 'user-id' ] );
+            $sql .= sprintf( ' where user_id = %d', $args[ 'user-id' ] );
         }
+
+        $sort = ( true === in_array( $args[ 'sort' ], [ 'date', 'calories_allowed', 'calories_used' ] ) ) ?  $args[ 'sort' ] : 'date';
+
+        $sort_order = ( true === in_array( $args[ 'sort-order' ], [ 'asc', 'desc' ] ) ) ? $args[ 'sort-order' ] : 'asc';
+
+        $sql .= sprintf( ' order by %s %s', $sort, $sort_order );
 
         // Limit
         if ( false === empty( $args[ 'limit' ] ) ) {
