@@ -10,12 +10,20 @@ HEX: #f7786b
 .yk-mt-hide, .yk-mt-hide-if-admin {
     display: none !important;
 }
-.yk-mt-disabled *, .yk-mt-disabled-premium *
+.yk-mt-disabled *, .yk-mt-disabled-premium *, .yk-mt-plugin-disabled *
 {
     color: #CCCCCC !important;
 }
 .yk-mt-disabled th::after {
     content: "\A(Premium version)";
+    color: #ef8988;
+    font-weight: bold;
+    clear: both;
+    width:100%;
+    white-space: pre;
+}
+.yk-mt-plugin-disabled th::after {
+    content: "\A(Plugin needs to be setup)";
     color: #ef8988;
     font-weight: bold;
     clear: both;

@@ -67,7 +67,7 @@ function yk_mt_settings_page_generic() {
                                                     </td>
                                                 </tr>
                                                 <tr class="<?php echo $disable_if_not_premium_class; ?>">
-                                                    <th scope="row"><?php echo __( 'Allow user settings' , WE_LS_SLUG); ?></th>
+                                                    <th scope="row"><?php echo __( 'Allow user settings' , YK_MT_SLUG ); ?></th>
                                                     <td>
                                                         <select id="yk-mt-allow-user-preferences" name="yk-mt-allow-user-preferences">
                                                             <option value="yes" <?php selected( get_option('yk-mt-allow-user-preferences'), 'yes' ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
@@ -123,10 +123,10 @@ function yk_mt_settings_page_generic() {
                                                             <option value="true" <?php selected( $allow_calorie, true ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
                                                             <option value="false" <?php selected( $allow_calorie, false ); ?>><?php echo __('No', YK_MT_SLUG )?></option>
                                                         </select>
-                                                        <p><?php echo __('Allow a user to specify their own daily calorie intake.', YK_MT_SLUG )?></p>
+                                                        <p><?php echo __('Allow a user to specify their own daily calorie intake.', 'WE_LS_SLUG'  )?></p>
                                                     </td>
                                                 </tr>
-                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
+                                                <tr class="<?php echo $disable_if_not_premium_class; ?><?php if ( false === yk_mt_wlt_pro_plus_enabled() ) { echo ' yk-mt-plugin-disabled'; } ?>">
                                                     <th scope="row">3.
                                                         <a href="https://weight.yeken.uk" target="_blank" rel="noopener">
                                                             <?php echo __( 'YeKen: Weight Tracker' , YK_MT_SLUG ); ?>
