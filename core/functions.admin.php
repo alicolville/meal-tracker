@@ -159,15 +159,6 @@ function yk_mt_admin_process_post_updates($user_id = NULL ) {
         return;
     }
 
-    $entry_id       = yk_mt_post_value( 'yk-mt-update-allowance', false );
-    $new_allowance  = yk_mt_post_value( 'yk-mt-calories_allowed', false );
-
-    // New allowance for entry?
-    if ( false === empty( $new_allowance ) && false === empty( $entry_id ) ) {
-        yk_mt_allowed_calories_update_entry( $new_allowance, $entry_id );
-        return;
-    }
-
     $user_id = ( null === $user_id ) ? yk_mt_get_user_id_from_qs() : $user_id;
 
     if ( true === empty( $user_id ) ) {
@@ -189,5 +180,5 @@ function yk_mt_admin_process_post_updates($user_id = NULL ) {
         yk_mt_settings_set( 'calorie-source', 'admin',  $user_id );
     }
 
-    do_action( 'yk_mt_settings_admin_saved' );
+    do_action( 'yk_mt_settings_admin_sidebar_saved' );
 }

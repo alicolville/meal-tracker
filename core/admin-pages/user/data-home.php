@@ -9,7 +9,7 @@ function yk_mt_admin_page_data_home() {
 
     yk_mt_admin_permission_check();
 
-	// Call relevant page function
+  	// Call relevant page function
 	switch ( yk_mt_querystring_value( 'mode', 'dashboard' ) ) {
         case 'user':
             yk_mt_admin_page_user_summary();

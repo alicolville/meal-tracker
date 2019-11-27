@@ -155,3 +155,23 @@ function yk_mt_admin_add_body_classes( $existing_classes ) {
     return sprintf('%1$s %2$s', $existing_classes, $class );
 }
 add_filter( 'admin_body_class', 'yk_mt_admin_add_body_classes' );
+
+/**
+ * Save changed to allowed calorie for given entry
+ */
+function yk_mt_admin_entry_allowed_calorie_save() {
+
+    if ( false === is_admin() ) {
+        return;
+    }
+
+    $entry_id       = yk_mt_post_value( 'yk-mt-update-allowance', false );
+    $new_allowance  = yk_mt_post_value( 'yk-mt-calories_allowed', false );
+
+    // New allowance for entry?
+    if ( false === empty( $new_allowance ) && false === empty( $entry_id ) ) {
+        yk_mt_allowed_calories_update_entry( $new_allowance, $entry_id );
+    }
+}
+add_action( 'init', 'yk_mt_admin_entry_allowed_calorie_save' );
+

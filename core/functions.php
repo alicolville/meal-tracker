@@ -783,10 +783,10 @@ function yk_mt_allowed_calories_update_entry( $new_allowance, $entry_id = false 
 
     // Only bother to update DB if we have a difference
     if( (int) $new_allowance === (int) $entry[ 'calories_allowed' ] ) {
-        return false;
+        return true;
     }
 
-    yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_allowed' => $new_allowance ] );
+    yk_mt_db_entry_update( [ 'id' => (int) $entry_id, 'calories_allowed' => (int) $new_allowance ] );
 
     yk_mt_entry_calories_calculate_update_used( $entry_id );
 
