@@ -45,7 +45,7 @@ include_once YK_MT_ABSPATH . 'core/functions.chart.php';
 include_once YK_MT_ABSPATH . 'core/license.php';
 
 $is_premium = yk_mt_license_is_premium();
-$is_premium = false;
+
 define( 'YK_MT_IS_PREMIUM', $is_premium );
 
 // Caching enabled?
