@@ -968,8 +968,12 @@ function yk_mt_features_list() {
                 __( 'Calorie sources', YK_MT_SLUG )             => __( 'Fetch daily calorie limits from other sources e.g. YeKen\'s Weight Tracker', YK_MT_SLUG ),
                 __( 'Compress meal items', YK_MT_SLUG )         => __( 'Compress multiple meal lines for an entry into one line', YK_MT_SLUG ),
                 __( 'Unlimited meals per user', YK_MT_SLUG )    => __( 'Your users are no longer limited to a maximum of 40 meals and may add as many as they wish', YK_MT_SLUG ),
-                __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
-                __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
+                __( 'View your user\'s data', YK_MT_SLUG )      => __( 'View all of your user entries, meals and calorie intake', YK_MT_SLUG ),
+                __( 'Set calorie allowances', YK_MT_SLUG )      => __( 'Set daily calorie allowances for your users', YK_MT_SLUG ),
+                __( 'Summary Statistics', YK_MT_SLUG )          => __( 'View summary statistics of your Meal Tracker data and it\'s usage by your users', YK_MT_SLUG ),
+                __( 'Calorie Allowance sources', YK_MT_SLUG )   => __( 'Specify one or more sources for calorie allowance', YK_MT_SLUG ),
+                __( 'Additional settings', YK_MT_SLUG )         => __( 'Additional settings for customising your Meal Tracker usage', YK_MT_SLUG ),
+                __( 'Admin Search', YK_MT_SLUG )                => __( 'Search for users by name and email address', YK_MT_SLUG ),
      ];
 }
 
