@@ -45,7 +45,7 @@ add_action( 'wp_ajax_add_meal_to_entry', 'yk_mt_ajax_add_meal_to_entry' );
 /**
  * Delete a meal from an entry
  */
-function yk_mt_ajax_delete_meal_to_entry() {
+function yk_mt_ajax_delete_meal_from_entry() {
 
     check_ajax_referer( 'yk-mt-nonce', 'security' );
 
@@ -70,7 +70,7 @@ function yk_mt_ajax_delete_meal_to_entry() {
 
     wp_send_json( [ 'error' => false, 'entry' => yk_mt_entry( $post_data[ 'entry-id' ] ) ] );
 }
-add_action( 'wp_ajax_delete_meal_to_entry', 'yk_mt_ajax_delete_meal_to_entry' ); //TODO: Rename delete_meal_to_entry to meal_form_entry
+add_action( 'wp_ajax_delete_meal_from_entry', 'yk_mt_ajax_delete_meal_from_entry' );
 
 /**
  * Add a new meal

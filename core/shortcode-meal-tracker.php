@@ -22,8 +22,9 @@
 			return yk_mt_shortcode_log_in_prompt();
 		}
 
-        $is_pro         = yk_mt_is_pro();
+        $is_pro         = YK_MT_IS_PREMIUM;
         $shortcode_mode = yk_mt_shortcode_get_mode();
+        $target         = yk_mt_user_calories_target();
 
 		$entry_id = ( true === $is_pro ) ? yk_mt_entry_id_from_qs() : NULL;
 
@@ -32,12 +33,17 @@
         // This is used to create an empty entry if one doesn't already exist for this user / day
         yk_mt_entry_get_id_or_create();
 
+        // Check the user actually has a calorie allowance. If not, we need to push them to the settings page.
+        if ( true === empty( $target ) ) {
+            $shortcode_mode = 'settings';
+        }
+
         yk_mt_shortcode_meal_tracker_localise( [ 'mode' => $shortcode_mode, 'entry-id' => $entry_id ] );
 
-		// Load settings?
+        // Load settings?
 		if ( 'settings' === $shortcode_mode ) {
 
-			$html .= yk_mt_shortcode_meal_tracker_settings();
+			$html .= yk_mt_shortcode_meal_tracker_settings( $target );
 
 		} else {
 
@@ -49,12 +55,10 @@
 
 			$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
-			if ( true === $is_pro ) {
-				$html .= sprintf( '<br /><button href="%s" class="yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">%s</button>',
-                                    yk_mt_shortcode_get_current_url( 'settings' ),
-                                    __( 'Settings', YK_MT_SLUG )
-                );
-			}
+            $html .= sprintf( '<br /><button href="%s" class="yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">%s</button>',
+                                yk_mt_shortcode_get_current_url( 'settings' ),
+                                __( 'Settings', YK_MT_SLUG )
+            );
 
 			// Embed hidden form / dialog required for adding a meal
 			$html .= yk_mt_shortcode_meal_tracker_add_meal_dialog();
@@ -76,6 +80,8 @@
 
         $links = yk_mt_navigation_links( $todays_entry_id );
 
+        $entry = yk_mt_db_entry_get( $todays_entry_id );
+
 	    $html = '<div class="yk-mt-t yk-mt-navigation-table">
                     <div class="yk-mt-r">
                         <div class="yk-mt-c">';
@@ -95,10 +101,13 @@
 
         $html .=       sprintf('</div>
                                                 <div class="yk-mt-c yk-mt-datepicker-cell">
-                                                    <a class="mt-datepicker">%1$s</a>
+                                                    %1$s
+                                                    &middot;
+                                                    <a class="mt-datepicker">%2$s</a>
                                                 </div>
                                            </div>
                                         </div>',
+                                        yk_mt_date_format( $entry[ 'date' ]),
                                         __( 'Select a date', YK_MT_SLUG )
         );
 
@@ -125,9 +134,31 @@
 	 *
 	 * @return string
 	 */
-    function yk_mt_shortcode_meal_tracker_settings() {
+    function yk_mt_shortcode_meal_tracker_settings( $target = NULL ) {
 
-	    $html = yk_mt_html_accordion_open( 'yk-mt-settings' );
+        // Look up user's target if needed
+        if ( NULL === $target ) {
+            $target = yk_mt_user_calories_target();
+        }
+
+        $target_missing = empty( $target );
+
+        $html = '';
+
+        if ( true === $target_missing ) {
+
+            $html .= yk_mt_html_accordion_open( 'yk-mt-information' );
+
+            $html .= yk_mt_html_accordion_section( [ 'id' => 0,
+                'title' => __( 'Getting started', YK_MT_SLUG ),
+                'content' => '<p>' . __( 'Before you can start recording your calorie intake, you must set your calorie allowance for the day. You can achieve this by completing the following form.', YK_MT_SLUG ) . '</p>',
+                'is-active' => true
+            ]);
+
+            $html .= yk_mt_html_accordion_close();
+        }
+
+        $html .= yk_mt_html_accordion_open( 'yk-mt-settings' );
 
 	    $html .= '<form id="yk-mt-settings-form" class="yk-mt-settings-form" >';
 
@@ -138,7 +169,9 @@
          * */
 	    $calorie_sources = yk_mt_user_calories_sources();
 
-	    $calories_html .= '<p>' . sprintf(  __( 'Your current daily allowance is: %1$dkcal.', YK_MT_SLUG ), yk_mt_user_calories_target() ) . '</p>';
+	    if ( false === $target_missing ) {
+            $calories_html .= '<p>' . sprintf(  __( 'Your current daily allowance is: %1$dkcal.', YK_MT_SLUG ), $target ) . '</p>';
+        }
 
         if ( true === empty( $calorie_sources ) ) {
 
@@ -321,7 +354,12 @@
                                 __( 'Close screen after adding meal(s)', YK_MT_SLUG )
         );
 
-        $html .= yk_mt_shortcode_meal_tracker_add_new_meal_form();
+        // Form to add a new meal
+        if ( true === yk_mt_license_is_premium() || yk_mt_meal_count() < 40 ) {
+            $html .= yk_mt_shortcode_meal_tracker_add_new_meal_form();
+        } else {
+            $html .= sprintf( '<br /><p>%1$s</p>', __( 'Unfortunately you have reached the maximum of 40 meals and are unable to add anymore.', YK_MT_SLUG ) );
+        }
 
         $html .= '</div></div>
                 <a id="yk-mt-open-dialog-edit" class="yk-mt-meal-button-edit yk-mt-add-meal-prompt yk-mt-hide"></a>               
@@ -480,14 +518,16 @@
 		wp_enqueue_script( 'mt-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-selectize', 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js', [], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-loading-overlay', plugins_url( 'assets/js/loadingoverlay.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
-        wp_enqueue_script( 'mt-chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_script( 'mt-notify', plugins_url( 'assets/js/notify.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+        wp_enqueue_script( 'mt-chart-js', YK_MT_CHART_JS, [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_script( 'mt-notify', plugins_url( 'assets/js/notify.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+
+        wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart' . $minified . '.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
 
         wp_enqueue_script( 'meal-tracker', plugins_url( 'assets/js/core' . $minified . '.js', __DIR__ ),
-                        [ 'mt-modal', 'mt-selectize', 'mt-loading-overlay', 'mt-chart-js', 'mt-notify' ], YK_MT_PLUGIN_VERSION, true );
+                        [ 'mt-modal', 'mt-selectize', 'mt-loading-overlay', 'mt-notify', 'mt-chart' ], YK_MT_PLUGIN_VERSION, true );
 
         // Include relevant JS for Pro users
-        if ( true === yk_mt_is_pro() ) {
+        if ( true === yk_mt_license_is_premium() ) {
             wp_enqueue_script( 'mt-datepicker', plugins_url( 'assets/js/zebra_datepicker.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
             wp_enqueue_style( 'mt-datepicker', plugins_url( 'assets/css/zebra/zebra_datepicker.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
@@ -524,7 +564,8 @@
 			'dialog-options'    => json_encode( $dialog_options ),
             'localise'          => yk_mt_localised_strings(),
             'todays-entry'      => yk_mt_entry( $args[ 'entry-id' ] ),
-            'load-entry'        => true
+            'load-entry'        => true,
+            'is-admin'          => false
 		] );
 	}
 
@@ -547,7 +588,7 @@
             $_GET[ 'yk-mt-mode' ] :
             'default';
 
-        if ( 'default' !== $mode && true !== yk_mt_is_pro() ) {
+        if ( 'default' !== $mode && true !== yk_mt_license_is_premium() ) {
             $mode = 'default';
         }
 

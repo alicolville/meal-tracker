@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or die('Naw ya dinnie!');
+
 /**
  * Get the URL to view / edit a certain entry ID
  * @param $entry_id
@@ -25,7 +27,7 @@ function yk_mt_entry_get_id_or_create( $user_id = NULL, $date = NULL ) {
     // If no date passed, we're only interested in today's date
 	if ( NULL === $date || false === yk_mt_date_is_valid_iso( $date ) ) {
         $date       = yk_mt_date_iso_today();
-        $entry_id   = yk_mt_db_entry_get_id_for_today($user_id);
+        $entry_id   = yk_mt_db_entry_get_id_for_today( $user_id );
     } else {
 	    $entry_id   = yk_mt_entry_for_given_date( $date );
 
@@ -169,23 +171,36 @@ function yk_mt_meal_types_ids() {
 }
 
 /**
+ * Return the number of meals added for the user
+ * @param null $user_id
+ * @return int
+ */
+function yk_mt_meal_count( $user_id = NULL ) {
+
+    $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+    $meals = yk_mt_db_meal_for_user( $user_id );
+
+    return ( false === empty( $meals ) ) ? count( $meals ) : 0;
+}
+
+/**
  * Get the allowed calories for the given user
  *
  * @param null $user_id
  *
  * @return int
  */
-function yk_mt_user_calories_target( $user_id = NULL ) {
+function yk_mt_user_calories_target( $user_id = NULL, $include_source = false ) {
 
 	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
 	$allowed_calories = NULL;
 
-	$selected_source = yk_mt_settings_get( 'calorie-source' );
+	$selected_source = yk_mt_settings_get( 'calorie-source', NULL, $user_id );
 
-	// TODO:    This is a temp hack. New user's don't have a calorie source specified in their settings yet.
-    //          Therefore, we will need to determine where we should get their calorie source from. From now, hard code to Weight Tracker.
-    if ( true === empty( $selected_source ) ) {
+	// If the user has no source selected and WT is enabled then use it
+    if ( true === empty( $selected_source ) && yk_mt_wlt_pro_plus_enabled() ) {
         $selected_source = 'wlt';
     }
 
@@ -197,7 +212,11 @@ function yk_mt_user_calories_target( $user_id = NULL ) {
 
 			$function = $calorie_sources[ $selected_source ][ 'func' ];
 
-			$allowed_calories = $function();
+			$allowed_calories = $function( $user_id );
+
+			if  ( true === $include_source ) {
+			    return  [ 'source' => $calorie_sources[ $selected_source ], 'value' => (int) $allowed_calories, 'key' => $selected_source ];
+            }
 		}
 	}
 
@@ -212,13 +231,22 @@ function yk_mt_user_calories_sources() {
 
 	$sources = apply_filters( 'yk_mt_calories_sources_pre', [] );;
 
-	if ( true === yk_mt_site_options( 'allow-calorie-override' ) ) {
-		$sources[ 'own' ] = [ 'value' => 'Your own target', 'func' => 'yk_mt_user_calories_target_user_specified' ];
+	if ( true === YK_MT_IS_PREMIUM &&
+            true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ) {
+		$sources[ 'admin' ] = [
+		                            'value'         => __( 'As specified by Admin', YK_MT_SLUG ),
+                                    'admin-message' => __( 'by Admin', YK_MT_SLUG ),
+                                    'func'          => 'yk_mt_user_calories_target_admin_specified'
+        ];
 	}
 
-	if ( true === yk_mt_site_options( 'allow-calorie-override-admin' ) ) {
-		$sources[ 'admin' ] = [ 'value' => 'As specified by Admin', 'func' => 'yk_mt_user_calories_target_admin_specified' ];
-	}
+    if ( true === yk_mt_site_options_as_bool( 'allow-calorie-override' ) ) {
+        $sources[ 'own' ] = [
+                                'value'         => __( 'Your own target', YK_MT_SLUG ),
+                                'admin-message' => __( 'by User', YK_MT_SLUG ),
+                                'func'          => 'yk_mt_user_calories_target_user_specified'
+        ];
+    }
 
     $sources = apply_filters( 'yk_mt_calories_sources', $sources );
 
@@ -234,9 +262,9 @@ function yk_mt_user_calories_sources() {
  */
 function yk_mt_user_calories_target_admin_specified( $user_id = NULL ) {
 
-	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+    $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
-	return 2000;
+    return yk_mt_settings_get( 'allowed-calories-admin', NULL,  $user_id );
 }
 
 /**
@@ -320,7 +348,7 @@ function yk_mt_use_minified() {
  *
  * @return null
  */
-function yk_mt_get_value( $key, $default = NULL ) {
+function yk_mt_querystring_value($key, $default = NULL ) {
 	return ( false === empty( $_GET[ $key ] ) ) ? $_GET[ $key ] : $default;
 }
 
@@ -672,101 +700,6 @@ function yk_mt_array_strip_keys( $array, $keys ) {
 }
 
 /**
- * Fetch a setting for a user
- * @param $key
- * @param null $default
- * @param null $user_id
- *
- * @return |null
- */
-function yk_mt_settings_get( $key, $default = NULL, $user_id = NULL ) {
-
-	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
-
-	$user_settings = yk_mt_db_settings_get( $user_id );
-
-	if ( true === isset( $user_settings[ $key ] ) ) {
-		return $user_settings[ $key ];
-	}
-
-	return $default ?: NULL;
-}
-
-/**
- * Save a user setting
- * @param $key
- * @param $value
- * @param null $user_id
- *
- * @return bool
- */
-function yk_mt_settings_set( $key, $value, $user_id = NULL ) {
-
-	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
-
-	if ( false === in_array( $key, yk_mt_settings_allowed_keys() ) ) {
-		return false;
-	}
-
-	$user_settings = yk_mt_db_settings_get( $user_id );
-
-	if ( false === is_array( $user_settings ) ) {
-		$user_settings = [];
-	}
-
-    $user_settings[ $key ] = $value;
-
-	return yk_mt_db_settings_update( $user_id, $user_settings );
-}
-
-/**
- * Allowed setting keys
- * @return array
- */
-function yk_mt_settings_allowed_keys() {
-	return [ 'allowed-calories', 'calorie-source' ];
-}
-/**
- * Fetch a site option
- * @param $key
- */
-function yk_mt_site_options( $key, $default = false ) {
-
-	// TODO: Tie this into an admins setting page
-	if ( 'allow-calorie-override' === $key ) {
-		return true;
-	}
-
-    // TODO: Tie this into an admins setting page
-    if ( 'allow-calorie-override-admin' === $key ) {
-        return false;
-    }
-
-    // TODO: Tie this into an admins setting page
-    if ( 'allow-calorie-external-wlt' === $key ) {
-        return true;
-    }
-
-	// TODO: Tie this into an admins setting page
-	if ( 'accordion-enabled' === $key ) {
-		return true;
-	}
-
-	return false;
-}
-
-/**
- * Get a site option ready for JS embed
- *
- * @param $key
- *
- * @return bool|string
- */
-function yk_mt_site_options_for_js_bool( $key ) {
-	return ( true === yk_mt_site_options( $key ) ) ? 'true' : 'false';
-}
-
-/**
  * Fetch entry ID from QS and ensure it belongs to the logged in user
  *
  * @param bool $ensure_belongs_to_current_user
@@ -775,7 +708,7 @@ function yk_mt_site_options_for_js_bool( $key ) {
 function yk_mt_entry_id_from_qs( $ensure_belongs_to_current_user = true,
                                     $create_entry_for_missing_date = true ) {
 
-    $entry_id = yk_mt_get_value( 'entry-id' );
+    $entry_id = yk_mt_querystring_value( 'entry-id' );
 
     if ( true === empty( $entry_id ) ) {
         return NULL;
@@ -826,6 +759,34 @@ function yk_mt_allowed_calories_refresh( $entry_id = false ) {
     }
 
     yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_allowed' => $allowed_calories ] );
+
+    yk_mt_entry_calories_calculate_update_used( $entry_id );
+
+    return true;
+}
+
+/**
+ * Update an entry's allowance
+ * @param $new_allowance
+ * @param bool $entry_id
+ * @return bool
+ */
+function yk_mt_allowed_calories_update_entry( $new_allowance, $entry_id = false ) {
+
+    $entry_id = ( false !== $entry_id ) ? (int) $entry_id : yk_mt_db_entry_get_id_for_today();
+
+    $entry = yk_mt_db_entry_get( $entry_id );
+
+    if ( true === empty( $entry ) ) {
+        return false;
+    }
+
+    // Only bother to update DB if we have a difference
+    if( (int) $new_allowance === (int) $entry[ 'calories_allowed' ] ) {
+        return true;
+    }
+
+    yk_mt_db_entry_update( [ 'id' => (int) $entry_id, 'calories_allowed' => (int) $new_allowance ] );
 
     yk_mt_entry_calories_calculate_update_used( $entry_id );
 
@@ -913,8 +874,269 @@ function yk_mt_entry_for_given_date( $date, $user_id = NULL ) {
  */
 function yk_mt_date_format( $iso_date ) {
 
+    if ( true === empty( $iso_date ) ) {
+        return '-';
+    }
+
     $time = strtotime( $iso_date );
 
     // TODO: Look up user option to render date
     return date('d/m/Y', $time );
+}
+
+/**
+ * Display an upgrade button
+ */
+function yk_mt_upgrade_button( $css_class = '', $link = NULL ) {
+
+    $link = ( false === empty( $link ) ) ? $link : YK_MT_UPGRADE_LINK . '?hash=' . yk_mt_generate_site_hash() ;
+
+    echo sprintf('<a href="%s" class="button-primary sh-cd-upgrade-button%s"><i class="far fa-credit-card"></i> %s £%d %s</a>',
+        esc_url( $link ),
+        esc_attr( ' ' . $css_class ),
+        __( 'Upgrade to Premium for ', YK_MT_SLUG ),
+        esc_html( yk_mt_license_price() ),
+        __( 'a year ', YK_MT_SLUG )
+    );
+}
+/**
+ * Display message in admin UI
+ *
+ * @param $text
+ * @param bool $error
+ */
+function yk_mt_message_display( $text, $error = false ) {
+
+    if ( true === empty( $text ) ) {
+        return;
+    }
+
+    printf( '<div class="%s"><p>%s</p></div>',
+        true === $error ? 'error' : 'updated',
+        esc_html( $text )
+    );
+}
+
+/**
+ * Render features array into HTML
+ * @param $features
+ */
+function yk_mt_features_display() {
+
+    $features = yk_mt_features_list();
+
+    $html = '';
+
+    if ( false === empty( $features ) ) {
+
+        $class  = '';
+        $html   = '<table class="form-table" >';
+
+        foreach ( $features as $title => $description ) {
+
+            if ( false === empty( $title ) ) {
+
+                $class = ('alternate' == $class) ? '' : 'alternate';
+
+                $html .= sprintf( '<tr valign="top" class="%1$s">
+                                            <td scope="row" style="padding-left:30px"><label for="tablecell">
+                                                    &middot; <strong>%2$s:</strong> %3$s.
+                                                </label></td>
+                            
+                                        </tr>',
+                    $class,
+                    esc_html( $title ),
+                    esc_html( $description )
+                );
+            }
+        }
+
+        $html .= '</table>';
+    }
+    return $html;
+}
+
+/**
+ * Return an array of all features
+ */
+function yk_mt_features_list() {
+
+    return [
+                __( 'Create and view entries', YK_MT_SLUG )     => __( 'Allow your users to create and view entries for any day', YK_MT_SLUG ),
+                __( 'Edit entries', YK_MT_SLUG )                => __( 'Allow your users to edit their entries for any given day', YK_MT_SLUG ),
+                __( 'Edit meals', YK_MT_SLUG )                  => __( 'Allow your users to edit their stored meals', YK_MT_SLUG ),
+                __( 'Calorie sources', YK_MT_SLUG )             => __( 'Fetch daily calorie limits from other sources e.g. YeKen\'s Weight Tracker', YK_MT_SLUG ),
+                __( 'Compress meal items', YK_MT_SLUG )         => __( 'Compress multiple meal lines for an entry into one line', YK_MT_SLUG ),
+                __( 'Unlimited meals per user', YK_MT_SLUG )    => __( 'Your users are no longer limited to a maximum of 40 meals and may add as many as they wish', YK_MT_SLUG ),
+                __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
+                __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
+     ];
+}
+
+/**
+ * HTML for mention of custom work
+ */
+function yk_mt_custom_notification_html() {
+    ?>
+
+    <p><img src="<?php echo plugins_url( 'admin-pages/assets/images/yeken-logo.png', __FILE__ ); ?>" width="100" height="100" style="margin-right:20px" align="left" /><?php echo __( 'If require plugin modifications to Meal Tracker, or need a new plugin built, or perhaps you need a developer to help you with your website then please don\'t hesitate get in touch!', YK_MT_SLUG ); ?></p>
+    <p><strong><?php echo __( 'We provide fixed priced quotes.', YK_MT_SLUG ); ?></strong></p>
+    <p><a href="https://www.yeken.uk" rel="noopener noreferrer" target="_blank">YeKen.uk</a> /
+        <a href="https://profiles.wordpress.org/aliakro" rel="noopener noreferrer" target="_blank">WordPress Profile</a> /
+        <a href="mailto:email@yeken.uk" >email@yeken.uk</a></p>
+    <br clear="both"/>
+    <?php
+}
+
+/**
+ * Display upgrade notice
+ *
+ * @param bool $pro_plus
+ */
+function yk_mt_display_pro_upgrade_notice( ) {
+    ?>
+
+    <div class="postbox yk-mt-advertise-premium">
+        <h3 class="hndle"><span><?php echo __( 'Upgrade Meal Tracker and get more features!', YK_MT_SLUG ); ?> </span></h3>
+        <div style="padding: 0px 15px 0px 15px">
+            <p><?php echo __( 'Upgrade to the Premium version of this plugin to view your user\'s data, record entries for multiple days, extrernal data sources and much more!', YK_MT_SLUG ); ?></p>
+            <p><a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-license') ); ?>" class="button-primary"><?php echo __( 'Read more and upgrade to Premium Version', YK_MT_SLUG ); ?></a></p>
+        </div>
+    </div>
+
+    <?php
+}
+
+/**
+Used to display a jQuery dialog box in the admin panel
+*/
+function yk_mt_create_dialog_jquery_code( $title, $message, $class_used_to_prompt_confirmation, $js_call = false ) {
+
+    global $wp_scripts;
+
+    $queryui = $wp_scripts->query('jquery-ui-core');
+
+    $url = sprintf( '//ajax.googleapis.com/ajax/libs/jqueryui/%s/themes/smoothness/jquery-ui.css', $queryui->ver );
+
+    wp_enqueue_script( 'jquery-ui-dialog' );
+    wp_enqueue_style('jquery-ui-smoothness', $url, false, null);
+
+    $id_hash = md5($title . $message . $class_used_to_prompt_confirmation );
+
+    printf('<div id="%1$s" title="%2$s">
+                        <p>%3$s</p>
+                    </div>
+                    <script>
+                        jQuery( function( $ ) {
+                            let $info = $( "#%1$s" );
+                            $info.dialog({
+                                "dialogClass"   : "wp-dialog",
+                                "modal"         : true,
+                                "autoOpen"      : false
+                            });
+                            
+                            $( ".%4$s" ).click( function( event ) {
+                                event.preventDefault();
+                                target_url = $( this ).attr( "href" );
+                                let  $info = $( "#%1$s" );
+                                $info.dialog({
+                                    "dialogClass"   : "wp-dialog",
+                                    "modal"         : true,
+                                    "autoOpen"      : false,
+                                    "closeOnEscape" : true,
+                                    "buttons"       : {
+                                        "Yes": function() {
+                                            %5$s
+                                        },
+                                        "No": function() {
+                                            $(this).dialog( "close" );
+                                        }
+                                    }
+                                });
+                                $info.dialog("open");
+                            });
+
+                        });
+                    </script>',
+                    $id_hash,
+                    esc_attr( $title ),
+                    esc_html( $message ),
+                    esc_attr( $class_used_to_prompt_confirmation ),
+                    ( true === $js_call ) ? $js_call : 'window.location.href = target_url;'
+    );
+
+}
+
+/**
+ * Fetch the user's ID from the querystring key user-id
+ *
+ * @return int
+ */
+function yk_mt_get_user_id_from_qs(){
+    return (int) yk_mt_querystring_value( 'user-id' );
+}
+
+/**
+ * Helper function to determine if the user exists in WP
+ *
+ * @param $user_id
+ * @return bool
+ */
+function yk_mt_user_exist( $user_id ) {
+
+    if( false === is_numeric( $user_id ) ) {
+        return false;
+    }
+
+    return ( false === get_userdata( $user_id ) ) ? false : true;
+}
+
+/**
+ * Helper function to check if user ID exists, if not throws wp_die()
+ *
+ * @param $user_id
+ * @return bool
+ */
+function yk_mt_exist_check( $user_id ) {
+
+    if(false === yk_mt_user_exist( $user_id ) ) {
+        wp_die( __( 'Error: The user does not appear to exist' , YK_MT_SLUG ) );
+    }
+}
+
+/**
+ * Helper function for formatting numbers
+ * @param $number
+ * @param $decimals
+ * @return string
+ */
+function yk_mt_format_number( $number, $decimals = 0 ) {
+    return number_format( $number, $decimals );
+}
+
+/**
+ * Helper function for formatting calories
+ * @param $number
+ * @return string
+ */
+function yk_mt_format_calories( $number ) {
+    return sprintf( '%s%s', number_format( $number ), __( 'kcal', YK_MT_SLUG ) );
+}
+
+/**
+ * Handy function for temp caching (if caching.php included)
+ * @param $key
+ * @return mixed
+ */
+function yk_mt_cache_temp_get( $key ) {
+    return apply_filters( 'yk_mt_cache_temp_get', NULL, $key );
+}
+
+/**
+ * Handy function for temp caching (if caching.php included)
+ * @param $key
+ * @param $value
+ */
+function yk_mt_cache_temp_set( $key, $value ) {
+    do_action( 'yk_mt_cache_temp_set', $key, $value );
 }

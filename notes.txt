@@ -1,9 +1,0 @@
-Rick Feedback:
-
-
-TODO:
-
-- Based on Rick's slow site, add some optimisation.
-- Add a hook to delete all entries when a user is deleted
-- check user's can only edit entries and data belonging to those entries that are theirs
-- If no existing meals then hide

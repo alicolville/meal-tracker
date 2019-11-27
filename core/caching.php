@@ -1,5 +1,7 @@
 <?php
 
+    defined('ABSPATH') or die("Jog on!");
+
 	/**
 	 *  See bottom of file for hook listeners that clear cache.
 	 */
@@ -426,3 +428,26 @@
 		return yk_mt_cache_get( 'settings-' . $user_id );
 	}
 	add_filter( 'yk_mt_db_settings_get', 'yk_mt_cache_filter_settings_get', 10, 2 );
+
+    /**
+     * Temp Cache - a temp caching mechanism for storing data for 5 minutes
+     *
+     * @param $key
+     * @param $value
+     */
+    function yk_mt_cache_temp_hook_set( $key, $value ) {
+        yk_mt_cache_set( 'temp-' . $key, $value, 300 ); // Cache for 5 minutes
+    }
+    add_action( 'yk_mt_cache_temp_set', 'yk_mt_cache_temp_hook_set', 10, 3 );
+
+    /**
+     * Get cache for temp storage
+     *
+     * @param $default_value
+     * @param $key
+     */
+    function yk_mt_cache_temp_hook_get( $default_value, $key ) {
+        $cache = yk_mt_cache_get( 'temp-' . $key );
+        return ( false === empty( $cache ) ) ? $cache : NULL;
+    }
+    add_filter( 'yk_mt_cache_temp_get', 'yk_mt_cache_temp_hook_get', 10, 2 );

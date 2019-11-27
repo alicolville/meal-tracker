@@ -1,0 +1,138 @@
+/*
+Color Pallete
+HEX: #92a8d1
+HEX: #034f84
+HEX: #ef8988
+HEX: #f7786b
+
+ */
+
+.yk-mt-hide, .yk-mt-hide-if-admin {
+    display: none !important;
+}
+.yk-mt-disabled *, .yk-mt-disabled-premium *, .yk-mt-plugin-disabled *
+{
+    color: #CCCCCC !important;
+}
+.yk-mt-disabled th::after {
+    content: "\A(Premium version)";
+    color: #ef8988;
+    font-weight: bold;
+    clear: both;
+    width:100%;
+    white-space: pre;
+}
+.yk-mt-plugin-disabled th::after {
+    content: "\A(Plugin needs to be setup)";
+    color: #ef8988;
+    font-weight: bold;
+    clear: both;
+    width:100%;
+    white-space: pre;
+}
+.yk-mt-advertise-premium .hndle {
+    background-color: #92a8d1;
+    color: #FFFFFF;
+}
+.yk-mt-settings h3 {
+    color: #034f84 !important;
+    font-size: 15px;
+}
+.yk-mt-settings th {
+    font-weight: 300;
+}
+.yk-mt-sidebar-stats {
+    width: 100%;
+    text-align: left;
+}
+.yk-mt-sidebar-stats th {
+    font-weight: 600;
+
+}
+.yk-mt-sidebar-stats th, .yk-mt-sidebar-stats td  {
+    border-bottom: 1px dotted #CCCCCC;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.yk-mt-sidebar-stats .last th, .yk-mt-sidebar-stats .last td {
+    border: none !important;
+}
+.yk-mt-not-premium .yk-mt-blur {
+    filter:url(#wherearemyglasses);
+    /* ^ for Firefox */
+    -webkit-filter: blur(2px);
+    /* ^ Webkit browsers */
+    filter: blur(2px);
+}
+.yk-mt-blur th {
+    display: inline-block;
+}
+.yk-mt-footable .footable-disabled .fooicon {
+    display: none !important;
+}
+.yk-mt-footable th {
+    text-align: left;
+    color: #92a8d1;
+}
+.yk-mt-footable .btn {
+    padding: 2px 5px !important;
+}
+.yk-mt-entry-table-group {
+    font-weight: bold;
+    height: 40px !important;
+}
+.yk-mt-footable tr {
+    height: 26px;
+}
+.yk-mt-footable td {
+    border-bottom: 1px dotted #CCC;
+}
+.yk-mt-entry-table-no-meal {
+    font-style: italic;
+}
+@media only screen and (max-width: 600px) {
+    .yk-mt-user-data a span {
+        display: none !important;
+    }
+}
+.yk-mt-footable th, td {
+    font-size: 12px;
+}
+.
+.yk-mt-footable .yk-mt-ok td {
+    background-color: #e3ffde;
+}
+.yk-mt-footable .yk-mt-error td {
+    background-color: #ffdede;
+}
+.yk-mt-error {
+    color: #ffdede;
+}
+.yk-mt-sidebar-stats .small, .yk-mt-admin-form .small {
+    font-style: italic;
+    font-size: 12px;
+}
+.yk-mt-sidebar-stats .small {
+    text-align: right;
+}
+.yk-mt-side-bar-admin-allowance div, .yk-mt-side-bar-admin-allowance .button {
+    display: inline;
+}
+#yk-mt-admin-calories-allowed label {
+    display: none;
+}
+#yk-mt-admin-calories-allowed input[type="number"] {
+    padding: 1px;
+    width: 60px;
+    display: inline-block;
+}
+#yk-mt-admin-calories-allowed input[type="submit"] {
+    padding: 0px 2px;
+    display: inline-block;
+}
+#yk-mt-admin-calories-allowed #yk-mt-calories_allowed-row {
+    display: inline-block;
+}
+#yk-mt-admin-calories-allowed #yk-mt-calories_allowed {
+
+}

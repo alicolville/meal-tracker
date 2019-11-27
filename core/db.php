@@ -243,6 +243,52 @@
         return $results;
     }
 
+    /**
+     * Get summary data for user's entries
+     *
+     * @param null $user_id
+     *
+     * @return null|string
+     */
+    function yk_mt_db_entries_summary( $args ) {
+
+        $args = wp_parse_args( $args, [
+            'user-id'       => NULL,
+            'limit'         => NULL,
+            'sort-order'    => 'asc',
+            'sort'          => 'date'
+        ]);
+
+        // TODO: Cache this function for 1 min
+
+        global $wpdb;
+
+        $sql = 'Select id, user_id, calories_allowed, calories_used, date from ' . $wpdb->prefix . YK_WT_DB_ENTRY;
+
+        if ( false === empty( $args[ 'user-id' ] ) ) {
+            $sql .= sprintf( ' where user_id = %d', $args[ 'user-id' ] );
+        }
+
+        $sort = ( true === in_array( $args[ 'sort' ], [ 'date', 'calories_allowed', 'calories_used' ] ) ) ?  $args[ 'sort' ] : 'date';
+
+        $sort_order = ( true === in_array( $args[ 'sort-order' ], [ 'asc', 'desc' ] ) ) ? $args[ 'sort-order' ] : 'asc';
+
+        $sql .= sprintf( ' order by %s %s', $sort, $sort_order );
+
+        // Limit
+        if ( false === empty( $args[ 'limit' ] ) ) {
+            $sql .= sprintf( ' limit 0, %d', $args[ 'limit' ] ) ;
+        }
+
+        $results = $wpdb->get_results( $sql, ARRAY_A );
+
+        if ( false === empty( $results ) ) {
+            $results = array_map( 'yk_mt_db_entry_calculate_stats', $results );
+        }
+
+        return $results;
+    }
+
 	/**
 	 * Get details for an entry
 	 *
@@ -251,7 +297,7 @@
 	function yk_mt_db_entry_get( $id = NULL ) {
 
 	    // If this is never the case, we need to deal with this value being true or false in caching.
-        $compress_multiple_meals = yk_mt_is_pro();
+        $compress_multiple_meals = yk_mt_license_is_premium();
 
 		if ( NULL === $id ) {
 			$id = yk_mt_db_entry_get_id_for_today();
@@ -292,6 +338,7 @@
 
             $entry['meals'] = [];
             $entry['counts'] = [];
+            $entry['counts']['total-meals'] = 0;
 
             // Initiate an empty array
             foreach ( $meal_type_ids as $id ) {
@@ -303,6 +350,8 @@
 
 			if ( false === empty( $meals ) ) {
 				foreach ( $meals as $meal ) {
+
+                    $entry['counts']['total-meals']++;
 
 				    // Compress meals that are the same into one row?
                     if ( true === $compress_multiple_meals ) {
@@ -649,7 +698,8 @@
 			'sort'                  => 'name',
 			'sort-order'            => 'asc',
 			'search'                => NULL,
-			'limit'                 => NULL
+			'limit'                 => NULL,
+            'count-only'            => false
 		]);
 
 		$cache_key = md5( json_encode( $options ) );
@@ -657,36 +707,43 @@
 		$cache = apply_filters( 'yk_mt_db_meals', [], $user_id, $cache_key );
 
         if ( false === empty( $cache ) ) {
-        	return $cache;
+            return $cache;
         }
 
 		global $wpdb;
 
-		$sql = $wpdb->prepare('Select * from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where added_by = %d', $user_id );
+        $sql = ( true === $options[ 'count-only' ] ) ? 'Select count( id )' : 'select *';
+
+		$sql = $wpdb->prepare( $sql .' from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where added_by = %d', $user_id );
 
 		// Exclude deleted?
 		if ( true === $options[ 'exclude-deleted' ] ) {
 			$sql .= ' and deleted = 0';
 		}
 
-		// Search Name?
-		if ( false === empty( $options[ 'search' ] ) ) {
-			$name = '%' . $wpdb->esc_like( $options[ 'search' ] ) . '%';
-			$sql .= ' and `name` like "' . $name . '"';
-		}
+		if ( true === $options[ 'count-only' ] ) {
+            $meals = $wpdb->get_var( $sql );
+        } else {
 
-		$sort = ( true === in_array( $options[ 'sort' ], [ 'name', 'calories' ] ) ) ?  $options[ 'sort' ] : 'name';
+            // Search Name?
+            if ( false === empty( $options[ 'search' ] ) ) {
+                $name = '%' . $wpdb->esc_like( $options[ 'search' ] ) . '%';
+                $sql .= ' and `name` like "' . $name . '"';
+            }
 
-		$sort_order = ( true === in_array( $options[ 'sort-order' ], [ 'asc', 'desc' ] ) ) ? $options[ 'sort-order' ] : 'asc';
+            $sort = ( true === in_array( $options[ 'sort' ], [ 'name', 'calories' ] ) ) ?  $options[ 'sort' ] : 'name';
 
-		$sql .= sprintf( ' order by %s %s', $sort, $sort_order );
+            $sort_order = ( true === in_array( $options[ 'sort-order' ], [ 'asc', 'desc' ] ) ) ? $options[ 'sort-order' ] : 'asc';
 
-		// Limit
-		if ( false === empty( $options[ 'limit' ] ) ) {
-			$sql .= sprintf( ' limit 0, %d', $options[ 'limit' ] ) ;
-		}
+            $sql .= sprintf( ' order by %s %s', $sort, $sort_order );
 
-		$meals = $wpdb->get_results( $sql, ARRAY_A );
+            // Limit
+            if ( false === empty( $options[ 'limit' ] ) ) {
+                $sql .= sprintf( ' limit 0, %d', $options[ 'limit' ] ) ;
+            }
+
+            $meals = $wpdb->get_results( $sql, ARRAY_A );
+        }
 
 		$meals = ( false === empty( $meals ) ) ? $meals : false;
 
@@ -767,23 +824,63 @@
 		return $meal_types;
 	}
 
-	/**
-	 * @param null $table
-	 *
-	 * @return null|string
-	 */
-	function yk_mt_db_mysql_count_table( $table = NULL ) {
+    /**
+     * @param null $table
+     *
+     * @param bool $use_cache
+     * @return null|string
+     */
+	function yk_mt_db_mysql_count_table( $table = YK_WT_DB_ENTRY, $use_cache = true ) {
 
 		global $wpdb;
 
-		if ( false === in_array( $table, [ YK_WT_DB_MEALS, YK_WT_DB_ENTRY, YK_WT_DB_ENTRY_MEAL ] ) ) {
+		if ( false === in_array( $table, [ YK_WT_DB_MEALS, YK_WT_DB_ENTRY, YK_WT_DB_ENTRY_MEAL, 'users' ] ) ) {
 			$table = YK_WT_DB_MEALS;
 		}
 
+		if ( true === $use_cache &&
+		        $cache = yk_mt_cache_temp_get( 'db-count-' . $table ) ) {
+		    return $cache;
+        }
+
 		$result = $wpdb->get_var( 'Select count( id ) from ' . $wpdb->prefix . $table );
+
+        yk_mt_cache_temp_set( 'db-count-' . $table, $result );
 
 		return (int) $result;
 	}
+
+/**
+ * Fetch the count of users that have made an entry
+ * @param string $mode
+ * @param bool $use_cache
+ * @return int|mixed
+ */
+    function yk_mt_db_mysql_count( $mode = 'unique-users', $use_cache = true ) {
+
+        global $wpdb;
+
+        $sql_statements = [
+                                'unique-users'          => 'Select count( distinct( user_id ) ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY,
+                                'successful-entries'    => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where calories_used <= calories_allowed',
+                                'failed-entries'        => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where calories_used > calories_allowed'
+        ];
+
+        if ( false === array_key_exists( $mode, $sql_statements ) ) {
+            return -1;
+        }
+
+        if ( true === $use_cache &&
+            $cache = yk_mt_cache_temp_get( 'sql-count-' . $mode ) ) {
+            return $cache;
+        }
+
+        $result = $wpdb->get_var( $sql_statements[ $mode ] );
+
+        yk_mt_cache_temp_set( 'unique-users', $result );
+
+        return (int) $result;
+    }
 
 	/**
 	 * Return data formats
