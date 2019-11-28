@@ -165,7 +165,7 @@ if ( false === function_exists( 'yeken_license_api_fetch_licenses' ) ) {
     function yeken_license_api_fetch_licenses() {
 
         if ( $cache = get_transient( 'yeken_api_prices' ) ) {
-           return $cache;
+    //       return $cache;
         }
 
         $response = wp_remote_get( 'https://shop.yeken.uk/wp-json/yeken/v1/license-prices/' );
