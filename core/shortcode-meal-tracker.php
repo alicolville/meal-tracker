@@ -454,10 +454,12 @@
 			'is-active' => false
 		]);
 
+		$accordion_enabled = yk_mt_site_options_as_bool( 'accordion-enabled' );
+
 		$accordion_section_class = apply_filters( 'yk_mt_shortcode_meal_tracker_accordion_section', '' );
 
 		$html = sprintf( '  <div class="yk-mt-accordion-section%2$s" id="%1$d">
-									<a class="yk-mt-accordion-section-title%3$s" href="#yk-mt-acc-%1$d">%4$s</a>
+									<%6$s class="yk-mt-accordion-section-title%3$s" href="#yk-mt-acc-%1$d">%4$s</%6$s>
 									<div id="yk-mt-acc-%1$d" class="yk-mt-accordion-section-content">
 										%5$s
 									</div>
@@ -466,7 +468,8 @@
 			esc_attr( $accordion_section_class ),
 			( true === $options['is-active'] ) ? ' initial-active' : '',
 			esc_html( $options['title'] ),
-			$options['content']
+			$options['content'],
+            ( true === $accordion_enabled ) ? 'a' : 'span'
 		);
 
 		return $html;
