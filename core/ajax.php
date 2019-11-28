@@ -11,13 +11,11 @@ function yk_mt_ajax_add_meal_to_entry() {
 
     check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-    $post_data = $_POST;
+    // Validate we have all the expected fields
+    $post_data =  yk_mt_ajax_validate_post_data( [ 'entry-id', 'meal-id', 'meal-type', 'quantity' ] );
 
     $post_data[ 'user-id' ]     = get_current_user_id();
     $post_data[ 'entry-id' ]    = ( true === empty( $post_data[ 'entry-id' ] ) ) ? yk_mt_entry_get_id_or_create( (int) $post_data[ 'user-id' ]  ) : (int) $post_data[ 'entry-id' ];
-
-	// Validate we have all the expected fields
-    yk_mt_ajax_validate_post_data( $post_data, [ 'user-id', 'entry-id', 'meal-id', 'meal-type', 'quantity' ] );
 
 	$quantity = (int) $post_data[ 'quantity' ];
 
