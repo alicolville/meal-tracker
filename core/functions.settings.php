@@ -80,8 +80,10 @@ function yk_mt_site_options_as_bool( $key, $default = true ) {
  *
  * @param $key
  *
+ * @param bool $default
+ *
  * @return bool|string
  */
-function yk_mt_site_options_for_js_bool( $key ) {
-    return ( true === yk_mt_site_options_as_bool( $key, false ) ) ? 'true' : 'false';
+function yk_mt_site_options_for_js_bool( $key, $default = false ) {
+    return ( true === yk_mt_site_options_as_bool( $key, $default ) ) ? 'true' : 'false';
 }

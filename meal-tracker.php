@@ -4,7 +4,7 @@ defined('ABSPATH') or die("Jog on!");
 
 /**
  * Plugin Name: Meal Tracker
- * Description: // TODO
+ * Description: Allow your users to track their meals and calorie intake for a given day.
  * Version: 1.0
  * Author: YeKen
  * Author URI: http://www.YeKen.uk

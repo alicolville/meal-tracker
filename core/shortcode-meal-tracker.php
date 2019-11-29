@@ -454,7 +454,7 @@
 			'is-active' => false
 		]);
 
-		$accordion_enabled = yk_mt_site_options_as_bool( 'accordion-enabled' );
+		$accordion_enabled = yk_mt_site_options_as_bool( 'accordion-enabled', true );
 
 		$accordion_section_class = apply_filters( 'yk_mt_shortcode_meal_tracker_accordion_section', '' );
 
@@ -563,7 +563,7 @@
 
 		wp_localize_script( 'meal-tracker', 'yk_mt_sc_meal_tracker', [
 			'mode'              => $args[ 'mode' ],
-			'accordion-enabled' => yk_mt_site_options_for_js_bool( 'accordion-enabled' ),
+			'accordion-enabled' => yk_mt_site_options_for_js_bool( 'accordion-enabled', true ),
 			'dialog-options'    => json_encode( $dialog_options ),
             'localise'          => yk_mt_localised_strings(),
             'todays-entry'      => yk_mt_entry( $args[ 'entry-id' ] ),
