@@ -136,3 +136,7 @@ HEX: #f7786b
 #yk-mt-admin-calories-allowed #yk-mt-calories_allowed {
 
 }
+.setup-wizard-image {
+    margin-right: 20px;
+    border: 1px dotted #cccccc;
+}

@@ -454,10 +454,12 @@
 			'is-active' => false
 		]);
 
+		$accordion_enabled = yk_mt_site_options_as_bool( 'accordion-enabled', true );
+
 		$accordion_section_class = apply_filters( 'yk_mt_shortcode_meal_tracker_accordion_section', '' );
 
 		$html = sprintf( '  <div class="yk-mt-accordion-section%2$s" id="%1$d">
-									<a class="yk-mt-accordion-section-title%3$s" href="#yk-mt-acc-%1$d">%4$s</a>
+									<%6$s class="yk-mt-accordion-section-title%3$s" href="#yk-mt-acc-%1$d">%4$s</%6$s>
 									<div id="yk-mt-acc-%1$d" class="yk-mt-accordion-section-content">
 										%5$s
 									</div>
@@ -466,7 +468,8 @@
 			esc_attr( $accordion_section_class ),
 			( true === $options['is-active'] ) ? ' initial-active' : '',
 			esc_html( $options['title'] ),
-			$options['content']
+			$options['content'],
+            ( true === $accordion_enabled ) ? 'a' : 'span'
 		);
 
 		return $html;
@@ -511,14 +514,14 @@
 
        	wp_enqueue_style( 'mt-meal-tracker-normalize', plugins_url( 'assets/css/normalize.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-animate', plugins_url( 'assets/css/animate.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_style( 'mt-selectize', 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css', [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'mt-selectize', plugins_url( 'assets/css/selectize.default.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'meal-tracker', plugins_url( 'assets/css/frontend' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-forced', plugins_url( 'assets/css/forced' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
 		wp_enqueue_script( 'mt-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
-        wp_enqueue_script( 'mt-selectize', 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js', [], YK_MT_PLUGIN_VERSION, true );
+        wp_enqueue_script( 'mt-selectize', plugins_url( 'assets/js/selectize.min.js', __DIR__ ), [], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-loading-overlay', plugins_url( 'assets/js/loadingoverlay.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
-        wp_enqueue_script( 'mt-chart-js', YK_MT_CHART_JS, [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_script( 'mt-chart-js', plugins_url( 'assets/js/Chart.bundle.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
         wp_enqueue_script( 'mt-notify', plugins_url( 'assets/js/notify.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
 
         wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart' . $minified . '.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
@@ -560,7 +563,7 @@
 
 		wp_localize_script( 'meal-tracker', 'yk_mt_sc_meal_tracker', [
 			'mode'              => $args[ 'mode' ],
-			'accordion-enabled' => yk_mt_site_options_for_js_bool( 'accordion-enabled' ),
+			'accordion-enabled' => yk_mt_site_options_for_js_bool( 'accordion-enabled', true ),
 			'dialog-options'    => json_encode( $dialog_options ),
             'localise'          => yk_mt_localised_strings(),
             'todays-entry'      => yk_mt_entry( $args[ 'entry-id' ] ),

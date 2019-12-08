@@ -21,7 +21,7 @@ add_action( 'yk_mt_settings_admin_saved', 'yk_mt_actions_settings_post_save' );
  */
 function yk_mt_body_class( $classes ) {
 
-    if ( true === yk_mt_site_options_as_bool( 'accordion-enabled' ) ) {
+    if ( true === yk_mt_site_options_as_bool( 'accordion-enabled', false ) ) {
         $classes[] = 'yk-mt-accordion-enabled';
     }
 
@@ -43,6 +43,10 @@ function yk_mt_build_admin_menu() {
 
     add_submenu_page( 'yk-mt-main-menu', __( 'User Data', YK_MT_SLUG ),  __( 'User Data', YK_MT_SLUG ), $permission_level, 'yk-mt-user', 'yk_mt_admin_page_data_home' );
 
+    if ( true === yk_mt_setup_wizard_show_notice() ) {
+        add_submenu_page( 'yk-mt-main-menu', __('Setup Wizard', YK_MT_SLUG ),  __('Setup Wizard', YK_MT_SLUG ), 'manage_options', 'yk-mt-setup-wizard', 'yk_mt_setup_wizard_page' );
+    }
+
     $menu_text = ( true === yk_mt_license_is_premium() ) ? __( 'Your License', YK_MT_SLUG ) : __( 'Upgrade to Pro', YK_MT_SLUG );
     add_submenu_page( 'yk-mt-main-menu', $menu_text,  $menu_text, 'manage_options', 'yk-mt-license', 'yk_mt_advertise_pro');
 
@@ -56,7 +60,7 @@ add_action( 'admin_menu', 'yk_mt_build_admin_menu' );
  */
 function yk_mt_enqueue_admin_files() {
 
-    if ( false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-settings' ] ) ) {
+    if ( false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-settings', 'yk-mt-setup-wizard' ] ) ) {
         return;
     }
 
@@ -68,7 +72,7 @@ function yk_mt_enqueue_admin_files() {
     wp_localize_script( 'yk-mt-admin', 'yk_mt_settings', [ 'premium' => YK_MT_IS_PREMIUM ] );
 
     // Settings page
-    if ( false === empty( $_GET['page'] ) && true === in_array( $_GET[ 'page' ], [ 'yk-mt-settings' ] ) ) {
+    if ( false === empty( $_GET['page'] ) && true === in_array( $_GET[ 'page' ], [ 'yk-mt-settings', 'yk-mt-setup-wizard' ] ) ) {
         wp_enqueue_script( 'jquery-tabs', plugins_url( '../assets/js/tabs.min.js', __FILE__ ), ['jquery'], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-tabs', plugins_url( '../assets/css/tabs.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-tabs-flat', plugins_url( '../assets/css/tabs.flat.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
@@ -102,7 +106,7 @@ function yk_mt_enqueue_scripts_footable() {
  */
 function yk_mt_enqueue_scripts_chart() {
 
-    wp_enqueue_script( 'mt-chart-js', YK_MT_CHART_JS, [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+    wp_enqueue_script( 'mt-chart-js', plugins_url( 'assets/js/Chart.bundle.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
     wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
 }
 

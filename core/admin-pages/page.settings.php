@@ -66,16 +66,6 @@ function yk_mt_settings_page_generic() {
                                                         <p><?php echo __('If enabled, additional caching will be performed to reduce database queries. It is highly recommended that this remains enabled and only disabled for testing or to enable other caching mechanisms.', YK_MT_SLUG); ?></p>
                                                     </td>
                                                 </tr>
-                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
-                                                    <th scope="row"><?php echo __( 'Allow user settings' , YK_MT_SLUG ); ?></th>
-                                                    <td>
-                                                        <select id="yk-mt-allow-user-preferences" name="yk-mt-allow-user-preferences">
-                                                            <option value="yes" <?php selected( get_option('yk-mt-allow-user-preferences'), 'yes' ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
-                                                            <option value="no" <?php selected( get_option('yk-mt-allow-user-preferences'), 'no' ); ?>><?php echo __('No', YK_MT_SLUG )?></option>
-                                                        </select>
-                                                        <p><?php echo __('Allow your users to select their own data units, complete their "About You" fields and remove all their data.', YK_MT_SLUG )?></p>
-                                                    </td>
-                                                </tr>
                                             </table>
                                             <h3><?php echo __( 'Security' , YK_MT_SLUG); ?></h3>
                                             <table class="form-table">

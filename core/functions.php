@@ -968,8 +968,12 @@ function yk_mt_features_list() {
                 __( 'Calorie sources', YK_MT_SLUG )             => __( 'Fetch daily calorie limits from other sources e.g. YeKen\'s Weight Tracker', YK_MT_SLUG ),
                 __( 'Compress meal items', YK_MT_SLUG )         => __( 'Compress multiple meal lines for an entry into one line', YK_MT_SLUG ),
                 __( 'Unlimited meals per user', YK_MT_SLUG )    => __( 'Your users are no longer limited to a maximum of 40 meals and may add as many as they wish', YK_MT_SLUG ),
-                __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
-                __( '', YK_MT_SLUG )     => __( '', YK_MT_SLUG ),
+                __( 'View your user\'s data', YK_MT_SLUG )      => __( 'View all of your user entries, meals and calorie intake', YK_MT_SLUG ),
+                __( 'Set calorie allowances', YK_MT_SLUG )      => __( 'Set daily calorie allowances for your users', YK_MT_SLUG ),
+                __( 'Summary Statistics', YK_MT_SLUG )          => __( 'View summary statistics of your Meal Tracker data and it\'s usage by your users', YK_MT_SLUG ),
+                __( 'Calorie Allowance sources', YK_MT_SLUG )   => __( 'Specify one or more sources for calorie allowance', YK_MT_SLUG ),
+                __( 'Additional settings', YK_MT_SLUG )         => __( 'Additional settings for customising your Meal Tracker usage', YK_MT_SLUG ),
+                __( 'Admin Search', YK_MT_SLUG )                => __( 'Search for users by name and email address', YK_MT_SLUG ),
      ];
 }
 
@@ -1005,66 +1009,6 @@ function yk_mt_display_pro_upgrade_notice( ) {
     </div>
 
     <?php
-}
-
-/**
-Used to display a jQuery dialog box in the admin panel
-*/
-function yk_mt_create_dialog_jquery_code( $title, $message, $class_used_to_prompt_confirmation, $js_call = false ) {
-
-    global $wp_scripts;
-
-    $queryui = $wp_scripts->query('jquery-ui-core');
-
-    $url = sprintf( '//ajax.googleapis.com/ajax/libs/jqueryui/%s/themes/smoothness/jquery-ui.css', $queryui->ver );
-
-    wp_enqueue_script( 'jquery-ui-dialog' );
-    wp_enqueue_style('jquery-ui-smoothness', $url, false, null);
-
-    $id_hash = md5($title . $message . $class_used_to_prompt_confirmation );
-
-    printf('<div id="%1$s" title="%2$s">
-                        <p>%3$s</p>
-                    </div>
-                    <script>
-                        jQuery( function( $ ) {
-                            let $info = $( "#%1$s" );
-                            $info.dialog({
-                                "dialogClass"   : "wp-dialog",
-                                "modal"         : true,
-                                "autoOpen"      : false
-                            });
-                            
-                            $( ".%4$s" ).click( function( event ) {
-                                event.preventDefault();
-                                target_url = $( this ).attr( "href" );
-                                let  $info = $( "#%1$s" );
-                                $info.dialog({
-                                    "dialogClass"   : "wp-dialog",
-                                    "modal"         : true,
-                                    "autoOpen"      : false,
-                                    "closeOnEscape" : true,
-                                    "buttons"       : {
-                                        "Yes": function() {
-                                            %5$s
-                                        },
-                                        "No": function() {
-                                            $(this).dialog( "close" );
-                                        }
-                                    }
-                                });
-                                $info.dialog("open");
-                            });
-
-                        });
-                    </script>',
-                    $id_hash,
-                    esc_attr( $title ),
-                    esc_html( $message ),
-                    esc_attr( $class_used_to_prompt_confirmation ),
-                    ( true === $js_call ) ? $js_call : 'window.location.href = target_url;'
-    );
-
 }
 
 /**

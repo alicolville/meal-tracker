@@ -11,21 +11,17 @@ function yk_mt_ajax_add_meal_to_entry() {
 
     check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-    $post_data = $_POST;
+    // Validate we have all the expected fields
+    $post_data = yk_mt_ajax_extract_and_validate_post_data( [ 'entry-id', 'meal-id', 'meal-type', 'quantity' ] );
 
     $post_data[ 'user-id' ]     = get_current_user_id();
     $post_data[ 'entry-id' ]    = ( true === empty( $post_data[ 'entry-id' ] ) ) ? yk_mt_entry_get_id_or_create( (int) $post_data[ 'user-id' ]  ) : (int) $post_data[ 'entry-id' ];
-
-	// Validate we have all the expected fields
-    yk_mt_ajax_validate_post_data( $post_data, [ 'user-id', 'entry-id', 'meal-id', 'meal-type', 'quantity' ] );
 
 	$quantity = (int) $post_data[ 'quantity' ];
 
     if ( $quantity > 50 ) {
         $quantity = 50;
     }
-
-    $post_data = yk_mt_ajax_strip_incoming( $post_data );
 
 	// Ensure the user is the owner of the entry.
 	if ( false === yk_mt_security_entry_owned_by_user( $post_data[ 'entry-id' ], $post_data[ 'user-id' ] ) ) {
@@ -49,22 +45,14 @@ function yk_mt_ajax_delete_meal_from_entry() {
 
     check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-    $post_data = $_POST;
-
-    $post_data[ 'meal-entry-id' ]  =  yk_mt_ajax_get_post_value_int( 'meal-entry-id' );
-    $post_data[ 'entry-id' ]       = ( true === empty( $post_data[ 'entry-id' ] ) ) ? yk_mt_entry_get_id_or_create() : (int) $post_data[ 'entry-id' ];
-
-    // Validate we have all the expected fields
-    yk_mt_ajax_validate_post_data( $post_data, [ 'meal-entry-id', 'entry-id' ] );
+    $post_data = yk_mt_ajax_extract_and_validate_post_data( [ 'entry-id', 'meal-entry-id' ] );
 
 	// Ensure the user is the owner of the entry.
 	if ( false === yk_mt_security_entry_owned_by_user( $post_data[ 'entry-id' ], get_current_user_id() ) ) {
 		return wp_send_json( [ 'error' => 'security' ] );
 	}
 
-    $post_data = yk_mt_ajax_strip_incoming( $post_data );
-
-    if ( true !== yk_mt_entry_meal_delete( $post_data[ 'meal-entry-id' ] ) ) {
+    if ( true !== yk_mt_entry_meal_delete( (int) $post_data[ 'meal-entry-id' ] ) ) {
         return wp_send_json( [ 'error' => 'updating-db' ] );
     }
 
@@ -81,34 +69,26 @@ function yk_mt_ajax_meal_add() {
 
     check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-    $post_data = $_POST;
+	$post_data = yk_mt_ajax_extract_and_validate_post_data( [ 'name', 'unit' ] );
 
     $post_data[ 'added_by' ] = get_current_user_id();
 
-    $entry_id = ( true === empty( $post_data[ 'entry-id' ] ) ) ? yk_mt_entry_get_id_or_create() : (int) $post_data[ 'entry-id' ];
-
-    $post_data = yk_mt_ajax_strip_incoming( $post_data, [ 'entry-id', 'meal-type' ] );
-
-    // Validate we have all the expected fields
-    yk_mt_ajax_validate_post_data( $post_data, [ 'name', 'unit' ] );
-
     // Ensure we have a calorie value (can be 0)
-    if ( false === isset( $post_data[ 'calories'] ) ) {
-        return wp_send_json( [ 'error' => 'missing-calories' ] );
-    }
+	$post_data[ 'calories' ] = yk_mt_ajax_extract_and_validate_post_data_single( 'calories', false );
 
     // If a unit that doesn't expect a quantity, then clear quantity
 	if ( true === in_array( $post_data[ 'unit' ], yk_mt_units_where( 'drop-quantity' ) ) ) {
 		$post_data[ 'quantity' ] = '';
 	} else {
 		// Now check we have it if expected!
-		yk_mt_ajax_validate_post_data( $post_data, [ 'quantity' ] );
+		$post_data[ 'quantity' ] = yk_mt_ajax_extract_and_validate_post_data_single( 'quantity' );
 	}
 
     // Are we updating a meal?
-    $meal_id = yk_mt_ajax_get_post_value_int( 'id', false );
+    $post_data[ 'id' ]  = yk_mt_ajax_get_post_value_int( 'id', false );
+	$entry_id           = yk_mt_ajax_get_post_value_int( 'entry-id' );
 
-    if ( false === empty( $meal_id ) ) {
+    if ( false === empty( $post_data[ 'id' ] ) ) {
 
         if ( false === yk_mt_db_meal_update( $post_data ) ) {
             return wp_send_json( [ 'error' => 'updating-db' ] );
@@ -117,6 +97,7 @@ function yk_mt_ajax_meal_add() {
         yk_mt_entry_calories_calculate_update_used( $entry_id );
 
     } else {
+
         $meal_id = yk_mt_db_meal_add( $post_data );
 
         // If we have an entry / meal type ID, then add the meal to the entry automatically
@@ -144,12 +125,8 @@ function yk_mt_ajax_meal() {
 
     check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-    $post_data = $_POST;
-
-    $post_data[ 'meal-id' ]  = yk_mt_ajax_get_post_value_int( 'meal-id' );
-
     // Validate we have all the expected fields
-    yk_mt_ajax_validate_post_data( $post_data, [ 'meal-id' ] );
+    $post_data = yk_mt_ajax_extract_and_validate_post_data([ 'meal-id' ] );
 
     $meal = yk_mt_db_meal_get( $post_data[ 'meal-id' ], get_current_user_id() );
 
@@ -261,34 +238,41 @@ function yk_mt_ajax_prep_meal( $meal ) {
 }
 
 /**
- * Tidy up post data
- * @param $postdata
- * @return mixed
- */
-function yk_mt_ajax_strip_incoming( $post_data, $additional = [] ) {
-
-    $defaults = [ 'security', 'action', 'entry' ];
-
-    if ( false === empty( $additional ) ) {
-        $defaults = array_merge( $defaults, $additional );
-    }
-
-	return yk_mt_array_strip_keys( $post_data, $defaults );
-}
-
-/**
- * For the given array of keys, ensure they are found within $post_data
+ * For the given array of keys, ensure they are found within $_POST
  *
  * @param array $post_data
  * @param array $keys
  */
-function yk_mt_ajax_validate_post_data( $post_data, $keys = [] ) {
+function yk_mt_ajax_extract_and_validate_post_data( $keys = [] ) {
+
+	$post_data = [];
 
     foreach ( $keys as $key ) {
-        if ( true === empty( $post_data[ $key ] ) ) {
-            wp_send_json( [ 'error' => 'missing-' . $key ] );
-        }
+  	    $post_data[ $key ] = yk_mt_ajax_extract_and_validate_post_data_single( $key );
     }
+
+    return $post_data;
+}
+
+/**
+ * For a given key, ensure they are found within $_POST
+ *
+ * @param $key
+ *
+ * @param bool $is_empty_check
+ *
+ * @return mixed
+ */
+function yk_mt_ajax_extract_and_validate_post_data_single( $key, $is_empty_check = true ) {
+
+	if ( true === $is_empty_check &&
+	        true === empty( $_POST[ $key ] ) ) {
+		wp_send_json( [ 'error' => 'missing-' . $key ] );
+	} elseif ( false === isset( $_POST[ $key ] ) ) {
+		wp_send_json( [ 'error' => 'missing-' . $key ] );
+	}
+
+	return $_POST[ $key ];
 }
 
 /**

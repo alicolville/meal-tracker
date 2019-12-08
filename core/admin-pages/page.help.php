@@ -25,7 +25,24 @@ function yk_mt_help_page() {
 	                        <?php yk_mt_custom_notification_html(); ?>
                         </div>
                     </div>
+                    <div class="postbox">
+                        <h3 class="hndle"><span><?php echo __( 'Admin Tools', WE_LS_SLUG); ?> </span></h3>
+                        <div class="ws-ls-help-admin" style="padding: 0px 15px 0px 15px">
+                            <p>
+                                <?php
 
+                                if ( false === yk_mt_setup_wizard_show_notice() ) {
+
+                                    printf('<a class="button" href="%1$s" >%2$s</a>',
+                                        esc_url( admin_url( 'admin.php?page=yk-mt-help&show-setup-wizard-links=y') ),
+                                        __('Show Setup Wizard link', WE_LS_SLUG)
+                                    );
+                                }
+
+                                ?>
+                            </p>
+                        </div>
+                    </div>
 
                     <div class="postbox">
                         <h3 class="hndle"><span><?php echo __( 'Contact', WE_LS_SLUG); ?> </span></h3>
