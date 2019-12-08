@@ -5,7 +5,7 @@ defined('ABSPATH') or die("Jog on!");
 /**
  * Plugin Name: Meal Tracker
  * Description: Allow your users to track their meals and calorie intake for a given day.
- * Version: 1.0
+ * Version: 1.1
  * Author: YeKen
  * Author URI: http://www.YeKen.uk
  * License: GPL2
@@ -28,7 +28,7 @@ defined('ABSPATH') or die("Jog on!");
 */
 
 define( 'YK_MT_ABSPATH', plugin_dir_path( __FILE__ ) );
-define( 'YK_MT_PLUGIN_VERSION', '1.0' );
+define( 'YK_MT_PLUGIN_VERSION', '1.1' );
 define( 'YK_MT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'YK_MT_SLUG', 'meal-tracker' );
 

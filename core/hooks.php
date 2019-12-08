@@ -138,7 +138,7 @@ add_filter( 'user_row_actions', 'yk_mt_user_action_links', 10, 2 );
  */
 function yk_mt_wlt_user_profile_add_header_link( $links, $user_id ) {
 
-    $links .= sprintf( '<a href="%1$s" class="button-secondary"><i class="fa fa-pie-chart"></i> %2$s</a>',
+    $links .= sprintf( '<a href="%1$s" class="button-secondary"><i class="fa fa-pie-chart"></i> <span>%2$s</span></a>',
         yk_mt_link_admin_page_user( $user_id ),
         __('Meal Tracker Record', YK_MT_SLUG )
     );

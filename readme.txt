@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food
 Requires at least: 5.2.2
 Tested up to: 5.3
-Stable tag: 1.0
+Stable tag: 1.1
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -49,6 +49,10 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 7. [meal-tracker] placement.
 
 == Changelog ==
+
+= 1.1 =
+
+* Bug fix: Responsive fix when adding menu link to Weight Tracker
 
 = 1.0 =
 
