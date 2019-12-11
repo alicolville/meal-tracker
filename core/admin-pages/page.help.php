@@ -68,16 +68,4 @@ function yk_mt_help_page() {
 </div> <!-- .wrap -->
 <?php
 
-    ws_ls_create_dialog_jquery_code(__('Are you sure?', WE_LS_SLUG),
-        __('Are you sure you wish to remove all issued awards?', WE_LS_SLUG) . '<br /><br />',
-        'awards-confirm');
-
-    ws_ls_create_dialog_jquery_code(__('Are you sure?', WE_LS_SLUG),
-        __('Are you sure you wish to clear all log entries?', WE_LS_SLUG) . '<br /><br />',
-        'logs-confirm');
-
 }
-
-
-
-?>
