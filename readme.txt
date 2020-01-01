@@ -56,6 +56,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 * Improvement: New Setting that enables users to search for meals added by any user. (#61)
 * Improvement: New Settings that specify whether users are permitted to add new entries in the past and / or future (#72)
 * Improvement: Clearer display names for users. (#73)
+* Bug Fix: Err was being displayed for meal unit if not description had been set for a meal. (#64)
 * Bug Fix: Added POT and en_GB language files. This should aid those that wish to translate the plugin (#74)
 * Bug Fix: Minified CSS and JS in front end (#37)
 * Bug fix: Fix an issue where Weight Tracker can't be selected correctly as a Calorie Allowance source.

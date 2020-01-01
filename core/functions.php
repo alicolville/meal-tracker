@@ -573,7 +573,7 @@ function yk_mt_get_unit_string( $meal ) {
  */
 function yk_mt_is_meal_object( $meal ) {
 	return true === is_array( $meal ) &&
-	       true === isset( $meal[ 'name'], $meal[ 'quantity'], $meal[ 'unit'], $meal[ 'calories'], $meal[ 'description'], $meal[ 'id'] );
+	       true === isset( $meal[ 'name'], $meal[ 'quantity'], $meal[ 'unit'], $meal[ 'calories'], $meal[ 'id'] );
 }
 
 /**
