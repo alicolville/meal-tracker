@@ -55,6 +55,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 * Improvement: Added meal description to "View Entry" page in admin. (#66)
 * Improvement: New Setting that enables users to search for meals added by any user. (#61)
 * Improvement: Clearer display names for users. (#73)
+* Bug Fix: Added POT and en_GB language files. This should aid those that wish to translate the plugin (#74)
 * Bug fix: Fix an issue where Weight Tracker can't be selected correctly as a Calorie Allowance source.
 * Bug fix: Responsive fix when adding menu link to Weight Tracker
 
