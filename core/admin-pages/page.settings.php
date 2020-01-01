@@ -43,7 +43,6 @@ function yk_mt_settings_page_generic() {
                                         <li><a><?php echo __( 'General', YK_MT_SLUG ); ?><span><?php echo __( 'General settings', YK_MT_SLUG ); ?></span></a></li>
                                         <li><a><?php echo __( 'Calorie Allowance', YK_MT_SLUG ); ?><span><?php echo __( 'Specify the sources for determining a user\'s calorie allowance', YK_MT_SLUG ); ?></span></a></li>
                                         <li><a><?php echo __( 'Display', YK_MT_SLUG ); ?><span><?php echo __( 'Specify how the plugin looks', YK_MT_SLUG ); ?></span></a></li>
-                                        <li><a><?php echo __( 'Miscellaneous', YK_MT_SLUG ); ?><span><?php echo __( 'Other miscellaneous settings', YK_MT_SLUG ); ?></span></a></li>
                                     </ul>
                                     <div>
                                         <div>
@@ -82,6 +81,22 @@ function yk_mt_settings_page_generic() {
                                                             <option value="publish_posts" <?php selected( $permission_level, 'publish_posts' ); ?>><?php echo __( 'Authors and above', YK_MT_SLUG )?></option>
                                                         </select>
                                                         <p><?php echo __('Specify the minimum level of user role that maybe view or edit user data', YK_MT_SLUG ); ?>.</p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <h3><?php echo __( 'Meals' , YK_MT_SLUG); ?></h3>
+                                            <table class="form-table">
+                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
+                                                    <th scope="row"><?php echo __( 'Search other\'s meals' , YK_MT_SLUG); ?></th>
+                                                    <td>
+                                                        <?php
+                                                        $search_others = yk_mt_site_options_as_bool('search-others-meals', false );
+                                                        ?>
+                                                        <select id="search-others-meals" name="search-others-meals">
+                                                            <option value="false" <?php selected( $search_others, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
+                                                            <option value="true" <?php selected( $search_others, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
+                                                        </select>
+                                                        <p><?php echo __( 'If set to "Yes", users are not restricted to searching their own meal collections. Instead, a search will be performed across every user\'s meal collection. Please note, this may cause search to slow across large meal collections.', YK_MT_SLUG )?></p>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -155,29 +170,6 @@ function yk_mt_settings_page_generic() {
                                                             <option value="false" <?php selected( $accordion_enabled, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
                                                         </select>
                                                         <p><?php echo __( 'If set to "Yes", the main meal tracker will use accordions to display meal data.', YK_MT_SLUG )?></p>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                        <div>
-                                            <?php
-                                            if ( false === $is_premium ) {
-                                                yk_mt_display_pro_upgrade_notice();
-                                            }
-                                            ?>
-                                            <h3><?php echo __( 'Searching' , YK_MT_SLUG); ?></h3>
-                                            <table class="form-table">
-                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
-                                                    <th scope="row"><?php echo __( 'Search other\'s meals' , YK_MT_SLUG); ?></th>
-                                                    <td>
-                                                        <?php
-                                                        $search_others = yk_mt_site_options_as_bool('search-others-meals', false );
-                                                        ?>
-                                                        <select id="search-others-meals" name="search-others-meals">
-                                                            <option value="false" <?php selected( $search_others, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
-                                                            <option value="true" <?php selected( $search_others, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
-                                                        </select>
-                                                        <p><?php echo __( 'If set to "Yes", users are not restricted to searching their own meal collections. Instead, a search will be performed across every user\'s meal collection. Please note, this may cause search to slow across large meal collections.', YK_MT_SLUG )?></p>
                                                     </td>
                                                 </tr>
                                             </table>
