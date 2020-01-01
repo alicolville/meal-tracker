@@ -286,8 +286,8 @@
 
 		$yk_mt_add_meal_button_id++;
 
-		$css_class = apply_filters( 'yk_mt_shortcode_button_meal_add_css', $default_css_class );
-		$button_text = apply_filters( 'yk_mt_shortcode_button_meal_add_text', $button_text );
+		$css_class      = apply_filters( 'yk_mt_shortcode_button_meal_add_css', $default_css_class );
+		$button_text    = apply_filters( 'yk_mt_shortcode_button_meal_add_text', $button_text );
 
 		return sprintf( '<button href="#yk-mt-add-meal-dialog" class="%1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d">%4$s</button>',
 						esc_attr( $css_class ),

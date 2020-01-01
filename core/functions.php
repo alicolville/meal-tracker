@@ -703,6 +703,7 @@ function yk_mt_array_strip_keys( $array, $keys ) {
  * Fetch entry ID from QS and ensure it belongs to the logged in user
  *
  * @param bool $ensure_belongs_to_current_user
+ * @param bool $create_entry_for_missing_date
  * @return null
  */
 function yk_mt_entry_id_from_qs( $ensure_belongs_to_current_user = true,
@@ -724,6 +725,10 @@ function yk_mt_entry_id_from_qs( $ensure_belongs_to_current_user = true,
         if ( false === $entry_id &&
                 true === $create_entry_for_missing_date ) {
 
+            if ( false === yk_mt_entry_allowed_to_create_for_this_date( $date ) ) {
+                return NULL;
+            }
+
             $entry_id = yk_mt_entry_get_id_or_create( NULL, $date );
         }
     }
@@ -734,6 +739,40 @@ function yk_mt_entry_id_from_qs( $ensure_belongs_to_current_user = true,
     }
 
     return (int) $entry_id;
+}
+
+/**
+ * For the given date, does the admin settings allow a new entry to be added for this date?
+ * @param $entry_date
+ * @return bool
+ */
+function yk_mt_entry_allowed_to_create_for_this_date( $entry_date ) {
+
+    if ( true === empty( $entry_date ) ) {
+        return false;
+    }
+
+    $entry_date     = new DateTime( $entry_date );
+    $current_date   = new DateTime();
+
+    $current_date->settime(0,0);
+
+    // Today's date
+    if ( $entry_date == $current_date ) {
+        return true;
+    }
+
+    // Future date
+    if ( $entry_date > $current_date && yk_mt_site_options_as_bool('new-entries-future' ) ) {
+        return true;
+    }
+
+    // Past Date
+    if ( $entry_date < $current_date && true === yk_mt_site_options_as_bool('new-entries-past' ) ) {
+        return true;
+    }
+
+    return false;
 }
 
 /**
@@ -809,14 +848,21 @@ function yk_mt_navigation_links() {
     // Do we already have an entry for yesterday? IF so, swap in entry ID
     if ( $existing_id =  yk_mt_entry_for_given_date( $links[ 'nav' ][ 'yesterday' ][ 'id' ] ) ) {
         $links[ 'nav' ][ 'yesterday' ][ 'id' ] = $existing_id;
+    } // Are we allowed to create entries in the past? IF not, and we don't have an actual entry for yesterday, then remove "Yesterday" link.
+    else if ( false === yk_mt_site_options_as_bool('new-entries-past' ) ) {
+        unset( $links[ 'nav' ][ 'yesterday' ] );
     }
 
     $links[ 'nav' ][ 'today' ]      =  [ 'id' => $todays_entry_id, 'label' =>  __( 'Today', YK_MT_SLUG )  ];
+
     $links[ 'nav' ][ 'tomorrow' ]   =  [ 'id' => date('Y-m-d', strtotime('+1 day' ) ), 'label' =>  __( 'Tomorrow', YK_MT_SLUG ) ];
 
     // Do we already have an entry for tomorrow? IF so, swap in entry ID
     if ( $existing_id =  yk_mt_entry_for_given_date( $links[ 'nav' ][ 'tomorrow' ][ 'id' ] ) ) {
         $links[ 'nav' ][ 'tomorrow' ][ 'id' ] = $existing_id;
+    }   // Tomorrow - are future dates are permitted.
+    elseif ( false === yk_mt_site_options_as_bool('new-entries-future' ) ) {
+        unset( $links[ 'nav' ][ 'tomorrow' ] );
     }
 
     return $links;
