@@ -116,7 +116,7 @@ function yk_mt_settings_page_generic() {
                                                         <p><?php echo __('Allow a user to specify their own daily calorie intake.', 'WE_LS_SLUG'  )?></p>
                                                     </td>
                                                 </tr>
-                                                <tr class="<?php echo $disable_if_not_premium_class; ?><?php if ( false === yk_mt_wlt_pro_plus_enabled() ) { echo ' yk-mt-plugin-disabled'; } ?>">
+                                                <tr class="<?php echo $disable_if_not_premium_class; ?><?php if ( false === yk_mt_wlt_enabled_for_mt() ) { echo ' yk-mt-plugin-disabled'; } ?>">
                                                     <th scope="row">3.
                                                         <a href="https://weight.yeken.uk" target="_blank" rel="noopener">
                                                             <?php echo __( 'YeKen: Weight Tracker' , YK_MT_SLUG ); ?>
@@ -124,7 +124,7 @@ function yk_mt_settings_page_generic() {
                                                     </th>
                                                     <td>
                                                         <?php
-                                                            $allow_calorie = yk_mt_wlt_pro_plus_enabled();
+                                                            $allow_calorie = yk_mt_wlt_enabled_for_mt();
                                                         ?>
                                                         <select id="allow-calorie-external-wlt" name="allow-calorie-external-wlt">
                                                             <option value="true" <?php selected( $allow_calorie, true ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>

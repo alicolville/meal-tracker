@@ -200,7 +200,7 @@ function yk_mt_user_calories_target( $user_id = NULL, $include_source = false ) 
 	$selected_source = yk_mt_settings_get( 'calorie-source', NULL, $user_id );
 
 	// If the user has no source selected and WT is enabled then use it
-    if ( true === empty( $selected_source ) && yk_mt_wlt_pro_plus_enabled() ) {
+    if ( true === empty( $selected_source ) && yk_mt_wlt_enabled_for_mt() ) {
         $selected_source = 'wlt';
     }
 
