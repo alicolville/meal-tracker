@@ -11,11 +11,19 @@ function yk_mt_wlt_enabled() {
 }
 
 /**
+ * Is Weight Tracker in Pro Plus mode?
+ * @return bool
+ */
+function yk_mt_wlt_pro_plus_enabled() {
+    return function_exists( 'ws_ls_harris_benedict_calculate_calories' );
+}
+
+/**
  * Is Weight Tracker enabled to be used with Meal Tracker?
  * @return bool
  */
 function yk_mt_wlt_enabled_for_mt() {
-    return function_exists( 'ws_ls_harris_benedict_calculate_calories' ) &&
+    return true === yk_mt_wlt_pro_plus_enabled() &&
            yk_mt_site_options_as_bool('allow-calorie-external-wlt' );
 }
 

@@ -52,6 +52,8 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 1.1 =
 
+* Improvement: New Setting that enables users to search for meals added by any user. (#61)
+* Bug fix: Fix an issue where Weight Tracker can't be selected correctly as a Calorie Allowance source.
 * Bug fix: Responsive fix when adding menu link to Weight Tracker
 
 = 1.0 =

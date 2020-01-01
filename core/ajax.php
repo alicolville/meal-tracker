@@ -152,7 +152,12 @@ function yk_mt_ajax_meals() {
 		$options = [ 'limit' => 20 ];
 	}
 
-	$meals = yk_mt_db_meal_for_user( get_current_user_id(), $options );
+	// Are users allowed to search across everyone's meals? Or just their own?
+	$user_id = ( true === yk_mt_license_is_premium() && true === yk_mt_site_options_as_bool('search-others-meals', false ) ) ?
+                    NULL :
+                        get_current_user_id();
+
+	$meals = yk_mt_db_meal_for_user( $user_id, $options );
 
     // Compress meal objects to reduce data returned via AJAX
     if ( false === empty( $meals ) ) {
