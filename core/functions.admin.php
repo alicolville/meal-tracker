@@ -182,3 +182,21 @@ function yk_mt_admin_process_post_updates($user_id = NULL ) {
 
     do_action( 'yk_mt_settings_admin_sidebar_saved' );
 }
+
+/**
+ * Fetch a user's First name / Last name from WP. IF not available, use display_name.
+ * @param $user_id
+ * @return string
+ */
+function yk_mt_user_display_name( $user_id ) {
+
+    if ( true === empty( $user_id ) ) {
+        return '-';
+    }
+
+    $name = sprintf( '%s %s', get_user_meta( $user_id, 'first_name' , true ), get_user_meta( $user_id, 'last_name' , true ) );
+
+    return ( true === empty( $name ) || ' ' === $name ) ?
+        get_user_meta( $user_id, 'nickname' , true ) :
+        $name;
+}

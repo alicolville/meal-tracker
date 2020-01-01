@@ -38,6 +38,7 @@ function yk_mt_admin_page_entry_view() {
                                 <thead>
                                     <tr>
                                         <th><?php echo __( 'Meal', YK_MT_SLUG ); ?></th>
+                                        <th data-breakpoints="xs"><?php echo __( 'Description', YK_MT_SLUG ); ?></th>
                                         <th data-breakpoints="xs"><?php echo __( 'Detail', YK_MT_SLUG ); ?></th>
                                     </tr>
                                 </thead>
@@ -48,7 +49,7 @@ function yk_mt_admin_page_entry_view() {
                                             $total_calories = yk_mt_blur_text( $entry[ 'counts' ][ $meal_type[ 'id' ] ] );
 
                                             printf( '<tr class="yk-mt-entry-table-group footable-disabled">
-                                                                <td>%1$s</td>
+                                                                <td colspan="2">%1$s</td>
                                                                 <td class="yk-mt-blur">%2$skcal</td>
                                                              </tr>',
                                                             esc_html( $meal_type[ 'name' ] ),
@@ -56,7 +57,7 @@ function yk_mt_admin_page_entry_view() {
                                             );
 
                                             if ( true === empty( $entry[ 'meals' ][ $meal_type[ 'id' ] ] ) ) {
-                                                printf( '<tr class="yk-mt-entry-table-no-meals footable-disabled"><td colspan="2">%s</td></tr>',__('No meals', YK_MT_SLUG ) );
+                                                printf( '<tr class="yk-mt-entry-table-no-meals footable-disabled"><td colspan="3">%s</td></tr>',__('No meals', YK_MT_SLUG ) );
                                             } else {
 
                                                 $i = 0;
@@ -68,10 +69,12 @@ function yk_mt_admin_page_entry_view() {
 
                                                     printf ( '<tr>
                                                                     <td class="%1$s">%2$s</td>
-                                                                    <td data-breakpoints="xs" class="yk-mt-blur">%3$s</td>
+                                                                    <td class="%1$s">%3$s</td>
+                                                                    <td data-breakpoints="xs" class="yk-mt-blur">%4$s</td>
                                                                 </tr>',
                                                         ( $i < 2 ) ? '' : 'yk-mt-blur',
                                                         esc_html( $meal[ 'name' ] ),
+                                                        esc_html( $meal[ 'description' ] ),
                                                         esc_html( $meal[ 'd' ] )
                                                     );
 

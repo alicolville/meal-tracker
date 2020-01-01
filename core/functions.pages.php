@@ -268,7 +268,7 @@ function yk_mt_user_header( $user_id ) {
                 %s
             </div>
         </div>',
-        $user_data->user_nicename,
+        yk_mt_user_display_name( $user_id ) ,
         yk_mt_link_email_for_user( $user_id, true ),
         esc_url( $previous_url ),
         __( 'Back', YK_MT_SLUG ),
@@ -382,13 +382,12 @@ function yk_mt_link_render( $link, $label ) {
  */
 function yk_mt_link_profile_display_name_link( $user_id ) {
 
-    $user = get_user_by( 'ID', $user_id );
 
-    if ( false === $user ) {
+    if ( true === empty( $user_id ) ) {
         return '-';
     }
 
-    $label = ( false === empty( $user->display_name ) ) ? $user->display_name : $user->user_login;
+    $label = yk_mt_user_display_name( $user_id );
 
     return yk_mt_link_admin_page_user_render( $user_id, $label );
 }
