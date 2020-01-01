@@ -336,7 +336,6 @@ function yk_mt_date_iso_today() {
  * @return string
  */
 function yk_mt_use_minified() {
-	return ''; //TODO
 	return ( true === defined('SCRIPT_DEBUG') && false == SCRIPT_DEBUG ) ? '.min' : '';
 }
 

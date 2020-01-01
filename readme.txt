@@ -57,6 +57,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 * Improvement: New Settings that specify whether users are permitted to add new entries in the past and / or future (#72)
 * Improvement: Clearer display names for users. (#73)
 * Bug Fix: Added POT and en_GB language files. This should aid those that wish to translate the plugin (#74)
+* Bug Fix: Minified CSS and JS in front end (#37)
 * Bug fix: Fix an issue where Weight Tracker can't be selected correctly as a Calorie Allowance source.
 * Bug fix: Responsive fix when adding menu link to Weight Tracker
 
