@@ -2,7 +2,7 @@
 Contributors: aliakro
 Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food
-Requires at least: 5.2.2
+Requires at least: 5.0
 Tested up to: 5.3
 Stable tag: 1.1
 Requires PHP: 7.1
@@ -64,6 +64,10 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 * Bug Fix: Minified CSS and JS in front end (#37)
 * Bug fix: Fix an issue where Weight Tracker can't be selected correctly as a Calorie Allowance source.
 * Bug fix: Responsive fix when adding menu link to Weight Tracker
+
+= 1.0.1 =
+
+* Bug Fix: Removed reference to missing function ws_ls_create_dialog_jquery_code()
 
 = 1.0 =
 
