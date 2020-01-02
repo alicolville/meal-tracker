@@ -56,6 +56,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 * Improvement: New Setting that enables users to search for meals added by any user. (#61)
 * Improvement: New Settings that specify whether users are permitted to add new entries in the past and / or future (#72)
 * Improvement: Clearer display names for users. (#73)
+* Improvement: Admins can now delete user entries and mark their meals as deleted. (#68)
 * Improvement: Options to display summary of entries for today, last 7 days, latest 100 and latest 500 on user data dashboard (#65)
 * Improvement: Entry summary on the user data dashboard is now cached for 5 minutes to improve performance.
 * Bug Fix: Err was being displayed for meal unit if not description had been set for a meal. (#64)
