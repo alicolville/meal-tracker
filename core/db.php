@@ -246,14 +246,14 @@ function yk_mt_db_entry_get_ids_and_dates( $user_id = NULL ) {
 /**
  * Get summary data for user's entries
  *
- * @param null $user_id
- *
+ * @param $args
  * @return null|string
  */
 function yk_mt_db_entries_summary( $args ) {
 
     $args = wp_parse_args( $args, [
         'user-id'       => NULL,
+        'last-x-days'   => NULL,
         'limit'         => NULL,
         'sort-order'    => 'asc',
         'sort'          => 'date'
@@ -263,10 +263,14 @@ function yk_mt_db_entries_summary( $args ) {
 
     global $wpdb;
 
-    $sql = 'Select id, user_id, calories_allowed, calories_used, date from ' . $wpdb->prefix . YK_WT_DB_ENTRY;
+    $sql = 'Select id, user_id, calories_allowed, calories_used, date from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where 1=1 ';
 
     if ( false === empty( $args[ 'user-id' ] ) ) {
-        $sql .= sprintf( ' where user_id = %d', $args[ 'user-id' ] );
+        $sql .= sprintf( ' and user_id = %d', $args[ 'user-id' ] );
+    }
+
+    if ( false === empty( $args[ 'last-x-days' ] ) ) {
+        $sql .= sprintf( ' and date >= NOW() - INTERVAL %d DAY and date <= NOW()', $args[ 'last-x-days' ] );
     }
 
     $sort = ( true === in_array( $args[ 'sort' ], [ 'date', 'calories_allowed', 'calories_used' ] ) ) ?  $args[ 'sort' ] : 'date';

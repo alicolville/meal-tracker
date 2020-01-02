@@ -347,7 +347,7 @@ function yk_mt_use_minified() {
  *
  * @return null
  */
-function yk_mt_querystring_value($key, $default = NULL ) {
+function yk_mt_querystring_value( $key, $default = NULL ) {
 	return ( false === empty( $_GET[ $key ] ) ) ? $_GET[ $key ] : $default;
 }
 
