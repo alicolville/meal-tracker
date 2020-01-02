@@ -60,6 +60,7 @@ add_action( 'admin_menu', 'yk_mt_build_admin_menu' );
  */
 function yk_mt_enqueue_admin_files() {
 
+    // Only include MT dependencies on our pages.
     if ( false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-settings', 'yk-mt-setup-wizard' ] ) ) {
         return;
     }
@@ -81,6 +82,10 @@ function yk_mt_enqueue_admin_files() {
     if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu' ] ) ) {
 
         wp_enqueue_style( 'mt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
+
+        // Confirmation dialogs
+        wp_enqueue_script( 'mt-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'mt-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css', [], YK_MT_PLUGIN_VERSION );
 
         yk_mt_enqueue_scripts_chart();
 

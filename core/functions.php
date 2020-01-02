@@ -461,7 +461,9 @@ function yk_mt_localised_strings( ) {
         'meal-entry-deleted-success'    => __( 'The meal has been removed', YK_MT_SLUG ),
         'db-error'                      => __( 'There was error saving your changes', YK_MT_SLUG ),
         'db-error-loading'              => __( 'There was error loading your data', YK_MT_SLUG ),
-	    'settings-saved-success'        => __( 'Your settings have been saved', YK_MT_SLUG )
+	    'settings-saved-success'        => __( 'Your settings have been saved', YK_MT_SLUG ),
+        'confirm-title'                 => __( 'Are you sure?', YK_MT_SLUG ),
+        'confirm-content'               => __( 'Proceeding will cause user data to be deleted. This data can not be recovered. Are you sure you wish to proceed?', YK_MT_SLUG ),
     ];
 }
 
