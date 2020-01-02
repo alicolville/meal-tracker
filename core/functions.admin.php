@@ -218,18 +218,18 @@ function yk_mt_admin_option_links_clicked( $key ) {
 /**
  * Render out links for options
  * @param $key
+ * @param $default
  * @param $options
+ * @param null $cache_notice
  */
-function yk_mt_admin_option_links( $key, $options ) {
+function yk_mt_admin_option_links( $key, $default,  $options, $cache_notice = NULL ) {
 
     if ( false === is_array( $options ) ||
             true === empty( $options ) ) {
         return;
     }
 
-
-
-    $current_selected = yk_mt_site_options( $key, 'latest-100' );
+    $current_selected = yk_mt_site_options( $key, $default );
 
     $url = yk_mt_link_user_data();
 
@@ -241,6 +241,12 @@ function yk_mt_admin_option_links( $key, $options ) {
                             ( $current_selected === $option_key ) ? 'yk-mt-selected' : '',
                                 esc_html( $option_name )
         );
+    }
+
+    if ( false === empty ( $cache_notice ) &&
+        true === yk_mt_site_options_as_bool('caching-enabled' ) ) {
+
+            printf( '<small>%1$s %2$d %3$s.</small>', __('The above table updates every', YK_MT_SLUG ), $cache_notice, __('minutes', YK_MT_SLUG ) );
     }
 
     echo '</div>';

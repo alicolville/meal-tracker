@@ -259,7 +259,11 @@ function yk_mt_db_entries_summary( $args ) {
         'sort'          => 'date'
     ]);
 
-    // TODO: Cache this function for 1 min
+    $cache_key = md5( json_encode( $args ) );
+
+    if ( $cache = apply_filters( 'yk_mt_db_entries_summary_get', NULL, $cache_key ) ) {
+        return $cache;
+    }
 
     global $wpdb;
 
@@ -289,6 +293,8 @@ function yk_mt_db_entries_summary( $args ) {
     if ( false === empty( $results ) ) {
         $results = array_map( 'yk_mt_db_entry_calculate_stats', $results );
     }
+
+    do_action( 'yk_mt_db_entries_summary', $cache_key, $results );
 
     return $results;
 }

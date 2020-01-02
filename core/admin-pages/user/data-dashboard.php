@@ -32,7 +32,7 @@ function yk_mt_admin_page_dashboard() {
 
                                 ];
 
-                                $db_args = [ 'sort-order' => 'desc' ];
+                                $db_args = [ 'sort-order' => 'desc', 'caching-notice' => 5 ];
 
                                 switch  ( yk_mt_site_options( 'summary-fetch', 'today' ) ) {
                                     case 'latest-100':
@@ -53,10 +53,9 @@ function yk_mt_admin_page_dashboard() {
 
                                 yk_mt_table_user_entries( [ 'entries'   => $entries, 'show-username' => true ] );
 
-                                yk_mt_admin_option_links( 'summary-fetch', $option_links );
+                                yk_mt_admin_option_links( 'summary-fetch', 'today', $option_links, 5 );
 
                                 ?>
-
                         </div>
                     </div>
                 </div>
