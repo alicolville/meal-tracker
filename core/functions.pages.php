@@ -184,7 +184,9 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
         <h2 class="hndle"><?php echo __( 'Delete Data', YK_MT_SLUG ); ?></h2>
         <div class="inside">
             <a href="<?php echo esc_url( yk_mt_link_admin_page_user($user_id, 'user', [ 'delete-entries' => 'y' ] ) );?>" class="button-secondary yk-mt-button-confirm"><?php echo __( 'All Entries', YK_MT_SLUG ); ?></span></a>
-            <a href="<?php echo esc_url( yk_mt_link_admin_page_user($user_id, 'user', [ 'delete-meals' => 'y' ] ) );?>" class="button-secondary yk-mt-button-confirm"><?php echo __( 'All Meals', YK_MT_SLUG ); ?></span></a>
+            <a href="<?php echo esc_url( yk_mt_link_admin_page_user($user_id, 'user', [ 'delete-meals' => 'y' ] ) );?>"
+                data-content="<?php echo __( 'All of the user\'s meals will be marked as deleted. They will still reside in the system, yet can only be viewed against old entries. They can no longer be added to entries', YK_MT_SLUG ); ?>"
+                class="button-secondary yk-mt-button-confirm"><?php echo __( 'All Meals', YK_MT_SLUG ); ?></span></a>
         </div>
     </div>
     <?php

@@ -136,6 +136,24 @@ function yk_mt_entry_delete_all_for_user( $user_id = NULL ) {
 }
 
 /**
+ * Soft delete all meals for this user
+ * @param null $user_id
+ */
+function yk_mt_meal_soft_delete_all_for_user( $user_id = NULL ) {
+
+    $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+    $meals = yk_mt_db_meal_for_user( $user_id );
+
+    if ( false === empty( $meals ) ) {
+
+        $meals = wp_list_pluck( $meals, 'id' );
+        array_map( 'yk_mt_meal_update_delete', $meals );
+
+    }
+}
+
+/**
  * Total up the calories used for an entry (sum all meals added) and update.
  *
  * @param $entry_id
@@ -174,6 +192,16 @@ function yk_mt_entry_calories_calculate_update_used( $entry_id ) {
  */
 function yk_mt_meal_update_fave( $meal_id, $favourite = true ) {
 	return yk_mt_db_meal_update( [ 'id' => $meal_id, 'favourite' => ( true === $favourite ) ? 1 : 0 ] );
+}
+
+/**
+ * Soft delete meal
+ * @param $meal_id
+ * @param bool $deleted
+ * @return bool
+ */
+function yk_mt_meal_update_delete( $meal_id, $deleted = true ) {
+    return yk_mt_db_meal_update( [ 'id' => $meal_id, 'deleted' => ( true === $deleted ) ? 1 : 0 ] );
 }
 
 /**
