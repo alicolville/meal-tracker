@@ -114,6 +114,9 @@ jQuery( document ).ready(function ($) {
             buttons: {
                 confirm: function () {
                    location.href = url;
+                },
+                cancel: function () {
+
                 }
             }
         });
