@@ -84,6 +84,51 @@ function yk_mt_settings_page_generic() {
                                                     </td>
                                                 </tr>
                                             </table>
+                                            <h3><?php echo __( 'Meals' , YK_MT_SLUG); ?></h3>
+                                            <table class="form-table">
+                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
+                                                    <th scope="row"><?php echo __( 'Search other\'s meals' , YK_MT_SLUG); ?></th>
+                                                    <td>
+                                                        <?php
+                                                        $search_others = yk_mt_site_options_as_bool('search-others-meals', false );
+                                                        ?>
+                                                        <select id="search-others-meals" name="search-others-meals">
+                                                            <option value="false" <?php selected( $search_others, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
+                                                            <option value="true" <?php selected( $search_others, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
+                                                        </select>
+                                                        <p><?php echo __( 'If set to "Yes", users are not restricted to searching their own meal collections. Instead, a search will be performed across every user\'s meal collection. Please note, this may cause search to slow across large meal collections.', YK_MT_SLUG )?></p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <h3><?php echo __( 'New Entries' , YK_MT_SLUG); ?></h3>
+                                            <table class="form-table">
+                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
+                                                    <th scope="row"><?php echo __( 'Allow new entries in the past' , YK_MT_SLUG); ?></th>
+                                                    <td>
+                                                        <?php
+                                                        $value = yk_mt_site_options_as_bool('new-entries-past' );
+                                                        ?>
+                                                        <select id="new-entries-past" name="new-entries-past">
+                                                            <option value="true" <?php selected( $value, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
+                                                            <option value="false" <?php selected( $value, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
+                                                        </select>
+                                                        <p><?php echo __( 'If set to "Yes", users can create entries for dates in the past.', YK_MT_SLUG )?></p>
+                                                    </td>
+                                                </tr>
+                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
+                                                    <th scope="row"><?php echo __( 'Allow new entries in the future' , YK_MT_SLUG); ?></th>
+                                                    <td>
+                                                        <?php
+                                                        $value = yk_mt_site_options_as_bool('new-entries-future' );
+                                                        ?>
+                                                        <select id="new-entries-future" name="new-entries-future">
+                                                            <option value="true" <?php selected( $value, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
+                                                            <option value="false" <?php selected( $value, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
+                                                        </select>
+                                                        <p><?php echo __( 'If set to "Yes", users can create entries for dates in the future.', YK_MT_SLUG )?></p>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
                                         <div>
                                             <p><?php echo __('Specify the methods in which a user\'s daily allowance can be determined', YK_MT_SLUG )?>.
@@ -124,7 +169,7 @@ function yk_mt_settings_page_generic() {
                                                     </th>
                                                     <td>
                                                         <?php
-                                                            $allow_calorie = yk_mt_wlt_pro_plus_enabled();
+                                                            $allow_calorie = yk_mt_wlt_enabled_for_mt();
                                                         ?>
                                                         <select id="allow-calorie-external-wlt" name="allow-calorie-external-wlt">
                                                             <option value="true" <?php selected( $allow_calorie, true ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
@@ -189,6 +234,9 @@ function yk_mt_register_settings(){
         register_setting( 'yk-mt-options-group', 'allow-calorie-override' );
         register_setting( 'yk-mt-options-group', 'allow-calorie-external-wlt' );
         register_setting( 'yk-mt-options-group', 'yk-mt-edit-permissions' );
+        register_setting( 'yk-mt-options-group', 'search-others-meals' );
+        register_setting( 'yk-mt-options-group', 'new-entries-past' );
+        register_setting( 'yk-mt-options-group', 'new-entries-future' );
     }
 }
 add_action( 'admin_init', 'yk_mt_register_settings' );

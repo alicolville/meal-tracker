@@ -179,6 +179,16 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
             <?php yk_mt_user_search_form(); ?>
         </div>
     </div>
+
+    <div class="postbox">
+        <h2 class="hndle"><?php echo __( 'Delete Data', YK_MT_SLUG ); ?></h2>
+        <div class="inside">
+            <a href="<?php echo esc_url( yk_mt_link_admin_page_user($user_id, 'user', [ 'delete-entries' => 'y' ] ) );?>" class="button-secondary yk-mt-button-confirm"><?php echo __( 'All Entries', YK_MT_SLUG ); ?></span></a>
+            <a href="<?php echo esc_url( yk_mt_link_admin_page_user($user_id, 'user', [ 'delete-meals' => 'y' ] ) );?>"
+                data-content="<?php echo __( 'All of the user\'s meals will be marked as deleted. They will still reside in the system, yet can only be viewed against old entries. They can no longer be added to entries', YK_MT_SLUG ); ?>"
+                class="button-secondary yk-mt-button-confirm"><?php echo __( 'All Meals', YK_MT_SLUG ); ?></span></a>
+        </div>
+    </div>
     <?php
 }
 
@@ -268,7 +278,7 @@ function yk_mt_user_header( $user_id ) {
                 %s
             </div>
         </div>',
-        $user_data->user_nicename,
+        yk_mt_user_display_name( $user_id ) ,
         yk_mt_link_email_for_user( $user_id, true ),
         esc_url( $previous_url ),
         __( 'Back', YK_MT_SLUG ),
@@ -313,11 +323,12 @@ function yk_mt_link_admin_page_user_dashboard() {
 }
 /**
  * Get a link to an admin User page
- * @param $user_id
- * @param string $mode
- * @return string
- */
-function yk_mt_link_admin_page_user( $user_id, $mode = 'user' ) {
+* @param $user_id
+* @param string $mode
+* @param null $additional_qs
+* @return string
+*/
+function yk_mt_link_admin_page_user( $user_id, $mode = 'user', $additional_qs = NULL ) {
 
     if ( false === is_numeric( $user_id ) ) {
         return '#';
@@ -326,6 +337,11 @@ function yk_mt_link_admin_page_user( $user_id, $mode = 'user' ) {
     $url = sprintf( 'admin.php?page=yk-mt-user&mode=%1$s&user-id=%2$d', $mode, $user_id );
 
     $url = admin_url( $url );
+
+    if ( false === empty( $additional_qs ) &&
+        true === is_array( $additional_qs ) ) {
+        $url = add_query_arg( $additional_qs, $url );
+    }
 
     return $url;
 }
@@ -382,13 +398,12 @@ function yk_mt_link_render( $link, $label ) {
  */
 function yk_mt_link_profile_display_name_link( $user_id ) {
 
-    $user = get_user_by( 'ID', $user_id );
 
-    if ( false === $user ) {
+    if ( true === empty( $user_id ) ) {
         return '-';
     }
 
-    $label = ( false === empty( $user->display_name ) ) ? $user->display_name : $user->user_login;
+    $label = yk_mt_user_display_name( $user_id );
 
     return yk_mt_link_admin_page_user_render( $user_id, $label );
 }

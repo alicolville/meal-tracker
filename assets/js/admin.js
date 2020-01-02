@@ -82,5 +82,43 @@ jQuery( document ).ready(function ($) {
 
     }
 
-    // yk-mt-side-bar-admin-allowance
+    /**
+     * Confirmation dialog
+     */
+    $( '.yk-mt-button-confirm' ).click( function( e ) {
+
+        e.preventDefault();
+
+        var title   = $( this ).data( 'title' );
+        var content = $( this ).data( 'content' );
+        var url     = $( this ).attr( 'href' );
+
+        if ( 'undefined' === typeof title ) {
+            title = yk_mt_sc_meal_tracker[ 'localise' ][ 'confirm-title' ];
+        }
+
+        if ( 'undefined' === typeof content ) {
+            content = yk_mt_sc_meal_tracker[ 'localise' ][ 'confirm-content' ];
+        }
+
+        if ( 'url' === typeof content ) {
+            url = '#';
+        }
+
+        $.confirm({
+            title: title,
+            content: content,
+            type: 'blue',
+            boxWidth: '30%',
+            useBootstrap: false,
+            buttons: {
+                confirm: function () {
+                   location.href = url;
+                },
+                cancel: function () {
+
+                }
+            }
+        });
+    });
 });

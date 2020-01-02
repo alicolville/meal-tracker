@@ -118,6 +118,42 @@ function yk_mt_entry_meal_delete( $entry_meal_id ) {
 }
 
 /**
+ * Delete all entries for the given user
+ * @param null $user_id
+ */
+function yk_mt_entry_delete_all_for_user( $user_id = NULL ) {
+
+    $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+    $entries = yk_mt_db_entry_get_ids_and_dates( $user_id );
+
+    if ( false === empty( $entries ) ) {
+
+        $entries = array_keys( $entries );
+
+        array_map( 'yk_mt_db_entry_delete', $entries);
+    }
+}
+
+/**
+ * Soft delete all meals for this user
+ * @param null $user_id
+ */
+function yk_mt_meal_soft_delete_all_for_user( $user_id = NULL ) {
+
+    $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+    $meals = yk_mt_db_meal_for_user( $user_id );
+
+    if ( false === empty( $meals ) ) {
+
+        $meals = wp_list_pluck( $meals, 'id' );
+        array_map( 'yk_mt_meal_update_delete', $meals );
+
+    }
+}
+
+/**
  * Total up the calories used for an entry (sum all meals added) and update.
  *
  * @param $entry_id
@@ -156,6 +192,16 @@ function yk_mt_entry_calories_calculate_update_used( $entry_id ) {
  */
 function yk_mt_meal_update_fave( $meal_id, $favourite = true ) {
 	return yk_mt_db_meal_update( [ 'id' => $meal_id, 'favourite' => ( true === $favourite ) ? 1 : 0 ] );
+}
+
+/**
+ * Soft delete meal
+ * @param $meal_id
+ * @param bool $deleted
+ * @return bool
+ */
+function yk_mt_meal_update_delete( $meal_id, $deleted = true ) {
+    return yk_mt_db_meal_update( [ 'id' => $meal_id, 'deleted' => ( true === $deleted ) ? 1 : 0 ] );
 }
 
 /**
@@ -200,7 +246,7 @@ function yk_mt_user_calories_target( $user_id = NULL, $include_source = false ) 
 	$selected_source = yk_mt_settings_get( 'calorie-source', NULL, $user_id );
 
 	// If the user has no source selected and WT is enabled then use it
-    if ( true === empty( $selected_source ) && yk_mt_wlt_pro_plus_enabled() ) {
+    if ( true === empty( $selected_source ) && yk_mt_wlt_enabled_for_mt() ) {
         $selected_source = 'wlt';
     }
 
@@ -336,7 +382,6 @@ function yk_mt_date_iso_today() {
  * @return string
  */
 function yk_mt_use_minified() {
-	return ''; //TODO
 	return ( true === defined('SCRIPT_DEBUG') && false == SCRIPT_DEBUG ) ? '.min' : '';
 }
 
@@ -348,7 +393,7 @@ function yk_mt_use_minified() {
  *
  * @return null
  */
-function yk_mt_querystring_value($key, $default = NULL ) {
+function yk_mt_querystring_value( $key, $default = NULL ) {
 	return ( false === empty( $_GET[ $key ] ) ) ? $_GET[ $key ] : $default;
 }
 
@@ -462,7 +507,9 @@ function yk_mt_localised_strings( ) {
         'meal-entry-deleted-success'    => __( 'The meal has been removed', YK_MT_SLUG ),
         'db-error'                      => __( 'There was error saving your changes', YK_MT_SLUG ),
         'db-error-loading'              => __( 'There was error loading your data', YK_MT_SLUG ),
-	    'settings-saved-success'        => __( 'Your settings have been saved', YK_MT_SLUG )
+	    'settings-saved-success'        => __( 'Your settings have been saved', YK_MT_SLUG ),
+        'confirm-title'                 => __( 'Are you sure?', YK_MT_SLUG ),
+        'confirm-content'               => __( 'Proceeding will cause user data to be deleted. This data can not be recovered. Are you sure you wish to proceed?', YK_MT_SLUG ),
     ];
 }
 
@@ -574,7 +621,7 @@ function yk_mt_get_unit_string( $meal ) {
  */
 function yk_mt_is_meal_object( $meal ) {
 	return true === is_array( $meal ) &&
-	       true === isset( $meal[ 'name'], $meal[ 'quantity'], $meal[ 'unit'], $meal[ 'calories'], $meal[ 'description'], $meal[ 'id'] );
+	       true === isset( $meal[ 'name'], $meal[ 'quantity'], $meal[ 'unit'], $meal[ 'calories'], $meal[ 'id'] );
 }
 
 /**
@@ -703,6 +750,7 @@ function yk_mt_array_strip_keys( $array, $keys ) {
  * Fetch entry ID from QS and ensure it belongs to the logged in user
  *
  * @param bool $ensure_belongs_to_current_user
+ * @param bool $create_entry_for_missing_date
  * @return null
  */
 function yk_mt_entry_id_from_qs( $ensure_belongs_to_current_user = true,
@@ -724,6 +772,10 @@ function yk_mt_entry_id_from_qs( $ensure_belongs_to_current_user = true,
         if ( false === $entry_id &&
                 true === $create_entry_for_missing_date ) {
 
+            if ( false === yk_mt_entry_allowed_to_create_for_this_date( $date ) ) {
+                return NULL;
+            }
+
             $entry_id = yk_mt_entry_get_id_or_create( NULL, $date );
         }
     }
@@ -734,6 +786,40 @@ function yk_mt_entry_id_from_qs( $ensure_belongs_to_current_user = true,
     }
 
     return (int) $entry_id;
+}
+
+/**
+ * For the given date, does the admin settings allow a new entry to be added for this date?
+ * @param $entry_date
+ * @return bool
+ */
+function yk_mt_entry_allowed_to_create_for_this_date( $entry_date ) {
+
+    if ( true === empty( $entry_date ) ) {
+        return false;
+    }
+
+    $entry_date     = new DateTime( $entry_date );
+    $current_date   = new DateTime();
+
+    $current_date->settime(0,0);
+
+    // Today's date
+    if ( $entry_date == $current_date ) {
+        return true;
+    }
+
+    // Future date
+    if ( $entry_date > $current_date && yk_mt_site_options_as_bool('new-entries-future' ) ) {
+        return true;
+    }
+
+    // Past Date
+    if ( $entry_date < $current_date && true === yk_mt_site_options_as_bool('new-entries-past' ) ) {
+        return true;
+    }
+
+    return false;
 }
 
 /**
@@ -809,14 +895,21 @@ function yk_mt_navigation_links() {
     // Do we already have an entry for yesterday? IF so, swap in entry ID
     if ( $existing_id =  yk_mt_entry_for_given_date( $links[ 'nav' ][ 'yesterday' ][ 'id' ] ) ) {
         $links[ 'nav' ][ 'yesterday' ][ 'id' ] = $existing_id;
+    } // Are we allowed to create entries in the past? IF not, and we don't have an actual entry for yesterday, then remove "Yesterday" link.
+    else if ( false === yk_mt_site_options_as_bool('new-entries-past' ) ) {
+        unset( $links[ 'nav' ][ 'yesterday' ] );
     }
 
     $links[ 'nav' ][ 'today' ]      =  [ 'id' => $todays_entry_id, 'label' =>  __( 'Today', YK_MT_SLUG )  ];
+
     $links[ 'nav' ][ 'tomorrow' ]   =  [ 'id' => date('Y-m-d', strtotime('+1 day' ) ), 'label' =>  __( 'Tomorrow', YK_MT_SLUG ) ];
 
     // Do we already have an entry for tomorrow? IF so, swap in entry ID
     if ( $existing_id =  yk_mt_entry_for_given_date( $links[ 'nav' ][ 'tomorrow' ][ 'id' ] ) ) {
         $links[ 'nav' ][ 'tomorrow' ][ 'id' ] = $existing_id;
+    }   // Tomorrow - are future dates are permitted.
+    elseif ( false === yk_mt_site_options_as_bool('new-entries-future' ) ) {
+        unset( $links[ 'nav' ][ 'tomorrow' ] );
     }
 
     return $links;

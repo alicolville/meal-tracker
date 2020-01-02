@@ -6,6 +6,8 @@ function yk_mt_admin_page_user_summary() {
 
     yk_mt_admin_permission_check();
 
+    $use_cache = true;
+
     $user_id = yk_mt_get_user_id_from_qs();
 
     // Ensure this WP user ID exists!
@@ -13,7 +15,18 @@ function yk_mt_admin_page_user_summary() {
 
     yk_mt_admin_process_post_updates( $user_id );
 
-    $entries            = yk_mt_db_entries_summary( [ 'user-id' => $user_id ] );
+    // Delete entries for the user?
+    if ( 'y' === yk_mt_querystring_value( 'delete-entries', false ) ) {
+        yk_mt_entry_delete_all_for_user( $user_id );
+        $use_cache = false;
+    }
+
+    // Delete meals for the user?
+    if ( 'y' === yk_mt_querystring_value( 'delete-meals', false ) ) {
+        yk_mt_meal_soft_delete_all_for_user( $user_id );
+    }
+
+    $entries            = yk_mt_db_entries_summary( [ 'user-id' => $user_id, 'use-cache' => $use_cache ] );
     $todays_entry_id    = yk_mt_db_entry_get_id_for_today( $user_id );
     $todays_entry       = ( false === empty( $todays_entry_id ) ) ? yk_mt_db_entry_get( $todays_entry_id ) : NULL;
 

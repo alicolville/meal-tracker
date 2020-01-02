@@ -71,7 +71,8 @@ function yk_mt_table_user_entries( $args ) {
     $args = wp_parse_args( $args, [
         'user-id'       => get_current_user_id(),
         'entries'       => NULL,
-        'show-username' => false
+        'show-username' => false,
+        'use-cache'     => true
     ]);
 
     // Fetch entries if non specified
@@ -181,4 +182,73 @@ function yk_mt_admin_process_post_updates($user_id = NULL ) {
     }
 
     do_action( 'yk_mt_settings_admin_sidebar_saved' );
+}
+
+/**
+ * Fetch a user's First name / Last name from WP. IF not available, use display_name.
+ * @param $user_id
+ * @return string
+ */
+function yk_mt_user_display_name( $user_id ) {
+
+    if ( true === empty( $user_id ) ) {
+        return '-';
+    }
+
+    $name = sprintf( '%s %s', get_user_meta( $user_id, 'first_name' , true ), get_user_meta( $user_id, 'last_name' , true ) );
+
+    return ( true === empty( $name ) || ' ' === $name ) ?
+        get_user_meta( $user_id, 'nickname' , true ) :
+        $name;
+}
+
+/**
+ * Handle click of option link
+ * @param $key
+ */
+function yk_mt_admin_option_links_clicked( $key ) {
+
+    // Has a link been clicked? If so, update option
+    $clicked_value = yk_mt_querystring_value( $key );
+
+    if ( false === empty( $clicked_value ) ) {
+        update_option( $key, $clicked_value );
+    }
+}
+
+/**
+ * Render out links for options
+ * @param $key
+ * @param $default
+ * @param $options
+ * @param null $cache_notice
+ */
+function yk_mt_admin_option_links( $key, $default,  $options, $cache_notice = NULL ) {
+
+    if ( false === is_array( $options ) ||
+            true === empty( $options ) ) {
+        return;
+    }
+
+    $current_selected = yk_mt_site_options( $key, $default );
+
+    $url = yk_mt_link_user_data();
+
+    echo '<div class="yk-mt-link-group">';
+
+    foreach ( $options as $option_key => $option_name ) {
+        printf(     '<a href="%1$s" class="%2$s">%3$s</a> &middot; ',
+                        esc_url( add_query_arg( $key , $option_key, $url ) ),
+                            ( $current_selected === $option_key ) ? 'yk-mt-selected' : '',
+                                esc_html( $option_name )
+        );
+    }
+
+    if ( false === empty ( $cache_notice ) &&
+        true === yk_mt_site_options_as_bool('caching-enabled' ) ) {
+
+            printf( '<small>%1$s %2$d %3$s.</small>', __('The above table updates every', YK_MT_SLUG ), $cache_notice, __('minutes', YK_MT_SLUG ) );
+    }
+
+    echo '</div>';
 }
