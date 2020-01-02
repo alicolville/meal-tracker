@@ -71,7 +71,8 @@ function yk_mt_table_user_entries( $args ) {
     $args = wp_parse_args( $args, [
         'user-id'       => get_current_user_id(),
         'entries'       => NULL,
-        'show-username' => false
+        'show-username' => false,
+        'use-cache'     => true
     ]);
 
     // Fetch entries if non specified

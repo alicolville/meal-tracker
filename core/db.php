@@ -256,12 +256,14 @@ function yk_mt_db_entries_summary( $args ) {
         'last-x-days'   => NULL,
         'limit'         => NULL,
         'sort-order'    => 'asc',
-        'sort'          => 'date'
+        'sort'          => 'date',
+        'use-cache'     => true
     ]);
 
     $cache_key = md5( json_encode( $args ) );
 
-    if ( $cache = apply_filters( 'yk_mt_db_entries_summary_get', NULL, $cache_key ) ) {
+    if ( true === $args[ 'use-cache' ] &&
+            $cache = apply_filters( 'yk_mt_db_entries_summary_get', NULL, $cache_key ) ) {
         return $cache;
     }
 

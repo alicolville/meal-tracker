@@ -118,6 +118,24 @@ function yk_mt_entry_meal_delete( $entry_meal_id ) {
 }
 
 /**
+ * Delete all entries for the given user
+ * @param null $user_id
+ */
+function yk_mt_entry_delete_all_for_user( $user_id = NULL ) {
+
+    $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+    $entries = yk_mt_db_entry_get_ids_and_dates( $user_id );
+
+    if ( false === empty( $entries ) ) {
+
+        $entries = array_keys( $entries );
+
+        array_map( 'yk_mt_db_entry_delete', $entries);
+    }
+}
+
+/**
  * Total up the calories used for an entry (sum all meals added) and update.
  *
  * @param $entry_id
