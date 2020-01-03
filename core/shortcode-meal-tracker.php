@@ -238,6 +238,8 @@
 
 			$active_tab = true;
 
+            $localised_strings = yk_mt_localised_strings();
+
 			// For each meal type, display an accordion and relevant meal data
 			foreach ( $meal_types as $meal_type ) {
 
@@ -245,8 +247,6 @@
                 $meal_type_html = sprintf( '<p>%s</p>', yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type['id'] ) );
 
                 $meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt-t yk-mt-list-of-meals' );
-
-                $localised_strings = yk_mt_localised_strings();
 
                 $meal_type_html .= sprintf( '<div id="meals-table-%d" class="%s">%s.</div>',
                                                     $meal_type['id'],
