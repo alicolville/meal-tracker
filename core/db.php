@@ -924,8 +924,8 @@ function yk_mt_db_mysql_formats( $data ) {
         'favourite'             => '%d',
         'unit'                  => '%s',
         'json'                  => '%s',
-        'protein'               => '%f',
-        'fat'                   => '%f',
+        'proteins'              => '%f',
+        'fats'                  => '%f',
         'carbs'                 => '%f'
     ];
 
@@ -962,8 +962,8 @@ function yk_wt_db_tables_create() {
                 added_by int NOT NULL,
                 name varchar(60) NOT NULL, 
                 calories float DEFAULT 0 NOT NULL,
-                protein float DEFAULT 0 NOT NULL,
-                fat float DEFAULT 0 NOT NULL,
+                proteins float DEFAULT 0 NOT NULL,
+                fats float DEFAULT 0 NOT NULL,
                 carbs float DEFAULT 0 NOT NULL,
                 quantity float DEFAULT 0 NOT NULL,
                 unit varchar(10) DEFAULT 'g' NOT NULL, 
