@@ -152,20 +152,22 @@ function yk_mt_cache_delete( $key ){
  */
 function yk_mt_cache_delete_all() {
 
+    if ( false === yk_mt_cache_is_enabled() ){
+        return;
+    }
+
     global $wpdb;
 
-    if ( true === yk_mt_cache_is_enabled() ){
+    $sql = "Delete FROM  $wpdb->options
+            WHERE option_name LIKE '%transient_" . YK_MT_SLUG ."%'";
 
-        $sql = "Delete FROM  $wpdb->options
-                WHERE option_name LIKE '%transient_" . YK_MT_SLUG ."%'";
+    $wpdb->query( $sql );
 
-        $wpdb->query($sql);
+    $sql = "Delete FROM  $wpdb->options
+            WHERE option_name LIKE '%transient_timeout_" . YK_MT_SLUG ."%'";
 
-        $sql = "Delete FROM  $wpdb->options
-                WHERE option_name LIKE '%transient_timeout_" . YK_MT_SLUG ."%'";
+    $wpdb->query( $sql );
 
-        $wpdb->query($sql);
-    }
 }
 
 /**
