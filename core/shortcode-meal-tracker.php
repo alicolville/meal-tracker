@@ -388,6 +388,13 @@
             __( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
         );
 
+		// MarcoNutrients enabled?
+        if ( true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) ) {
+            $html .= yk_mt_form_number( __( 'Proteins', YK_MT_SLUG ), 'add-meal-proteins', '', '', 1,0 );
+            $html .= yk_mt_form_number( __( 'Fats', YK_MT_SLUG ), 'add-meal-fats', '', '', 1,0 );
+            $html .= yk_mt_form_number( __( 'Carbs', YK_MT_SLUG ), 'add-meal-carbs', '', '', 1,0 );
+        }
+
 		$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', '', yk_mt_units() );
 
 		$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity', '', '', 1, 1, 99999, true, false, true );
@@ -564,6 +571,7 @@
 		wp_localize_script( 'meal-tracker', 'yk_mt_sc_meal_tracker', [
 			'mode'              => $args[ 'mode' ],
 			'accordion-enabled' => yk_mt_site_options_for_js_bool( 'accordion-enabled', true ),
+			'macros-enabled'    => yk_mt_site_options_for_js_bool( 'macronutrients-enabled', false ),
 			'dialog-options'    => json_encode( $dialog_options ),
             'localise'          => yk_mt_localised_strings(),
             'todays-entry'      => yk_mt_entry( $args[ 'entry-id' ] ),

@@ -106,9 +106,9 @@ function yk_mt_settings_page_generic() {
                                                     <th scope="row"><?php echo __( 'Enable' , YK_MT_SLUG); ?></th>
                                                     <td>
                                                         <?php
-                                                        $macronutrients = yk_mt_site_options_as_bool('macronutrients', false );
+                                                        $macronutrients = yk_mt_site_options_as_bool('macronutrients-enabled', false );
                                                         ?>
-                                                        <select id="macronutrients" name="macronutrients">
+                                                        <select id="macronutrients-enabled" name="macronutrients-enabled">
                                                             <option value="false" <?php selected( $macronutrients, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
                                                             <option value="true" <?php selected( $macronutrients, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
                                                         </select>
@@ -253,7 +253,7 @@ function yk_mt_register_settings(){
         register_setting( 'yk-mt-options-group', 'search-others-meals' );
         register_setting( 'yk-mt-options-group', 'new-entries-past' );
         register_setting( 'yk-mt-options-group', 'new-entries-future' );
-        register_setting( 'yk-mt-options-group', 'macronutrients' );
+        register_setting( 'yk-mt-options-group', 'macronutrients-enabled' );
     }
 }
 add_action( 'admin_init', 'yk_mt_register_settings' );
