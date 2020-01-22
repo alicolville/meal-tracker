@@ -1,15 +1,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Meal Tracker\n"
-"POT-Creation-Date: 2020-01-01 21:27+0000\n"
-"PO-Revision-Date: 2020-01-01 21:27+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-22 18:13+0000\n"
+"PO-Revision-Date: 2020-01-22 18:13+0000\n"
 "Last-Translator: \n"
-"Language-Team: \n"
-"Language: en_GB\n"
+"Language-Team: English (UK)\n"
+"Language: ar_SA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
 "X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
@@ -18,32 +20,33 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Loco-Version: 2.3.1; wp-5.3.2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: core/activate.php:32
+#: core/activate.php:32 core/functions.php:1193
 msgid "Breakfast"
-msgstr ""
+msgstr "الافطار"
 
-#: core/activate.php:33
+#: core/activate.php:33 core/functions.php:1194
 msgid "Mid-morning"
-msgstr ""
+msgstr "منتصف الصباح"
 
-#: core/activate.php:34
+#: core/activate.php:34 core/functions.php:1195
 msgid "Lunch"
-msgstr ""
+msgstr "الغداء"
 
-#: core/activate.php:35
+#: core/activate.php:35 core/functions.php:1196
 msgid "Afternoon"
-msgstr ""
+msgstr "بعد ظهر"
 
-#: core/activate.php:36
+#: core/activate.php:36 core/functions.php:1197
 msgid "Dinner"
-msgstr ""
+msgstr "العشاء"
 
-#: core/activate.php:37
+#: core/activate.php:37 core/functions.php:1198
 msgid "Evening"
-msgstr ""
+msgstr "المساء"
 
 #: core/admin-pages/page.help.php:23
 msgid "Custom modifications / web development"
@@ -61,26 +64,14 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: core/admin-pages/page.help.php:71 core/admin-pages/page.help.php:75
-msgid "Are you sure?"
-msgstr ""
-
-#: core/admin-pages/page.help.php:72
-msgid "Are you sure you wish to remove all issued awards?"
-msgstr ""
-
-#: core/admin-pages/page.help.php:76
-msgid "Are you sure you wish to clear all log entries?"
-msgstr ""
-
 #: core/admin-pages/page.license.php:10 core/admin-pages/page.settings.php:8
-#: core/functions.admin.php:135
+#: core/functions.admin.php:136
 msgid "You do not have sufficient permissions to access this page."
-msgstr ""
+msgstr "ليس لديك الصلاحيات الكافية للوصول إلى هذه الصفحة."
 
 #: core/admin-pages/page.license.php:28
 msgid "Your license has been applied!"
-msgstr ""
+msgstr "تم تطبيق الترخيص الخاص بك!"
 
 #: core/admin-pages/page.license.php:30
 msgid "There was an error applying your license. "
@@ -96,7 +87,7 @@ msgstr ""
 
 #: core/admin-pages/page.settings.php:30
 msgid " Settings"
-msgstr ""
+msgstr "الإعدادات"
 
 #: core/admin-pages/page.settings.php:43
 msgid "General"
@@ -104,11 +95,11 @@ msgstr ""
 
 #: core/admin-pages/page.settings.php:43
 msgid "General settings"
-msgstr ""
+msgstr "الاعدادات العامة"
 
 #: core/admin-pages/page.settings.php:44
 msgid "Calorie Allowance"
-msgstr ""
+msgstr "السعرات الحرارية المسموح بها"
 
 #: core/admin-pages/page.settings.php:44
 msgid "Specify the sources for determining a user's calorie allowance"
@@ -183,7 +174,7 @@ msgid ""
 msgstr ""
 
 #: core/admin-pages/page.settings.php:87 core/functions.pages.php:70
-#: core/functions.pages.php:208
+#: core/functions.pages.php:218
 msgid "Meals"
 msgstr ""
 
@@ -201,7 +192,7 @@ msgstr ""
 
 #: core/admin-pages/page.settings.php:103
 msgid "New Entries"
-msgstr ""
+msgstr "إدخالات جديدة"
 
 #: core/admin-pages/page.settings.php:106
 msgid "Allow new entries in the past"
@@ -309,17 +300,23 @@ msgstr ""
 msgid "Summary"
 msgstr ""
 
+#: core/admin-pages/user/data-dashboard.php:28
+msgid "Today 's entries"
+msgstr "إدخالات اليوم"
+
 #: core/admin-pages/user/data-dashboard.php:29
-msgid "Latest 100"
+msgid "Last 7 days"
 msgstr ""
 
 #: core/admin-pages/user/data-dashboard.php:30
-msgid "Today 's entries"
+msgid "Latest 100"
 msgstr ""
 
 #: core/admin-pages/user/data-dashboard.php:31
-msgid "This week's entries"
-msgstr ""
+#, fuzzy
+#| msgid "Latest Entry"
+msgid "Latest 500"
+msgstr "آخر إدخال"
 
 #: core/admin-pages/user/data-entry.php:35
 msgid "Entry for"
@@ -327,166 +324,176 @@ msgstr ""
 
 #: core/admin-pages/user/data-entry.php:40
 msgid "Meal"
-msgstr ""
+msgstr "وجبة"
 
 #: core/admin-pages/user/data-entry.php:41 core/shortcode-meal-tracker.php:383
 msgid "Description"
-msgstr ""
+msgstr "وصف"
 
 #: core/admin-pages/user/data-entry.php:42
 msgid "Detail"
-msgstr ""
+msgstr "التفاصيل"
 
 #: core/admin-pages/user/data-entry.php:60
 msgid "No meals"
-msgstr ""
+msgstr "لا توجد وجبات"
 
 #: core/admin-pages/user/data-search-results.php:11
 #: core/admin-pages/user/data-search-results.php:17
 msgid "Search Results"
-msgstr ""
+msgstr "نتائج البحث"
 
 #: core/admin-pages/user/data-search-results.php:37
 msgid "results were found for"
-msgstr ""
+msgstr "تم العثور على نتائج لـ"
 
 #: core/admin-pages/user/data-search-results.php:45
 msgid "Username"
-msgstr ""
+msgstr "اسم المستخدم"
 
 #: core/admin-pages/user/data-search-results.php:46
 msgid "Email"
-msgstr ""
+msgstr "البريد الإلكتروني"
 
 #: core/admin-pages/user/data-search-results.php:47 core/functions.pages.php:83
 msgid "Latest Entry"
-msgstr ""
+msgstr "آخر إدخال"
 
 #: core/admin-pages/user/data-search-results.php:48
 msgid "Number Entries"
-msgstr ""
+msgstr "عدد الادخالات"
 
 #: core/admin-pages/user/data-search-results.php:49
 msgid "Number Meals"
-msgstr ""
+msgstr "عدد الوجبات"
 
 #: core/admin-pages/user/data-search-results.php:64
 msgid "No users were found for the given search criteria"
-msgstr ""
+msgstr "لم يتم العثور على مستخدمين لمعايير البحث المحددة"
 
 #: core/admin-pages/user/data-search-results.php:69
 msgid "No search terms were specified"
 msgstr ""
 
-#: core/admin-pages/user/data-user.php:33
+#: core/admin-pages/user/data-user.php:46
 msgid "Chart"
-msgstr ""
+msgstr "الرسم البياني"
 
-#: core/admin-pages/user/data-user.php:41
+#: core/admin-pages/user/data-user.php:54
 msgid "Latest 15 entries"
-msgstr ""
+msgstr "أحدث 15 إدخال"
 
-#: core/admin-pages/user/data-user.php:44
+#: core/admin-pages/user/data-user.php:57
 msgid "No results"
-msgstr ""
+msgstr "لا يوجد نتائج"
 
-#: core/admin-pages/user/data-user.php:50
+#: core/admin-pages/user/data-user.php:63
 msgid "Entries for this user"
-msgstr ""
+msgstr "إدخالات لهذا المستخدم"
 
-#: core/ajax.php:236 core/db.php:370 core/db.php:381 core/functions.php:449
-#: core/functions.php:1112
+#: core/ajax.php:236 core/db.php:382 core/db.php:393 core/functions.php:495
+#: core/functions.php:1160
 msgid "kcal"
-msgstr ""
+msgstr "سعرة حرارية"
 
-#: core/functions.admin.php:86 core/functions.pages.php:32
+#: core/functions.admin.php:87 core/functions.pages.php:32
 msgid "Date"
-msgstr ""
+msgstr "التاريخ"
 
-#: core/functions.admin.php:88
+#: core/functions.admin.php:89
 msgid "User"
-msgstr ""
+msgstr "المستخدم"
 
-#: core/functions.admin.php:90 core/functions.chart.php:72
+#: core/functions.admin.php:91 core/functions.chart.php:72
 #: core/functions.pages.php:36
 msgid "Calories Allowed"
-msgstr ""
+msgstr "السعرات الحرارية المسموح بها"
 
-#: core/functions.admin.php:91 core/functions.chart.php:81
+#: core/functions.admin.php:92 core/functions.chart.php:81
 #: core/functions.pages.php:58
 msgid "Calories Used"
-msgstr ""
+msgstr "السعرات الحرارية المستخدمة"
 
-#: core/functions.admin.php:92 core/functions.pages.php:62
+#: core/functions.admin.php:93 core/functions.pages.php:62
 msgid "Calories Remaining"
+msgstr "السعرات الحرارية المتبقية"
+
+#: core/functions.admin.php:94
+msgid "Percentage Used"
+msgstr "النسبة المستخدمة"
+
+#: core/functions.admin.php:250
+msgid "The above table updates every"
 msgstr ""
 
-#: core/functions.admin.php:93
-msgid "Percentage Used"
+#: core/functions.admin.php:250
+msgid "minutes"
 msgstr ""
 
 #: core/functions.chart.php:14
 msgid "In a chart"
-msgstr ""
+msgstr "في الرسم البياني"
 
 #: core/functions.pages.php:25
 msgid "Entry summary"
-msgstr ""
+msgstr "ملخص الادخال"
 
 #: core/functions.pages.php:25
 msgid "Today's entry"
-msgstr ""
+msgstr "إدخال اليوم"
 
 #: core/functions.pages.php:42
 msgid "Calories allowed: "
-msgstr ""
+msgstr "السعرات الحرارية المسموح بها:"
 
 #: core/functions.pages.php:52 core/functions.pages.php:137
 #: core/functions.pages.php:170
 msgid "Save"
-msgstr ""
+msgstr "حفظ"
 
 #: core/functions.pages.php:66
 msgid "Percentage used"
-msgstr ""
+msgstr "النسبة المستخدمة"
 
 #: core/functions.pages.php:79
 msgid "User Information"
-msgstr ""
+msgstr "معلومات المستخدم"
 
 #: core/functions.pages.php:87
 msgid "Oldest Entry"
-msgstr ""
+msgstr "أقدم إدخال"
 
 #: core/functions.pages.php:91
 msgid "Number of Entries"
-msgstr ""
+msgstr "عدد الادخالات"
 
 #: core/functions.pages.php:95
 msgid "Number of Meals"
-msgstr ""
+msgstr "عدد الوجبات"
 
 #: core/functions.pages.php:103
 msgid "Allowed calories source"
-msgstr ""
+msgstr "مصدر السعرات الحرارية المسموح بها"
 
 #: core/functions.pages.php:105
 msgid ""
 "When a new entry is created for this user, their allowed calories will be "
 "set in the following way"
 msgstr ""
+"عند إنشاء إدخال جديد لهذا المستخدم ، سيتم تعيين السعرات الحرارية المسموح بها "
+"بالطريقة التالية"
 
 #: core/functions.pages.php:112
 msgid "Source"
-msgstr ""
+msgstr "المصدر"
 
 #: core/functions.pages.php:141
 msgid "You must specify one or more calorie sources in settings."
-msgstr ""
+msgstr "يجب عليك تحديد واحد أو أكثر من مصادر السعرات الحرارية في الإعدادات."
 
 #: core/functions.pages.php:147
 msgid "Current allowance"
-msgstr ""
+msgstr "المسموح به حالياً"
 
 #: core/functions.pages.php:156
 msgid "Specify admin allowance for the user"
@@ -500,303 +507,336 @@ msgstr ""
 
 #: core/functions.pages.php:160
 msgid "Set Target: "
-msgstr ""
+msgstr "تحديد الهدف:"
 
-#: core/functions.pages.php:177 core/functions.pages.php:194
+#: core/functions.pages.php:177 core/functions.pages.php:204
 msgid "User Search"
+msgstr "بحث المستخدم"
+
+#: core/functions.pages.php:184
+msgid "Delete Data"
 msgstr ""
 
-#: core/functions.pages.php:200
+#: core/functions.pages.php:186
+#, fuzzy
+#| msgid "Entries"
+msgid "All Entries"
+msgstr "الإدخالات"
+
+#: core/functions.pages.php:188
+msgid ""
+"All of the user's meals will be marked as deleted. They will still reside in "
+"the system, yet can only be viewed against old entries. They can no longer "
+"be added to entries"
+msgstr ""
+
+#: core/functions.pages.php:189
+#, fuzzy
+#| msgid "Add Meal"
+msgid "All Meals"
+msgstr "أضف وجبة"
+
+#: core/functions.pages.php:210
 msgid "Summary Counts"
 msgstr ""
 
-#: core/functions.pages.php:204
+#: core/functions.pages.php:214
 msgid "Entries"
-msgstr ""
+msgstr "الإدخالات"
 
-#: core/functions.pages.php:212
+#: core/functions.pages.php:222
 msgid "Meals added to entries"
-msgstr ""
+msgstr "الوجبات المضافة إلى الإدخالات"
 
-#: core/functions.pages.php:216
+#: core/functions.pages.php:226
 msgid "WordPress users"
 msgstr ""
 
-#: core/functions.pages.php:220
+#: core/functions.pages.php:230
 msgid "Users with an entry"
 msgstr ""
 
-#: core/functions.pages.php:224
+#: core/functions.pages.php:234
 msgid "Entries on target"
 msgstr ""
 
-#: core/functions.pages.php:228
+#: core/functions.pages.php:238
 msgid "Entries over target"
 msgstr ""
 
-#: core/functions.pages.php:232
+#: core/functions.pages.php:242
 msgid "last updated at "
 msgstr ""
 
-#: core/functions.pages.php:274
+#: core/functions.pages.php:284
 msgid "Back"
-msgstr ""
+msgstr "عودة"
 
-#: core/functions.pages.php:276
+#: core/functions.pages.php:286
 msgid "WordPress Record"
 msgstr ""
 
-#: core/functions.pages.php:278 core/hooks.php:143
+#: core/functions.pages.php:288 core/hooks.php:148
 msgid "Meal Tracker Record"
 msgstr ""
 
-#: core/functions.pages.php:497
+#: core/functions.pages.php:513
 msgid "Enter a user's email, display name or username then click \"Search\"."
 msgstr ""
 
-#: core/functions.php:237
+#: core/functions.php:283
 msgid "As specified by Admin"
-msgstr ""
+msgstr "كما هو محدد من قبل المختص"
 
-#: core/functions.php:238
+#: core/functions.php:284
 msgid "by Admin"
-msgstr ""
+msgstr "من قبل المختص"
 
-#: core/functions.php:245
+#: core/functions.php:291
 msgid "Your own target"
-msgstr ""
+msgstr "هدفك"
 
-#: core/functions.php:246
+#: core/functions.php:292
 msgid "by User"
-msgstr ""
+msgstr "من قبل المستخدم"
 
-#: core/functions.php:420
+#: core/functions.php:466
 msgid "kcal used"
-msgstr ""
+msgstr "سعرة حرارية مستخدمة"
 
-#: core/functions.php:421
+#: core/functions.php:467
 msgid "out of"
-msgstr ""
-
-#: core/functions.php:448
-msgid "Just Added:"
-msgstr ""
-
-#: core/functions.php:450
-msgid "Remove"
-msgstr ""
-
-#: core/functions.php:451
-msgid "Edit"
-msgstr ""
-
-#: core/functions.php:452
-msgid "used"
-msgstr ""
-
-#: core/functions.php:453
-msgid "remaining"
-msgstr ""
-
-#: core/functions.php:454
-msgid "Target"
-msgstr ""
-
-#: core/functions.php:455
-msgid "No data has been entered"
-msgstr ""
-
-#: core/functions.php:456 core/functions.php:458
-msgid "The meal has been added"
-msgstr ""
-
-#: core/functions.php:457 core/functions.php:459
-msgid "Added"
-msgstr ""
-
-#: core/functions.php:460
-msgid "Select a meal"
-msgstr ""
-
-#: core/functions.php:461
-msgid "The meal has been removed"
-msgstr ""
-
-#: core/functions.php:462
-msgid "There was error saving your changes"
-msgstr ""
-
-#: core/functions.php:463
-msgid "There was error loading your data"
-msgstr ""
-
-#: core/functions.php:464
-msgid "Your settings have been saved"
-msgstr ""
-
-#: core/functions.php:489
-msgid "N/A"
-msgstr ""
-
-#: core/functions.php:492
-msgid "Small"
-msgstr ""
-
-#: core/functions.php:493
-msgid "Medium"
-msgstr ""
+msgstr "من أصل"
 
 #: core/functions.php:494
+msgid "Just Added:"
+msgstr "أضيفت للتو:"
+
+#: core/functions.php:496
+msgid "Remove"
+msgstr "إزالة"
+
+#: core/functions.php:497
+msgid "Edit"
+msgstr "تعديل"
+
+#: core/functions.php:498
+msgid "used"
+msgstr "المستخدم"
+
+#: core/functions.php:499
+msgid "remaining"
+msgstr "المتبقي"
+
+#: core/functions.php:500
+msgid "Target"
+msgstr "الهدف"
+
+#: core/functions.php:501
+msgid "No data has been entered"
+msgstr "لم يتم إدخال بيانات"
+
+#: core/functions.php:502 core/functions.php:504
+msgid "The meal has been added"
+msgstr "تمت إضافة الوجبة"
+
+#: core/functions.php:503 core/functions.php:505
+msgid "Added"
+msgstr "أضيفت"
+
+#: core/functions.php:506
+msgid "Select a meal"
+msgstr "اختر وجبة"
+
+#: core/functions.php:507
+msgid "The meal has been removed"
+msgstr "تمت إزالة الوجبة"
+
+#: core/functions.php:508
+msgid "There was error saving your changes"
+msgstr "حدث خطأ أثناء حفظ التغييرات"
+
+#: core/functions.php:509
+msgid "There was error loading your data"
+msgstr "حدث خطأ أثناء تحميل بياناتك"
+
+#: core/functions.php:510
+msgid "Your settings have been saved"
+msgstr "تم حفظ إعداداتك"
+
+#: core/functions.php:511
+msgid "Are you sure?"
+msgstr "هل أنت متأكد؟"
+
+#: core/functions.php:512
+msgid ""
+"Proceeding will cause user data to be deleted. This data can not be "
+"recovered. Are you sure you wish to proceed?"
+msgstr ""
+
+#: core/functions.php:537
+msgid "N/A"
+msgstr "لا ينطبق"
+
+#: core/functions.php:540
+msgid "Small"
+msgstr "صغير"
+
+#: core/functions.php:541
+msgid "Medium"
+msgstr "وسط"
+
+#: core/functions.php:542
 msgid "Large"
-msgstr ""
+msgstr "كبير"
 
-#: core/functions.php:845 core/functions.php:887
+#: core/functions.php:893 core/functions.php:935
 msgid "Yesterday"
-msgstr ""
+msgstr "أمس"
 
-#: core/functions.php:855 core/functions.php:883
+#: core/functions.php:903 core/functions.php:931
 msgid "Today"
-msgstr ""
+msgstr "اليوم"
 
-#: core/functions.php:857 core/functions.php:891
+#: core/functions.php:905 core/functions.php:939
 msgid "Tomorrow"
-msgstr ""
+msgstr "الغد"
 
-#: core/functions.php:942
+#: core/functions.php:990
 msgid "Upgrade to Premium for "
 msgstr ""
 
-#: core/functions.php:944
+#: core/functions.php:992
 msgid "a year "
 msgstr ""
 
-#: core/functions.php:1010
+#: core/functions.php:1058
 msgid "Create and view entries"
 msgstr ""
 
-#: core/functions.php:1010
+#: core/functions.php:1058
 msgid "Allow your users to create and view entries for any day"
 msgstr ""
 
-#: core/functions.php:1011
+#: core/functions.php:1059
 msgid "Edit entries"
 msgstr ""
 
-#: core/functions.php:1011
+#: core/functions.php:1059
 msgid "Allow your users to edit their entries for any given day"
 msgstr ""
 
-#: core/functions.php:1012
+#: core/functions.php:1060
 msgid "Edit meals"
 msgstr ""
 
-#: core/functions.php:1012
+#: core/functions.php:1060
 msgid "Allow your users to edit their stored meals"
 msgstr ""
 
-#: core/functions.php:1013
+#: core/functions.php:1061
 msgid "Calorie sources"
 msgstr ""
 
-#: core/functions.php:1013
+#: core/functions.php:1061
 msgid ""
 "Fetch daily calorie limits from other sources e.g. YeKen's Weight Tracker"
 msgstr ""
 
-#: core/functions.php:1014
+#: core/functions.php:1062
 msgid "Compress meal items"
 msgstr ""
 
-#: core/functions.php:1014
+#: core/functions.php:1062
 msgid "Compress multiple meal lines for an entry into one line"
 msgstr ""
 
-#: core/functions.php:1015
+#: core/functions.php:1063
 msgid "Unlimited meals per user"
 msgstr ""
 
-#: core/functions.php:1015
+#: core/functions.php:1063
 msgid ""
 "Your users are no longer limited to a maximum of 40 meals and may add as "
 "many as they wish"
 msgstr ""
 
-#: core/functions.php:1016
+#: core/functions.php:1064
 msgid "View your user's data"
 msgstr ""
 
-#: core/functions.php:1016
+#: core/functions.php:1064
 msgid "View all of your user entries, meals and calorie intake"
 msgstr ""
 
-#: core/functions.php:1017
+#: core/functions.php:1065
 msgid "Set calorie allowances"
 msgstr ""
 
-#: core/functions.php:1017
+#: core/functions.php:1065
 msgid "Set daily calorie allowances for your users"
 msgstr ""
 
-#: core/functions.php:1018
+#: core/functions.php:1066
 msgid "Summary Statistics"
 msgstr ""
 
-#: core/functions.php:1018
+#: core/functions.php:1066
 msgid ""
 "View summary statistics of your Meal Tracker data and it's usage by your "
 "users"
 msgstr ""
 
-#: core/functions.php:1019
+#: core/functions.php:1067
 msgid "Calorie Allowance sources"
 msgstr ""
 
-#: core/functions.php:1019
+#: core/functions.php:1067
 msgid "Specify one or more sources for calorie allowance"
 msgstr ""
 
-#: core/functions.php:1020
+#: core/functions.php:1068
 msgid "Additional settings"
 msgstr ""
 
-#: core/functions.php:1020
+#: core/functions.php:1068
 msgid "Additional settings for customising your Meal Tracker usage"
 msgstr ""
 
-#: core/functions.php:1021
+#: core/functions.php:1069
 msgid "Admin Search"
 msgstr ""
 
-#: core/functions.php:1021
+#: core/functions.php:1069
 msgid "Search for users by name and email address"
 msgstr ""
 
-#: core/functions.php:1031
+#: core/functions.php:1079
 msgid ""
 "If require plugin modifications to Meal Tracker, or need a new plugin built, "
 "or perhaps you need a developer to help you with your website then please "
 "don't hesitate get in touch!"
 msgstr ""
 
-#: core/functions.php:1032 core/setup.wizard.php:87
+#: core/functions.php:1080 core/setup.wizard.php:87
 msgid "We provide fixed priced quotes."
 msgstr ""
 
-#: core/functions.php:1049
+#: core/functions.php:1097
 msgid "Upgrade Meal Tracker and get more features!"
 msgstr ""
 
-#: core/functions.php:1051
+#: core/functions.php:1099
 msgid ""
 "Upgrade to the Premium version of this plugin to view your user's data, "
 "record entries for multiple days, extrernal data sources and much more!"
 msgstr ""
 
-#: core/functions.php:1052
+#: core/functions.php:1100
 msgid "Read more and upgrade to Premium Version"
 msgstr ""
 
-#: core/functions.php:1092
+#: core/functions.php:1140
 msgid "Error: The user does not appear to exist"
 msgstr ""
 
@@ -820,9 +860,9 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: core/hooks.php:127
+#: core/hooks.php:132
 msgid "Meal entries"
-msgstr ""
+msgstr "إدخال الوجبات"
 
 #: core/license.php:32
 msgid "License missing"
@@ -845,19 +885,19 @@ msgstr ""
 
 #: core/shortcode-functions.php:15
 msgid "You must be logged in to view and log meal entries"
-msgstr ""
+msgstr "يتطلب تسجيل الدخول لعرض إدخالات الوجبة وتسجيلها"
 
 #: core/shortcode-functions.php:17
 msgid "Log in to your account"
-msgstr ""
+msgstr "تسجيل الدخول إلى حسابك"
 
 #: core/shortcode-meal-tracker.php:111
 msgid "Select a date"
-msgstr ""
+msgstr "اختر التاريخ"
 
 #: core/shortcode-meal-tracker.php:153
 msgid "Getting started"
-msgstr ""
+msgstr "ابدء"
 
 #: core/shortcode-meal-tracker.php:154
 msgid ""
@@ -865,123 +905,130 @@ msgid ""
 "calorie allowance for the day. You can achieve this by completing the "
 "following form."
 msgstr ""
+"قبل أن تتمكن من بدء تسجيل السعرات الحرارية الخاصة بك ، يجب عليك تعيين كمية "
+"السعرات الحرارية اللازمة لهذا اليوم. يمكنك تحقيق ذلك عن طريق ملء النموذج "
+"التالي."
 
 #: core/shortcode-meal-tracker.php:173
 #, php-format
 msgid "Your current daily allowance is: %1$dkcal."
-msgstr ""
+msgstr "المسموح الحالي من السعرات الحرارية اليومية هي: %1$dkcal."
 
 #: core/shortcode-meal-tracker.php:178
 msgid ""
 "Your calorie allowance has been set by an administrator and can not be "
 "changed."
-msgstr ""
+msgstr "تم تعيين السعرات الحرارية المسموح بها من قبل المختص ولا يمكن تغييره."
 
 #: core/shortcode-meal-tracker.php:182
 msgid "Calorie target source"
-msgstr ""
+msgstr "مصدر السعرات الحرارية "
 
 #: core/shortcode-meal-tracker.php:190
 msgid "Specify your own target: "
-msgstr ""
+msgstr "حدد هدفك الخاص:"
 
 #: core/shortcode-meal-tracker.php:200
 msgid ""
 "Changes to these settings will adjust today's entry and future entries. "
 "Historic entries shall not be changed."
 msgstr ""
+"ستؤدي التغييرات في هذه الإعدادات إلى ضبط إدخال اليوم والإدخالات المستقبلية. "
+"لا يمكن تغيير الادخالات السابقة."
 
 #: core/shortcode-meal-tracker.php:205
 msgid "Calorie Intake"
-msgstr ""
+msgstr "السعرات الحرارية"
 
 #: core/shortcode-meal-tracker.php:215
 msgid "Save Settings"
-msgstr ""
+msgstr "حفظ الإعدادات"
 
 #: core/shortcode-meal-tracker.php:217
 msgid "Cancel"
-msgstr ""
+msgstr "إلغاء"
 
 #: core/shortcode-meal-tracker.php:245
 msgid "Add Meal"
-msgstr ""
+msgstr "أضف وجبة"
 
 #: core/shortcode-meal-tracker.php:324
 msgid "Close"
-msgstr ""
+msgstr "إغلاق"
 
 #: core/shortcode-meal-tracker.php:325
 msgid "Log a meal"
-msgstr ""
+msgstr "تسجيل وجبة"
 
 #: core/shortcode-meal-tracker.php:326 core/shortcode-meal-tracker.php:400
 msgid "Edit meal"
-msgstr ""
+msgstr "تعديل وجبة"
 
 #: core/shortcode-meal-tracker.php:335
 msgid "Quick Search"
-msgstr ""
+msgstr "بحث سريع"
 
 #: core/shortcode-meal-tracker.php:339
 msgid "Add"
-msgstr ""
+msgstr "إضافة"
 
 #: core/shortcode-meal-tracker.php:354
 msgid "Close screen after adding meal(s)"
-msgstr ""
+msgstr "أغلق الشاشة بعد إضافة الوجبة"
 
 #: core/shortcode-meal-tracker.php:361
 msgid ""
 "Unfortunately you have reached the maximum of 40 meals and are unable to add "
 "anymore."
-msgstr ""
+msgstr " لقد وصلت إلى 40 وجبة كحد أقصى ولا يمكنك الإضافة بعد الآن."
 
 #: core/shortcode-meal-tracker.php:379
 msgid "Add new meal"
-msgstr ""
+msgstr "أضف وجبة جديدة"
 
 #: core/shortcode-meal-tracker.php:381
 msgid "Name"
-msgstr ""
+msgstr "اسم"
 
 #: core/shortcode-meal-tracker.php:385
 msgid "Calories"
-msgstr ""
+msgstr "سعرات حرارية"
 
 #: core/shortcode-meal-tracker.php:388
 msgid ""
 "Today's calorie count shall be adjusted if a meal's calorific value is "
 "modified. Other entries will only be re-counted if done manually."
 msgstr ""
+"يجب تعديل عدد السعرات الحرارية لليوم إذا تم تعديل القيمة الحرارية للوجبة. "
+"سيتم إعادة احتساب الإدخالات الأخرى فقط إذا تمت يدويًا."
 
 #: core/shortcode-meal-tracker.php:391
 msgid "Unit"
-msgstr ""
+msgstr "الوحدة"
 
 #: core/shortcode-meal-tracker.php:393
 msgid "Quantity"
-msgstr ""
+msgstr "الكمية"
 
 #: core/shortcode-meal-tracker.php:396
 msgid "Add a new meal"
-msgstr ""
+msgstr "أضف وجبة جديدة"
 
 #: core/shortcode-meal-tracker.php:420
 msgid "Search for an existing meal"
-msgstr ""
+msgstr "البحث عن وجبة موجودة"
 
 #: core/sources-weight-tracker.php:45
 msgid "Weight Tracker"
-msgstr ""
+msgstr "تتبع الوزن"
 
 #: core/sources-weight-tracker.php:46
 msgid "from Weight Tracker"
-msgstr ""
+msgstr "من تتبع الوزن"
 
 #. Plugin Name of the plugin/theme
 msgid "Meal Tracker"
-msgstr ""
+msgstr "تتبع الوجبات اليومية"
 
 #. Description of the plugin/theme
 msgid ""
@@ -995,3 +1042,12 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.YeKen.uk"
 msgstr ""
+
+#~ msgid "Are you sure you wish to remove all issued awards?"
+#~ msgstr "هل أنت متأكد من رغبتك في إزالة جميع الجوائز الصادرة؟"
+
+#~ msgid "Are you sure you wish to clear all log entries?"
+#~ msgstr "هل أنت متأكد أنك ترغب في مسح كافة الإدخالات المسجلة؟"
+
+#~ msgid "This week's entries"
+#~ msgstr "إدخالات هذا الأسبوع"

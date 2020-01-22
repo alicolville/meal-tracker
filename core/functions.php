@@ -1177,3 +1177,26 @@ function yk_mt_cache_temp_get( $key ) {
 function yk_mt_cache_temp_set( $key, $value ) {
     do_action( 'yk_mt_cache_temp_set', $key, $value );
 }
+
+/**
+ * Translate known meal types from English into locale.
+ * @param $meal_type
+ * @return mixed|string
+ */
+function yk_mt_lang_translate_known_meal_type_from_english( $meal_type ) {
+
+    if ( true === empty( $meal_type ) ) {
+        return '';
+    }
+
+    $lookup = [
+                    'Breakfast'     => __( 'Breakfast', YK_MT_SLUG ),
+                    'Mid-morning'   => __( 'Mid-morning', YK_MT_SLUG ),
+                    'Lunch'         => __( 'Lunch', YK_MT_SLUG ),
+                    'Afternoon'     => __( 'Afternoon', YK_MT_SLUG ),
+                    'Dinner'        => __( 'Dinner', YK_MT_SLUG ),
+                    'Evening'       => __( 'Evening', YK_MT_SLUG )
+    ];
+
+    return ( false === empty( $lookup[ $meal_type ] ) ) ? $lookup[ $meal_type ] : '';
+}
