@@ -458,6 +458,8 @@
 
 		$accordion_section_class = apply_filters( 'yk_mt_shortcode_meal_tracker_accordion_section', '' );
 
+		$title = yk_mt_lang_translate_known_meal_type_from_english( $options['title'] );
+
 		$html = sprintf( '  <div class="yk-mt-accordion-section%2$s" id="%1$d">
 									<%6$s class="yk-mt-accordion-section-title%3$s" href="#yk-mt-acc-%1$d">%4$s</%6$s>
 									<div id="yk-mt-acc-%1$d" class="yk-mt-accordion-section-content">
@@ -467,7 +469,7 @@
 			(int) $options['id'],
 			esc_attr( $accordion_section_class ),
 			( true === $options['is-active'] ) ? ' initial-active' : '',
-			esc_html( $options['title'] ),
+			esc_html( $title ),
 			$options['content'],
             ( true === $accordion_enabled ) ? 'a' : 'span'
 		);
