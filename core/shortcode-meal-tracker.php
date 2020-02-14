@@ -238,8 +238,6 @@
 
 			$active_tab = true;
 
-            $localised_strings = yk_mt_localised_strings();
-
 			// For each meal type, display an accordion and relevant meal data
 			foreach ( $meal_types as $meal_type ) {
 
@@ -247,6 +245,8 @@
                 $meal_type_html = sprintf( '<p>%s</p>', yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type['id'] ) );
 
                 $meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt-t yk-mt-list-of-meals' );
+
+                $localised_strings = yk_mt_localised_strings();
 
                 $meal_type_html .= sprintf( '<div id="meals-table-%d" class="%s">%s.</div>',
                                                     $meal_type['id'],
@@ -387,13 +387,6 @@
         $html .= sprintf( ' <p class="yk-mt-info yk-mt-hide-if-adding">%1$s</p>',
             __( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
         );
-
-		// MarcoNutrients enabled?
-        if ( true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) ) {
-            $html .= yk_mt_form_number( __( 'Proteins', YK_MT_SLUG ), 'add-meal-proteins', '', '', 1,0 );
-            $html .= yk_mt_form_number( __( 'Fats', YK_MT_SLUG ), 'add-meal-fats', '', '', 1,0 );
-            $html .= yk_mt_form_number( __( 'Carbs', YK_MT_SLUG ), 'add-meal-carbs', '', '', 1,0 );
-        }
 
 		$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', '', yk_mt_units() );
 
@@ -573,7 +566,6 @@
 		wp_localize_script( 'meal-tracker', 'yk_mt_sc_meal_tracker', [
 			'mode'              => $args[ 'mode' ],
 			'accordion-enabled' => yk_mt_site_options_for_js_bool( 'accordion-enabled', true ),
-			'macros-enabled'    => yk_mt_site_options_for_js_bool( 'macronutrients-enabled', false ),
 			'dialog-options'    => json_encode( $dialog_options ),
             'localise'          => yk_mt_localised_strings(),
             'todays-entry'      => yk_mt_entry( $args[ 'entry-id' ] ),

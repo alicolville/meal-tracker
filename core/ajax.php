@@ -76,25 +76,6 @@ function yk_mt_ajax_meal_add() {
     // Ensure we have a calorie value (can be 0)
 	$post_data[ 'calories' ] = yk_mt_ajax_extract_and_validate_post_data_single( 'calories', false );
 
-	// If Macronutrients are enabled then look for an array of MacroN values. Validate add add to DB call.
-    if ( true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) ) {
-
-        if ( true === empty( $_POST[ 'macroN' ] ) || false === is_array( $_POST[ 'macroN' ] ) ) {
-            return wp_send_json( [ 'error' => 'missing-macroN-array' ] );
-        }
-
-        $macroN = $_POST[ 'macroN' ];
-
-        foreach ( [ 'fats', 'proteins', 'carbs' ] as $key ) {
-            if ( false === isset( $macroN[ $key ] ) ) {
-                return wp_send_json( [ 'error' => 'missing-macroN-field-' . $key ] );
-            }
-
-            $post_data[ $key ] = (int) $macroN[ $key ];
-        }
-
-    }
-
     // If a unit that doesn't expect a quantity, then clear quantity
 	if ( true === in_array( $post_data[ 'unit' ], yk_mt_units_where( 'drop-quantity' ) ) ) {
 		$post_data[ 'quantity' ] = '';

@@ -297,7 +297,7 @@ jQuery( document ).ready( function( $ ) {
         }
     }
 
-    /**
+     /**
      * Delete meal from entry
      * @param meal_entry_id
      */
@@ -389,15 +389,6 @@ jQuery( document ).ready( function( $ ) {
         let quantity    = $( '#yk-mt-add-meal-quantity' ).val();
         let unit        = $( '#yk-mt-add-meal-unit' ).val();
 
-        let macroN = { 'fats': 0, 'carbs': 0, 'proteins': 0 }
-
-        // Is MacroN populated?
-        if ( yk_mt_meal_tracker_found && 'true' === yk_mt_sc_meal_tracker[ 'macros-enabled' ] ) {
-            macroN[ 'fats' ]        = $( '#yk-mt-add-meal-fats' ).val();
-            macroN[ 'carbs' ]       = $( '#yk-mt-add-meal-carbs' ).val();
-            macroN[ 'proteins' ]    = $( '#yk-mt-add-meal-proteins' ).val();
-        }
-
         // Update the meal
         if ( 'edit' === yk_meal_tracker_dialog_mode ) {
             yk_mt_post_api_edit_meal(
@@ -405,8 +396,7 @@ jQuery( document ).ready( function( $ ) {
                 description,
                 calories,
                 quantity,
-                unit,
-                macroN
+                unit
             );
         } else {
 
@@ -415,8 +405,7 @@ jQuery( document ).ready( function( $ ) {
                 description,
                 calories,
                 quantity,
-                unit,
-                macroN
+                unit
             );
 
         }
@@ -430,7 +419,7 @@ jQuery( document ).ready( function( $ ) {
      * @param quantity
      * @param unit
      */
-    function yk_mt_post_api_add_meal( name, description, calories, quantity, unit, macroN ) {
+    function yk_mt_post_api_add_meal( name, description, calories, quantity, unit ) {
 
         var data = {
             'name'          : name,
@@ -439,8 +428,7 @@ jQuery( document ).ready( function( $ ) {
             'quantity'      : quantity,
             'unit'          : unit,
             'entry-id'      : yk_mt_entry_id,
-            'meal-type'     : yk_mt_selected_meal_type,
-            'macroN'        : macroN
+            'meal-type'     : yk_mt_selected_meal_type
         };
 
         yk_mt_post( 'add_meal', data,  yk_mt_post_api_add_meal_callback);
