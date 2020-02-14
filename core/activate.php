@@ -7,7 +7,7 @@
 	*/
 	function yk_wt_upgrade() {
 
-		if( update_option('yk-wt-version-number', YK_MT_PLUGIN_VERSION ) ) {
+		if( update_option('yk-wst-version-number', YK_MT_PLUGIN_VERSION ) ) {
 
 			// Build DB tables
 			yk_wt_db_tables_create();
