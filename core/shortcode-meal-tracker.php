@@ -586,7 +586,8 @@
             'localise'          => yk_mt_localised_strings(),
             'todays-entry'      => yk_mt_entry( $args[ 'entry-id' ] ),
             'load-entry'        => true,
-            'is-admin'          => false
+            'is-admin'          => false,
+			'meta-fields' => yk_mt_meta_js_config()
 		] );
 	}
 
