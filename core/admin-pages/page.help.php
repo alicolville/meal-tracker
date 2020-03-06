@@ -20,13 +20,13 @@ function yk_mt_help_page() {
 				<div class="meta-box-sortables ui-sortable">
 
                     <div class="postbox">
-                        <h3 class="hndle"><span><?php echo __( 'Custom modifications / web development', WE_LS_SLUG); ?> </span></h3>
+                        <h3 class="hndle"><span><?php echo __( 'Custom modifications / web development', YK_MT_SLUG ); ?> </span></h3>
                         <div style="padding: 0px 15px 0px 15px">
 	                        <?php yk_mt_custom_notification_html(); ?>
                         </div>
                     </div>
                     <div class="postbox">
-                        <h3 class="hndle"><span><?php echo __( 'Admin Tools', WE_LS_SLUG); ?> </span></h3>
+                        <h3 class="hndle"><span><?php echo __( 'Admin Tools', YK_MT_SLUG ); ?> </span></h3>
                         <div class="ws-ls-help-admin" style="padding: 0px 15px 0px 15px">
                             <p>
                                 <?php
@@ -35,7 +35,7 @@ function yk_mt_help_page() {
 
                                     printf('<a class="button" href="%1$s" >%2$s</a>',
                                         esc_url( admin_url( 'admin.php?page=yk-mt-help&show-setup-wizard-links=y') ),
-                                        __('Show Setup Wizard link', WE_LS_SLUG)
+                                        __('Show Setup Wizard link', YK_MT_SLUG )
                                     );
                                 }
 
@@ -45,7 +45,7 @@ function yk_mt_help_page() {
                     </div>
 
                     <div class="postbox">
-                        <h3 class="hndle"><span><?php echo __( 'Contact', WE_LS_SLUG); ?> </span></h3>
+                        <h3 class="hndle"><span><?php echo __( 'Contact', YK_MT_SLUG ); ?> </span></h3>
                         <div style="padding: 0px 15px 0px 15px">
                             <p>If you have any questions or bugs to report, then please contact us at <a href="mailto:email@yeken.uk">email@yeken.uk</a>.</p>
                         </div>
