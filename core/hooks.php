@@ -61,7 +61,8 @@ add_action( 'admin_menu', 'yk_mt_build_admin_menu' );
 function yk_mt_enqueue_admin_files() {
 
     // Only include MT dependencies on our pages.
-    if ( false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-settings', 'yk-mt-setup-wizard' ] ) ) {
+    if ( true === empty( $_GET['page'] ) ||
+    	  false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-settings', 'yk-mt-setup-wizard' ] ) ) {
         return;
     }
 
