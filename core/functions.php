@@ -562,7 +562,8 @@ function yk_mt_units_where( $field, $equals = true, $just_keys = true ) {
 
 	foreach ( yk_mt_units_raw() as $unit => $details ) {
 
-		if ( $equals === $details[ $field ] ) {
+		if ( false === empty( $details[ $field ] ) &&
+				$equals === $details[ $field ] ) {
 			$units[ $unit ] = $details[ 'label' ];
 		}
 	}
@@ -1035,7 +1036,7 @@ function yk_mt_features_display() {
                                             <td scope="row" style="padding-left:30px"><label for="tablecell">
                                                     &middot; <strong>%2$s:</strong> %3$s.
                                                 </label></td>
-                            
+
                                         </tr>',
                     $class,
                     esc_html( $title ),

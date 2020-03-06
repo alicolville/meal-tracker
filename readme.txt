@@ -54,6 +54,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 * Bug fix: Minor bug fixes throwing PHP errors.
 * Bug fix: Incorrect slug used for localisation.
+* Bug fix: Warning being thrown for missing array index.
 
 = 1.1 =
 
