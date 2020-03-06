@@ -388,16 +388,22 @@
             __( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
         );
 
-        $meta_fields = yk_mt_meta_fields();
+        // If premium, do we have any additional fields for the meal?
+        if ( true === yk_mt_license_is_premium() ) {
 
-		print_R($meta_fields);
+			$meta_fields = yk_mt_meta_fields_where( 'visible_user', true );
 
-		// MarcoNutrients enabled?
-        if ( true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) ) {
-            $html .= yk_mt_form_number( __( 'Proteins', YK_MT_SLUG ), 'add-meal-proteins', '', '', 1,0 );
-            $html .= yk_mt_form_number( __( 'Fats', YK_MT_SLUG ), 'add-meal-fats', '', '', 1,0 );
-            $html .= yk_mt_form_number( __( 'Carbs', YK_MT_SLUG ), 'add-meal-carbs', '', '', 1,0 );
-        }
+			foreach ( $meta_fields as $field ) {
+
+				// TODO: Support additional field types.
+
+				// Integer fields
+				if ( 'int' === $field[ 'type' ] ) {
+
+					$html .= yk_mt_form_number( $field[ 'title' ], sprintf( 'add-meal-%s', $field[ 'db_col' ] ), '', '', 1,0 );
+				}
+			}
+		}
 
 		$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', '', yk_mt_units() );
 
