@@ -53,6 +53,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 = 2.0 =
 
 * Bug fix: Minor bug fixes throwing PHP errors.
+* Bug fix: Incorrect slug used for localisation.
 
 = 1.1 =
 
