@@ -124,7 +124,7 @@
 			                        <div class="yk-mt-c yk-mt-summary-chart-slot">
 			                            <canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
 			                        </div>
-			                        
+
 			                </div>
 	                    </div>';
     }
@@ -315,7 +315,7 @@
                                 <button id="btn-close-modal" class="close-yk-mt-add-meal-dialog yk-mt-button-silent">
                                     %2$s
                                 </button>
-                             </div>   
+                             </div>
                 			 <div class="yk-mt-modal-content">
                 			    <div class="yk-mt-hide-if-editing">
                 			    <form id="yk-mt-form-add-meal-to-entry">
@@ -362,7 +362,7 @@
         }
 
         $html .= '</div></div>
-                <a id="yk-mt-open-dialog-edit" class="yk-mt-meal-button-edit yk-mt-add-meal-prompt yk-mt-hide"></a>               
+                <a id="yk-mt-open-dialog-edit" class="yk-mt-meal-button-edit yk-mt-add-meal-prompt yk-mt-hide"></a>
         ';
 
 		return $html;
@@ -387,6 +387,10 @@
         $html .= sprintf( ' <p class="yk-mt-info yk-mt-hide-if-adding">%1$s</p>',
             __( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
         );
+
+        $meta_fields = yk_mt_meta_fields();
+
+		print_R($meta_fields);
 
 		// MarcoNutrients enabled?
         if ( true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) ) {

@@ -106,7 +106,8 @@
                                             <td>
                                                 <?php
 
-                                                    if( 'mt-premium' === $license_decoded['type'] ) {
+                                                    if( false === empty( $license_decoded['type'] ) &&
+															'mt-premium' === $license_decoded['type'] ) {
 
                                                         $time = strtotime( $license_decoded['expiry-date'] );
                                                         $formatted = date( 'd/m/Y', $time );
