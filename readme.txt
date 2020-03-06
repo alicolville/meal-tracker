@@ -52,6 +52,8 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 2.0 =
 
+* Bug fix: Minor bug fixes throwing PHP errors.
+
 = 1.1 =
 
 * Improvement: Added meal description to "View Entry" page in admin. (#66)
