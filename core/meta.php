@@ -76,3 +76,29 @@ function yk_mt_meta_fields() {
 
 	return $fields;
 }
+
+/**
+ * Return meta fields for JS config
+ * @return array
+ */
+function yk_mt_meta_js_config() {
+
+	$config 		= [];
+	$meta_fields 	= yk_mt_meta_fields_where( 'visible_user', true );
+
+	foreach ( $meta_fields as $field ) {
+
+		switch ( $field[ 'type' ] ) {
+			case 'int':
+				$default = 0;
+				break;
+			default:
+				$default = '';
+		}
+
+		$config[] = [ $field[ 'db_col'] => $default ];
+	}
+
+	return $config;
+
+}
