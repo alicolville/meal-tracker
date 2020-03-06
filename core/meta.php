@@ -16,26 +16,29 @@ function yk_mt_meta_fields() {
 
 		// Protein
 		$fields[] = [
-			'db_col' => 'proteins',
-			'title' => __( 'Proteins', YK_MT_SLUG ),
-			'visible_user' => true,
-			'visible_admin' => true
+			'db_col' 			=> 'proteins',
+			'title' 			=> __( 'Proteins', YK_MT_SLUG ),
+			'visible_user' 		=> true,
+			'visible_admin' 	=> true,
+			'type'				=> 'int'
 		];
 
 		// Fats
 		$fields[] = [
-			'db_col' => 'fats',
-			'title' => __( 'Fats', YK_MT_SLUG ),
-			'visible_user' => true,
-			'visible_admin' => true
+			'db_col' 			=> 'fats',
+			'title' 			=> __( 'Fats', YK_MT_SLUG ),
+			'visible_user' 		=> true,
+			'visible_admin' 	=> true,
+			'type'				=> 'int'
 		];
 
 		// Carbs
 		$fields[] = [
-			'db_col' => 'carbs',
-			'title' => __( 'Carbs', YK_MT_SLUG ),
-			'visible_user' => true,
-			'visible_admin' => true
+			'db_col' 			=> 'carbs',
+			'title' 			=> __( 'Carbs', YK_MT_SLUG ),
+			'visible_user' 		=> true,
+			'visible_admin' 	=> true,
+			'type'				=> 'int'
 		];
 
 	}
