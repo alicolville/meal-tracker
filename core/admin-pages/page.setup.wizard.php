@@ -21,14 +21,14 @@ function yk_mt_setup_wizard_page() {
 					<div class="meta-box-sortables ui-sortable">
 
 						<div class="postbox">
-							<h3 class="hndle"><span><?php echo __( 'Setup Wizard', WE_LS_SLUG); ?> </span></h3>
+							<h3 class="hndle"><span><?php echo __( 'Setup Wizard', YK_MT_SLUG ); ?> </span></h3>
 							<div style="padding: 15px 15px 0px 15px">
                                 <div id="yk-mt-tabs">
                                     <ul>
-                                        <li><a>1. <?php echo __( 'Introduction', WE_LS_SLUG); ?><span><?php echo __( 'Thank you for using Meal Tracker', WE_LS_SLUG); ?></span></a></li>
-                                        <li><a>2. <?php echo __( 'Setup', WE_LS_SLUG); ?><span><?php echo __( 'How to use Shortcodes and Widgets', WE_LS_SLUG); ?></span></a></li>
-                                        <li><a>3. <?php echo __( 'Admin Interface', WE_LS_SLUG); ?><span><?php echo __( 'Viewing and interacting with your user\'s data', WE_LS_SLUG); ?></span></a></li>
-                                        <li><a>4. <?php echo __( 'Customisations', WE_LS_SLUG); ?><span><?php echo __( 'Custom modifications to Meal Tracker', WE_LS_SLUG); ?></span></a></li>
+                                        <li><a>1. <?php echo __( 'Introduction', YK_MT_SLUG ); ?><span><?php echo __( 'Thank you for using Meal Tracker', YK_MT_SLUG ); ?></span></a></li>
+                                        <li><a>2. <?php echo __( 'Setup', YK_MT_SLUG ); ?><span><?php echo __( 'How to use Shortcodes and Widgets', YK_MT_SLUG ); ?></span></a></li>
+                                        <li><a>3. <?php echo __( 'Admin Interface', YK_MT_SLUG ); ?><span><?php echo __( 'Viewing and interacting with your user\'s data', YK_MT_SLUG ); ?></span></a></li>
+                                        <li><a>4. <?php echo __( 'Customisations', YK_MT_SLUG ); ?><span><?php echo __( 'Custom modifications to Meal Tracker', YK_MT_SLUG ); ?></span></a></li>
                                     </ul>
                                     <div>
                                         <div>
