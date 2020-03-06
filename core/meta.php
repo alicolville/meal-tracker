@@ -11,7 +11,8 @@ function yk_mt_meta_fields() {
 	$fields = [];
 
 	// Macro Nutrient columns: Protein, fat and carbs
-	if ( true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) ) {
+	if ( true === yk_mt_license_is_premium() &&
+			true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) ) {
 
 		// Protein
 		$fields[] = [
