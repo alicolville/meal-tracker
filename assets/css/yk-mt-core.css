@@ -98,10 +98,30 @@ Accordion
 
 /* Accordion > Titles */
 .yk-mt-accordion-section-title {
+	position: relative;
 	display: inline-block;
 	padding: 10px;
+	border-bottom: 2px solid #000;
 	width: 100%;
 	font-family: var(--yk-mt-font-sans, 'Arial, sans-serif');
+
+	box-shadow: none !important;
+	transition: all ease .15s !important;
+}
+
+.yk-mt-accordion-section-title.active:before {
+	content: '';
+	position: absolute;
+	bottom: calc(-.55 * var(--yk-mt-grid-gap-m));
+	left: var(--yk-mt-grid-gap-m);
+	border: 2px solid transparent;
+	border-right-color: #000;
+	border-bottom-color: #000;
+	width: var(--yk-mt-grid-gap-m);
+	height: var(--yk-mt-grid-gap-m);
+	background-color: #fff;
+
+	transform: rotate(45deg);
 }
 
 /* Accordion > Content */

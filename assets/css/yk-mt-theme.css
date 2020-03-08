@@ -8,7 +8,7 @@ Version: x.x.x
 */
 
 /****************
-Theme > Typefaces
+Typefaces
 ****************/
 
 @font-face {
@@ -31,34 +31,20 @@ Theme > Typefaces
 	--yk-mt-primary-color: #b0dda0;
 
 	/* Vars > Fonts */
-	--yk-mt-font-display: 'Spartan', sans-serif;
+	--yk-mt-font-display: 'Inter', sans-serif;
 }
 
-/* Theme > Accordion */
+/* Accordion */
 .yk-mt-accordion-section-title {
-	position: relative;
-	border-bottom: 2px solid var(--yk-mt-primary-color);
+	border-bottom-color: var(--yk-mt-primary-color);
 	font-family: var(--yk-mt-font-display);
-	font-weight: 600;
+	font-weight: 800;
 	background-color: #fff;
-
-	box-shadow: none !important;
-	transition: all linear .15s !important;
 }
 
 .yk-mt-accordion-section-title.active:before {
-	content: '';
-	position: absolute;
-	bottom: calc(-.55 * var(--yk-mt-grid-gap-m));
-	left: var(--yk-mt-grid-gap-m);
-	border: 2px solid transparent;
 	border-right-color: var(--yk-mt-primary-color);
 	border-bottom-color: var(--yk-mt-primary-color);
-	width: var(--yk-mt-grid-gap-m);
-	height: var(--yk-mt-grid-gap-m);
-	background-color: #fff;
-
-	transform: rotate(45deg);
 }
 
 .yk-mt-accordion-section-title:hover,
@@ -67,14 +53,13 @@ Theme > Typefaces
 	color: #000 !important;
 }
 
-/* Theme > Tables */
+/* Tables */
 .yk-mt-act-r {
 	box-shadow: none !important;
-
 	border-radius: 50%;
 }
 
-/* Theme > Modals */
+/* Modals */
 #yk-mt-add-meal-dialog {
 	background-color: #fff;
 }
@@ -83,9 +68,13 @@ Theme > Typefaces
 	border-bottom: 1px solid #ccc;
 }
 
-/* Theme > Buttons */
+/* Buttons */
 .yk-mt__btn-text {
 	font-family: var(--yk-mt-font-display);
+}
+
+.yk-mt__btn--medium .yk-mt__btn-text {
+	font-size: 87.5%;
 }
 
 /*.yk-mt-button-success,*/
@@ -130,7 +119,7 @@ Theme > Typefaces
 /*	background-color: rgb(220, 220, 220);*/
 /*}*/
 
-/* Theme > Selectize */
+/* Selectize */
 .yk-mt-shortcode-meal-tracker .selectize-control:before {
 	content: ' ';
 	z-index: 2;
