@@ -11,6 +11,19 @@ Version: x.x.x
 Theme > Typefaces
 ****************/
 
+@font-face {
+	font-family: 'FontAwesome';
+	font-style: normal;
+	font-weight: 400;
+	font-display: auto;
+	src: url('../fonts/font-awesome/fa-regular-400.eot');
+	src: url('../fonts/font-awesome/fa-regular-400.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/font-awesome/fa-regular-400.woff2') format('woff2'),
+		url('../fonts/font-awesome/fa-regular-400.woff') format('woff'),
+		url('../fonts/font-awesome/fa-regular-400.ttf') format('truetype'),
+		url('../fonts/font-awesome/fa-regular-400.svg#fontawesome') format('svg');
+}
+
 /* Vars */
 :root {
 
@@ -40,7 +53,7 @@ Theme > Typefaces
 .yk-mt-accordion-section-title.active:before {
 	content: '';
 	position: absolute;
-	bottom: calc(-.5 * var(--yk-mt-grid-gap-m));
+	bottom: calc(-.55 * var(--yk-mt-grid-gap-m));
 	left: var(--yk-mt-grid-gap-m);
 	border: 2px solid transparent;
 	border-right-color: var(--yk-mt-primary-color);
@@ -59,19 +72,10 @@ Theme > Typefaces
 }
 
 /* Theme > Tables */
-.yk-mt-t button {
-	padding: 5px 2px 0 2px !important;
-	width: 25px !important;
-	height: 25px !important;
-	font-size: 11px !important;
-	background-color: rgb(220,220,220);
-	color: #000 !important;
+.yk-mt-act-r {
 	box-shadow: none !important;
-}
 
-.yk-mt-t button img {
-	width: 15px !important;
-	height: 15px !important;
+	border-radius: 50%;
 }
 
 /* Theme > Modals */
@@ -127,7 +131,7 @@ Theme > Typefaces
 
 .yk-mt-button-small {
 	padding: 3px 10px 3px 10px;
-	font-family: 'Arial', sans-serif;
+	/*font-family: 'Arial', sans-serif;*/
 	font-size: 13px;
 }
 

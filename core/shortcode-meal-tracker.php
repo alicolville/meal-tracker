@@ -242,7 +242,7 @@
 			foreach ( $meal_types as $meal_type ) {
 
                 // Add the "Add Meal" prompt now
-                $meal_type_html = sprintf( '<p>%s</p>', yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type['id'] ) );
+                $meal_type_html = sprintf( '<div class="yk-mt__btn-wrap">%s</div>', yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type['id'] ) );
 
                 $meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt-t yk-mt-list-of-meals' );
 
@@ -536,6 +536,7 @@
         // TO DO - add theme CSS switch for theme CSS
         wp_enqueue_style( 'meal-tracker-theme', plugins_url( 'assets/css/yk-mt-theme' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'meal-tracker-font', 'https://fonts.googleapis.com/css?family=Spartan:400,700&display=swap', [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'meal-tracker-icon-font', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
 
         // Include relevant JS for Pro users
         if ( true === yk_mt_license_is_premium() ) {

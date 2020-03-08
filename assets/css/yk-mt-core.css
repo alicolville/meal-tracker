@@ -43,9 +43,9 @@ Utility classes
 	width: 25px;
 }
 
-.yk-mt-not-pro .yk-mt-hide-if-not-pro {
-	display: none !important;
-}
+/*.yk-mt-not-pro .yk-mt-hide-if-not-pro {*/
+/*	display: none !important;*/
+/*}*/
 
 /********
 Shortcode
@@ -53,6 +53,15 @@ Shortcode
 
 .yk-mt-shortcode-meal-tracker * {
 	font-family: var(--yk-mt-font-sans);
+}
+
+.yk-mt__btn-wrap {
+	margin-bottom: var(--yk-mt-grid-gap-m);
+	text-align: center;
+}
+
+.yk-mt-list-of-meals {
+	text-align: center;
 }
 
 /****
@@ -69,6 +78,7 @@ Forms
 	padding: .6em;
 	border: 1px solid #eee;
 	font-size: 14px;
+
 	border-radius: 2px;
 	transition: .2s ease-in;
 }
@@ -126,13 +136,6 @@ Tables
 
 .yk-mt-o {
 	width: 60px;
-}
-
-.yk-mt-t button {
-	padding: 5px 2px 0 2px;
-	width: 25px;
-	height: 25px;
-	font-size: 11px;
 }
 
 /****
@@ -302,6 +305,39 @@ Summary
 #yk-mt-add-meal-dialog input,
 .selectize-input input {
 	font-size: 16px;
+}
+
+/******
+Buttons
+******/
+
+.yk-mt-act-r {
+	display: block;
+	padding: 0;
+	width: calc(2 * var(--yk-mt-grid-gap-m));
+	height: calc(2 * var(--yk-mt-grid-gap-m));
+
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: var(--yk-mt-grid-gap-m);
+	color: #333;
+
+	box-sizing: border-box;
+	transition: background-color ease .2s;
+}
+
+.yk-mt-act-r--edit {
+	background-color: #333;
+	color: #fff;
+}
+
+.yk-mt-act-r--remove {
+	background-color: #f30;
+	color: #fff;
+}
+
+.yk-mt-r__text {
+	display: none;
 }
 
 /************
