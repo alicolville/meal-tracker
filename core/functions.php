@@ -637,7 +637,7 @@ function yk_mt_form_text( $title, $name, $value ='', $max_length = 60, $required
 
     return sprintf(
 		'   <label for="%1$s">%2$s</label>
-				<input type="text" name="%1$s" id="%1$s" maxlength="%3$d" value="%4$s" %5$s />',
+				<input type="text" class="yk-mt__input" name="%1$s" id="%1$s" maxlength="%3$d" value="%4$s" %5$s />',
 		$name,
 		$title,
 		(int) $max_length,
@@ -660,7 +660,7 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
 
 	$html = sprintf( '<div id="%1$s-row" class="yk-mt-form-row">
 						<label for="%1$s">%2$s</label>
-							<select name="%1$s" id="%1$s" class="" %s>', $name, $title, $placeholder );
+							<select name="%1$s" id="%1$s" class="yk-mt__select" %s>', $name, $title, $placeholder );
 
 	if ( false === empty( $placeholder ) ) {
         $html .= '<option>' . $placeholder . '</option>';
