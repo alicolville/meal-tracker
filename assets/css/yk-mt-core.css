@@ -7,6 +7,25 @@ Description: Core styles for the YeKen Meal Tracker plugin.
 Version: x.x.x
 */
 
+/*
+Vars
+*/
+
+:root {
+
+	/* Vars > Grids */
+	--yk-mt-grid-gap-s: 8px;
+	--yk-mt-grid-gap-m: 16px;
+	--yk-mt-grid-gap-l: 32px;
+
+	/* Vars > Colours */
+	--yk-mt-primary-color: #333;
+
+	/* Vars > Fonts */
+	--yk-mt-font-display: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	--yk-mt-font-sans: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 /**************
 Utility classes
 **************/
@@ -28,6 +47,14 @@ Utility classes
 	display: none !important;
 }
 
+/********
+Shortcode
+********/
+
+.yk-mt-shortcode-meal-tracker * {
+	font-family: var(--yk-mt-font-sans);
+}
+
 /****
 Forms
 ****/
@@ -46,7 +73,10 @@ Forms
 	transition: .2s ease-in;
 }
 
-/* Core > Accordion */
+/********
+Accordion
+********/
+
 .yk-mt-accordion,
 .yk-mt-accordion * {
 	box-sizing: border-box;
@@ -56,14 +86,15 @@ Forms
 	overflow: hidden;
 }
 
-/* Core > Accordion > Titles */
+/* Accordion > Titles */
 .yk-mt-accordion-section-title {
 	display: inline-block;
-	padding: 10px 15px;
+	padding: 10px;
 	width: 100%;
+	font-family: var(--yk-mt-font-sans, 'Arial, sans-serif');
 }
 
-/* Core > Accordion > Content */
+/* Accordion > Content */
 .yk-mt-accordion-section-content {
 	padding: 15px;
 }
@@ -72,7 +103,10 @@ Forms
 	display: none;
 }
 
-/* Core > Tables */
+/*****
+Tables
+*****/
+
 .yk-mt-t {
 	display: table;
 	width: 100%;
@@ -101,7 +135,17 @@ Forms
 	font-size: 11px;
 }
 
-/* Core > Modal > Header */
+/****
+Modal
+****/
+
+.yk-mt-modal__wrap {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+
+/* Modal > Header */
 .yk-mt-modal-header {
 	margin-bottom: 5px;
 	padding: 10px;
@@ -118,7 +162,7 @@ Forms
 	margin-bottom: 0;
 }
 
-/* Core > Modal > Content */
+/* Modal > Content */
 .yk-mt-modal-content {
 	padding: 10px;
 }
@@ -134,7 +178,7 @@ Forms
 	height: 30px;
 }
 
-/* Core > Modal > Buttons / inputs */
+/* Modal > Buttons / inputs */
 .yk-mt-modal-content .yk-mt-quantity-row label,
 .yk-mt-auto-close label {
 	display: inline;
@@ -175,7 +219,10 @@ Forms
 	padding: 6px 15px 6px 15px;
 }
 
-/* Core > 'Add New Meal' form */
+/******************
+'Add New Meal' form
+******************/
+
 .yk-mt-add-new-meal-form {
 	margin-top: 20px;
 }
@@ -208,7 +255,7 @@ Forms
 	display: none;
 }
 
-/* Core > Navigation */
+/* Navigation */
 .yk-mt-navigation-table {
 	margin-bottom: 7px;
 }
@@ -217,7 +264,10 @@ Forms
 	text-align: right;
 }
 
-/* Core > Summary */
+/******
+Summary
+******/
+
 .yk-mt-summary-table {
 	margin-bottom: 25px;
 }
@@ -239,7 +289,7 @@ Forms
 	font-size: 30px;
 }
 
-/* Core > Settings */
+/* Settings */
 #yk-mt-settings-form .yk-mt-form-row {
 	margin-bottom: 10px;
 }
@@ -248,8 +298,7 @@ Forms
 	margin-top: 15px;
 }
 
-/* Core > Selectize */
-
+/* Selectize */
 #yk-mt-add-meal-dialog input,
 .selectize-input input {
 	font-size: 16px;
@@ -278,18 +327,20 @@ Media queries
 	}
 }
 
-/* Media queries: >=800px */
-@media only screen and (min-width: 800px) {
+/* Media queries: screen, <=767px */
+@media only screen and (max-width: 767px) {
 
-	.yk-mt-modal-header, .yk-mt-modal-content {
-		width: 60%;
+	/* Modal > Wrap */
+	.yk-mt-modal__wrap {
+		max-width: 80%;
 	}
 }
 
-/* Media queries: >=1200px */
-@media only screen and (min-width: 1200px) {
+/* Media queries: screen, >=768px */
+@media only screen and (min-width: 768px) {
 
-	.yk-mt-modal-header, .yk-mt-modal-content {
-		width: 40%;
+	/* Modal > Wrap */
+	.yk-mt-modal__wrap {
+		max-width: 60%;
 	}
 }

@@ -309,16 +309,17 @@
 		$top = apply_filters( 'yk_mt_shortcode_dialog_top', 30 );
 
         $html = sprintf( '<div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-type="0" class="yk-mt-hide">
-                             <div class="yk-mt-modal-header">
-                                <h3 class="yk-mt-hide-if-editing">%3$s</h3>
-                                <h3 class="yk-mt-hide-if-adding">%4$s</h3>
-                                <button id="btn-close-modal" class="close-yk-mt-add-meal-dialog yk-mt-button-silent">
-                                    %2$s
-                                </button>
-                             </div>   
-                			 <div class="yk-mt-modal-content">
-                			    <div class="yk-mt-hide-if-editing">
-                			    <form id="yk-mt-form-add-meal-to-entry">
+                             <div class="yk-mt-modal__wrap">
+                                 <div class="yk-mt-modal-header">
+                                    <h3 class="yk-mt-hide-if-editing">%3$s</h3>
+                                    <h3 class="yk-mt-hide-if-adding">%4$s</h3>
+                                    <button id="btn-close-modal" class="close-yk-mt-add-meal-dialog yk-mt-button-silent">
+                                        %2$s
+                                    </button>
+                                 </div>   
+                                 <div class="yk-mt-modal-content">
+                                    <div class="yk-mt-hide-if-editing">
+                                    <form id="yk-mt-form-add-meal-to-entry">
 				                ',
 				            $top,
                             __( 'Close', YK_MT_SLUG ),
@@ -343,7 +344,9 @@
             }
         }
 
-        $html .= sprintf('    </div>
+        $html .= sprintf('   
+                                        </div> 
+                                    </div>
                                   </form>
                                   <div class="yk-mt-auto-close">
                                         <input type="checkbox" id="%1$s" checked="checked" />
@@ -518,7 +521,6 @@
         wp_enqueue_style( 'mt-animate', plugins_url( 'assets/css/animate.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-selectize', plugins_url( 'assets/css/selectize.default.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'meal-tracker-core', plugins_url( 'assets/css/yk-mt-core' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_style( 'meal-tracker-theme', plugins_url( 'assets/css/yk-mt-theme' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
 		wp_enqueue_script( 'mt-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-selectize', plugins_url( 'assets/js/selectize.min.js', __DIR__ ), [], YK_MT_PLUGIN_VERSION, true );
@@ -531,7 +533,9 @@
         wp_enqueue_script( 'meal-tracker', plugins_url( 'assets/js/core' . $minified . '.js', __DIR__ ),
                         [ 'mt-modal', 'mt-selectize', 'mt-loading-overlay', 'mt-notify', 'mt-chart' ], YK_MT_PLUGIN_VERSION, true );
 
-        // TO DO - add theme CSS switch
+        // TO DO - add theme CSS switch for theme CSS
+        wp_enqueue_style( 'meal-tracker-theme', plugins_url( 'assets/css/yk-mt-theme' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'meal-tracker-font', 'https://fonts.googleapis.com/css?family=Spartan:400,700&display=swap', [], YK_MT_PLUGIN_VERSION );
 
         // Include relevant JS for Pro users
         if ( true === yk_mt_license_is_premium() ) {

@@ -7,14 +7,18 @@ Description: Theme styles for the YeKen Meal Tracker plugin.
 Version: x.x.x
 */
 
+/****************
+Theme > Typefaces
+****************/
+
 /* Vars */
 :root {
 
 	/* Vars > Colours */
-	--yk-mt-primary-color: #333;
+	--yk-mt-primary-color: #b0dda0;
 
 	/* Vars > Fonts */
-	--yk-mt-primary-font: 'Arial', sans-serif;
+	--yk-mt-font-display: 'Spartan', sans-serif;
 }
 
 /* Theme > Accordion */
@@ -23,17 +27,35 @@ Version: x.x.x
 }
 
 .yk-mt-accordion-section-title {
-	background-color: var(--yk-mt-primary-color);
-	color: #fff;
+	position: relative;
+	border-bottom: 2px solid var(--yk-mt-primary-color);
+	font-family: var(--yk-mt-font-display);
+	font-weight: 600;
+	background-color: #fff;
 
 	box-shadow: none !important;
 	transition: all linear .15s !important;
 }
 
+.yk-mt-accordion-section-title.active:before {
+	content: '';
+	position: absolute;
+	bottom: calc(-.5 * var(--yk-mt-grid-gap-m));
+	left: var(--yk-mt-grid-gap-m);
+	border: 2px solid transparent;
+	border-right-color: var(--yk-mt-primary-color);
+	border-bottom-color: var(--yk-mt-primary-color);
+	width: var(--yk-mt-grid-gap-m);
+	height: var(--yk-mt-grid-gap-m);
+	background-color: #fff;
+
+	transform: rotate(45deg);
+}
+
 .yk-mt-accordion-section-title:hover,
 .yk-mt-accordion-section-title:focus,
 .yk-mt-accordion-section-title:active {
-	color: #fff !important;
+	color: #000 !important;
 }
 
 /* Theme > Tables */
