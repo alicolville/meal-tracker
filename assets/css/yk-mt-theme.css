@@ -51,11 +51,6 @@ Version: x.x.x
 	color: #000 !important;
 }
 
-/* Shortcode > Modal */
-.yk-mt__modal-header {
-	border-bottom: 1px solid #ccc;
-}
-
 /* Selectize */
 .yk-mt-shortcode-meal-tracker .selectize-control:before {
 	content: ' ';
@@ -74,6 +69,6 @@ Version: x.x.x
 	transition: opacity .2s;
 }
 
-.yk-mt-shortcode-meal-tracker .selectize-control.loading::before {
+.yk-mt-shortcode-meal-tracker .selectize-control.loading:before {
 	opacity: .4;
 }

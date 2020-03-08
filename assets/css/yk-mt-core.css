@@ -97,8 +97,8 @@ Components
 }
 
 .yk-mt__btn--large {
-	padding-left: var(--yk-mt-grid-gap-l);
-	padding-right: var(--yk-mt-grid-gap-l);
+	padding-left: calc(var(--yk-mt-unit-base) * 2);
+	padding-right: calc(var(--yk-mt-unit-base) * 2);
 	line-height: 2;
 	font-size: 125%;
 }
@@ -249,7 +249,7 @@ Shortcode > Modal
 .yk-mt__modal-wrap {
 	margin-left: auto;
 	margin-right: auto;
-	padding: var(--yk-mt-grid-gap-l);
+	padding: calc(var(--yk-mt-unit-base) * 2);
 	width: 100%;
 	background-color: #fff;
 
