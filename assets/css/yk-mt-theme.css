@@ -50,6 +50,10 @@ Version: x.x.x
 	color: #000 !important;
 }
 
+.yk-mt__meal-name {
+	font-weight: 800;
+}
+
 /* Shortcode > Modal > Header */
 .yk-mt__modal-title {
 	font-weight: 800;

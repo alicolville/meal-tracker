@@ -697,13 +697,13 @@ jQuery( document ).ready( function( $ ) {
     const MealRow = ({ meal_entry_id, meal_type, name, calories, quantity, d, id }) => `
                         <div class="yk-mt__table-row" data-mt="${meal_type}">
                             <div class="yk-mt__table-cell">
-                                 ${name}
+                                <span class="yk-mt__meal-name">${name}</span>
                             </div>
                             <div class="yk-mt__table-cell yk-mt-cq">
-                                ${d}
+                                <span class="yk-mt__meal-data">${d}</span>
                             </div>
                             <div class="yk-mt__table-cell yk-mt-o">
-                                <div class="yk-mt__btn-group yk-mt-flex">
+                                <div class="yk-mt__btn-group yk-mt-inline-flex">
                                     <button data-meal-id="${id}" class="yk-mt-act-r yk-mt-act-r--edit yk-mt-hide-if-not-pro yk-mt-meal-button-edit-inline" >
                                         <span class="fa fa-edit"></span>
                                         <span class="yk-mt-r__text">${yk_mt_sc_meal_tracker[ 'localise' ][ 'edit-text' ]}</span>
