@@ -88,9 +88,9 @@
 
         $entry = yk_mt_db_entry_get( $todays_entry_id );
 
-	    $html = '<div class="yk-mt-t yk-mt-navigation-table">
-                    <div class="yk-mt-r">
-                        <div class="yk-mt-c">';
+	    $html = '<div class="yk-mt__table yk-mt-navigation-table">
+                    <div class="yk-mt__table-row">
+                        <div class="yk-mt__table-cell">';
 
 	                    $i = 0;
 
@@ -106,7 +106,7 @@
                         }
 
         $html .=       sprintf('</div>
-                                                <div class="yk-mt-c yk-mt-datepicker-cell">
+                                                <div class="yk-mt__table-cell yk-mt-datepicker-cell">
                                                     %1$s
                                                     &middot;
                                                     <a class="mt-datepicker">%2$s</a>
@@ -125,9 +125,9 @@
      */
 	function yk_mt_shortcode_meal_tracker_summary() {
 
-		return '<div class="yk-mt-t yk-mt-summary-table">
-			                <div class="yk-mt-r" >
-			                        <div class="yk-mt-c yk-mt-summary-chart-slot">
+		return '<div class="yk-mt__table yk-mt-summary-table">
+			                <div class="yk-mt__table-row" >
+			                        <div class="yk-mt__table-cell yk-mt-summary-chart-slot">
 			                            <canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
 			                        </div>
 			                </div>
@@ -249,7 +249,7 @@
                 // Add the "Add Meal" prompt now
                 $meal_type_html = sprintf( '<div class="yk-mt__btn-wrap">%s</div>', yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type['id'] ) );
 
-                $meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt-t yk-mt-list-of-meals' );
+                $meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt__table yk-mt-list-of-meals' );
 
                 $localised_strings = yk_mt_localised_strings();
 

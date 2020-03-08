@@ -695,14 +695,14 @@ jQuery( document ).ready( function( $ ) {
      * @constructor
      */
     const MealRow = ({ meal_entry_id, meal_type, name, calories, quantity, d, id }) => `
-                        <div class="yk-mt-r" data-mt="${meal_type}">
-                            <div class="yk-mt-c">
+                        <div class="yk-mt__table-row" data-mt="${meal_type}">
+                            <div class="yk-mt__table-cell">
                                  ${name}
                             </div>
-                            <div class="yk-mt-c yk-mt-cq">
+                            <div class="yk-mt__table-cell yk-mt-cq">
                                 ${d}
                             </div>
-                            <div class="yk-mt-c yk-mt-o">
+                            <div class="yk-mt__table-cell yk-mt-o">
                                 <div class="yk-mt__btn-group yk-mt-flex">
                                     <button data-meal-id="${id}" class="yk-mt-act-r yk-mt-act-r--edit yk-mt-hide-if-not-pro yk-mt-meal-button-edit-inline" >
                                         <span class="fa fa-edit"></span>
@@ -724,13 +724,13 @@ jQuery( document ).ready( function( $ ) {
      * @constructor
      */
     const SummaryRow = ({ total, unit }) => `
-                        <div class="yk-mt-r" >
-                                <div class="yk-mt-c">
+                        <div class="yk-mt__table-row" >
+                                <div class="yk-mt__table-cell">
                                 </div>
-                                <div class="yk-mt-c yk-mt-cq">
+                                <div class="yk-mt__table-cell yk-mt-cq">
                                     ${total}${unit}
                                 </div>	
-                                <div class="yk-mt-c yk-mt-o">
+                                <div class="yk-mt__table-cell yk-mt-o">
                                 </div>
                         </div>`;
 

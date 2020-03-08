@@ -51,6 +51,12 @@ Global styles
 	font-size: var(--yk-mt-unit-base) !important;
 }
 
+/* Global styles > Set global font */
+.yk-mt,
+.yk-mt * {
+	font-family: var(--yk-mt-font-sans);
+}
+
 /**************
 Utility classes
 **************/
@@ -109,21 +115,17 @@ Components
 }
 
 /* Components > Tables */
-.yk-mt-t {
+.yk-mt__table {
 	display: table;
 	width: 100%;
 }
 
-.yk-mt-r {
+.yk-mt__table-row {
 	display: table-row;
 }
 
-.yk-mt-c {
+.yk-mt__table-cell {
 	display: table-cell;
-}
-
-.yk-mt-label-col {
-	width: 10%;
 }
 
 .yk-mt-o {
@@ -133,10 +135,6 @@ Components
 /********
 Shortcode
 ********/
-
-.yk-mt-shortcode-meal-tracker * {
-	font-family: var(--yk-mt-font-sans);
-}
 
 .yk-mt-shortcode-meal-tracker .yk-mt__btn-wrap {
 	margin-bottom: var(--yk-mt-unit-base);
