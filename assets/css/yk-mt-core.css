@@ -42,6 +42,15 @@ Vars
 	--yk-mt-font-icons: 'FontAwesome', sans-serif;
 }
 
+/************
+Global styles
+************/
+
+/* Global styles > Protect plugin units from themes */
+.yk-mt {
+	font-size: var(--yk-mt-unit-base) !important;
+}
+
 /**************
 Utility classes
 **************/
@@ -80,27 +89,6 @@ Components
 
 	border-radius: 3rem;
 	box-sizing: border-box;
-}
-
-.yk-mt__btn--small {
-	padding-left: calc(var(--yk-mt-unit-base) / 2);
-	padding-right: calc(var(--yk-mt-unit-base) / 2);
-	line-height: 1.5;
-	font-size: 75%;
-}
-
-.yk-mt__btn--medium {
-	padding-left: var(--yk-mt-unit-base);
-	padding-right: var(--yk-mt-unit-base);
-	line-height: 2;
-	font-size: 100%;
-}
-
-.yk-mt__btn--large {
-	padding-left: calc(var(--yk-mt-unit-base) * 2);
-	padding-right: calc(var(--yk-mt-unit-base) * 2);
-	line-height: 2;
-	font-size: 125%;
 }
 
 .yk-mt__btn:hover,
@@ -269,6 +257,7 @@ Shortcode > Modal
 
 .yk-mt__modal-title {
 	margin: 0 !important;
+	line-height: 125%;
 	font-family: var(--yk-mt-font-display);
 	font-size: 150%;
 	font-weight: 600;
@@ -277,7 +266,9 @@ Shortcode > Modal
 /* Shortcode > Modal > Content */
 .yk-mt__modal-subtitle {
 	margin-bottom: .5rem;
-	font-weight: 500;
+	line-height: 125%;
+	font-size: 100%;
+	font-weight: 600;
 }
 
 .yk-mt__label {
@@ -297,23 +288,20 @@ Shortcode > Modal
 	display: inline-block;
 }
 
-.yk-mt__modal-quick-search .yk-mt__input {
-	width: 60px;
-	text-align: center;
-}
-
 .yk-mt__btn--add-meal-quantity {
-	margin-left: .5rem;
+	margin-bottom: .25rem;
+	margin-right: .25rem;
 	padding-left: .5rem;
 	padding-right: .5rem;
+	line-height: 150%;
 }
 
-.yk-mt-auto-close {
-	margin-top: 15px;
+.yk-mt__modal-auto-close {
+	margin-top: var(--yk-mt-unit-base);
 	font-size: .8em;
 }
 
-.yk-mt-auto-close label {
+.yk-mt__modal-auto-close .yk-mt__label {
 	margin-left: 5px;
 }
 
@@ -432,6 +420,21 @@ Summary
 /* @media queries: screen, <=767px */
 @media only screen and (max-width: 767px) {
 
+	/* Components > Buttons */
+	.yk-mt__btn--small {
+		padding-left: calc(var(--yk-mt-unit-base) / 2);
+		padding-right: calc(var(--yk-mt-unit-base) / 2);
+		line-height: 1.5;
+		font-size: 75%;
+	}
+
+	.yk-mt__btn--medium {
+		padding-left: var(--yk-mt-unit-base);
+		padding-right: var(--yk-mt-unit-base);
+		line-height: 2;
+		font-size: 100%;
+	}
+
 	/* Shortcode > Modal > Wrap */
 	.yk-mt__modal-wrap {
 		max-width: 80%;
@@ -453,16 +456,25 @@ Summary
 	.yk-mt__modal-header .yk-mt__btn-text {
 		display: none;
 	}
-
-	/* Shortcode > Modal > Quick Search */
-	.yk-mt__btn--add-meal-quantity {
-		height: 20px;
-		line-height: 20px;
-	}
 }
 
 /* @media queries: screen, >=768px */
 @media only screen and (min-width: 768px) {
+
+	/* Components > Buttons */
+	.yk-mt__btn--small {
+		padding-left: calc(var(--yk-mt-unit-base) / 2);
+		padding-right: calc(var(--yk-mt-unit-base) / 2);
+		line-height: 1.5;
+		font-size: 75%;
+	}
+
+	.yk-mt__btn--medium {
+		padding-left: var(--yk-mt-unit-base);
+		padding-right: var(--yk-mt-unit-base);
+		line-height: 2;
+		font-size: 100%;
+	}
 
 	/* Shortcode > Modal > Wrap */
 	.yk-mt__modal-wrap {
@@ -484,11 +496,6 @@ Summary
 	/* Shortcode > Modal > Header */
 	.yk-mt__modal-header .yk-mt__btn {
 		margin-left: auto;
-	}
-
-	/* Shortcode > Modal > Quick Search */
-	.yk-mt__modal-quick-search .yk-mt-flex {
-		justify-content: space-evenly;
 	}
 
 	@media only screen and (min-width: 768px) {

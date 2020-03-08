@@ -28,7 +28,7 @@
 
 		$entry_id = ( true === $is_pro ) ? yk_mt_entry_id_from_qs() : NULL;
 
-		$html .= '<div id="yk-mt-shortcode-meal-tracker" class="yk-mt-shortcode-meal-tracker">';
+		$html .= '<div id="yk-mt-shortcode-meal-tracker" class="yk-mt yk-mt-shortcode-meal-tracker">';
 
         // This is used to create an empty entry if one doesn't already exist for this user / day
         yk_mt_entry_get_id_or_create();
@@ -130,7 +130,6 @@
 			                        <div class="yk-mt-c yk-mt-summary-chart-slot">
 			                            <canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
 			                        </div>
-			                        
 			                </div>
 	                    </div>';
     }
@@ -352,7 +351,7 @@
             $html .= sprintf(
                 '<div class="yk-mt-quantity-row">
                             <label class="yk-mt__label">%1$s:</label>
-                            <div class="yk-mt__modal-quantity yk-mt-flex">',
+                            <div class="yk-mt__modal-quantity">',
                 __( 'Add', YK_MT_SLUG )
             );
 
@@ -366,7 +365,7 @@
                         </div> 
                     </div>
                 </form>
-                <div class="yk-mt-auto-close">
+                <div class="yk-mt__modal-auto-close">
                     <input class="yk-mt__input" type="checkbox" id="%1$s" checked="checked" />
                     <label class="yk-mt__label" for="%1$s">%2$s</label>
                 </div>
@@ -416,7 +415,7 @@
 
 		$html .= sprintf( '
             <div class="yk-mt__modal-footer">
-                <button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--large yk-mt-button-add-new-meal yk-mt-button-secondary yk-mt-hide-if-editing">
+                <button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-add-new-meal yk-mt-button-secondary yk-mt-hide-if-editing">
                     <span class="yk-mt__btn-icon fa fa-plus"></span>
                     <span class="yk-mt__btn-text">%1$s</span>
                 </button>',
