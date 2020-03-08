@@ -7,4 +7,289 @@ Description: Core styles for the YeKen Meal Tracker plugin.
 Version: x.x.x
 */
 
-/**/
+/**************
+Utility classes
+**************/
+
+.yk-mt-hide {
+	display: none !important;
+}
+
+.yk-mt-selected {
+	font-weight: bold !important;
+}
+
+/* Utility classes > Non-Pro */
+.yk-mt-not-pro .yk-mt-o {
+	width: 25px;
+}
+
+.yk-mt-not-pro .yk-mt-hide-if-not-pro {
+	display: none !important;
+}
+
+/****
+Forms
+****/
+
+.yk-mt-shortcode-meal-tracker input[type='text'],
+.yk-mt-shortcode-meal-tracker input[type='email'],
+.yk-mt-shortcode-meal-tracker input[type='password'],
+.yk-mt-shortcode-meal-tracker input[type='search'],
+.yk-mt-shortcode-meal-tracker input[type='url'],
+.yk-mt-shortcode-meal-tracker input[type='number'],
+.yk-mt-shortcode-meal-tracker select {
+	padding: .6em;
+	border: 1px solid #eee;
+	font-size: 14px;
+	border-radius: 2px;
+	transition: .2s ease-in;
+}
+
+/* Core > Accordion */
+.yk-mt-accordion,
+.yk-mt-accordion * {
+	box-sizing: border-box;
+}
+
+.yk-mt-accordion {
+	overflow: hidden;
+}
+
+/* Core > Accordion > Titles */
+.yk-mt-accordion-section-title {
+	display: inline-block;
+	padding: 10px 15px;
+	width: 100%;
+}
+
+/* Core > Accordion > Content */
+.yk-mt-accordion-section-content {
+	padding: 15px;
+}
+
+.yk-mt-accordion-enabled .yk-mt-accordion-section-content {
+	display: none;
+}
+
+/* Core > Tables */
+.yk-mt-t {
+	display: table;
+	width: 100%;
+}
+
+.yk-mt-r {
+	display: table-row;
+}
+
+.yk-mt-c {
+	display: table-cell;
+}
+
+.yk-mt-label-col {
+	width: 10%;
+}
+
+.yk-mt-o {
+	width: 60px;
+}
+
+.yk-mt-t button {
+	padding: 5px 2px 0 2px;
+	width: 25px;
+	height: 25px;
+	font-size: 11px;
+}
+
+/* Core > Modal > Header */
+.yk-mt-modal-header {
+	margin-bottom: 5px;
+	padding: 10px;
+	overflow: hidden;
+}
+
+.yk-mt-modal-header button {
+	float: right;
+}
+
+.yk-mt-modal-header h3 {
+	float: left;
+	margin-top: 7px;
+	margin-bottom: 0;
+}
+
+/* Core > Modal > Content */
+.yk-mt-modal-content {
+	padding: 10px;
+}
+
+.yk-mt-modal-content h5 {
+	margin-bottom: 6px;
+}
+
+.yk-mt-modal-content .yk-mt-quantity-row {
+	display: inline-block;
+	margin-top: 12px;
+	margin-bottom: 12px;
+	height: 30px;
+}
+
+/* Core > Modal > Buttons / inputs */
+.yk-mt-modal-content .yk-mt-quantity-row label,
+.yk-mt-auto-close label {
+	display: inline;
+}
+
+.yk-mt-modal-content .yk-mt-quantity-row input {
+	width: 60px;
+	text-align: center;
+}
+
+.yk-mt-modal-content .yk-mt-quantity-row button {
+	margin-left: 5px;
+}
+
+.yk-mt-meal-button-add {
+	padding: 6px 15px 6px 15px;
+	font-size: 16px;
+}
+
+#yk-mt-button-add-meal-6,
+#yk-mt-button-add-meal-7,
+#yk-mt-button-add-meal-8,
+#yk-mt-button-add-meal-9,
+#yk-mt-button-add-meal-10 {
+	display: none;
+}
+
+.yk-mt-auto-close {
+	margin-top: 15px;
+	font-size: .8em;
+}
+
+.yk-mt-auto-close label {
+	margin-left: 5px;
+}
+
+#btn-close-modal {
+	padding: 6px 15px 6px 15px;
+}
+
+/* Core > 'Add New Meal' form */
+.yk-mt-add-new-meal-form {
+	margin-top: 20px;
+}
+
+.yk-mt-settings-form label,
+.yk-mt-add-new-meal-form label,
+.yk-mt-add-new-meal-form input,
+.yk-mt-add-new-meal-form select {
+	display: block;
+	margin-bottom: 10px;
+	width: 95%;
+}
+
+.yk-mt-add-new-meal-form input {
+	padding: 8px !important;
+}
+
+.yk-mt-add-new-meal-form select {
+	height: 38px;
+}
+
+.yk-mt-info {
+	margin-top: 10px;
+	font-size: 13px;
+	font-style: italic;
+}
+
+.yk-mt-mode-edit .yk-mt-hide-if-editing,
+.yk-mt-mode-add .yk-mt-hide-if-adding {
+	display: none;
+}
+
+/* Core > Navigation */
+.yk-mt-navigation-table {
+	margin-bottom: 7px;
+}
+
+.yk-mt-datepicker-cell {
+	text-align: right;
+}
+
+/* Core > Summary */
+.yk-mt-summary-table {
+	margin-bottom: 25px;
+}
+
+.yk-mt-summary-details {
+	text-align: right;
+	vertical-align: middle !important;
+}
+
+.yk-mt-summary-chart-slot {
+	width: 300px ! important;
+}
+
+.yk-mt-summary-details p {
+	margin-bottom: 0;
+}
+
+.yk-mt-summary-details .yk-mt-figure {
+	font-size: 30px;
+}
+
+/* Core > Settings */
+#yk-mt-settings-form .yk-mt-form-row {
+	margin-bottom: 10px;
+}
+
+.yk-mt-button-save-settings {
+	margin-top: 15px;
+}
+
+/* Core > Selectize */
+
+#yk-mt-add-meal-dialog input,
+.selectize-input input {
+	font-size: 16px;
+}
+
+/************
+Media queries
+************/
+
+/* Media queries: screen, >=345px */
+@media only screen and (min-width: 345px) {
+
+	#yk-mt-button-add-meal-10 {
+		display: inline;
+	}
+}
+
+/* Media queries: screen, >=520px */
+@media only screen and (min-width: 520px) {
+
+	#yk-mt-button-add-meal-6,
+	#yk-mt-button-add-meal-7,
+	#yk-mt-button-add-meal-8,
+	#yk-mt-button-add-meal-9 {
+		display: inline;
+	}
+}
+
+/* Media queries: >=800px */
+@media only screen and (min-width: 800px) {
+
+	.yk-mt-modal-header, .yk-mt-modal-content {
+		width: 60%;
+	}
+}
+
+/* Media queries: >=1200px */
+@media only screen and (min-width: 1200px) {
+
+	.yk-mt-modal-header, .yk-mt-modal-content {
+		width: 40%;
+	}
+}

@@ -6,3 +6,127 @@ Author URI:
 Description: Theme styles for the YeKen Meal Tracker plugin.
 Version: x.x.x
 */
+
+/* Vars */
+:root {
+
+	/* Vars > Colours */
+	--yk-mt-primary-color: #333;
+
+	/* Vars > Fonts */
+	--yk-mt-primary-font: 'Arial', sans-serif;
+}
+
+/* Theme > Accordion */
+.yk-mt-accordion {
+	background-color: #f7f7f7;
+}
+
+.yk-mt-accordion-section-title {
+	background-color: var(--yk-mt-primary-color);
+	color: #fff;
+
+	box-shadow: none !important;
+	transition: all linear .15s !important;
+}
+
+.yk-mt-accordion-section-title:hover,
+.yk-mt-accordion-section-title:focus,
+.yk-mt-accordion-section-title:active {
+	color: #fff !important;
+}
+
+/* Theme > Tables */
+.yk-mt-t button {
+	padding: 5px 2px 0 2px !important;
+	width: 25px !important;
+	height: 25px !important;
+	font-size: 11px !important;
+	background-color: rgb(220,220,220);
+	color: #000 !important;
+	box-shadow: none !important;
+}
+
+.yk-mt-t button img {
+	width: 15px !important;
+	height: 15px !important;
+}
+
+/* Theme > Modals */
+#yk-mt-add-meal-dialog {
+	background-color: #fff;
+}
+
+.yk-mt-modal-header {
+	border-bottom: 1px solid #ccc;
+}
+
+/* Theme > Buttons */
+.yk-mt-button-success,
+.yk-mt-button-error,
+.yk-mt-button-warning,
+.yk-mt-button-secondary,
+.yk-mt-button-cancel {
+	font-family: 'Arial', sans-serif;
+	border-radius: 4px;
+}
+
+.yk-mt-button-success,
+.yk-mt-button-error,
+.yk-mt-button-warning,
+.yk-mt-button-secondary,
+.yk-mt-button-cancel {
+	color: #fff;
+}
+
+.yk-mt-button-success {
+	background-color: rgb(28, 184, 65);
+}
+
+.yk-mt-button-error {
+	background-color: rgb(202, 60, 60);
+}
+
+.yk-mt-button-warning {
+	background-color: rgb(223, 117, 20);
+}
+
+.yk-mt-button-secondary {
+	background-color: rgb(66, 184, 221);
+}
+
+.yk-mt-button-cancel {
+	background-color: rgb(204, 204, 204);
+}
+
+.yk-mt-button-silent, .yk-mt-button-small {
+	background-color: rgb(220, 220, 220);
+}
+
+.yk-mt-button-small {
+	padding: 3px 10px 3px 10px;
+	font-family: 'Arial', sans-serif;
+	font-size: 13px;
+}
+
+/* Theme > Selectize */
+.yk-mt-shortcode-meal-tracker .selectize-control:before {
+	content: ' ';
+	z-index: 2;
+	position: absolute;
+	top: 50%;
+	right: 34px;
+	display: block;
+	margin: -11px 0 0 0;
+	width: 16px;
+	height: 16px;
+	background-image: url(../images/spinner.gif);
+	background-size: 16px 16px;
+	opacity: 0;
+
+	transition: opacity .2s;
+}
+
+.yk-mt-shortcode-meal-tracker .selectize-control.loading::before {
+	opacity: .4;
+}
