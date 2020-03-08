@@ -12,7 +12,7 @@
 
 .yk-mt-accordion {
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    box-shadow: 0 1px 3px rgba(0,0,0,.25);
     border-radius: 3px;
     background: #f7f7f7;
 }
@@ -24,8 +24,8 @@
     display: inline-block;
     border-bottom: 1px solid #1a1a1a;
     background: #333;
-    transition: all linear 0.15s;
-    
+    transition: all linear .15s;
+
     /* Type */
     font-size:1.100em;
     text-shadow:0 1px 0 #1a1a1a;
@@ -165,7 +165,7 @@ Table styles
 }
 .yk-mt-auto-close {
     margin-top: 15px;
-    font-size: 0.8em;
+    font-size: .8em;
 }
 .yk-mt-auto-close label {
     margin-left: 5px;
@@ -249,7 +249,7 @@ Table styles
 .yk-mt-button-cancel {
     font-family: tahoma;
     border-radius: 4px;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
 }
 .yk-mt-button-success,
 .yk-mt-button-error,
@@ -302,21 +302,21 @@ Table styles
     border: 1px solid #eee;
     font-size: 14px;
     font-size: 1.4rem;
-    padding: 0.6em;
+    padding: .6em;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    -webkit-transition: 0.2s ease-in;
-    transition: 0.2s ease-in;
+    -webkit-transition: .2s ease-in;
+    transition: .2s ease-in;
 }
 
 /**
    Selectize
  */
 .yk-mt-shortcode-meal-tracker .selectize-control::before {
-    -moz-transition: opacity 0.2s;
-    -webkit-transition: opacity 0.2s;
-    transition: opacity 0.2s;
+    -moz-transition: opacity .2s;
+    -webkit-transition: opacity .2s;
+    transition: opacity .2s;
     content: ' ';
     z-index: 2;
     position: absolute;
@@ -331,7 +331,7 @@ Table styles
     opacity: 0;
 }
 .yk-mt-shortcode-meal-tracker .selectize-control.loading::before {
-    opacity: 0.4;
+    opacity: .4;
 }
 /**
     Forcing input fields to 16px to stop iOS / Safari zooming in
