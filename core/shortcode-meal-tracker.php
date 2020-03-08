@@ -457,7 +457,7 @@
 	 */
 	function yk_mt_html_accordion_open( $id = '' ) {
 
-		$accordion_class = apply_filters( 'yk_mt_shortcode_meal_tracker_accordion', 'yk-mt-accordion' );
+		$accordion_class = apply_filters( 'yk_mt_shortcode_meal_tracker_accordion', 'yk-mt__accordion' );
 
 		return sprintf( '<div class="%s" %s>', esc_attr( $accordion_class ), ( false === empty( $id ) ? ' id="' . esc_attr( $id ) . '" ' : '' ) );
 	}
@@ -488,9 +488,9 @@
 
 		$title = yk_mt_lang_translate_known_meal_type_from_english( $options['title'] );
 
-		$html = sprintf( '  <div class="yk-mt-accordion-section%2$s" id="%1$d">
-									<%6$s class="yk-mt-accordion-section-title%3$s" href="#yk-mt-acc-%1$d">%4$s</%6$s>
-									<div id="yk-mt-acc-%1$d" class="yk-mt-accordion-section-content">
+		$html = sprintf( '  <div class="yk-mt__accordion-section%2$s" id="%1$d">
+									<%6$s class="yk-mt__accordion-section-title%3$s" href="#yk-mt-acc-%1$d">%4$s</%6$s>
+									<div id="yk-mt-acc-%1$d" class="yk-mt__accordion-section-content">
 										%5$s
 									</div>
 								</div>',

@@ -132,34 +132,21 @@ Components
 	width: 60px;
 }
 
-/********
-Shortcode
-********/
-
-.yk-mt-shortcode-meal-tracker .yk-mt__btn-wrap {
-	margin-bottom: var(--yk-mt-unit-base);
-	text-align: center;
-}
-
-.yk-mt__no-meals {
-	text-align: center;
-}
-
 /********************
 Shortcode > Accordion
 ********************/
 
-.yk-mt-accordion,
-.yk-mt-accordion * {
+.yk-mt__accordion,
+.yk-mt__accordion * {
 	box-sizing: border-box;
 }
 
-.yk-mt-accordion {
+.yk-mt__accordion {
 	overflow: hidden;
 }
 
 /* Shortcode > Accordion > Titles */
-.yk-mt-accordion-section-title {
+.yk-mt__accordion-section-title {
 	position: relative;
 	display: inline-block;
 	padding: 10px;
@@ -171,7 +158,7 @@ Shortcode > Accordion
 	transition: all ease .15s !important;
 }
 
-.yk-mt-accordion-section-title.active:before {
+.yk-mt__accordion-section-title.active:before {
 	content: '';
 	position: absolute;
 	bottom: calc(-.55 * var(--yk-mt-unit-base));
@@ -187,17 +174,25 @@ Shortcode > Accordion
 }
 
 /* Shortcode > Accordion > Content */
-.yk-mt-accordion-section-content {
+.yk-mt__accordion-section-content {
 	padding-top: var(--yk-mt-unit-base);
 	padding-bottom: var(--yk-mt-unit-base);
 	border-bottom: 1px dashed #ddd;
 }
 
-.yk-mt-accordion-enabled .yk-mt-accordion-section-content {
+.yk-mt__accordion-enabled .yk-mt__accordion-section-content {
 	display: none;
 }
 
-/**/
+.yk-mt__accordion .yk-mt__btn-wrap {
+	margin-bottom: var(--yk-mt-unit-base);
+	text-align: center;
+}
+
+.yk-mt__no-meals {
+	text-align: center;
+}
+
 .yk-mt-act-r {
 	box-shadow: none !important;
 	border-radius: 50%;

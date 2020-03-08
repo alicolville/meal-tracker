@@ -25,13 +25,13 @@ jQuery( document ).ready( function( $ ) {
         // Close all sections (probably none open in the first place)
         yk_mt_accordion_close_sections();
 
-        $( '.yk-mt-accordion-section .initial-active' ).each( function() {
+        $( '.yk-mt__accordion-section .initial-active' ).each( function() {
             var currentAttrValue = $( this ).attr( 'href' );
             $( this ).addClass( 'active' );
-            $( '.yk-mt-accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
+            $( '.yk-mt__accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
         });
 
-        $( '.yk-mt-accordion-section-title' ).click( function( e ) {
+        $( '.yk-mt__accordion-section-title' ).click( function( e ) {
 
             // Grab current anchor value
             var currentAttrValue = $( this ).attr( 'href' );
@@ -44,7 +44,7 @@ jQuery( document ).ready( function( $ ) {
                 // Add active class to section title
                 $( this ).addClass( 'active' );
                 // Open up the hidden content panel
-                $( '.yk-mt-accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
+                $( '.yk-mt__accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
             }
 
             e.preventDefault();
@@ -52,8 +52,8 @@ jQuery( document ).ready( function( $ ) {
     }
 
     function yk_mt_accordion_close_sections() {
-        $( '.yk-mt-accordion .yk-mt-accordion-section-title' ).removeClass( 'active' );
-        $( '.yk-mt-accordion .yk-mt-accordion-section-content' ).slideUp(300).removeClass( 'open' );
+        $( '.yk-mt__accordion .yk-mt__accordion-section-title' ).removeClass( 'active' );
+        $( '.yk-mt__accordion .yk-mt__accordion-section-content' ).slideUp(300).removeClass( 'open' );
     }
 
     /**

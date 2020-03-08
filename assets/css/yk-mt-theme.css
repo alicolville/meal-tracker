@@ -32,21 +32,21 @@ Version: x.x.x
 }
 
 /* Shortcode > Accordion */
-.yk-mt-accordion-section-title {
+.yk-mt__accordion-section-title {
 	border-bottom-color: var(--yk-mt-primary-color);
 	font-size: 125%;
 	font-weight: 800;
 	background-color: #fff;
 }
 
-.yk-mt-accordion-section-title.active:before {
+.yk-mt__accordion-section-title.active:before {
 	border-right-color: var(--yk-mt-primary-color);
 	border-bottom-color: var(--yk-mt-primary-color);
 }
 
-.yk-mt-accordion-section-title:hover,
-.yk-mt-accordion-section-title:focus,
-.yk-mt-accordion-section-title:active {
+.yk-mt__accordion-section-title:hover,
+.yk-mt__accordion-section-title:focus,
+.yk-mt__accordion-section-title:active {
 	color: #000 !important;
 }
 
