@@ -703,7 +703,7 @@ jQuery( document ).ready( function( $ ) {
                                 ${d}
                             </div>
                             <div class="yk-mt-c yk-mt-o">
-                                <div class="yk-mt__btn-group">
+                                <div class="yk-mt__btn-group yk-mt-flex">
                                     <button data-meal-id="${id}" class="yk-mt-act-r yk-mt-act-r--edit yk-mt-hide-if-not-pro yk-mt-meal-button-edit-inline" >
                                         <span class="fa fa-edit"></span>
                                         <span class="yk-mt-r__text">${yk_mt_sc_meal_tracker[ 'localise' ][ 'edit-text' ]}</span>

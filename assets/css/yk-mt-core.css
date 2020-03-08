@@ -179,7 +179,7 @@ Shortcode > Accordion
 	padding: 10px;
 	border-bottom: 2px solid #000;
 	width: 100%;
-	font-family: var(--yk-mt-font-sans, 'Arial, sans-serif');
+	font-family: var(--yk-mt-font-display, 'Arial, sans-serif');
 
 	box-shadow: none !important;
 	transition: all ease .15s !important;
@@ -222,6 +222,7 @@ Shortcode > Modal
 ****************/
 
 .yk-mt__modal {
+	z-index: 51;
 	margin-left: auto;
 	margin-right: auto;
 	padding-top: 10vh;
@@ -229,6 +230,7 @@ Shortcode > Modal
 }
 
 .yk-mt__modal-bg {
+	z-index: 50;
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -247,6 +249,7 @@ Shortcode > Modal
 }
 
 .yk-mt__modal-wrap {
+	position: relative;
 	margin-left: auto;
 	margin-right: auto;
 	padding: calc(var(--yk-mt-unit-base) * 2);
@@ -254,56 +257,55 @@ Shortcode > Modal
 	background-color: #fff;
 
 	border-radius: 4px;
+	box-shadow: 0 2px 3px rgba(0,0,0,.66);
 }
 
 /* Shortcode > Modal > Header */
-.yk-my__modal-title {
+.yk-mt__modal-header {
+	margin-bottom: 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 2px solid var(--yk-mt-primary-color);
+}
+
+.yk-mt__modal-title {
+	margin: 0 !important;
+	font-family: var(--yk-mt-font-display);
 	font-size: 150%;
 	font-weight: 600;
 }
 
-.yk-mt__modal-header .yk-mt__btn {
-	float: right; /* TO DO: flexbox */
-}
-
 /* Shortcode > Modal > Content */
-.yk-mt__modal-content h5 {
-	margin-bottom: 6px;
+.yk-mt__modal-subtitle {
+	margin-bottom: .5rem;
+	font-weight: 500;
 }
 
-.yk-mt__modal-content .yk-mt-quantity-row {
-	display: inline-block;
+.yk-mt__label {
+	display: block;
+	margin-bottom: .5rem;
+	font-weight: 400;
+	font-size: 75%;
+}
+
+/* Shortcode > Modal > Quick Search */
+.yk-mt__modal-quick-search .yk-mt-quantity-row {
 	margin-top: 12px;
 	margin-bottom: 12px;
-	height: 30px;
 }
 
-/* Shortcode > Modal > Buttons / inputs */
-.yk-mt__modal-content .yk-mt-quantity-row label,
-.yk-mt-auto-close label {
-	display: inline;
+.yk-mt__modal-quick-search .yk-mt__modal-label {
+	display: inline-block;
 }
 
-.yk-mt__modal-content .yk-mt-quantity-row input {
+.yk-mt__modal-quick-search .yk-mt__input {
 	width: 60px;
 	text-align: center;
 }
 
-.yk-mt__modal-content .yk-mt-quantity-row button {
-	margin-left: 5px;
-}
-
-.yk-mt-meal-button-add {
-	padding: 6px 15px 6px 15px;
-	font-size: 16px;
-}
-
-#yk-mt-button-add-meal-6,
-#yk-mt-button-add-meal-7,
-#yk-mt-button-add-meal-8,
-#yk-mt-button-add-meal-9,
-#yk-mt-button-add-meal-10 {
-	display: none;
+.yk-mt__btn--add-meal-quantity {
+	margin-left: .5rem;
+	padding-left: .5rem;
+	padding-right: .5rem;
 }
 
 .yk-mt-auto-close {
@@ -401,37 +403,62 @@ Summary
 *************/
 
 /* @media queries: screen, >=345px */
-@media only screen and (min-width: 345px) {
+@media only screen and (max-width: 344px) {
 
+	/* Shortcode > Modal > Quick Search > Hide #10 */
 	#yk-mt-button-add-meal-10 {
-		display: inline;
+		display: none;
 	}
 }
 
-/* @media queries: screen, >=520px */
-@media only screen and (min-width: 520px) {
+/* @media queries: screen, <=519px */
+@media only screen and (max-width: 519px) {
 
+	/* Shortcode > Modal > Quick Search > Hide #6 - #9 */
 	#yk-mt-button-add-meal-6,
 	#yk-mt-button-add-meal-7,
 	#yk-mt-button-add-meal-8,
 	#yk-mt-button-add-meal-9 {
-		display: inline;
+		display: none;
 	}
 }
 
 /* @media queries: screen, <=767px */
 @media only screen and (max-width: 767px) {
 
-	/* Modal > Wrap */
+	/* Shortcode > Modal > Wrap */
 	.yk-mt__modal-wrap {
 		max-width: 80%;
+	}
+
+	/* Shortcode > Modal > Header */
+	.yk-mt__modal-header .yk-mt__btn {
+		position: absolute;
+		top: calc(-1 * var(--yk-mt-unit-base));
+		right: calc(-1 * var(--yk-mt-unit-base));
+		padding: 0;
+		width: 32px;
+		height: 32px;
+		line-height: 26px;
+		background-color: #000;
+		color: #fff;
+	}
+
+	.yk-mt__modal-header .yk-mt__btn-text {
+		display: none;
+	}
+
+	/* Shortcode > Modal > Quick Search */
+	.yk-mt__btn--add-meal-quantity {
+		height: 20px;
+		line-height: 20px;
 	}
 }
 
 /* @media queries: screen, >=768px */
 @media only screen and (min-width: 768px) {
 
-	/* Modal > Wrap */
+	/* Shortcode > Modal > Wrap */
 	.yk-mt__modal-wrap {
 		max-width: 60%;
 	}
@@ -444,8 +471,18 @@ Summary
 /* @supports flexbox */
 @supports (display: flex) {
 
-	.yk-mt__btn-group {
+	.yk-mt-flex {
 		display: flex;
+	}
+
+	/* Shortcode > Modal > Header */
+	.yk-mt__modal-header .yk-mt__btn {
+		margin-left: auto;
+	}
+
+	/* Shortcode > Modal > Quick Search */
+	.yk-mt__modal-quick-search .yk-mt-flex {
+		justify-content: space-evenly;
 	}
 
 	@media only screen and (min-width: 768px) {

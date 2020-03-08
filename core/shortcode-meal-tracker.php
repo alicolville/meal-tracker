@@ -321,15 +321,15 @@
         $html = sprintf( '
             <div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-type="0" class="yk-mt__modal yk-mt-hide">
                  <div class="yk-mt__modal-wrap">
-                     <div class="yk-mt__modal-header">
-                        <h3 class="yk-my__modal-title yk-mt-hide-if-editing">%3$s</h3>
-                        <h3 class="yk-my__modal-title yk-mt-hide-if-adding">%4$s</h3>
-                        <button id="btn-close-modal" class="yk-mt__btn yk-mt__btn--medium close-yk-mt-add-meal-dialog yk-mt-button-silent">
+                     <div class="yk-mt__modal-header yk-mt-flex">
+                        <h3 class="yk-mt__modal-title yk-mt-hide-if-editing">%3$s</h3>
+                        <h3 class="yk-mt__modal-title yk-mt-hide-if-adding">%4$s</h3>
+                        <button id="btn-close-modal" class="yk-mt__btn yk-mt__btn--medium close-yk-mt-add-meal-dialog">
                             <span class="yk-mt__btn-icon fa fa-close"></span>
                             <span class="yk-mt__btn-text">%2$s</span>
                         </button>
                      </div>   
-                     <div class="yk-mt__modal-content">
+                     <div class="yk-mt__modal-quick-search">
                         <div class="yk-mt-hide-if-editing">
                             <form id="yk-mt-form-add-meal-to-entry">
             ',
@@ -345,28 +345,34 @@
         // Do we have any existing meals for this user?
         if ( false === empty( $add_form ) ) {
 
-            $html .= sprintf('  <h5>%1$s</h5>', __( 'Quick Search', YK_MT_SLUG ) );
+            $html .= sprintf('  <h4 class="yk-mt__modal-subtitle">%1$s</h4>', __( 'Quick Search', YK_MT_SLUG ) );
 
 	        $html .= $add_form;
 
-            $html .= sprintf('  <div class="yk-mt-quantity-row"><label>%1$s:</label>', __( 'Add', YK_MT_SLUG ) );
+            $html .= sprintf(
+                '<div class="yk-mt-quantity-row">
+                            <label class="yk-mt__label">%1$s:</label>
+                            <div class="yk-mt__modal-quantity yk-mt-flex">',
+                __( 'Add', YK_MT_SLUG )
+            );
 
             for ( $i = 1; $i <= 10; $i++ ) {
-                 $html .= sprintf( '<button id="yk-mt-button-add-meal-%1$d" data-quantity="%1$d" class="yk-mt-meal-button-add yk-mt-button-silent">%1$d</button>', $i );
+                 $html .= sprintf( '<button id="yk-mt-button-add-meal-%1$d" data-quantity="%1$d" class="yk-mt__btn yk-mt__btn--add-meal-quantity yk-mt-meal-button-add">%1$d</button>', $i );
             }
         }
 
         $html .= sprintf('   
-                                        </div> 
-                                    </div>
-                                  </form>
-                                  <div class="yk-mt-auto-close">
-                                        <input type="checkbox" id="%1$s" checked="checked" />
-                                        <label for="%1$s">%2$s</label>
-                                  </div>
-                                </div>',
-                                'yk-mt-button-add-meal-close',
-                                __( 'Close screen after adding meal(s)', YK_MT_SLUG )
+                            </div> 
+                        </div> 
+                    </div>
+                </form>
+                <div class="yk-mt-auto-close">
+                    <input class="yk-mt__input" type="checkbox" id="%1$s" checked="checked" />
+                    <label class="yk-mt__label" for="%1$s">%2$s</label>
+                </div>
+            </div>',
+            'yk-mt-button-add-meal-close',
+            __( 'Close screen after adding meal(s)', YK_MT_SLUG )
         );
 
         // Form to add a new meal
@@ -392,7 +398,7 @@
 
 		$html = sprintf( '  <div class="yk-mt-add-new-meal-form">
                                         <form id="yk-mt-form-add-new-meal">
-								<h5 id="yk-mt-header-meal-add" class="yk-mt-hide-if-editing">%s</h5>', __( 'Add new meal', YK_MT_SLUG ) );
+								<h4 id="yk-mt-header-meal-add" class="yk-mt__modal-subtitle yk-mt-hide-if-editing">%s</h4>', __( 'Add new meal', YK_MT_SLUG ) );
 
 		$html .= yk_mt_form_text( __( 'Name', YK_MT_SLUG ),	'add-meal-name' );
 

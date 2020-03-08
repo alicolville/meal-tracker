@@ -636,7 +636,7 @@ function yk_mt_form_text( $title, $name, $value ='', $max_length = 60, $required
     $name = 'yk-mt-' . $name;
 
     return sprintf(
-		'   <label for="%1$s">%2$s</label>
+		'   <label class="yk-mt__label" for="%1$s">%2$s</label>
 				<input type="text" class="yk-mt__input" name="%1$s" id="%1$s" maxlength="%3$d" value="%4$s" %5$s />',
 		$name,
 		$title,
@@ -659,7 +659,7 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
     $name = 'yk-mt-' . $name;
 
 	$html = sprintf( '<div id="%1$s-row" class="yk-mt-form-row">
-						<label for="%1$s">%2$s</label>
+						<label class="yk-mt__label" for="%1$s">%2$s</label>
 							<select name="%1$s" id="%1$s" class="yk-mt__select" %s>', $name, $title, $placeholder );
 
 	if ( false === empty( $placeholder ) ) {
@@ -706,7 +706,7 @@ function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step =
 	$html = sprintf( '<div id="%1$s-row" class="yk-mt-form-row">', $name );
 
 	if ( true === $show_label ) {
-		$html .= sprintf( '<label for="%1$s" class="%3$s">%2$s</label>', $name, $title, $css_class );
+		$html .= sprintf( '<label for="%1$s" class="yk-mt__label %3$s">%2$s</label>', $name, $title, $css_class );
 	}
 
 	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s class="%7$s" %8$s />',

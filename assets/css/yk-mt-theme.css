@@ -34,7 +34,6 @@ Version: x.x.x
 /* Shortcode > Accordion */
 .yk-mt-accordion-section-title {
 	border-bottom-color: var(--yk-mt-primary-color);
-	font-family: var(--yk-mt-font-display);
 	font-size: 125%;
 	font-weight: 800;
 	background-color: #fff;
@@ -49,6 +48,11 @@ Version: x.x.x
 .yk-mt-accordion-section-title:focus,
 .yk-mt-accordion-section-title:active {
 	color: #000 !important;
+}
+
+/* Shortcode > Modal > Header */
+.yk-mt__modal-title {
+	font-weight: 800;
 }
 
 /* Selectize */
