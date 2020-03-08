@@ -76,7 +76,7 @@ Forms
 .yk-mt-shortcode-meal-tracker input[type='number'],
 .yk-mt-shortcode-meal-tracker select {
 	padding: .6em;
-	border: 1px solid #eee;
+	border: 1px solid #ddd;
 	font-size: 14px;
 
 	border-radius: 2px;
@@ -164,39 +164,57 @@ Tables
 Modal
 ****/
 
-.yk-mt-modal__wrap {
+.yk-mt__modal {
 	margin-left: auto;
 	margin-right: auto;
+	padding-top: 10vh;
+	background-color: transparent !important;
+}
+
+.yk-mt__modal-bg {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: block;
 	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,.8);
+	opacity: 0;
+	pointer-events: none;
+}
+
+.yk-mt-add-meal-dialog-on + .yk-mt__modal-bg {
+	opacity: 1;
+}
+
+.yk-mt__modal-wrap {
+	margin-left: auto;
+	margin-right: auto;
+	padding: var(--yk-mt-grid-gap-l);
+	width: 100%;
+	background-color: #fff;
+
+	border-radius: 4px;
 }
 
 /* Modal > Header */
-.yk-mt-modal-header {
-	margin-bottom: 5px;
-	padding: 10px;
-	overflow: hidden;
+.yk-my__modal-title {
+	font-size: 150%;
+	font-weight: 600;
 }
 
-.yk-mt-modal-header button {
-	float: right;
-}
-
-.yk-mt-modal-header h3 {
-	float: left;
-	margin-top: 7px;
-	margin-bottom: 0;
+.yk-mt__modal-header .yk-mt__btn {
+	float: right; /* TO DO: flexbox */
 }
 
 /* Modal > Content */
-.yk-mt-modal-content {
-	padding: 10px;
-}
-
-.yk-mt-modal-content h5 {
+.yk-mt__modal-content h5 {
 	margin-bottom: 6px;
 }
 
-.yk-mt-modal-content .yk-mt-quantity-row {
+.yk-mt__modal-content .yk-mt-quantity-row {
 	display: inline-block;
 	margin-top: 12px;
 	margin-bottom: 12px;
@@ -204,17 +222,17 @@ Modal
 }
 
 /* Modal > Buttons / inputs */
-.yk-mt-modal-content .yk-mt-quantity-row label,
+.yk-mt__modal-content .yk-mt-quantity-row label,
 .yk-mt-auto-close label {
 	display: inline;
 }
 
-.yk-mt-modal-content .yk-mt-quantity-row input {
+.yk-mt__modal-content .yk-mt-quantity-row input {
 	width: 60px;
 	text-align: center;
 }
 
-.yk-mt-modal-content .yk-mt-quantity-row button {
+.yk-mt__modal-content .yk-mt-quantity-row button {
 	margin-left: 5px;
 }
 
@@ -240,39 +258,12 @@ Modal
 	margin-left: 5px;
 }
 
-#btn-close-modal {
-	padding: 6px 15px 6px 15px;
-}
-
 /******************
 'Add New Meal' form
 ******************/
 
 .yk-mt-add-new-meal-form {
 	margin-top: 20px;
-}
-
-.yk-mt-settings-form label,
-.yk-mt-add-new-meal-form label,
-.yk-mt-add-new-meal-form input,
-.yk-mt-add-new-meal-form select {
-	display: block;
-	margin-bottom: 10px;
-	width: 95%;
-}
-
-.yk-mt-add-new-meal-form input {
-	padding: 8px !important;
-}
-
-.yk-mt-add-new-meal-form select {
-	height: 38px;
-}
-
-.yk-mt-info {
-	margin-top: 10px;
-	font-size: 13px;
-	font-style: italic;
 }
 
 .yk-mt-mode-edit .yk-mt-hide-if-editing,
@@ -403,11 +394,11 @@ Buttons
 	display: none;
 }
 
-/************
-Media queries
-************/
+/*************
+@media queries
+*************/
 
-/* Media queries: screen, >=345px */
+/* @media queries: screen, >=345px */
 @media only screen and (min-width: 345px) {
 
 	#yk-mt-button-add-meal-10 {
@@ -415,7 +406,7 @@ Media queries
 	}
 }
 
-/* Media queries: screen, >=520px */
+/* @media queries: screen, >=520px */
 @media only screen and (min-width: 520px) {
 
 	#yk-mt-button-add-meal-6,
@@ -426,20 +417,20 @@ Media queries
 	}
 }
 
-/* Media queries: screen, <=767px */
+/* @media queries: screen, <=767px */
 @media only screen and (max-width: 767px) {
 
 	/* Modal > Wrap */
-	.yk-mt-modal__wrap {
+	.yk-mt__modal-wrap {
 		max-width: 80%;
 	}
 }
 
-/* Media queries: screen, >=768px */
+/* @media queries: screen, >=768px */
 @media only screen and (min-width: 768px) {
 
 	/* Modal > Wrap */
-	.yk-mt-modal__wrap {
+	.yk-mt__modal-wrap {
 		max-width: 60%;
 	}
 }

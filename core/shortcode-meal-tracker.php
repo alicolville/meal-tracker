@@ -318,23 +318,25 @@
 
 		$top = apply_filters( 'yk_mt_shortcode_dialog_top', 30 );
 
-        $html = sprintf( '<div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-type="0" class="yk-mt-hide">
-                             <div class="yk-mt-modal__wrap">
-                                 <div class="yk-mt-modal-header">
-                                    <h3 class="yk-mt-hide-if-editing">%3$s</h3>
-                                    <h3 class="yk-mt-hide-if-adding">%4$s</h3>
-                                    <button id="btn-close-modal" class="close-yk-mt-add-meal-dialog yk-mt-button-silent">
-                                        %2$s
-                                    </button>
-                                 </div>   
-                                 <div class="yk-mt-modal-content">
-                                    <div class="yk-mt-hide-if-editing">
-                                    <form id="yk-mt-form-add-meal-to-entry">
-				                ',
-				            $top,
-                            __( 'Close', YK_MT_SLUG ),
-                            __( 'Log a meal', YK_MT_SLUG ),
-                            __( 'Edit meal', YK_MT_SLUG )
+        $html = sprintf( '
+            <div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-type="0" class="yk-mt__modal yk-mt-hide">
+                 <div class="yk-mt__modal-wrap">
+                     <div class="yk-mt__modal-header">
+                        <h3 class="yk-my__modal-title yk-mt-hide-if-editing">%3$s</h3>
+                        <h3 class="yk-my__modal-title yk-mt-hide-if-adding">%4$s</h3>
+                        <button id="btn-close-modal" class="yk-mt__btn yk-mt__btn--medium close-yk-mt-add-meal-dialog yk-mt-button-silent">
+                            <span class="yk-mt__btn-icon fa fa-close"></span>
+                            <span class="yk-mt__btn-text">%2$s</span>
+                        </button>
+                     </div>   
+                     <div class="yk-mt__modal-content">
+                        <div class="yk-mt-hide-if-editing">
+                            <form id="yk-mt-form-add-meal-to-entry">
+            ',
+            $top,
+            __( 'Close', YK_MT_SLUG ),
+            __( 'Log a meal', YK_MT_SLUG ),
+            __( 'Edit meal', YK_MT_SLUG )
         );
 
         // Build HTML for "Add Meal" tab
@@ -375,6 +377,7 @@
         }
 
         $html .= '</div></div>
+                <div class="yk-mt__modal-bg"></div>
                 <a id="yk-mt-open-dialog-edit" class="yk-mt-meal-button-edit yk-mt-add-meal-prompt yk-mt-hide"></a>               
         ';
 
@@ -405,7 +408,11 @@
 
 		$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity', '', '', 1, 1, 99999, true, false, true );
 
-		$html .= sprintf( ' <button id="yk-mt-button-meal-add" class="yk-mt-button-add-new-meal yk-mt-button-secondary yk-mt-hide-if-editing">%1$s</button>',
+		$html .= sprintf( '
+            <button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--large yk-mt-button-add-new-meal yk-mt-button-secondary yk-mt-hide-if-editing">
+                <span class="yk-mt__btn-icon fa fa-plus"></span>
+                <span class="yk-mt__btn-text">%1$s</span>
+            </button>',
 			__( 'Add a new meal', YK_MT_SLUG )
 		);
 
