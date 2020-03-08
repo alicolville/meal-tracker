@@ -335,6 +335,12 @@ Shortcode > Modal
 	text-align: right;
 }
 
+/* Shortcode > Modal > Footer */
+.yk-mt__modal-footer {
+	padding-top: 1rem;
+	text-align: center;
+}
+
 /******
 Summary
 ******/

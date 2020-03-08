@@ -415,14 +415,17 @@
 		$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity', '', '', 1, 1, 99999, true, false, true );
 
 		$html .= sprintf( '
-            <button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--large yk-mt-button-add-new-meal yk-mt-button-secondary yk-mt-hide-if-editing">
-                <span class="yk-mt__btn-icon fa fa-plus"></span>
-                <span class="yk-mt__btn-text">%1$s</span>
-            </button>',
+            <div class="yk-mt__modal-footer">
+                <button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--large yk-mt-button-add-new-meal yk-mt-button-secondary yk-mt-hide-if-editing">
+                    <span class="yk-mt__btn-icon fa fa-plus"></span>
+                    <span class="yk-mt__btn-text">%1$s</span>
+                </button>',
 			__( 'Add a new meal', YK_MT_SLUG )
 		);
 
-        $html .= sprintf( ' <button id="yk-mt-button-meal-edit" class="yk-mt-button-secondary yk-mt-hide-if-adding">%1$s</button>',
+        $html .= sprintf( '
+                <button id="yk-mt-button-meal-edit" class="yk-mt-button-secondary yk-mt-hide-if-adding">%1$s</button>
+            </div>',
             __( 'Edit meal', YK_MT_SLUG )
         );
 
