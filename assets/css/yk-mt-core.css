@@ -7,16 +7,31 @@ Description: Core styles for the YeKen Meal Tracker plugin.
 Version: x.x.x
 */
 
+/****
+Icons
+****/
+
+@font-face {
+	font-family: 'FontAwesome';
+	font-style: normal;
+	font-weight: 400;
+	font-display: auto;
+	src: url('../fonts/font-awesome/fa-regular-400.eot');
+	src: url('../fonts/font-awesome/fa-regular-400.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/font-awesome/fa-regular-400.woff2') format('woff2'),
+		url('../fonts/font-awesome/fa-regular-400.woff') format('woff'),
+		url('../fonts/font-awesome/fa-regular-400.ttf') format('truetype'),
+		url('../fonts/font-awesome/fa-regular-400.svg#fontawesome') format('svg');
+}
+
 /***
 Vars
 ***/
 
 :root {
 
-	/* Vars > Grids */
-	--yk-mt-grid-gap-s: 8px;
-	--yk-mt-grid-gap-m: 16px;
-	--yk-mt-grid-gap-l: 32px;
+	/* Vars > Units */
+	--yk-mt-unit-base: 16px;
 
 	/* Vars > Colours */
 	--yk-mt-primary-color: #333;
@@ -24,6 +39,7 @@ Vars
 	/* Vars > Fonts */
 	--yk-mt-font-display: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	--yk-mt-font-sans: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	--yk-mt-font-icons: 'FontAwesome', sans-serif;
 }
 
 /**************
@@ -67,15 +83,15 @@ Components
 }
 
 .yk-mt__btn--small {
-	padding-left: var(--yk-mt-grid-gap-s);
-	padding-right: var(--yk-mt-grid-gap-s);
+	padding-left: calc(var(--yk-mt-unit-base) / 2);
+	padding-right: calc(var(--yk-mt-unit-base) / 2);
 	line-height: 1.5;
 	font-size: 75%;
 }
 
 .yk-mt__btn--medium {
-	padding-left: var(--yk-mt-grid-gap-m);
-	padding-right: var(--yk-mt-grid-gap-m);
+	padding-left: var(--yk-mt-unit-base);
+	padding-right: var(--yk-mt-unit-base);
 	line-height: 2;
 	font-size: 100%;
 }
@@ -96,7 +112,7 @@ Components
 /* Components > Inputs */
 .yk-mt__input,
 .yk-mt__select {
-	padding: var(--yk-mt-grid-gap-s) !important;
+	padding: calc(var(--yk-mt-unit-base) / 2) !important;
 	border: 1px solid #ddd !important;
 	font-size: 87.5%;
 
@@ -135,7 +151,7 @@ Shortcode
 }
 
 .yk-mt-shortcode-meal-tracker .yk-mt__btn-wrap {
-	margin-bottom: var(--yk-mt-grid-gap-m);
+	margin-bottom: var(--yk-mt-unit-base);
 	text-align: center;
 }
 
@@ -172,13 +188,13 @@ Shortcode > Accordion
 .yk-mt-accordion-section-title.active:before {
 	content: '';
 	position: absolute;
-	bottom: calc(-.55 * var(--yk-mt-grid-gap-m));
-	left: var(--yk-mt-grid-gap-m);
+	bottom: calc(-.55 * var(--yk-mt-unit-base));
+	left: var(--yk-mt-unit-base);
 	border: 2px solid transparent;
 	border-right-color: #000;
 	border-bottom-color: #000;
-	width: var(--yk-mt-grid-gap-m);
-	height: var(--yk-mt-grid-gap-m);
+	width: var(--yk-mt-unit-base);
+	height: var(--yk-mt-unit-base);
 	background-color: #fff;
 
 	transform: rotate(45deg);
@@ -186,13 +202,19 @@ Shortcode > Accordion
 
 /* Shortcode > Accordion > Content */
 .yk-mt-accordion-section-content {
-	padding-top: var(--yk-mt-grid-gap-m);
-	padding-bottom: var(--yk-mt-grid-gap-m);
+	padding-top: var(--yk-mt-unit-base);
+	padding-bottom: var(--yk-mt-unit-base);
 	border-bottom: 1px dashed #ddd;
 }
 
 .yk-mt-accordion-enabled .yk-mt-accordion-section-content {
 	display: none;
+}
+
+/**/
+.yk-mt-act-r {
+	box-shadow: none !important;
+	border-radius: 50%;
 }
 
 /****************
@@ -348,12 +370,12 @@ Summary
 .yk-mt-act-r {
 	display: block;
 	padding: 0;
-	width: calc(2 * var(--yk-mt-grid-gap-m));
-	height: calc(2 * var(--yk-mt-grid-gap-m));
+	width: calc(2 * var(--yk-mt-unit-base));
+	height: calc(2 * var(--yk-mt-unit-base));
 
 	background-repeat: no-repeat;
 	background-position: center center;
-	background-size: var(--yk-mt-grid-gap-m);
+	background-size: var(--yk-mt-unit-base);
 	color: #333;
 
 	box-sizing: border-box;
@@ -429,7 +451,7 @@ Summary
 	@media only screen and (min-width: 768px) {
 
 		.yk-mt-act-r--edit {
-			margin-right: var(--yk-mt-grid-gap-s);
+			margin-right: calc(var(--yk-mt-unit-base) / 2);
 		}
 	}
 }

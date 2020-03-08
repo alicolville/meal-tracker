@@ -7,26 +7,13 @@ Description: Theme styles for the YeKen Meal Tracker plugin.
 Version: x.x.x
 */
 
-@font-face {
-	font-family: 'FontAwesome';
-	font-style: normal;
-	font-weight: 400;
-	font-display: auto;
-	src: url('../fonts/font-awesome/fa-regular-400.eot');
-	src: url('../fonts/font-awesome/fa-regular-400.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/font-awesome/fa-regular-400.woff2') format('woff2'),
-		url('../fonts/font-awesome/fa-regular-400.woff') format('woff'),
-		url('../fonts/font-awesome/fa-regular-400.ttf') format('truetype'),
-		url('../fonts/font-awesome/fa-regular-400.svg#fontawesome') format('svg');
-}
-
-/* Vars */
+/* Var overrides */
 :root {
 
-	/* Vars > Colours */
+	/* Var overrides > Colours */
 	--yk-mt-primary-color: #b0dda0;
 
-	/* Vars > Fonts */
+	/* Var overrides > Fonts */
 	--yk-mt-font-display: 'Inter', sans-serif;
 }
 
@@ -42,13 +29,13 @@ Version: x.x.x
 /* Components > Tables */
 .yk-mt-act-r {
 	box-shadow: none !important;
-	border-radius: 50%;
 }
 
 /* Shortcode > Accordion */
 .yk-mt-accordion-section-title {
 	border-bottom-color: var(--yk-mt-primary-color);
 	font-family: var(--yk-mt-font-display);
+	font-size: 125%;
 	font-weight: 800;
 	background-color: #fff;
 }
