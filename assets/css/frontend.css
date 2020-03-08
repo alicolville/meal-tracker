@@ -7,29 +7,28 @@
 */
 .yk-mt-accordion,
 .yk-mt-accordion * {
-    -webkit-box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    box-sizing:border-box;
+    box-sizing: border-box;
 }
 
 .yk-mt-accordion {
-    overflow:hidden;
-    box-shadow:0px 1px 3px rgba(0,0,0,0.25);
-    border-radius:3px;
-    background:#f7f7f7;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    border-radius: 3px;
+    background: #f7f7f7;
 }
 
 /*----- Section Titles -----*/
 .yk-mt-accordion-section-title {
-    width:100%;
+    width: 100%;
     padding: 5px 5px 10px 10px;
-    display:inline-block;
-    border-bottom:1px solid #1a1a1a;
-    background:#333;
-    transition:all linear 0.15s;
+    display: inline-block;
+    border-bottom: 1px solid #1a1a1a;
+    background: #333;
+    transition: all linear 0.15s;
+    
     /* Type */
     font-size:1.100em;
-    text-shadow:0px 1px 0px #1a1a1a;
+    text-shadow:0 1px 0 #1a1a1a;
     color:#fff;
 }
 
@@ -76,7 +75,7 @@ Table styles
 .yk-mt-t button {
     width: 25px;
     height: 25px;
-    padding: 5px 2px 0px 2px;
+    padding: 5px 2px 0 2px;
     font-size: 11px;
     background: rgb(220,220,220);
     color: #000;
@@ -163,7 +162,7 @@ Table styles
 }
 .yk-mt-modal-header h3 {
     float: left;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     margin-top: 7px;
 }
 .yk-mt-auto-close {
@@ -230,7 +229,7 @@ Table styles
 
 }
 .yk-mt-summary-details p {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 .yk-mt-summary-details .yk-mt-figure {
     font-size: 30px;
@@ -239,7 +238,7 @@ Table styles
     Settings
  */
 #yk-mt-settings-form .yk-mt-form-row {
-    margin-bottom: 10px
+    margin-bottom: 10px;
 }
 
 /**
