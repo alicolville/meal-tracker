@@ -703,14 +703,16 @@ jQuery( document ).ready( function( $ ) {
                                 ${d}
                             </div>
                             <div class="yk-mt-c yk-mt-o">
-                                <button data-meal-id="${id}" class="yk-mt-act-r yk-mt-act-r--edit yk-mt-hide-if-not-pro yk-mt-meal-button-edit-inline" >
-                                    <span class="fa fa-edit"></span>
-                                    <span class="yk-mt-r__text">${yk_mt_sc_meal_tracker[ 'localise' ][ 'edit-text' ]}</span>
-                                </button>
-                                <button data-id="${meal_entry_id}" class="yk-mt-act-r yk-mt-act-r--remove" onclick="yk_mt_trigger_meal_entry_delete( ${meal_entry_id} )">
-                                    <span class="fa fa-close"></span>
-                                    <span class="yk-mt-r__text">${yk_mt_sc_meal_tracker[ 'localise' ][ 'remove-text' ]}</span>
-                                </button>
+                                <div class="yk-mt__btn-group">
+                                    <button data-meal-id="${id}" class="yk-mt-act-r yk-mt-act-r--edit yk-mt-hide-if-not-pro yk-mt-meal-button-edit-inline" >
+                                        <span class="fa fa-edit"></span>
+                                        <span class="yk-mt-r__text">${yk_mt_sc_meal_tracker[ 'localise' ][ 'edit-text' ]}</span>
+                                    </button>
+                                    <button data-id="${meal_entry_id}" class="yk-mt-act-r yk-mt-act-r--remove" onclick="yk_mt_trigger_meal_entry_delete( ${meal_entry_id} )">
+                                        <span class="fa fa-close"></span>
+                                        <span class="yk-mt-r__text">${yk_mt_sc_meal_tracker[ 'localise' ][ 'remove-text' ]}</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>`;
 
@@ -740,7 +742,7 @@ jQuery( document ).ready( function( $ ) {
      */
     function yk_mt_render_meal_rows( table_id, meals, total ) {
 
-        let html = yk_mt_sc_meal_tracker[ 'localise' ][ 'no-data' ] + '.';
+        let html = '<p class="yk-mt__no-meals">' + yk_mt_sc_meal_tracker[ 'localise' ][ 'no-data' ] + '.' + '</p>';
 
         if ( 0 !== meals.length ) {
 

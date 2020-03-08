@@ -35,10 +35,6 @@ Theme > Typefaces
 }
 
 /* Theme > Accordion */
-.yk-mt-accordion {
-	background-color: #f7f7f7;
-}
-
 .yk-mt-accordion-section-title {
 	position: relative;
 	border-bottom: 2px solid var(--yk-mt-primary-color);
@@ -88,52 +84,51 @@ Theme > Typefaces
 }
 
 /* Theme > Buttons */
-.yk-mt-button-success,
-.yk-mt-button-error,
-.yk-mt-button-warning,
-.yk-mt-button-secondary,
-.yk-mt-button-cancel {
-	font-family: 'Arial', sans-serif;
-	border-radius: 4px;
+.yk-mt__btn-text {
+	font-family: var(--yk-mt-font-display);
 }
 
-.yk-mt-button-success,
-.yk-mt-button-error,
-.yk-mt-button-warning,
-.yk-mt-button-secondary,
-.yk-mt-button-cancel {
-	color: #fff;
-}
+/*.yk-mt-button-success,*/
+/*.yk-mt-button-error,*/
+/*.yk-mt-button-warning,*/
+/*.yk-mt-button-secondary,*/
+/*.yk-mt-button-cancel {*/
+/*	font-family: 'Arial', sans-serif;*/
+/*	border-radius: 4px;*/
+/*}*/
 
-.yk-mt-button-success {
-	background-color: rgb(28, 184, 65);
-}
+/*.yk-mt-button-success,*/
+/*.yk-mt-button-error,*/
+/*.yk-mt-button-warning,*/
+/*.yk-mt-button-secondary,*/
+/*.yk-mt-button-cancel {*/
+/*	color: #fff;*/
+/*}*/
 
-.yk-mt-button-error {
-	background-color: rgb(202, 60, 60);
-}
+/*.yk-mt-button-success {*/
+/*	background-color: rgb(28, 184, 65);*/
+/*}*/
 
-.yk-mt-button-warning {
-	background-color: rgb(223, 117, 20);
-}
+/*.yk-mt-button-error {*/
+/*	background-color: rgb(202, 60, 60);*/
+/*}*/
 
-.yk-mt-button-secondary {
-	background-color: rgb(66, 184, 221);
-}
+/*.yk-mt-button-warning {*/
+/*	background-color: rgb(223, 117, 20);*/
+/*}*/
 
-.yk-mt-button-cancel {
-	background-color: rgb(204, 204, 204);
-}
+/*.yk-mt-button-secondary {*/
+/*	background-color: rgb(66, 184, 221);*/
+/*}*/
 
-.yk-mt-button-silent, .yk-mt-button-small {
-	background-color: rgb(220, 220, 220);
-}
+/*.yk-mt-button-cancel {*/
+/*	background-color: rgb(204, 204, 204);*/
+/*}*/
 
-.yk-mt-button-small {
-	padding: 3px 10px 3px 10px;
-	/*font-family: 'Arial', sans-serif;*/
-	font-size: 13px;
-}
+/*.yk-mt-button-silent,*/
+/*.yk-mt-button-small {*/
+/*	background-color: rgb(220, 220, 220);*/
+/*}*/
 
 /* Theme > Selectize */
 .yk-mt-shortcode-meal-tracker .selectize-control:before {

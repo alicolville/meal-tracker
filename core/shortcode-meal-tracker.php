@@ -55,9 +55,15 @@
 
 			$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
-            $html .= sprintf( '<br /><button href="%s" class="yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">%s</button>',
-                                yk_mt_shortcode_get_current_url( 'settings' ),
-                                __( 'Settings', YK_MT_SLUG )
+            $html .= sprintf( '<br />
+                <div class="yk-mt__btn-wrap">
+                    <button href="%s" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">
+                        <span class="yk-mt__btn-icon fa fa-cog"></span>
+                        <span class="yk-mt__btn-text">%s</span>
+                    </button>
+                </div>',
+                yk_mt_shortcode_get_current_url( 'settings' ),
+                __( 'Settings', YK_MT_SLUG )
             );
 
 			// Embed hidden form / dialog required for adding a meal
@@ -289,12 +295,16 @@
 		$css_class      = apply_filters( 'yk_mt_shortcode_button_meal_add_css', $default_css_class );
 		$button_text    = apply_filters( 'yk_mt_shortcode_button_meal_add_text', $button_text );
 
-		return sprintf( '<button href="#yk-mt-add-meal-dialog" class="%1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d">%4$s</button>',
-						esc_attr( $css_class ),
-						(int) $meal_type_id,
-						(int) $yk_mt_add_meal_button_id,
-						esc_html( $button_text )
-			       );
+		return sprintf( '
+            <button href="#yk-mt-add-meal-dialog" class="yk-mt__btn yk-mt__btn--medium %1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d">
+                <span class="yk-mt__btn-icon fa fa-plus"></span>
+                <span class="yk-mt__btn-text">%4$s</span>
+            </button>',
+            esc_attr( $css_class ),
+            (int) $meal_type_id,
+            (int) $yk_mt_add_meal_button_id,
+            esc_html( $button_text )
+       );
 	}
 
 	/**
