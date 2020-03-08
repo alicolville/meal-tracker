@@ -286,7 +286,7 @@ Table styles
 .yk-mt-button-warning,
 .yk-mt-button-secondary,
 .yk-mt-button-cancel {
-	font-family: tahoma;
+	font-family: 'Arial', sans-serif;
 	border-radius: 4px;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
 }
@@ -324,7 +324,7 @@ Table styles
 }
 
 .yk-mt-button-small {
-	font-family: tahoma;
+	font-family: 'Arial', sans-serif;
 	font-size: 13px;
 	padding: 3px 10px 3px 10px;
 }
@@ -342,12 +342,8 @@ Table styles
 .yk-mt-shortcode-meal-tracker select {
 	border: 1px solid #eee;
 	font-size: 14px;
-	font-size: 1.4rem;
 	padding: .6em;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
 	border-radius: 2px;
-	-webkit-transition: .2s ease-in;
 	transition: .2s ease-in;
 }
 
@@ -355,8 +351,6 @@ Table styles
    Selectize
  */
 .yk-mt-shortcode-meal-tracker .selectize-control::before {
-	-moz-transition: opacity .2s;
-	-webkit-transition: opacity .2s;
 	transition: opacity .2s;
 	content: ' ';
 	z-index: 2;
