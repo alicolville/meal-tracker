@@ -76,8 +76,10 @@ function yk_mt_ajax_meal_add() {
     // Ensure we have a calorie value (can be 0)
 	$post_data[ 'calories' ] = yk_mt_ajax_extract_and_validate_post_data_single( 'calories', false );
 
-	// If Macronutrients are enabled then look for an array of MacroN values. Validate add add to DB call.
-    if ( true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) ) {
+	$meta_field_keys = yk_mt_meta_fields_visible_user_keys();
+
+	// If meta fields are enabled then look for an array of values. Validate add add to DB call.
+    if ( false === empty( $meta_field_keys ) ) {
 
         if ( true === empty( $_POST[ 'meta-fields' ] ) || false === is_array( $_POST[ 'meta-fields' ] ) ) {
             return wp_send_json( [ 'error' => 'missing-meta-fields-array' ] );

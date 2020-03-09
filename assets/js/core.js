@@ -539,6 +539,15 @@ jQuery( document ).ready( function( $ ) {
             $( '#yk-mt-add-meal-unit' ).val( meal[ 'unit' ] );
             $( '#yk-mt-add-meal-quantity' ).val( meal[ 'quantity' ] );
 
+            let meta_fields = yk_mt_meta_fields();
+
+            // If we have meta fields, populate the object from form fields
+            if ( false !== meta_fields ) {
+              $.each( meta_fields, function( index , value ){
+                 $( '#yk-mt-add-meal-' + index ).val( meal[ index ] );
+              });
+            }
+
             yk_mt_dialog_open();
 
         } else {
