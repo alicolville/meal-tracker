@@ -79,18 +79,18 @@ function yk_mt_ajax_meal_add() {
 	// If Macronutrients are enabled then look for an array of MacroN values. Validate add add to DB call.
     if ( true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) ) {
 
-        if ( true === empty( $_POST[ 'macroN' ] ) || false === is_array( $_POST[ 'macroN' ] ) ) {
-            return wp_send_json( [ 'error' => 'missing-macroN-array' ] );
+        if ( true === empty( $_POST[ 'meta-fields' ] ) || false === is_array( $_POST[ 'meta-fields' ] ) ) {
+            return wp_send_json( [ 'error' => 'missing-meta-fields-array' ] );
         }
 
-        $macroN = $_POST[ 'macroN' ];
+        $meta_fields = $_POST[ 'meta-fields' ];
 
-        foreach ( [ 'fats', 'proteins', 'carbs' ] as $key ) {
-            if ( false === isset( $macroN[ $key ] ) ) {
-                return wp_send_json( [ 'error' => 'missing-macroN-field-' . $key ] );
+        foreach ( yk_mt_meta_fields_visible_user_keys() as $key ) {
+            if ( false === isset( $meta_fields[ $key ] ) ) {
+                return wp_send_json( [ 'error' => 'missing-meta-field-' . $key ] );
             }
 
-            $post_data[ $key ] = (int) $macroN[ $key ];
+            $post_data[ $key ] = (int) $meta_fields[ $key ];
         }
 
     }

@@ -389,13 +389,13 @@ jQuery( document ).ready( function( $ ) {
         let quantity    = $( '#yk-mt-add-meal-quantity' ).val();
         let unit        = $( '#yk-mt-add-meal-unit' ).val();
 
-        let macroN = { 'fats': 0, 'carbs': 0, 'proteins': 0 }
+        let meta_fields = yk_mt_meta_fields();
 
-        // Is MacroN populated?
-        if ( yk_mt_meal_tracker_found && 'true' === yk_mt_sc_meal_tracker[ 'macros-enabled' ] ) {
-            macroN[ 'fats' ]        = $( '#yk-mt-add-meal-fats' ).val();
-            macroN[ 'carbs' ]       = $( '#yk-mt-add-meal-carbs' ).val();
-            macroN[ 'proteins' ]    = $( '#yk-mt-add-meal-proteins' ).val();
+        // If we have meta fields, populate the object from form fields
+        if ( yk_mt_meal_tracker_found && false !== meta_fields ) {
+          $.each( meta_fields, function( index , value ){
+            meta_fields[ index ] = $( '#yk-mt-add-meal-' + index ).val();
+          });
         }
 
         // Update the meal
@@ -406,7 +406,7 @@ jQuery( document ).ready( function( $ ) {
                 calories,
                 quantity,
                 unit,
-                macroN
+                meta_fields
             );
         } else {
 
@@ -416,7 +416,7 @@ jQuery( document ).ready( function( $ ) {
                 calories,
                 quantity,
                 unit,
-                macroN
+                meta_fields
             );
 
         }
@@ -430,7 +430,7 @@ jQuery( document ).ready( function( $ ) {
      * @param quantity
      * @param unit
      */
-    function yk_mt_post_api_add_meal( name, description, calories, quantity, unit, macroN ) {
+    function yk_mt_post_api_add_meal( name, description, calories, quantity, unit, meta_fields ) {
 
         var data = {
             'name'          : name,
@@ -440,10 +440,10 @@ jQuery( document ).ready( function( $ ) {
             'unit'          : unit,
             'entry-id'      : yk_mt_entry_id,
             'meal-type'     : yk_mt_selected_meal_type,
-            'macroN'        : macroN
+            'meta-fields'   : meta_fields
         };
 
-        yk_mt_post( 'add_meal', data,  yk_mt_post_api_add_meal_callback);
+        yk_mt_post( 'add_meal', data,  yk_mt_post_api_add_meal_callback );
     }
 
     /**
@@ -554,7 +554,7 @@ jQuery( document ).ready( function( $ ) {
      * @param quantity
      * @param unit
      */
-    function yk_mt_post_api_edit_meal( name, description, calories, quantity, unit ) {
+    function yk_mt_post_api_edit_meal( name, description, calories, quantity, unit, meta_fields ) {
 
         var data = {
             'id'            : yk_mt_temp_store_get( 'meal-id' ),
@@ -564,7 +564,8 @@ jQuery( document ).ready( function( $ ) {
             'quantity'      : quantity,
             'unit'          : unit,
             'entry-id'      : yk_mt_entry_id,
-            'meal-type'     : yk_mt_selected_meal_type
+            'meal-type'     : yk_mt_selected_meal_type,
+            'meta-fields'   : meta_fields
         };
 
         yk_mt_post( 'add_meal', data,  yk_mt_post_api_edit_meal_callback);
@@ -654,6 +655,23 @@ jQuery( document ).ready( function( $ ) {
      * Helper functions
      * ---------------------------------------------------------------------------------------
      */
+
+    /**
+     * Fetch all enabled meta fields
+     * @returns {boolean|*}
+     */
+    function yk_mt_meta_fields() {
+
+      if ( false === yk_mt_meal_tracker_found ) {
+        return false;
+      }
+
+      if ( 'undefined' === typeof( yk_mt_sc_meal_tracker[ 'meta-fields' ] ) ) {
+        return false;
+      }
+
+      return yk_mt_sc_meal_tracker[ 'meta-fields' ];
+    }
 
     /*
         Store some temp data against the shortcode div

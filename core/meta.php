@@ -78,6 +78,18 @@ function yk_mt_meta_fields() {
 }
 
 /**
+ * Fetch all keys for meta fields that are visible to the user.
+ * @return bool
+ */
+function yk_mt_meta_fields_visible_user_keys() {
+
+	$meta_fields = yk_mt_meta_fields_where( 'visible_user', true );
+
+	return ( false === empty( $meta_fields ) ) ?
+			wp_list_pluck( $meta_fields, 'db_col') : false;
+}
+
+/**
  * Return meta fields for JS config
  * @return array
  */
@@ -100,7 +112,6 @@ function yk_mt_meta_js_config() {
 	}
 
 	return $config;
-
 }
 
 /**
