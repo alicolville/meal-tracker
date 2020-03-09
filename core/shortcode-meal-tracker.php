@@ -587,7 +587,7 @@
             'todays-entry'      => yk_mt_entry( $args[ 'entry-id' ] ),
             'load-entry'        => true,
             'is-admin'          => false,
-			'meta-fields' => yk_mt_meta_js_config()
+			'meta-fields' 		=> yk_mt_meta_js_config()
 		] );
 	}
 
