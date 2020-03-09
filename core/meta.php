@@ -43,7 +43,7 @@ function yk_mt_meta_fields() {
 
 		// Protein
 		$fields[] = [
-			'db_col' 			=> 'proteins',
+			'db_col' 			=> 'meta_proteins',
 			'title' 			=> __( 'Proteins', YK_MT_SLUG ),
 			'visible_user' 		=> true,
 			'visible_admin' 	=> true,
@@ -52,7 +52,7 @@ function yk_mt_meta_fields() {
 
 		// Fats
 		$fields[] = [
-			'db_col' 			=> 'fats',
+			'db_col' 			=> 'meta_fats',
 			'title' 			=> __( 'Fats', YK_MT_SLUG ),
 			'visible_user' 		=> true,
 			'visible_admin' 	=> true,
@@ -61,7 +61,7 @@ function yk_mt_meta_fields() {
 
 		// Carbs
 		$fields[] = [
-			'db_col' 			=> 'carbs',
+			'db_col' 			=> 'meta_carbs',
 			'title' 			=> __( 'Carbs', YK_MT_SLUG ),
 			'visible_user' 		=> true,
 			'visible_admin' 	=> true,
@@ -96,9 +96,63 @@ function yk_mt_meta_js_config() {
 				$default = '';
 		}
 
-		$config[] = [ $field[ 'db_col'] => $default ];
+		$config[ $field[ 'db_col'] ] = $default;
 	}
 
 	return $config;
 
 }
+
+/**
+ * Return an array of all existing meta columns in the database
+ * @return mixed
+ */
+function yk_mt_meta_db_columns_existing() {
+
+	global $wpdb;
+
+	$meta_fields = $wpdb->get_results( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" . $wpdb->prefix . YK_WT_DB_MEALS .
+											"' and COLUMN_NAME like 'meta_%'", ARRAY_A );
+
+	return wp_list_pluck( $meta_fields, 'COLUMN_NAME' );
+}
+
+/**
+ * ADd meta columns to Entry and Meta tables where they don't exist
+ */
+function yk_mt_meta_db_columns_create() {
+
+	// Fetch all meta fields that we wish to track data for.
+	$required_fields 	= yk_mt_meta_fields();
+	$existing_fields 	= yk_mt_meta_db_columns_existing();
+	$sql_to_execute		= [];
+
+	foreach ( $required_fields as $field ) {
+
+		if ( false === in_array( $field[ 'db_col' ], $existing_fields ) ) {
+
+			switch ( $field[ 'type' ] ) {
+				case 'int':
+					$sql_to_execute[] = ' ADD ' . $field[ 'db_col' ]. ' INT(1) NULL DEFAULT 0';
+					break;
+				default:
+					$default = '';
+			}
+		}
+
+	}
+
+	if ( true === empty( $sql_to_execute ) ) {
+		return;
+	}
+
+	global $wpdb;
+
+	// Add the column to the Meals and Entry tables.
+	foreach ( $sql_to_execute as $sql ) {
+		$wpdb->query( 'ALTER TABLE ' . $wpdb->prefix . YK_WT_DB_MEALS . $sql );
+		$wpdb->query( 'ALTER TABLE ' . $wpdb->prefix . YK_WT_DB_ENTRY . $sql );
+	}
+}
+add_action( 'yk_mt_settings_saved', 'yk_mt_meta_db_columns_create' );	// Admin settings page saved
+add_action( 'yk_mt_db_upgrade', 'yk_mt_meta_db_columns_create' );		// Fresh install / Version change
