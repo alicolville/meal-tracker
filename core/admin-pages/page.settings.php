@@ -12,6 +12,10 @@ function yk_mt_settings_page_generic() {
 
     $disable_if_not_premium_class = ( YK_MT_IS_PREMIUM ) ? '' : 'yk-mt-disabled';
 
+	if ( true === isset( $_GET[ 'settings-updated' ] ) ) {
+		do_action( 'yk_mt_settings_saved' );
+	}
+
     ?>
     <div id="icon-options-general" class="icon32"></div>
 
@@ -245,6 +249,7 @@ function yk_mt_register_settings(){
 
     // Premium options
     if( true ===  yk_mt_license_is_premium() ){
+
         register_setting( 'yk-mt-options-group', 'accordion-enabled' );
         register_setting( 'yk-mt-options-group', 'allow-calorie-override-admin' );
         register_setting( 'yk-mt-options-group', 'allow-calorie-override' );
@@ -254,6 +259,7 @@ function yk_mt_register_settings(){
         register_setting( 'yk-mt-options-group', 'new-entries-past' );
         register_setting( 'yk-mt-options-group', 'new-entries-future' );
         register_setting( 'yk-mt-options-group', 'macronutrients-enabled' );
+
     }
 }
 add_action( 'admin_init', 'yk_mt_register_settings' );
