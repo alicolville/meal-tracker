@@ -57,7 +57,7 @@
 
             $html .= sprintf( '<br />
                 <div class="yk-mt__btn-wrap">
-                    <button href="%s" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-secondary yk-mt-clickable">
+                    <button href="%s" class="yk-mt__btn yk-mt__btn--medium yk-mt-clickable">
                         <span class="yk-mt__btn-icon fa fa-cog"></span>
                         <span class="yk-mt__btn-text">%s</span>
                     </button>
@@ -214,7 +214,7 @@
 
 	    $html .= yk_mt_html_accordion_close();
 
-	    $html .= sprintf( '<br /><button id="yk-mt-button-save-settings" class="yk-mt-button-secondary">%1$s</button>
+	    $html .= sprintf( '<br /><button id="yk-mt-button-save-settings" class="yk-mt__btn yk-mt__btn--medium">%1$s</button>
                                     &nbsp;<button href="%2$s" class="yk-mt-button-cancel yk-mt-clickable">%3$s</button>
                                     </form></div>',
             __( 'Save Settings', YK_MT_SLUG ),
@@ -419,7 +419,7 @@
 
 		$html .= sprintf( '
             <div class="yk-mt__modal-footer">
-                <button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-add-new-meal yk-mt-button-secondary yk-mt-hide-if-editing">
+                <button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-add-new-meal yk-mt-hide-if-editing">
                     <span class="yk-mt__btn-icon fa fa-plus"></span>
                     <span class="yk-mt__btn-text">%1$s</span>
                 </button>',
@@ -427,7 +427,7 @@
 		);
 
         $html .= sprintf( '
-                <button id="yk-mt-button-meal-edit" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-secondary yk-mt-hide-if-adding">
+                <button id="yk-mt-button-meal-edit" class="yk-mt__btn yk-mt__btn--medium yk-mt-hide-if-adding">
                     <span class="yk-mt__btn-icon fa fa-edit"></span>
                     <span class="yk-mt__btn-text">%1$s</span>
                 </button>
