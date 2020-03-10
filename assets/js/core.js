@@ -727,7 +727,7 @@ jQuery( document ).ready( function( $ ) {
                         <div class="yk-mt__table-row" >
                                 <div class="yk-mt__table-cell">
                                 </div>
-                                <div class="yk-mt__table-cell yk-mt-cq">
+                                <div class="yk-mt__table-cell yk-mt__table-cell-total yk-mt-cq">
                                     ${total}${unit}
                                 </div>	
                                 <div class="yk-mt__table-cell yk-mt-o">

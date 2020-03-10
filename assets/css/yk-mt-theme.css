@@ -59,24 +59,28 @@ Version: x.x.x
 	font-weight: 800;
 }
 
+/*.yk-mt__modal-subtitle {*/
+
+/*}*/
+
 /* Selectize */
-.yk-mt-shortcode-meal-tracker .selectize-control:before {
-	content: ' ';
-	z-index: 2;
-	position: absolute;
-	top: 50%;
-	right: 34px;
-	display: block;
-	margin: -11px 0 0 0;
-	width: 16px;
-	height: 16px;
-	background-image: url(../images/spinner.gif);
-	background-size: 16px 16px;
-	opacity: 0;
+/*.yk-mt-shortcode-meal-tracker .selectize-control:before {*/
+/*	content: ' ';*/
+/*	z-index: 2;*/
+/*	position: absolute;*/
+/*	top: 50%;*/
+/*	right: 34px;*/
+/*	display: block;*/
+/*	margin: -11px 0 0 0;*/
+/*	width: 16px;*/
+/*	height: 16px;*/
+/*	background-image: url(../images/spinner.gif);*/
+/*	background-size: 16px 16px;*/
+/*	opacity: 0;*/
 
-	transition: opacity .2s;
-}
+/*	transition: opacity .2s;*/
+/*}*/
 
-.yk-mt-shortcode-meal-tracker .selectize-control.loading:before {
-	opacity: .4;
-}
+/*.yk-mt-shortcode-meal-tracker .selectize-control.loading:before {*/
+/*	opacity: .4;*/
+/*}*/
