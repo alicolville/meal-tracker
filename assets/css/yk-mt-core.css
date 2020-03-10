@@ -201,7 +201,7 @@ Shortcode > Accordion
 .yk-mt__accordion-section-title.active:before {
 	content: '';
 	position: absolute;
-	bottom: calc(-.55 * var(--yk-mt-unit-base));
+	bottom: calc(-.5 * var(--yk-mt-unit-base));
 	left: var(--yk-mt-unit-base);
 	border: 2px solid transparent;
 	border-right-color: #000;
@@ -234,6 +234,8 @@ Shortcode > Accordion
 }
 
 .yk-mt__table-cell-total {
+	font-family: var(--yk-mt-font-display, 'Arial, sans-serif');
+	font-size: 125%;
 	font-weight: 600;
 }
 
@@ -276,10 +278,12 @@ Shortcode > Modal
 	background-color: rgba(0,0,0,.8);
 	opacity: 0;
 	pointer-events: none;
+	visibility: hidden;
 }
 
 .yk-mt-add-meal-dialog-on + .yk-mt__modal-bg {
 	opacity: 1;
+	visibility: visible;
 }
 
 .yk-mt__modal-wrap {
@@ -365,6 +369,7 @@ Shortcode > Modal
 	padding-left: .5rem;
 	padding-right: .5rem;
 	line-height: 150%;
+	font-family: var(--yk-mt-font-display);
 }
 
 .yk-mt__modal-auto-close .yk-mt__label {

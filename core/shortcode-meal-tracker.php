@@ -567,7 +567,7 @@
 
         // TO DO - add theme CSS switch for theme CSS
         wp_enqueue_style( 'meal-tracker-theme', plugins_url( 'assets/css/yk-mt-theme' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_style( 'meal-tracker-font', 'https://fonts.googleapis.com/css?family=Inter:400,600,700,800&display=swap', [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'meal-tracker-font', 'https://fonts.googleapis.com/css?family=Nunito:700,800&display=swap', [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'meal-tracker-icon-font', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
 
         // Include relevant JS for Pro users
