@@ -829,7 +829,7 @@ msgstr ""
 #: core/functions.php:1099
 msgid ""
 "Upgrade to the Premium version of this plugin to view your user's data, "
-"record entries for multiple days, extrernal data sources and much more!"
+"record entries for multiple days, external data sources and much more!"
 msgstr ""
 
 #: core/functions.php:1100

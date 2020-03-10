@@ -1096,7 +1096,7 @@ function yk_mt_display_pro_upgrade_notice( ) {
     <div class="postbox yk-mt-advertise-premium">
         <h3 class="hndle"><span><?php echo __( 'Upgrade Meal Tracker and get more features!', YK_MT_SLUG ); ?> </span></h3>
         <div style="padding: 0px 15px 0px 15px">
-            <p><?php echo __( 'Upgrade to the Premium version of this plugin to view your user\'s data, record entries for multiple days, extrernal data sources and much more!', YK_MT_SLUG ); ?></p>
+            <p><?php echo __( 'Upgrade to the Premium version of this plugin to view your user\'s data, record entries for multiple days, external data sources and much more!', YK_MT_SLUG ); ?></p>
             <p><a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-license') ); ?>" class="button-primary"><?php echo __( 'Read more and upgrade to Premium Version', YK_MT_SLUG ); ?></a></p>
         </div>
     </div>
