@@ -57,7 +57,7 @@
 
             $html .= sprintf( '<br />
                 <div class="yk-mt__btn-wrap">
-                    <button href="%s" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">
+                    <button href="%s" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-secondary yk-mt-clickable">
                         <span class="yk-mt__btn-icon fa fa-cog"></span>
                         <span class="yk-mt__btn-text">%s</span>
                     </button>
@@ -285,7 +285,7 @@
 	 *
 	 * @return string
 	 */
-	function yk_mt_shortcode_meal_tracker_add_meal_button( $button_text, $meal_type_id = NULL, $default_css_class = 'yk-mt-button-small' ) {
+	function yk_mt_shortcode_meal_tracker_add_meal_button( $button_text, $meal_type_id = NULL, $default_css_class = 'yk-mt__btn--medium' ) {
 
 		global $yk_mt_add_meal_button_id;
 
@@ -295,7 +295,7 @@
 		$button_text    = apply_filters( 'yk_mt_shortcode_button_meal_add_text', $button_text );
 
 		return sprintf( '
-            <button href="#yk-mt-add-meal-dialog" class="yk-mt__btn yk-mt__btn--medium %1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d">
+            <button href="#yk-mt-add-meal-dialog" class="yk-mt__btn %1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d">
                 <span class="yk-mt__btn-icon fa fa-plus"></span>
                 <span class="yk-mt__btn-text">%4$s</span>
             </button>',
@@ -365,7 +365,7 @@
                         </div> 
                     </div>
                 </form>
-                <div class="yk-mt__modal-auto-close">
+                <div class="yk-mt__modal-auto-close yk-mt-flex">
                     <input class="yk-mt__input" type="checkbox" id="%1$s" checked="checked" />
                     <label class="yk-mt__label" for="%1$s">%2$s</label>
                 </div>
@@ -405,7 +405,11 @@
 
 		$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories', '', '', 1,0 );
 
-        $html .= sprintf( ' <p class="yk-mt-info yk-mt-hide-if-adding">%1$s</p>',
+        $html .= sprintf( '
+            <p class="yk-mt__info-box yk-mt-info yk-mt-hide-if-adding">
+                <span class="fa fa-info-circle"></span>
+                <span class="yk-mt__info-box-text">%1$s</span>
+            </p>',
             __( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
         );
 
@@ -423,7 +427,10 @@
 		);
 
         $html .= sprintf( '
-                <button id="yk-mt-button-meal-edit" class="yk-mt-button-secondary yk-mt-hide-if-adding">%1$s</button>
+                <button id="yk-mt-button-meal-edit" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-secondary yk-mt-hide-if-adding">
+                    <span class="yk-mt__btn-icon fa fa-edit"></span>
+                    <span class="yk-mt__btn-text">%1$s</span>
+                </button>
             </div>',
             __( 'Edit meal', YK_MT_SLUG )
         );

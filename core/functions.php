@@ -709,7 +709,7 @@ function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step =
 		$html .= sprintf( '<label for="%1$s" class="yk-mt__label %3$s">%2$s</label>', $name, $title, $css_class );
 	}
 
-	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s class="%7$s" %8$s />',
+	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s class="yk-mt__input %7$s" %8$s />',
 		$name,
 		(int) $min,
 		(int) $max,
