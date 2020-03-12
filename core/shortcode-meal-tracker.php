@@ -127,7 +127,7 @@
 
         return '
             <div class="yk-mt__summary">
-                <div class="yk-mt__summary-title"><span class="fa fa-check-circle"></span> Your Summary</div>
+                <div class="yk-mt__summary-title"><span class="fa fa-check-circle"></span> Today\'s summary</div>
                 <div class="yk-mt__table yk-mt__table--summary">
                     <div class="yk-mt__table-row" >
                         <div class="yk-mt__table-cell yk-mt__table--summary-chart-slot">

@@ -189,7 +189,7 @@ Shortcode > Summary
 }
 
 .yk-mt__table--summary {
-	padding: var(--yk-mt-unit-base);
+	padding: 0 var(--yk-mt-unit-base) var(--yk-mt-unit-base) var(--yk-mt-unit-base);
 	background-color: #fafafa;
 }
 
