@@ -172,6 +172,44 @@ Components
 	display: table-cell;
 }
 
+/******************
+Shortcode > Summary
+******************/
+
+.yk-mt__summary {
+	margin-bottom: calc(2 * var(--yk-mt-unit-base));
+}
+
+.yk-mt__summary-title {
+	padding: 10px;
+	border-bottom: 2px solid var(--yk-mt-primary-color);
+	font-family: var(--yk-mt-font-display, 'Arial, sans-serif');
+	font-size: 125%;
+	font-weight: 800;
+}
+
+.yk-mt__table--summary {
+	padding: var(--yk-mt-unit-base);
+	background-color: #fafafa;
+}
+
+.yk-mt__table--summary-details {
+	text-align: right;
+	vertical-align: middle !important;
+}
+
+.yk-mt__table--summary-chart-slot {
+	width: 300px ! important;
+}
+
+.yk-mt__table--summary-details p {
+	margin-bottom: 0;
+}
+
+#yk-mt-settings-form .yk-mt-form-row {
+	margin-bottom: 10px;
+}
+
 /********************
 Shortcode > Accordion
 ********************/
@@ -409,39 +447,12 @@ Shortcode > Modal
 	text-align: center;
 }
 
-/******
-Summary
-******/
 
-.yk-mt-summary-table {
-	margin-bottom: 25px;
-}
 
-.yk-mt-summary-details {
-	text-align: right;
-	vertical-align: middle !important;
-}
 
-.yk-mt-summary-chart-slot {
-	width: 300px ! important;
-}
 
-.yk-mt-summary-details p {
-	margin-bottom: 0;
-}
 
-.yk-mt-summary-details .yk-mt-figure {
-	font-size: 30px;
-}
 
-/* Settings */
-#yk-mt-settings-form .yk-mt-form-row {
-	margin-bottom: 10px;
-}
-
-.yk-mt-button-save-settings {
-	margin-top: 15px;
-}
 
 .yk-mt-act-r {
 	display: block;

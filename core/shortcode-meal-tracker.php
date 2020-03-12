@@ -125,13 +125,18 @@
      */
 	function yk_mt_shortcode_meal_tracker_summary() {
 
-		return '<div class="yk-mt__table yk-mt-summary-table">
-			                <div class="yk-mt__table-row" >
-			                        <div class="yk-mt__table-cell yk-mt-summary-chart-slot">
-			                            <canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
-			                        </div>
-			                </div>
-	                    </div>';
+        return '
+            <div class="yk-mt__summary">
+                <div class="yk-mt__summary-title"><span class="fa fa-check-circle"></span> Your Summary</div>
+                <div class="yk-mt__table yk-mt__table--summary">
+                    <div class="yk-mt__table-row" >
+                        <div class="yk-mt__table-cell yk-mt__table--summary-chart-slot">
+                            <canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ';
     }
 
 	/**

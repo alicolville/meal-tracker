@@ -10,6 +10,9 @@ Version: x.x.x
 /* Var overrides */
 :root {
 
+	/* Var overrides > Colours */
+	--yk-mt-primary-color: #a48787;
+
 	/* Var overrides > Fonts */
 	--yk-mt-font-display: 'Nunito', sans-serif;
 }
@@ -28,6 +31,11 @@ Version: x.x.x
 /* Components > Tables */
 .yk-mt-act-r {
 	box-shadow: none !important;
+}
+
+/* Shortcode > Summary */
+.yk-mt__summary-title .fa {
+	color: var(--yk-mt-primary-color);
 }
 
 /* Shortcode > Accordion */
