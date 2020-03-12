@@ -114,8 +114,8 @@ function yk_mt_chart_data() {
     return {
         datasets: [{
             data: [ yk_mt_chart_config[ 'calories_used' ],  yk_mt_chart_config[ 'calories_remaining' ] ],
-            backgroundColor: [ "rgb(255, 99, 132)", "rgb(228,228,228)" ],
-            borderWidth: 1
+            backgroundColor: [ "rgb(251, 142, 46)", "rgb(228,228,228)" ],
+            borderWidth: 0
         }],
         labels: [
             yk_mt_chart_config[ 'calories_used' ] + ' ' + yk_mt_sc_meal_tracker[ 'localise' ][ 'chart-label-used' ],
@@ -131,20 +131,24 @@ function yk_mt_chart_data() {
 function yk_mt_chart_options() {
 
     let options = {
-        cutoutPercentage: 70,
+        cutoutPercentage: 88,
         title: {
             display: ! yk_mt_chart_is_admin,
-            fontSize: 15,
+            fontFamily: 'Nunito, Arial, sans-serif',
+            fontSize: 16,
             fontStyle: 'normal',
             padding: 20,
-            text: yk_mt_chart_config[ 'chart_title' ]
+            text: yk_mt_chart_config[ 'chart_title' ],
+            fontColor: 'rgb(0,0,0)'
         },
         legend: {
             display: ! yk_mt_chart_is_admin,
             position: 'right',
             labels: {
-                fontSize: 17,
-                boxWidth: 20
+                fontFamily: 'Nunito, Arial, sans-serif',
+                fontSize: 16,
+                boxWidth: 16,
+                fontColor: 'rgb(0,0,0)'
             }
         }
     };
@@ -153,9 +157,9 @@ function yk_mt_chart_options() {
         options[ 'elements' ] = {
             center: {
                 text: yk_mt_chart_config[ 'percentage_used' ] + '%',
-                color: 'rgb(255, 99, 132)',
-                fontStyle:  'Helvetica',
-                sidePadding: 125
+                color: 'rgb(251, 142, 46)',
+                fontStyle: 'Nunito, Arial, sans-serif',
+                sidePadding: 125,
             }
         }
     }

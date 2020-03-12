@@ -181,16 +181,12 @@ Shortcode > Summary
 }
 
 .yk-mt__summary-title {
+	margin-bottom: 1rem;
 	padding: 10px;
 	border-bottom: 2px solid var(--yk-mt-primary-color);
 	font-family: var(--yk-mt-font-display, 'Arial, sans-serif');
 	font-size: 125%;
 	font-weight: 800;
-}
-
-.yk-mt__table--summary {
-	padding: 0 var(--yk-mt-unit-base) var(--yk-mt-unit-base) var(--yk-mt-unit-base);
-	background-color: #fafafa;
 }
 
 .yk-mt__table--summary-details {

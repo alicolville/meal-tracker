@@ -11,7 +11,7 @@ Version: x.x.x
 :root {
 
 	/* Var overrides > Colours */
-	--yk-mt-primary-color: #a48787;
+	--yk-mt-primary-color: #ccc;
 
 	/* Var overrides > Fonts */
 	--yk-mt-font-display: 'Nunito', sans-serif;
