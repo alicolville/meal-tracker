@@ -725,8 +725,7 @@ jQuery( document ).ready( function( $ ) {
      */
     const SummaryRow = ({ total, unit }) => `
                         <div class="yk-mt__table-row" >
-                                <div class="yk-mt__table-cell">
-                                </div>
+                                <div class="yk-mt__table-cell yk-mt__table-cell-total-text">Total:</div>
                                 <div class="yk-mt__table-cell yk-mt__table-cell-total yk-mt-cq">
                                     ${total}${unit}
                                 </div>	
