@@ -48,12 +48,18 @@ Global styles
 
 /* Global styles > Protect plugin units from themes */
 .yk-mt {
+	font-size: 16px !important;
+
+	/* Vars */
 	font-size: var(--yk-mt-unit-base) !important;
 }
 
 /* Global styles > Set global font */
 .yk-mt,
 .yk-mt * {
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+	/* Vars */
 	font-family: var(--yk-mt-font-sans);
 }
 
@@ -119,15 +125,20 @@ Components
 .yk-mt__input,
 .yk-mt__select {
 	margin-bottom: 1rem;
-	padding: 0 calc(var(--yk-mt-unit-base) / 2) !important;
+	padding: 0 8px !important;
 	border: 1px solid #ddd;
-	height: calc(var(--yk-mt-unit-base) * 2);
-	line-height: calc(var(--yk-mt-unit-base) * 2);
+	height: 32px;
+	line-height: 32px;
 	font-size: 87.5%;
 	border-radius: 3px !important;
 
 	-webkit-transition: all ease .2s;
 	transition: all ease .2s;
+
+	/* Vars */
+	padding: 0 calc(var(--yk-mt-unit-base) / 2) !important;
+	height: calc(var(--yk-mt-unit-base) * 2);
+	line-height: calc(var(--yk-mt-unit-base) * 2);
 }
 
 .yk-mt__input:not([type='checkbox']),
@@ -182,16 +193,23 @@ Shortcode > Summary
 ******************/
 
 .yk-mt__summary {
+	margin-bottom: 32px;
+
+	/* Vars */
 	margin-bottom: calc(2 * var(--yk-mt-unit-base));
 }
 
 .yk-mt__summary-title {
 	margin-bottom: 1rem;
 	padding: 10px;
-	border-bottom: 2px solid var(--yk-mt-primary-color);
-	font-family: var(--yk-mt-font-display, 'Arial, sans-serif');
+	border-bottom: 2px solid #333;
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 125%;
 	font-weight: 800;
+
+	/* Vars */
+	border-bottom-color: var(--yk-mt-primary-color);
+	font-family: var(--yk-mt-font-display);
 }
 
 .yk-mt__table--summary-details {
@@ -231,32 +249,45 @@ Shortcode > Accordion
 	padding: 10px;
 	border-bottom: 2px solid #000;
 	width: 100%;
-	font-family: var(--yk-mt-font-display, 'Arial, sans-serif');
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	text-align: center;
 	box-shadow: none !important;
 
 	-webkit-transition: all ease .15s !important;
 	transition: all ease .15s !important;
+
+	/* Vars */
+	font-family: var(--yk-mt-font-display);
 }
 
 .yk-mt__accordion-section-title.active:before {
 	content: '';
 	position: absolute;
-	bottom: calc(-.5 * var(--yk-mt-unit-base));
-	left: calc(50% - (var(--yk-mt-unit-base) / 2));
+	bottom: 8px;
+	left: calc(50% - 8px);
 	border: 2px solid transparent;
 	border-right-color: #000;
 	border-bottom-color: #000;
-	width: var(--yk-mt-unit-base);
-	height: var(--yk-mt-unit-base);
+	width: 16px;
+	height: 16px;
 	background-color: #fff;
 
 	-webkit-transform: rotate(45deg);
 	transform: rotate(45deg);
+
+	/* Vars */
+	bottom: calc(-.5 * var(--yk-mt-unit-base));
+	left: calc(50% - (var(--yk-mt-unit-base) / 2));
+	width: var(--yk-mt-unit-base);
+	height: var(--yk-mt-unit-base);
 }
 
 /* Shortcode > Accordion > Content */
 .yk-mt__accordion-section-content {
+	padding-top: 16px;
+	padding-bottom: 16px;
+
+	/* Vars */
 	padding-top: var(--yk-mt-unit-base);
 	padding-bottom: var(--yk-mt-unit-base);
 }
@@ -272,8 +303,11 @@ Shortcode > Accordion
 }
 
 .yk-mt__meal-name {
-	font-family: var(--yk-mt-font-display, 'Arial, sans-serif');
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: 600;
+
+	/* Vars */
+	font-family: var(--yk-mt-font-display);
 }
 
 .yk-mt__accordion .yk-mt__table-cell {
@@ -282,14 +316,20 @@ Shortcode > Accordion
 
 .yk-mt__table-cell-total-text,
 .yk-mt__table-cell-total {
-	font-family: var(--yk-mt-font-display, 'Arial, sans-serif');
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: 900;
+
+	/* Vars */
+	font-family: var(--yk-mt-font-display);
 }
 
 .yk-mt__table-cell-total-text {
-	padding-right: var(--yk-mt-unit-base);
+	padding-right: 16px;
 	font-size: 100%;
 	text-transform: uppercase;
+
+	/* Vars */
+	padding-right: var(--yk-mt-unit-base);
 }
 
 .yk-mt__table-cell-total {
@@ -297,18 +337,21 @@ Shortcode > Accordion
 }
 
 .yk-mt__accordion .yk-mt__btn-wrap {
-	margin-bottom: var(--yk-mt-unit-base);
+	margin-bottom: 16px;
 	text-align: center;
+
+	/* Vars */
+	margin-bottom: var(--yk-mt-unit-base);
 }
 
 .yk-mt-act-r {
 	display: block;
 	padding: 0;
-	width: calc(2 * var(--yk-mt-unit-base));
-	height: calc(2 * var(--yk-mt-unit-base));
+	width: 32px;
+	height: 32px;
 	background-repeat: no-repeat;
 	background-position: center center;
-	background-size: var(--yk-mt-unit-base);
+	background-size: 16px;
 	color: #333;
 	border-radius: 50%;
 	box-shadow: none !important;
@@ -316,6 +359,11 @@ Shortcode > Accordion
 
 	-webkit-transition: background-color ease .2s;
 	transition: background-color ease .2s;
+
+	/* Vars */
+	width: calc(2 * var(--yk-mt-unit-base));
+	height: calc(2 * var(--yk-mt-unit-base));
+	background-size: var(--yk-mt-unit-base);
 }
 
 .yk-mt-act-r--edit {
@@ -374,27 +422,36 @@ Shortcode > Modal
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
-	padding: calc(var(--yk-mt-unit-base) * 2);
+	padding: 32px;
 	width: 100%;
 	background-color: #fff;
 
 	border-radius: 4px;
 	box-shadow: 0 2px 3px rgba(0,0,0,.66);
+
+	/* Vars */
+	padding: calc(var(--yk-mt-unit-base) * 2);
 }
 
 /* Shortcode > Modal > Header */
 .yk-mt__modal-header {
 	margin-bottom: 1rem;
 	padding-bottom: 1rem;
-	border-bottom: 2px solid var(--yk-mt-primary-color);
+	border-bottom: 2px solid #333;
+
+	/* Vars */
+	border-bottom-color: var(--yk-mt-primary-color);
 }
 
 .yk-mt__modal-title,
 .yk-mt__modal-subtitle {
 	padding: 0;
 	line-height: 125%;
-	font-family: var(--yk-mt-font-display);
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: 600;
+
+	/* Vars */
+	font-family: var(--yk-mt-font-display);
 }
 
 .yk-mt__modal-title {
@@ -405,19 +462,24 @@ Shortcode > Modal
 .yk-mt__info-box {
 	position: relative;
 	margin: 2rem auto;
-	padding-left: calc(var(--yk-mt-unit-base) * 2.5);
+	padding-left: 40px;
 	width: 100%;
 	max-width: 300px;
 	background-color: #fff;
 	color: #000;
 
-	/*border-radius: 8px;*/
 	box-sizing: border-box;
+
+	/* Vars */
+	padding-left: calc(var(--yk-mt-unit-base) * 2.5);
 }
 
 .yk-mt__info-box-text {
 	display: block;
 	line-height: 125%;
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+	/* Vars */
 	font-family: var(--yk-mt-font-display);
 }
 
@@ -425,6 +487,12 @@ Shortcode > Modal
 	position: absolute;
 	top: 0;
 	left: 0;
+	width: 32px;
+	height: 32px;
+	font-size: 32px;
+	color: #333;
+
+	/* Vars */
 	width: calc(var(--yk-mt-unit-base) * 2);
 	height: calc(var(--yk-mt-unit-base) * 2);
 	font-size: calc(var(--yk-mt-unit-base) * 2);
@@ -452,6 +520,9 @@ Shortcode > Modal
 	padding-left: .5rem;
 	padding-right: .5rem;
 	line-height: 150%;
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+	/* Vars */
 	font-family: var(--yk-mt-font-display);
 }
 
@@ -506,6 +577,10 @@ Fallbacks
 /* Fallbacks > Shortcode > Modal > Header */
 .yk-mt__modal-header .yk-mt__btn {
 	position: absolute;
+	top: 32px;
+	right: 32px;
+
+	/* Vars */
 	top: calc(2 * var(--yk-mt-unit-base));
 	right: calc(2 * var(--yk-mt-unit-base));
 }
@@ -540,17 +615,25 @@ Fallbacks
 
 	/* Components > Buttons */
 	.yk-mt__btn--small {
-		padding-left: calc(var(--yk-mt-unit-base) / 2);
-		padding-right: calc(var(--yk-mt-unit-base) / 2);
+		padding-left: 8px;
+		padding-right: 8px;
 		line-height: 1.5;
 		font-size: 75%;
+
+		/* Vars */
+		padding-left: calc(var(--yk-mt-unit-base) / 2);
+		padding-right: calc(var(--yk-mt-unit-base) / 2);
 	}
 
 	.yk-mt__btn--medium {
-		padding-left: var(--yk-mt-unit-base);
-		padding-right: var(--yk-mt-unit-base);
+		padding-left: 16px;
+		padding-right: 16px;
 		line-height: 2;
 		font-size: 100%;
+
+		/* Vars */
+		padding-left: var(--yk-mt-unit-base);
+		padding-right: var(--yk-mt-unit-base);
 	}
 
 	/* Shortcode > Accordion */
@@ -566,14 +649,18 @@ Fallbacks
 	/* Shortcode > Modal > Header */
 	.yk-mt__modal-header .yk-mt__btn {
 		position: absolute;
-		top: calc(-1 * var(--yk-mt-unit-base));
-		right: calc(-1 * var(--yk-mt-unit-base));
+		top: -16px;
+		right: -16px;
 		padding: 0;
 		width: 32px;
 		height: 32px;
 		line-height: 26px;
 		background-color: #000;
 		color: #fff;
+
+		/* Vars */
+		top: calc(-1 * var(--yk-mt-unit-base));
+		right: calc(-1 * var(--yk-mt-unit-base));
 	}
 
 	.yk-mt__modal-header .yk-mt__btn-text {
@@ -593,17 +680,25 @@ Fallbacks
 
 	/* Components > Buttons */
 	.yk-mt__btn--small {
-		padding-left: calc(var(--yk-mt-unit-base) / 2);
-		padding-right: calc(var(--yk-mt-unit-base) / 2);
+		padding-left: 8px;
+		padding-right: 8px;
 		line-height: 1.5;
 		font-size: 75%;
+
+		/* Vars */
+		padding-left: calc(var(--yk-mt-unit-base) / 2);
+		padding-right: calc(var(--yk-mt-unit-base) / 2);
 	}
 
 	.yk-mt__btn--medium {
-		padding-left: var(--yk-mt-unit-base);
-		padding-right: var(--yk-mt-unit-base);
+		padding-left: 16px;
+		padding-right: 16px;
 		line-height: 2;
 		font-size: 100%;
+
+		/* Vars */
+		padding-left: var(--yk-mt-unit-base);
+		padding-right: var(--yk-mt-unit-base);
 	}
 
 	/* Shortcode > Accordion */
@@ -662,6 +757,9 @@ Fallbacks
 	}
 
 	.yk-mt-act-r--edit {
+		margin-right: 8px;
+
+		/* Vars */
 		margin-right: calc(var(--yk-mt-unit-base) / 2);
 	}
 
@@ -717,6 +815,10 @@ Fallbacks
 			grid-template-areas: 'meal edit' 'data edit';
 			grid-column-gap: var(--yk-mt-unit-base);
 
+			padding-top: 8px;
+			padding-bottom: 8px;
+
+			/* Vars */
 			padding-top: calc(var(--yk-mt-unit-base) / 2);
 			padding-bottom: calc(var(--yk-mt-unit-base) / 2);
 		}
