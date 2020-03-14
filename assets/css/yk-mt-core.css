@@ -264,6 +264,10 @@ Shortcode > Accordion
 	font-weight: 600;
 }
 
+.yk-mt__accordion .yk-mt__table-cell {
+	vertical-align: middle;
+}
+
 .yk-mt__accordion .yk-mt__table-cell:last-child {
 	text-align: right;
 }
@@ -476,10 +480,6 @@ Fallbacks
 ********/
 
 /* Fallbacks > Shortcode > Tables */
-.yk-mt__table .yk-mt-o {
-	text-align: right;
-}
-
 .yk-mt-inline-flex {
 	display: inline-block;
 	max-width: 74px;
@@ -518,15 +518,6 @@ Fallbacks
 /*.yk-mt-inline-flex > .yk-mt-act-r {*/
 /*	float: none;*/
 /*}*/
-
-/* FLEX: MOBILE */
-@media only screen and (max-width: 767px) {
-
-	.yk-mt__table--cell {
-		padding-top: 10px;
-		padding-bottom: 10px;
-	}
-}
 
 /* FLEX: DESKTOP */
 /*.yk-mt__modal-header .yk-mt__btn {*/
@@ -576,6 +567,11 @@ Fallbacks
 		font-size: 100%;
 	}
 
+	/* Shortcode > Accordion */
+	.yk-mt > .yk-mt__btn-wrap {
+		text-align: center;
+	}
+
 	/* Shortcode > Modal > Wrap */
 	.yk-mt__modal-wrap {
 		max-width: 80%;
@@ -597,6 +593,13 @@ Fallbacks
 	.yk-mt__modal-header .yk-mt__btn-text {
 		display: none;
 	}
+
+	/* Fallbacks > Shortcode > Tables */
+	.yk-mt__table-cell {
+		padding-top: 10px;
+		padding-bottom: 10px;
+		border-bottom: 1px dashed #ccc;
+	}
 }
 
 /* @media queries: screen, >=768px */
@@ -615,6 +618,11 @@ Fallbacks
 		padding-right: var(--yk-mt-unit-base);
 		line-height: 2;
 		font-size: 100%;
+	}
+
+	/* Shortcode > Accordion */
+	.yk-mt > .yk-mt__btn-wrap {
+		text-align: right;
 	}
 
 	/* Shortcode > Accordion > Tables */
