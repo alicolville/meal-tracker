@@ -105,6 +105,13 @@ Components
 	color: #fff;
 }
 
+.yk-mt__btn-text {
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+	/* Vars */
+	font-family: var(--yk-mt-font-display);
+}
+
 /* Components > Inputs */
 .yk-mt__label {
 	display: block;

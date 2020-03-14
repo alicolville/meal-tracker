@@ -19,7 +19,6 @@ Version: x.x.x
 
 /* Components > Buttons */
 .yk-mt__btn-text {
-	font-family: var(--yk-mt-font-display);
 	font-weight: 900;
 	text-transform: uppercase;
 }
@@ -35,18 +34,28 @@ Version: x.x.x
 
 /* Shortcode > Summary */
 .yk-mt__summary-title .fa {
+	color: #ccc;
+
+	/* Vars */
 	color: var(--yk-mt-primary-color);
 }
 
 /* Shortcode > Accordion */
 .yk-mt__accordion-section-title {
-	border-bottom-color: var(--yk-mt-primary-color);
+	border-bottom-color: #ccc;
 	font-size: 125%;
 	font-weight: 800;
 	background-color: #fff;
+
+	/* Vars */
+	border-bottom-color: var(--yk-mt-primary-color);
 }
 
 .yk-mt__accordion-section-title.active:before {
+	border-right-color: #ccc;
+	border-bottom-color: #ccc;
+
+	/* Vars */
 	border-right-color: var(--yk-mt-primary-color);
 	border-bottom-color: var(--yk-mt-primary-color);
 }
@@ -81,7 +90,7 @@ Version: x.x.x
 	margin: -11px 0 0 0;
 	width: 16px;
 	height: 16px;
-	background-image: url(../images/spinner.gif);
+	background-image: url('../images/spinner.gif');
 	background-size: 16px 16px;
 	opacity: 0;
 
