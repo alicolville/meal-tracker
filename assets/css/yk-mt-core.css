@@ -70,9 +70,9 @@ Utility classes
 }
 
 /* Utility classes > Non-Pro */
-/*.yk-mt-not-pro .yk-mt-hide-if-not-pro {*/
-/*	display: none !important;*/
-/*}*/
+.yk-mt-not-pro .yk-mt-hide-if-not-pro {
+	display: none !important;
+}
 
 /*********
 Components
@@ -107,6 +107,7 @@ Components
 	font-size: 75%;
 	color: #444;
 
+	-webkit-transition: color ease .2s;
 	transition: color ease .2s;
 }
 
@@ -123,8 +124,9 @@ Components
 	height: calc(var(--yk-mt-unit-base) * 2);
 	line-height: calc(var(--yk-mt-unit-base) * 2);
 	font-size: 87.5%;
-
 	border-radius: 3px !important;
+
+	-webkit-transition: all ease .2s;
 	transition: all ease .2s;
 }
 
@@ -231,8 +233,9 @@ Shortcode > Accordion
 	width: 100%;
 	font-family: var(--yk-mt-font-display, 'Arial, sans-serif');
 	text-align: center;
-
 	box-shadow: none !important;
+
+	-webkit-transition: all ease .15s !important;
 	transition: all ease .15s !important;
 }
 
@@ -248,6 +251,7 @@ Shortcode > Accordion
 	height: var(--yk-mt-unit-base);
 	background-color: #fff;
 
+	-webkit-transform: rotate(45deg);
 	transform: rotate(45deg);
 }
 
@@ -306,10 +310,11 @@ Shortcode > Accordion
 	background-position: center center;
 	background-size: var(--yk-mt-unit-base);
 	color: #333;
-
 	border-radius: 50%;
 	box-shadow: none !important;
 	box-sizing: border-box;
+
+	-webkit-transition: background-color ease .2s;
 	transition: background-color ease .2s;
 }
 
@@ -636,15 +641,21 @@ Fallbacks
 @supports (display: flex) {
 
 	.yk-mt-flex {
+		display: -webkit-box;
+		display: -ms-flexbox;
 		display: flex;
 	}
 
 	.yk-mt-inline-flex {
+		display: -webkit-inline-box;
+		display: -ms-inline-flexbox;
 		display: inline-flex;
 	}
 
 	/* Shortcode > Accordion */
 	.yk-mt__accordion .yk-mt-inline-flex {
+		-webkit-box-align: center;
+		-ms-flex-align: center;
 		align-items: center;
 
 		height: 100%;
@@ -660,6 +671,8 @@ Fallbacks
 	}
 
 	.yk-mt__modal-auto-close {
+		-webkit-box-align: center;
+		-ms-flex-align: center;
 		align-items: center;
 	}
 
@@ -687,7 +700,7 @@ Fallbacks
 }
 
 /* @supports grid */
-@supports (display: grid) {
+@supports ((display: -ms-grid) or (display: grid)) {
 
 	/* @media screen, <=767px */
 	@media only screen and (max-width: 767px) {
@@ -697,7 +710,9 @@ Fallbacks
 		}
 
 		.yk-mt__accordion .yk-mt__table-row {
+			display: -ms-grid;
 			display: grid;
+			-ms-grid-columns: 3fr auto;
 			grid-template-columns: 3fr auto;
 			grid-template-areas: 'meal edit' 'data edit';
 			grid-column-gap: var(--yk-mt-unit-base);
@@ -723,6 +738,8 @@ Fallbacks
 		}
 
 		.yk-mt__accordion .yk-mt__table-row:last-child {
+			-webkit-box-align: center;
+			-ms-flex-align: center;
 			align-items: center;
 		}
 
