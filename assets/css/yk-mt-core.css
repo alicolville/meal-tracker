@@ -172,6 +172,7 @@ Components
 
 .yk-mt__table-cell {
 	display: table-cell;
+	padding: 10px;
 }
 
 /******************
@@ -229,6 +230,7 @@ Shortcode > Accordion
 	border-bottom: 2px solid #000;
 	width: 100%;
 	font-family: var(--yk-mt-font-display, 'Arial, sans-serif');
+	text-align: center;
 
 	box-shadow: none !important;
 	transition: all ease .15s !important;
@@ -238,7 +240,7 @@ Shortcode > Accordion
 	content: '';
 	position: absolute;
 	bottom: calc(-.5 * var(--yk-mt-unit-base));
-	left: var(--yk-mt-unit-base);
+	left: calc(50% - (var(--yk-mt-unit-base) / 2));
 	border: 2px solid transparent;
 	border-right-color: #000;
 	border-bottom-color: #000;
@@ -259,6 +261,12 @@ Shortcode > Accordion
 	display: none;
 }
 
+.yk-mt__meal-name,
+.yk-mt__meal-data {
+	display: inline-block;
+	line-height: 120%;
+}
+
 .yk-mt__meal-name {
 	font-family: var(--yk-mt-font-display, 'Arial, sans-serif');
 	font-weight: 600;
@@ -266,10 +274,6 @@ Shortcode > Accordion
 
 .yk-mt__accordion .yk-mt__table-cell {
 	vertical-align: middle;
-}
-
-.yk-mt__accordion .yk-mt__table-cell:last-child {
-	text-align: right;
 }
 
 .yk-mt__table-cell-total-text,
@@ -280,9 +284,8 @@ Shortcode > Accordion
 
 .yk-mt__table-cell-total-text {
 	padding-right: var(--yk-mt-unit-base);
-	font-size: 87.5%;
+	font-size: 100%;
 	text-transform: uppercase;
-	text-align: right;
 }
 
 .yk-mt__table-cell-total {
@@ -502,28 +505,6 @@ Fallbacks
 	right: calc(2 * var(--yk-mt-unit-base));
 }
 
-/* FLEX: DESKTOP/MOBILE */
-/*.yk-mt__table .yk-mt-o {*/
-/*	text-align: left;*/
-/*}*/
-
-/*.yk-mt-inline-flex {*/
-/*	max-width: unset;*/
-/*}*/
-
-/*.yk-mt-inline-flex:after {*/
-/*	display: none;*/
-/*}*/
-
-/*.yk-mt-inline-flex > .yk-mt-act-r {*/
-/*	float: none;*/
-/*}*/
-
-/* FLEX: DESKTOP */
-/*.yk-mt__modal-header .yk-mt__btn {*/
-/*	position: static;*/
-/*}*/
-
 /*************
 @media queries
 *************/
@@ -626,13 +607,19 @@ Fallbacks
 	}
 
 	/* Shortcode > Accordion > Tables */
-	.yk-mt__accordion .yk-mt__table-cell {
-		padding-top: calc(var(--yk-mt-unit-base) / 2);
-		padding-bottom: calc(var(--yk-mt-unit-base) / 2);
-	}
-
 	.yk-mt__accordion .yk-mt__table-row:not(:last-child) .yk-mt__table-cell {
 		border-bottom: 2px dashed #ddd;
+	}
+
+	.yk-mt__table-cell-controls {
+		padding: 10px;
+		max-width: 92px;
+	}
+
+	.yk-mt__table-cell-quantity,
+	.yk-mt__table-cell-controls,
+	.yk-mt__table-cell-total {
+		text-align: right;
 	}
 
 	/* Shortcode > Modal > Wrap */
@@ -646,75 +633,104 @@ Fallbacks
 ****************/
 
 /* @supports flexbox */
-/*@supports (display: flex) {*/
+@supports (display: flex) {
 
-/*	.yk-mt-flex {*/
-/*		display: flex;*/
-/*	}*/
+	.yk-mt-flex {
+		display: flex;
+	}
 
-/*	.yk-mt-inline-flex {*/
-/*		display: inline-flex;*/
-/*	}*/
+	.yk-mt-inline-flex {
+		display: inline-flex;
+	}
 
-/*	!* Shortcode > Accordion *!*/
-/*	.yk-mt__accordion .yk-mt-inline-flex {*/
-/*		align-items: center;*/
+	/* Shortcode > Accordion */
+	.yk-mt__accordion .yk-mt-inline-flex {
+		align-items: center;
 
-/*		height: 100%;*/
-/*	}*/
+		height: 100%;
+	}
 
-/*	.yk-mt-act-r--edit {*/
-/*		margin-right: calc(var(--yk-mt-unit-base) / 2);*/
-/*	}*/
+	.yk-mt-act-r--edit {
+		margin-right: calc(var(--yk-mt-unit-base) / 2);
+	}
 
-/*	!* Shortcode > Modal > Header *!*/
-/*	.yk-mt__modal-header .yk-mt__btn {*/
-/*		margin-left: auto;*/
-/*	}*/
+	/* Shortcode > Modal > Header */
+	.yk-mt__modal-header .yk-mt__btn {
+		margin-left: auto;
+	}
 
-/*	.yk-mt__modal-auto-close {*/
-/*		align-items: center;*/
-/*	}*/
-/*}*/
+	.yk-mt__modal-auto-close {
+		align-items: center;
+	}
 
-/*!* @supports grid *!*/
-/*@supports (display: grid) {*/
+	/* Unset fallbacks */
+	.yk-mt-inline-flex {
+		max-width: unset;
+	}
 
-/*	!* @media screen, <=767px *!*/
-/*	@media only screen and (max-width: 767px) {*/
+	.yk-mt-inline-flex:after {
+		display: none;
+	}
 
-/*		.yk-mt__accordion .yk-mt__table {*/
-/*			display: block;*/
-/*		}*/
+	.yk-mt-inline-flex > .yk-mt-act-r {
+		float: none;
+	}
 
-/*		.yk-mt__accordion .yk-mt__table-row {*/
-/*			display: grid;*/
-/*			grid-template-columns: 3fr auto;*/
-/*			grid-template-areas: 'meal edit' 'data edit';*/
-/*			grid-column-gap: var(--yk-mt-unit-base);*/
+	/* @media screen, >=768px */
+	@media only screen and (min-width: 768px) {
 
-/*			padding-top: calc(var(--yk-mt-unit-base) / 2);*/
-/*			padding-bottom: calc(var(--yk-mt-unit-base) / 2);*/
-/*		}*/
+		/* Unset fallbacks */
+		.yk-mt__modal-header .yk-mt__btn {
+			position: static;
+		}
+	}
+}
 
-/*		.yk-mt__accordion .yk-mt__table-row:not(:last-child) {*/
-/*			border-bottom: 1px dashed #ccc;*/
-/*		}*/
+/* @supports grid */
+@supports (display: grid) {
 
-/*		.yk-mt__table-row:not(:last-child) .yk-mt__table-cell:nth-child(1) {*/
-/*			grid-area: meal;*/
-/*		}*/
+	/* @media screen, <=767px */
+	@media only screen and (max-width: 767px) {
 
-/*		.yk-mt__table-row:not(:last-child) .yk-mt__table-cell:nth-child(2) {*/
-/*			grid-area: data;*/
-/*		}*/
+		.yk-mt__accordion .yk-mt__table {
+			display: block;
+		}
 
-/*		.yk-mt__table-row:not(:last-child) .yk-mt__table-cell:nth-child(3) {*/
-/*			grid-area: edit;*/
-/*		}*/
+		.yk-mt__accordion .yk-mt__table-row {
+			display: grid;
+			grid-template-columns: 3fr auto;
+			grid-template-areas: 'meal edit' 'data edit';
+			grid-column-gap: var(--yk-mt-unit-base);
 
-/*		.yk-mt__accordion .yk-mt__table-row:last-child {*/
-/*			align-items: center;*/
-/*		}*/
-/*	}*/
-/*}*/
+			padding-top: calc(var(--yk-mt-unit-base) / 2);
+			padding-bottom: calc(var(--yk-mt-unit-base) / 2);
+		}
+
+		.yk-mt__accordion .yk-mt__table-row:not(:last-child) {
+			border-bottom: 1px dashed #ccc;
+		}
+
+		.yk-mt__table-row:not(:last-child) .yk-mt__table-cell:nth-child(1) {
+			grid-area: meal;
+		}
+
+		.yk-mt__table-row:not(:last-child) .yk-mt__table-cell:nth-child(2) {
+			grid-area: data;
+		}
+
+		.yk-mt__table-row:not(:last-child) .yk-mt__table-cell:nth-child(3) {
+			grid-area: edit;
+		}
+
+		.yk-mt__accordion .yk-mt__table-row:last-child {
+			align-items: center;
+		}
+
+		/* Unset fallbacks */
+		.yk-mt__table-cell {
+			padding-top: 0;
+			padding-bottom: 0;
+			border-bottom: 0;
+		}
+	}
+}
