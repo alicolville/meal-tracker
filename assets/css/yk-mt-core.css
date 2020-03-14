@@ -48,9 +48,12 @@ Global styles
 
 /* Global styles > Protect plugin units from themes */
 .yk-mt {
+	padding: 16px;
+	background-color: #fff;
 	font-size: 16px !important;
 
 	/* Vars */
+	padding: var(--yk-mt-unit-base);
 	font-size: var(--yk-mt-unit-base) !important;
 }
 
@@ -61,6 +64,11 @@ Global styles
 
 	/* Vars */
 	font-family: var(--yk-mt-font-sans);
+}
+
+/* Global styles > Reset browser styling */
+.yk-mt button {
+	-webkit-appearance: none;
 }
 
 /**************
@@ -95,8 +103,11 @@ Components
 	background-color: #fff;
 	color: #000;
 
-	border-radius: 3rem;
+	border-radius: 32px;
 	box-sizing: border-box;
+
+	/* Vars */
+	border-radius: calc(var(--yk-mt-unit-base) * 2);
 }
 
 .yk-mt__btn:hover,
@@ -115,13 +126,16 @@ Components
 /* Components > Inputs */
 .yk-mt__label {
 	display: block;
-	margin-bottom: .25rem;
+	margin-bottom: 8px;
 	font-weight: 400;
 	font-size: 75%;
 	color: #444;
 
 	-webkit-transition: color ease .2s;
 	transition: color ease .2s;
+
+	/* Vars */
+	margin-bottom: calc(var(--yk-mt-unit-base) / 2);
 }
 
 .yk-mt__label:hover,
@@ -131,7 +145,7 @@ Components
 
 .yk-mt__input,
 .yk-mt__select {
-	margin-bottom: 1rem;
+	margin-bottom: 16px;
 	padding: 0 8px !important;
 	border: 1px solid #ddd;
 	height: 32px;
@@ -143,6 +157,7 @@ Components
 	transition: all ease .2s;
 
 	/* Vars */
+	margin-bottom: var(--yk-mt-unit-base);
 	padding: 0 calc(var(--yk-mt-unit-base) / 2) !important;
 	height: calc(var(--yk-mt-unit-base) * 2);
 	line-height: calc(var(--yk-mt-unit-base) * 2);
@@ -253,24 +268,35 @@ Shortcode > Accordion
 .yk-mt__accordion-section-title {
 	position: relative;
 	display: inline-block;
-	padding: 10px;
+	padding: 16px 10px;
 	border-bottom: 2px solid #000;
 	width: 100%;
+	line-height: 16px;
 	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	text-align: center;
+	text-decoration: none !important;
+	color: #555;
 	box-shadow: none !important;
 
 	-webkit-transition: all ease .15s !important;
 	transition: all ease .15s !important;
 
 	/* Vars */
+	padding-top: var(--yk-mt-unit-base);
+	padding-bottom: var(--yk-mt-unit-base);
 	font-family: var(--yk-mt-font-display);
+}
+
+.yk-mt__accordion-section-title.active {
+	border-bottom-color: #000;
+	color: #000;
 }
 
 .yk-mt__accordion-section-title.active:before {
 	content: '';
+	z-index: 1;
 	position: absolute;
-	bottom: 8px;
+	bottom: -8px;
 	left: calc(50% - 8px);
 	border: 2px solid transparent;
 	border-right-color: #000;
@@ -278,6 +304,7 @@ Shortcode > Accordion
 	width: 16px;
 	height: 16px;
 	background-color: #fff;
+	box-sizing: border-box;
 
 	-webkit-transform: rotate(45deg);
 	transform: rotate(45deg);
@@ -354,6 +381,7 @@ Shortcode > Accordion
 .yk-mt-act-r {
 	display: block;
 	padding: 0;
+	border: 0;
 	width: 32px;
 	height: 32px;
 	background-repeat: no-repeat;

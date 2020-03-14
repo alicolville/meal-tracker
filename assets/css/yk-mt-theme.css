@@ -44,26 +44,18 @@ Version: x.x.x
 .yk-mt__accordion-section-title {
 	border-bottom-color: #ccc;
 	font-size: 125%;
-	font-weight: 800;
+	font-weight: 900;
 	background-color: #fff;
 
 	/* Vars */
 	border-bottom-color: var(--yk-mt-primary-color);
 }
 
-.yk-mt__accordion-section-title.active:before {
-	border-right-color: #ccc;
-	border-bottom-color: #ccc;
-
-	/* Vars */
-	border-right-color: var(--yk-mt-primary-color);
-	border-bottom-color: var(--yk-mt-primary-color);
-}
-
 .yk-mt__accordion-section-title:hover,
 .yk-mt__accordion-section-title:focus,
 .yk-mt__accordion-section-title:active {
-	color: #000 !important;
+	border-bottom-color: #000 !important;
+	color: #000;
 }
 
 .yk-mt__meal-name {
