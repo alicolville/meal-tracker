@@ -324,7 +324,7 @@ Shortcode > Accordion
 .yk-mt__table-cell-total-text,
 .yk-mt__table-cell-total {
 	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-weight: 900;
+	font-weight: 600;
 
 	/* Vars */
 	font-family: var(--yk-mt-font-display);
