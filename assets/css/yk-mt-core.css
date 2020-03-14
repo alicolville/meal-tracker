@@ -485,7 +485,7 @@ Fallbacks
 /* Fallbacks > Shortcode > Tables */
 .yk-mt-inline-flex {
 	display: inline-block;
-	max-width: 74px;
+	width: 74px;
 }
 
 .yk-mt-inline-flex:after {
