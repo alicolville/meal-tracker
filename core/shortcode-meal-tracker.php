@@ -594,8 +594,8 @@
         }
 
         wp_localize_script( 'mt-chart', 'yk_mt_chart', [
-            chartFont  => $chart_font,
-            chartColor => $chart_color,
+            'chartFont'  => $chart_font,
+            'chartColor' => $chart_color,
         ] );
 
         wp_enqueue_script( 'meal-tracker', plugins_url( 'assets/js/core' . $minified . '.js', __DIR__ ),
