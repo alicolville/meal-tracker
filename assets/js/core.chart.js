@@ -1,3 +1,8 @@
+/*global $, jQuery, yk_mt_chart*/
+
+// Chart localized vars
+let yk_mt_chart_font  = yk_mt_chart.chartFont;
+let yk_mt_chart_color = yk_mt_chart.chartColor;
 
 var yk_mt_chart_config      = false;
 var yk_mt_ctx               = false;
@@ -114,7 +119,7 @@ function yk_mt_chart_data() {
     return {
         datasets: [{
             data: [ yk_mt_chart_config[ 'calories_used' ],  yk_mt_chart_config[ 'calories_remaining' ] ],
-            backgroundColor: [ "rgb(251, 142, 46)", "rgb(228,228,228)" ],
+            backgroundColor: [ yk_mt_chart_color, "#e5e5e5" ],
             borderWidth: 0
         }],
         labels: [
@@ -134,21 +139,21 @@ function yk_mt_chart_options() {
         cutoutPercentage: 88,
         title: {
             display: ! yk_mt_chart_is_admin,
-            fontFamily: 'Nunito, Arial, sans-serif',
+            fontFamily: yk_mt_chart_font,
             fontSize: 16,
             fontStyle: 'normal',
             padding: 20,
             text: yk_mt_chart_config[ 'chart_title' ],
-            fontColor: 'rgb(0,0,0)'
+            fontColor: '#000000'
         },
         legend: {
             display: ! yk_mt_chart_is_admin,
             position: 'right',
             labels: {
-                fontFamily: 'Nunito, Arial, sans-serif',
+                fontFamily: yk_mt_chart_font,
                 fontSize: 16,
                 boxWidth: 16,
-                fontColor: 'rgb(0,0,0)'
+                fontColor: '#000000'
             }
         }
     };
@@ -157,8 +162,8 @@ function yk_mt_chart_options() {
         options[ 'elements' ] = {
             center: {
                 text: yk_mt_chart_config[ 'percentage_used' ] + '%',
-                color: 'rgb(251, 142, 46)',
-                fontStyle: 'Nunito, Arial, sans-serif',
+                color: yk_mt_chart_color,
+                fontStyle: yk_mt_chart_font,
                 sidePadding: 125,
             }
         }

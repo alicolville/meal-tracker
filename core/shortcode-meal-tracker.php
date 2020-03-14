@@ -554,26 +554,52 @@
 
         $minified = yk_mt_use_minified();
 
+		// Styles
 		wp_enqueue_style( 'mt-meal-tracker-normalize', plugins_url( 'assets/css/normalize.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-animate', plugins_url( 'assets/css/animate.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-selectize', plugins_url( 'assets/css/selectize.default.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_style( 'meal-tracker-core', plugins_url( 'assets/css/yk-mt-core' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
+        // Styles > Core
+        wp_enqueue_style( 'mt-core', plugins_url( 'assets/css/yk-mt-core' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'mt-font-icons', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
+
+        // Styles > Core > Vars
+        $chart_font  = '\'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif';
+        $chart_color = '#000000';
+
+        // Styles > Theme
+        $is_themed = apply_filters( 'yk-mt-filter-enable-theme', true );
+
+        if ( true === $is_themed ) {
+            wp_enqueue_style( 'mt-theme', plugins_url( 'assets/css/yk-mt-theme' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+        }
+
+        // Scripts
 		wp_enqueue_script( 'mt-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-selectize', plugins_url( 'assets/js/selectize.min.js', __DIR__ ), [], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-loading-overlay', plugins_url( 'assets/js/loadingoverlay.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-chart-js', plugins_url( 'assets/js/Chart.bundle.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
         wp_enqueue_script( 'mt-notify', plugins_url( 'assets/js/notify.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
-
         wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart' . $minified . '.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
+
+        // Scripts > ChartJS > Localized scripts
+        if ( true === $is_themed ) {
+
+            // Styles > Theme > Fonts
+            wp_enqueue_style( 'mt-font-nunito', 'https://fonts.googleapis.com/css?family=Nunito:700,800&display=swap', [], YK_MT_PLUGIN_VERSION );
+
+            // Styles > Theme > Vars
+            $chart_font  = apply_filters( 'yk-mt-filter-chart-font', '\'Nunito\', \'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif' );
+            $chart_color = apply_filters( 'yk-mt-filter-chart-color', '#fb8e2e' );
+        }
+
+        wp_localize_script( 'mt-chart', 'yk_mt_chart', [
+            chartFont  => $chart_font,
+            chartColor => $chart_color,
+        ] );
 
         wp_enqueue_script( 'meal-tracker', plugins_url( 'assets/js/core' . $minified . '.js', __DIR__ ),
                         [ 'mt-modal', 'mt-selectize', 'mt-loading-overlay', 'mt-notify', 'mt-chart' ], YK_MT_PLUGIN_VERSION, true );
-
-        // TO DO - add theme CSS switch for theme CSS
-        wp_enqueue_style( 'meal-tracker-theme', plugins_url( 'assets/css/yk-mt-theme' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_style( 'meal-tracker-font', 'https://fonts.googleapis.com/css?family=Nunito:700,800&display=swap', [], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_style( 'meal-tracker-icon-font', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
 
         // Include relevant JS for Pro users
         if ( true === yk_mt_license_is_premium() ) {
