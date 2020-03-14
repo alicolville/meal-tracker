@@ -100,9 +100,8 @@ Components
 	padding-bottom: 0;
 	border: 2px solid #000;
 	font-weight: 600;
-	background-color: #fff;
+	background-color: #fff !important;
 	color: #000;
-
 	border-radius: 32px;
 	box-sizing: border-box;
 
@@ -112,6 +111,7 @@ Components
 
 .yk-mt__btn:hover,
 .yk-mt__btn:focus {
+	text-decoration: none !important;
 	background-color: #000 !important;
 	color: #fff;
 }
@@ -151,6 +151,7 @@ Components
 	height: 32px;
 	line-height: 32px;
 	font-size: 87.5%;
+	background-color: #fff !important;
 	border-radius: 3px !important;
 
 	-webkit-transition: all ease .2s;
@@ -192,7 +193,7 @@ Components
 }
 
 .yk-mt__input:disabled {
-	background-color: #fafafa;
+	background-color: #fafafa !important;
 }
 
 /* Components > Tables */
@@ -403,13 +404,19 @@ Shortcode > Accordion
 
 .yk-mt-act-r--edit {
 	margin-right: 10px;
-	background-color: #333;
+	background-color: #333 !important;
 	color: #fff;
 }
 
 .yk-mt-act-r--remove {
-	background-color: #f30;
+	background-color: #f30 !important;
 	color: #fff;
+}
+
+.yk-mt-act-r:hover,
+.yk-mt-act-r:focus,
+.yk-mt-act-r:active {
+	background-color: #000 !important;
 }
 
 .yk-mt-r__text {
@@ -417,7 +424,11 @@ Shortcode > Accordion
 }
 
 .yk-mt__no-meals {
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 	text-align: center;
+
+	/* Vars */
+	font-family: var(--yk-mt-font-sans) !important;
 }
 
 /****************
