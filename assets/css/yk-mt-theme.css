@@ -29,6 +29,7 @@ Version: x.x.x
 	border-radius: calc(var(--yk-mt-unit-base) * 2);
 
 	-webkit-transition: all ease .2s !important;
+	-o-transition: all ease .2s !important;
 	transition: all ease .2s !important;
 }
 
@@ -49,6 +50,7 @@ Version: x.x.x
 /* Components > Inputs */
 .yk-mt__label {
 	-webkit-transition: color ease .2s !important;
+	-o-transition: color ease .2s !important;
 	transition: color ease .2s !important;
 }
 
@@ -63,11 +65,13 @@ Version: x.x.x
 	border-radius: 3px !important;
 
 	-webkit-transition: all ease .2s;
+	-o-transition: all ease .2s;
 	transition: all ease .2s;
 }
 
 /* Components > Tables */
 .yk-mt-act-r {
+	-webkit-box-shadow: none !important;
 	box-shadow: none !important;
 }
 
@@ -118,12 +122,14 @@ Version: x.x.x
 /* Shortcode > Accordion > Titles */
 .yk-mt__accordion-section-title {
 	-webkit-transition: all ease .15s !important;
+	-o-transition: all ease .15s !important;
 	transition: all ease .15s !important;
 }
 
 /* Shortcode > Accordion > Content */
 .yk-mt-act-r {
 	-webkit-transition: background-color ease .2s;
+	-o-transition: background-color ease .2s;
 	transition: background-color ease .2s;
 }
 
@@ -174,6 +180,7 @@ Version: x.x.x
 	opacity: 0;
 
 	-webkit-transition: opacity ease .2s;
+	-o-transition: opacity ease .2s;
 	transition: opacity ease .2s;
 }
 

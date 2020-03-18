@@ -98,6 +98,8 @@ Components
 	text-decoration: none !important;
 	background-color: #fff;
 	color: #000;
+
+	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -270,6 +272,7 @@ Shortcode > Accordion
 
 .yk-mt__accordion,
 .yk-mt__accordion * {
+	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -292,6 +295,8 @@ Shortcode > Accordion
 	text-align: center;
 	text-decoration: none !important;
 	color: #555;
+
+	-webkit-box-shadow: none !important;
 	box-shadow: none !important;
 }
 
@@ -316,9 +321,11 @@ Shortcode > Accordion
 	height: 16px; /* Fallback */
 	height: var(--yk-mt-unit-base);
 	background-color: #fff;
+	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 
 	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
 	transform: rotate(45deg);
 }
 
@@ -388,7 +395,11 @@ Shortcode > Accordion
 	background-size: var(--yk-mt-unit-base);
 	color: #333;
 	border-radius: 50%;
+
+	-webkit-box-shadow: none !important;
 	box-shadow: none !important;
+
+	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -458,8 +469,9 @@ Shortcode > Modal
 	padding: calc(var(--yk-mt-unit-base) * 2);
 	width: 100%;
 	background-color: #fff;
-
 	border-radius: 4px;
+
+	-webkit-box-shadow: 0 2px 3px rgba(0,0,0,.66);
 	box-shadow: 0 2px 3px rgba(0,0,0,.66);
 }
 
@@ -495,6 +507,7 @@ Shortcode > Modal
 	background-color: #fff;
 	color: #000;
 
+	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -868,14 +881,21 @@ Fallbacks
 		}
 
 		.yk-mt__table-row:not(:last-child) .yk-mt__table-cell:nth-child(1) {
+			-ms-grid-row: 1;
+			-ms-grid-column: 1;
 			grid-area: meal;
 		}
 
 		.yk-mt__table-row:not(:last-child) .yk-mt__table-cell:nth-child(2) {
+			-ms-grid-row: 2;
+			-ms-grid-column: 1;
 			grid-area: data;
 		}
 
 		.yk-mt__table-row:not(:last-child) .yk-mt__table-cell:nth-child(3) {
+			-ms-grid-row: 1;
+			-ms-grid-row-span: 2;
+			-ms-grid-column: 3;
 			grid-area: edit;
 		}
 
