@@ -1,3 +1,5 @@
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+
 /*
 Plugin Name: YeKen Meal Tracker
 Plugin URI:
@@ -53,6 +55,8 @@ Version: x.x.x
 	font-family: var(--yk-mt-font-icons);
 	font-size: 13px;
 	color: transparent;
+
+	-webkit-box-sizing: border-box !important;
 	box-sizing: border-box !important;
 	border-radius: 50%;
 }
@@ -70,6 +74,8 @@ Version: x.x.x
 .Zebra_DatePicker .dp_actions .dp_next,
 .Zebra_DatePicker .dp_actions .dp_previous:before,
 .Zebra_DatePicker .dp_actions .dp_next:before {
+	-webkit-transition: all ease .2s;
+	-o-transition: all ease .2s;
 	transition: all ease .2s;
 }
 
@@ -154,12 +160,15 @@ Version: x.x.x
 	text-decoration: none !important;
 	background-color: #fff;
 	color: #000;
-	box-sizing: border-box !important;
 	border-radius: 32px;
 	border-radius: calc(var(--yk-mt-unit-base) * 2);
 
 	-webkit-transition: all ease .2s !important;
+	-o-transition: all ease .2s !important;
 	transition: all ease .2s !important;
+
+	-webkit-box-sizing: border-box !important;
+	box-sizing: border-box !important;
 }
 
 .Zebra_DatePicker .dp_footer td:hover,
