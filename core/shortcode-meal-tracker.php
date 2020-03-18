@@ -88,33 +88,38 @@
 
         $entry = yk_mt_db_entry_get( $todays_entry_id );
 
-	    $html = '<div class="yk-mt__table yk-mt-navigation-table">
+	    $html = '<div class="yk-mt__table yk-mt__table--nav">
                     <div class="yk-mt__table-row">
                         <div class="yk-mt__table-cell">';
 
 	                    $i = 0;
 
 	                    foreach ( $links[ 'nav' ] as $link ) {
-	                        $html .= sprintf( '%4$s<a href="%1$s" class="%2$s">%3$s</a>',
-                                                        yk_mt_entry_url( $link[ 'id' ] ),
-                                                        ( $todays_entry_id === $link[ 'id' ] ) ? 'yk-mt-selected' : '',
-                                                        $link[ 'label' ],
-                                                        ( 0 !== $i ) ? ' &middot; ' : ''
+	                        $html .= sprintf(
+	                            '<a href="%1$s" class="yk-mt__btn yk-mt__btn--small %2$s">
+                                    <span class="yk-mt__btn-text">%3$s</span>
+                                </a>',
+                                yk_mt_entry_url( $link[ 'id' ] ),
+                                ( $todays_entry_id === $link[ 'id' ] ) ? 'yk-mt-selected' : '',
+                                $link[ 'label' ],
+                                ( 0 !== $i ) ? ' &middot; ' : ''
                             );
 
                             $i++;
                         }
 
-        $html .=       sprintf('</div>
-                                                <div class="yk-mt__table-cell yk-mt-datepicker-cell">
-                                                    %1$s
-                                                    &middot;
-                                                    <a class="mt-datepicker">%2$s</a>
-                                                </div>
-                                           </div>
-                                        </div>',
-                                        yk_mt_date_format( $entry[ 'date' ]),
-                                        __( 'Select a date', YK_MT_SLUG )
+        $html .= sprintf(
+            '</div>
+                    <div class="yk-mt__table-cell yk-mt__table-cell--date">
+                        <span class="yk-mt__date-text">%1$s</span>
+                        <a class="yk-mt__btn yk-mt__btn--small mt-datepicker">
+                            <span class="yk-mt__btn-text">%2$s</span>
+                        </a>
+                    </div>
+                </div>
+            </div>',
+            yk_mt_date_format( $entry[ 'date' ]),
+            __( 'Select a date', YK_MT_SLUG )
         );
 
 	    return $html;

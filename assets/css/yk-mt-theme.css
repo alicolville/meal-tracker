@@ -85,6 +85,12 @@ Version: x.x.x
 	width: 300px ! important;
 }
 
+/* Shortcode > Navigation */
+.yk-mt__table--nav .yk-mt-selected {
+	background-color: #000 !important;
+	color: #fff;
+}
+
 /* Shortcode > Accordion */
 .yk-mt__accordion-section-title {
 	border-bottom-color: #ccc; /* Fallback */
