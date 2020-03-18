@@ -19,20 +19,17 @@ Version: x.x.x
 
 /* Global styles */
 .yk-mt {
-	/* Vars */
 	font-size: var(--yk-mt-unit-base) !important;
 }
 
 /* Components > Buttons */
 .yk-mt__btn {
 	background-color: #fff !important;
-	border-radius: 32px;
+	border-radius: 32px; /* Fallback */
+	border-radius: calc(var(--yk-mt-unit-base) * 2);
 
 	-webkit-transition: all ease .2s !important;
 	transition: all ease .2s !important;
-
-	/* Vars */
-	border-radius: calc(var(--yk-mt-unit-base) * 2);
 }
 
 .yk-mt__btn:hover,
@@ -57,18 +54,16 @@ Version: x.x.x
 
 .yk-mt__input,
 .yk-mt__select {
-	margin-bottom: 16px !important;
-	padding: 0 8px !important;
+	margin-bottom: 16px !important; /* Fallback */
+	margin-bottom: var(--yk-mt-unit-base) !important;
+	padding: 0 8px !important; /* Fallback */
+	padding: 0 calc(var(--yk-mt-unit-base) / 2) !important;
 	background-color: #fff !important;
 	font-size: 87.5% !important;
 	border-radius: 3px !important;
 
 	-webkit-transition: all ease .2s;
 	transition: all ease .2s;
-
-	/* Vars */
-	margin-bottom: var(--yk-mt-unit-base) !important;
-	padding: 0 calc(var(--yk-mt-unit-base) / 2) !important;
 }
 
 /* Components > Tables */
@@ -78,9 +73,7 @@ Version: x.x.x
 
 /* Shortcode > Summary */
 .yk-mt__summary-title .fa {
-	color: #ccc;
-
-	/* Vars */
+	color: #ccc; /* Fallback */
 	color: var(--yk-mt-primary-color);
 }
 
@@ -94,13 +87,11 @@ Version: x.x.x
 
 /* Shortcode > Accordion */
 .yk-mt__accordion-section-title {
-	border-bottom-color: #ccc;
+	border-bottom-color: #ccc; /* Fallback */
+	border-bottom-color: var(--yk-mt-primary-color);
 	font-size: 125%;
 	font-weight: 900;
 	background-color: #fff;
-
-	/* Vars */
-	border-bottom-color: var(--yk-mt-primary-color);
 }
 
 .yk-mt__accordion-section-title:hover,
@@ -145,9 +136,7 @@ Version: x.x.x
 }
 
 .yk-mt__no-meals {
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-
-	/* Vars */
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif !important; /* Fallback */
 	font-family: var(--yk-mt-font-sans) !important;
 }
 
@@ -160,9 +149,7 @@ Version: x.x.x
 
 .yk-mt__modal-title,
 .yk-mt__modal-subtitle {
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-
-	/* Vars */
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif !important; /* Fallback */
 	font-family: var(--yk-mt-font-display) !important;
 }
 

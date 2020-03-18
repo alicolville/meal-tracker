@@ -48,20 +48,16 @@ Global styles
 
 /* Global styles > Protect plugin units from themes */
 .yk-mt {
-	padding: 16px;
+	padding: 16px; /* Fallback */
+	padding: var(--yk-mt-unit-base);
 	background-color: #fff;
 	font-size: 16px !important;
-
-	/* Vars */
-	padding: var(--yk-mt-unit-base);
 }
 
 /* Global styles > Set global font */
 .yk-mt,
 .yk-mt * {
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
-	/* Vars */
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fallback */
 	font-family: var(--yk-mt-font-sans);
 }
 
@@ -112,22 +108,18 @@ Components
 }
 
 .yk-mt__btn-text {
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
-	/* Vars */
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fallback */
 	font-family: var(--yk-mt-font-display);
 }
 
 /* Components > Inputs */
 .yk-mt__label {
 	display: block;
-	margin-bottom: 8px;
+	margin-bottom: 8px; /* Fallback */
+	margin-bottom: calc(var(--yk-mt-unit-base) / 2);
 	font-weight: 400;
 	font-size: 75%;
 	color: #444;
-
-	/* Vars */
-	margin-bottom: calc(var(--yk-mt-unit-base) / 2);
 }
 
 .yk-mt__label:hover,
@@ -137,19 +129,17 @@ Components
 
 .yk-mt__input,
 .yk-mt__select {
-	margin-bottom: 16px;
-	padding: 0 8px;
+	margin-bottom: 16px; /* Fallback */
+	margin-bottom: var(--yk-mt-unit-base);
+	padding: 0 8px; /* Fallback */
+	padding: 0 calc(var(--yk-mt-unit-base) / 2);
 	border: 1px solid #ddd;
-	height: 32px;
-	line-height: 32px;
+	height: 32px; /* Fallback */
+	height: calc(var(--yk-mt-unit-base) * 2);
+	line-height: 32px; /* Fallback */
+	line-height: calc(var(--yk-mt-unit-base) * 2);
 	font-size: 87.5%;
 	background-color: #fff;
-
-	/* Vars */
-	margin-bottom: var(--yk-mt-unit-base);
-	padding: 0 calc(var(--yk-mt-unit-base) / 2);
-	height: calc(var(--yk-mt-unit-base) * 2);
-	line-height: calc(var(--yk-mt-unit-base) * 2);
 }
 
 .yk-mt__input:not([type='checkbox']),
@@ -206,23 +196,19 @@ Shortcode > Summary
 ******************/
 
 .yk-mt__summary {
-	margin-bottom: 32px;
-
-	/* Vars */
+	margin-bottom: 32px; /* Fallback */
 	margin-bottom: calc(2 * var(--yk-mt-unit-base));
 }
 
 .yk-mt__summary-title {
 	margin-bottom: 1rem;
 	padding: 10px;
-	border-bottom: 2px solid #333;
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	border-bottom: 2px solid #333; /* Fallback color */
+	border-bottom-color: var(--yk-mt-primary-color);
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fallback */
+	font-family: var(--yk-mt-font-display);
 	font-size: 125%;
 	font-weight: 800;
-
-	/* Vars */
-	border-bottom-color: var(--yk-mt-primary-color);
-	font-family: var(--yk-mt-font-display);
 }
 
 .yk-mt__table--summary-details {
@@ -254,20 +240,18 @@ Shortcode > Accordion
 .yk-mt__accordion-section-title {
 	position: relative;
 	display: inline-block;
-	padding: 16px 10px;
+	padding: 16px 10px; /* Fallback */
+	padding-top: var(--yk-mt-unit-base);
+	padding-bottom: var(--yk-mt-unit-base);
 	border-bottom: 2px solid #000;
 	width: 100%;
 	line-height: 16px;
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fallback */
+	font-family: var(--yk-mt-font-display);
 	text-align: center;
 	text-decoration: none !important;
 	color: #555;
 	box-shadow: none !important;
-
-	/* Vars */
-	padding-top: var(--yk-mt-unit-base);
-	padding-bottom: var(--yk-mt-unit-base);
-	font-family: var(--yk-mt-font-display);
 }
 
 .yk-mt__accordion-section-title.active {
@@ -279,33 +263,29 @@ Shortcode > Accordion
 	content: '';
 	z-index: 1;
 	position: absolute;
-	bottom: -8px;
-	left: calc(50% - 8px);
+	bottom: -8px; /* Fallback */
+	bottom: calc(-.5 * var(--yk-mt-unit-base));
+	left: calc(50% - 8px); /* Fallback */
+	left: calc(50% - (var(--yk-mt-unit-base) / 2));
 	border: 2px solid transparent;
 	border-right-color: #000;
 	border-bottom-color: #000;
-	width: 16px;
-	height: 16px;
+	width: 16px; /* Fallback */
+	width: var(--yk-mt-unit-base);
+	height: 16px; /* Fallback */
+	height: var(--yk-mt-unit-base);
 	background-color: #fff;
 	box-sizing: border-box;
 
 	-webkit-transform: rotate(45deg);
 	transform: rotate(45deg);
-
-	/* Vars */
-	bottom: calc(-.5 * var(--yk-mt-unit-base));
-	left: calc(50% - (var(--yk-mt-unit-base) / 2));
-	width: var(--yk-mt-unit-base);
-	height: var(--yk-mt-unit-base);
 }
 
 /* Shortcode > Accordion > Content */
 .yk-mt__accordion-section-content {
-	padding-top: 16px;
-	padding-bottom: 16px;
-
-	/* Vars */
+	padding-top: 16px; /* Fallback */
 	padding-top: var(--yk-mt-unit-base);
+	padding-bottom: 16px; /* Fallback */
 	padding-bottom: var(--yk-mt-unit-base);
 }
 
@@ -320,11 +300,9 @@ Shortcode > Accordion
 }
 
 .yk-mt__meal-name {
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-weight: 600;
-
-	/* Vars */
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fallback */
 	font-family: var(--yk-mt-font-display);
+	font-weight: 600;
 }
 
 .yk-mt__accordion .yk-mt__table-cell {
@@ -333,20 +311,16 @@ Shortcode > Accordion
 
 .yk-mt__table-cell-total-text,
 .yk-mt__table-cell-total {
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-weight: 600;
-
-	/* Vars */
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fallback */
 	font-family: var(--yk-mt-font-display);
+	font-weight: 600;
 }
 
 .yk-mt__table-cell-total-text {
-	padding-right: 16px;
+	padding-right: 16px; /* Fallback */
+	padding-right: var(--yk-mt-unit-base);
 	font-size: 100%;
 	text-transform: uppercase;
-
-	/* Vars */
-	padding-right: var(--yk-mt-unit-base);
 }
 
 .yk-mt__table-cell-total {
@@ -354,31 +328,27 @@ Shortcode > Accordion
 }
 
 .yk-mt__accordion .yk-mt__btn-wrap {
-	margin-bottom: 16px;
-	text-align: center;
-
-	/* Vars */
+	margin-bottom: 16px; /* Fallback */
 	margin-bottom: var(--yk-mt-unit-base);
+	text-align: center;
 }
 
 .yk-mt-act-r {
 	display: block;
 	padding: 0;
 	border: 0;
-	width: 32px;
-	height: 32px;
+	width: 32px; /* Fallback */
+	width: calc(2 * var(--yk-mt-unit-base));
+	height: 32px; /* Fallback */
+	height: calc(2 * var(--yk-mt-unit-base));
 	background-repeat: no-repeat;
 	background-position: center center;
-	background-size: 16px;
+	background-size: 16px; /* Fallback */
+	background-size: var(--yk-mt-unit-base);
 	color: #333;
 	border-radius: 50%;
 	box-shadow: none !important;
 	box-sizing: border-box;
-
-	/* Vars */
-	width: calc(2 * var(--yk-mt-unit-base));
-	height: calc(2 * var(--yk-mt-unit-base));
-	background-size: var(--yk-mt-unit-base);
 }
 
 .yk-mt-act-r--edit {
@@ -403,11 +373,9 @@ Shortcode > Accordion
 }
 
 .yk-mt__no-meals {
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	text-align: center;
-
-	/* Vars */
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fallback */
 	font-family: var(--yk-mt-font-sans);
+	text-align: center;
 }
 
 /****************
@@ -445,24 +413,20 @@ Shortcode > Modal
 .yk-mt__modal-wrap {
 	position: relative;
 	margin: 10vh auto;
-	padding: 32px;
+	padding: 32px; /* Fallback */
+	padding: calc(var(--yk-mt-unit-base) * 2);
 	width: 100%;
 	background-color: #fff;
 
 	border-radius: 4px;
 	box-shadow: 0 2px 3px rgba(0,0,0,.66);
-
-	/* Vars */
-	padding: calc(var(--yk-mt-unit-base) * 2);
 }
 
 /* Shortcode > Modal > Header */
 .yk-mt__modal-header {
 	margin-bottom: 1rem;
 	padding-bottom: 1rem;
-	border-bottom: 2px solid #333;
-
-	/* Vars */
+	border-bottom: 2px solid #333; /* Fallback color */
 	border-bottom-color: var(--yk-mt-primary-color);
 }
 
@@ -470,11 +434,9 @@ Shortcode > Modal
 .yk-mt__modal-subtitle {
 	padding: 0;
 	line-height: 125%;
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-weight: 600;
-
-	/* Vars */
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fallback */
 	font-family: var(--yk-mt-font-display);
+	font-weight: 600;
 }
 
 .yk-mt__modal-title {
@@ -485,24 +447,20 @@ Shortcode > Modal
 .yk-mt__info-box {
 	position: relative;
 	margin: 2rem auto;
-	padding-left: 40px;
+	padding-left: 40px; /* Fallback */
+	padding-left: calc(var(--yk-mt-unit-base) * 2.5);
 	width: 100%;
 	max-width: 300px;
 	background-color: #fff;
 	color: #000;
 
 	box-sizing: border-box;
-
-	/* Vars */
-	padding-left: calc(var(--yk-mt-unit-base) * 2.5);
 }
 
 .yk-mt__info-box-text {
 	display: block;
 	line-height: 125%;
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
-	/* Vars */
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fallback */
 	font-family: var(--yk-mt-font-display);
 }
 
@@ -510,15 +468,13 @@ Shortcode > Modal
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 32px;
-	height: 32px;
-	font-size: 32px;
-	color: #333;
-
-	/* Vars */
+	width: 32px; /* Fallback */
 	width: calc(var(--yk-mt-unit-base) * 2);
+	height: 32px; /* Fallback */
 	height: calc(var(--yk-mt-unit-base) * 2);
+	font-size: 32px; /* Fallback */
 	font-size: calc(var(--yk-mt-unit-base) * 2);
+	color: #333; /* Fallback */
 	color: var(--yk-mt-primary-color);
 }
 
@@ -544,11 +500,9 @@ Shortcode > Modal
 	padding-right: .5rem;
 	min-width: 25px;
 	line-height: 150%;
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-size: 87.5%;
-
-	/* Vars */
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fallback */
 	font-family: var(--yk-mt-font-display);
+	font-size: 87.5%;
 }
 
 .yk-mt__modal-auto-close .yk-mt__label {
@@ -603,11 +557,9 @@ Fallbacks
 /* Fallbacks > Shortcode > Modal > Header */
 .yk-mt__modal-header .yk-mt__btn {
 	position: absolute;
-	top: 32px;
-	right: 32px;
-
-	/* Vars */
+	top: 32px; /* Fallback */
 	top: calc(2 * var(--yk-mt-unit-base));
+	right: 32px; /* Fallback */
 	right: calc(2 * var(--yk-mt-unit-base));
 }
 
@@ -641,25 +593,21 @@ Fallbacks
 
 	/* Components > Buttons */
 	.yk-mt__btn--small {
-		padding-left: 8px;
-		padding-right: 8px;
+		padding-left: 8px; /* Fallback */
+		padding-left: calc(var(--yk-mt-unit-base) / 2);
+		padding-right: 8px; /* Fallback */
+		padding-right: calc(var(--yk-mt-unit-base) / 2);
 		line-height: 1.5;
 		font-size: 75%;
-
-		/* Vars */
-		padding-left: calc(var(--yk-mt-unit-base) / 2);
-		padding-right: calc(var(--yk-mt-unit-base) / 2);
 	}
 
 	.yk-mt__btn--medium {
-		padding-left: 16px;
-		padding-right: 16px;
+		padding-left: 16px; /* Fallback */
+		padding-left: var(--yk-mt-unit-base);
+		padding-right: 16px; /* Fallback */
+		padding-right: var(--yk-mt-unit-base);
 		line-height: 2;
 		font-size: 100%;
-
-		/* Vars */
-		padding-left: var(--yk-mt-unit-base);
-		padding-right: var(--yk-mt-unit-base);
 	}
 
 	/* Shortcode > Accordion */
@@ -675,18 +623,16 @@ Fallbacks
 	/* Shortcode > Modal > Header */
 	.yk-mt__modal-header .yk-mt__btn {
 		position: absolute;
-		top: -16px;
-		right: -16px;
+		top: -16px; /* Fallback */
+		top: calc(-1 * var(--yk-mt-unit-base));
+		right: -16px; /* Fallback */
+		right: calc(-1 * var(--yk-mt-unit-base));
 		padding: 0;
 		width: 32px;
 		height: 32px;
 		line-height: 26px;
 		background-color: #000;
 		color: #fff;
-
-		/* Vars */
-		top: calc(-1 * var(--yk-mt-unit-base));
-		right: calc(-1 * var(--yk-mt-unit-base));
 	}
 
 	.yk-mt__modal-header .yk-mt__btn-text {
@@ -706,25 +652,21 @@ Fallbacks
 
 	/* Components > Buttons */
 	.yk-mt__btn--small {
-		padding-left: 8px;
-		padding-right: 8px;
+		padding-left: 8px; /* Fallback */
+		padding-left: calc(var(--yk-mt-unit-base) / 2);
+		padding-right: 8px; /* Fallback */
+		padding-right: calc(var(--yk-mt-unit-base) / 2);
 		line-height: 1.5;
 		font-size: 75%;
-
-		/* Vars */
-		padding-left: calc(var(--yk-mt-unit-base) / 2);
-		padding-right: calc(var(--yk-mt-unit-base) / 2);
 	}
 
 	.yk-mt__btn--medium {
-		padding-left: 16px;
-		padding-right: 16px;
+		padding-left: 16px; /* Fallback */
+		padding-left: var(--yk-mt-unit-base);
+		padding-right: 16px; /* Fallback */
+		padding-right: var(--yk-mt-unit-base);
 		line-height: 2;
 		font-size: 100%;
-
-		/* Vars */
-		padding-left: var(--yk-mt-unit-base);
-		padding-right: var(--yk-mt-unit-base);
 	}
 
 	/* Shortcode > Accordion */
@@ -783,9 +725,7 @@ Fallbacks
 	}
 
 	.yk-mt-act-r--edit {
-		margin-right: 8px;
-
-		/* Vars */
+		margin-right: 8px; /* Fallback */
 		margin-right: calc(var(--yk-mt-unit-base) / 2);
 	}
 
@@ -841,11 +781,9 @@ Fallbacks
 			grid-template-areas: 'meal edit' 'data edit';
 			grid-column-gap: var(--yk-mt-unit-base);
 
-			padding-top: 8px;
-			padding-bottom: 8px;
-
-			/* Vars */
+			padding-top: 8px; /* Fallback */
 			padding-top: calc(var(--yk-mt-unit-base) / 2);
+			padding-bottom: 8px; /* Fallback */
 			padding-bottom: calc(var(--yk-mt-unit-base) / 2);
 		}
 
