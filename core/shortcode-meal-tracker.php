@@ -610,6 +610,7 @@
         if ( true === yk_mt_license_is_premium() ) {
             wp_enqueue_script( 'mt-datepicker', plugins_url( 'assets/js/zebra_datepicker.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
             wp_enqueue_style( 'mt-datepicker', plugins_url( 'assets/css/zebra/zebra_datepicker.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+            wp_enqueue_style( 'mt-datepicker-theme', plugins_url( 'assets/css/yk-mt-zebra' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
             wp_enqueue_script( 'mt-pro', plugins_url( 'assets/js/pro.js', __DIR__ ), [ 'meal-tracker', 'mt-datepicker' ], YK_MT_PLUGIN_VERSION, true );
         }
