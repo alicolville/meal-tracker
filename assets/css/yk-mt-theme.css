@@ -57,14 +57,17 @@ Version: x.x.x
 
 .yk-mt__input,
 .yk-mt__select {
+	margin-bottom: 16px !important;
 	padding: 0 8px !important;
 	background-color: #fff !important;
+	font-size: 87.5% !important;
 	border-radius: 3px !important;
 
 	-webkit-transition: all ease .2s;
 	transition: all ease .2s;
 
 	/* Vars */
+	margin-bottom: var(--yk-mt-unit-base) !important;
 	padding: 0 calc(var(--yk-mt-unit-base) / 2) !important;
 }
 
@@ -184,4 +187,12 @@ Version: x.x.x
 
 .yk-mt-shortcode-meal-tracker .selectize-control.loading:before {
 	opacity: .4;
+}
+
+/* @media queries: screen, <=767px */
+@media only screen and (max-width: 767px) {
+
+	.yk-mt__modal-header .yk-mt__btn {
+		background-color: #000 !important;
+	}
 }

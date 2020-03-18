@@ -418,7 +418,6 @@ Shortcode > Modal
 	z-index: 51;
 	margin-left: auto;
 	margin-right: auto;
-	padding-top: 10vh;
 	background-color: transparent !important;
 }
 
@@ -445,8 +444,7 @@ Shortcode > Modal
 
 .yk-mt__modal-wrap {
 	position: relative;
-	margin-left: auto;
-	margin-right: auto;
+	margin: 10vh auto;
 	padding: 32px;
 	width: 100%;
 	background-color: #fff;
