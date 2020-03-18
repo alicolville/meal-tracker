@@ -54,7 +54,6 @@ Global styles
 
 	/* Vars */
 	padding: var(--yk-mt-unit-base);
-	font-size: var(--yk-mt-unit-base) !important;
 }
 
 /* Global styles > Set global font */
@@ -100,19 +99,15 @@ Components
 	padding-bottom: 0;
 	border: 2px solid #000;
 	font-weight: 600;
-	background-color: #fff !important;
+	background-color: #fff;
 	color: #000;
-	border-radius: 32px;
 	box-sizing: border-box;
-
-	/* Vars */
-	border-radius: calc(var(--yk-mt-unit-base) * 2);
 }
 
 .yk-mt__btn:hover,
 .yk-mt__btn:focus {
 	text-decoration: none !important;
-	background-color: #000 !important;
+	background-color: #000;
 	color: #fff;
 }
 
@@ -143,17 +138,16 @@ Components
 .yk-mt__input,
 .yk-mt__select {
 	margin-bottom: 16px;
-	padding: 0 8px !important;
+	padding: 0 8px;
 	border: 1px solid #ddd;
 	height: 32px;
 	line-height: 32px;
 	font-size: 87.5%;
-	background-color: #fff !important;
-	border-radius: 3px !important;
+	background-color: #fff;
 
 	/* Vars */
 	margin-bottom: var(--yk-mt-unit-base);
-	padding: 0 calc(var(--yk-mt-unit-base) / 2) !important;
+	padding: 0 calc(var(--yk-mt-unit-base) / 2);
 	height: calc(var(--yk-mt-unit-base) * 2);
 	line-height: calc(var(--yk-mt-unit-base) * 2);
 }
@@ -231,11 +225,6 @@ Shortcode > Summary
 
 .yk-mt__table--summary-details {
 	text-align: right;
-	vertical-align: middle !important;
-}
-
-.yk-mt__table--summary-chart-slot {
-	width: 300px ! important;
 }
 
 .yk-mt__table--summary-details p {
@@ -392,19 +381,19 @@ Shortcode > Accordion
 
 .yk-mt-act-r--edit {
 	margin-right: 10px;
-	background-color: #333 !important;
+	background-color: #333;
 	color: #fff;
 }
 
 .yk-mt-act-r--remove {
-	background-color: #f30 !important;
+	background-color: #f30;
 	color: #fff;
 }
 
 .yk-mt-act-r:hover,
 .yk-mt-act-r:focus,
 .yk-mt-act-r:active {
-	background-color: #000 !important;
+	background-color: #000;
 }
 
 .yk-mt-r__text {
@@ -412,11 +401,11 @@ Shortcode > Accordion
 }
 
 .yk-mt__no-meals {
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	text-align: center;
 
 	/* Vars */
-	font-family: var(--yk-mt-font-sans) !important;
+	font-family: var(--yk-mt-font-sans);
 }
 
 /****************
@@ -481,15 +470,15 @@ Shortcode > Modal
 .yk-mt__modal-subtitle {
 	padding: 0;
 	line-height: 125%;
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: 600;
 
 	/* Vars */
-	font-family: var(--yk-mt-font-display) !important;
+	font-family: var(--yk-mt-font-display);
 }
 
 .yk-mt__modal-title {
-	margin: 0 !important;
+	margin: 0;
 	font-size: 150%;
 }
 
