@@ -18,6 +18,11 @@ Version: x.x.x
 }
 
 /* Components > Buttons */
+.yk-mt__btn {
+	-webkit-transition: all ease .2s !important;
+	transition: all ease .2s !important;
+}
+
 .yk-mt__btn-text {
 	font-weight: 900;
 	text-transform: uppercase;
@@ -25,6 +30,18 @@ Version: x.x.x
 
 .yk-mt__btn--medium .yk-mt__btn-text {
 	font-size: 87.5%;
+}
+
+/* Components > Inputs */
+.yk-mt__label {
+	-webkit-transition: color ease .2s !important;
+	transition: color ease .2s !important;
+}
+
+.yk-mt__input,
+.yk-mt__select {
+	-webkit-transition: all ease .2s;
+	transition: all ease .2s;
 }
 
 /* Components > Tables */
@@ -64,6 +81,18 @@ Version: x.x.x
 
 .yk-mt__table-cell-total {
 	font-weight: 900;
+}
+
+/* Shortcode > Accordion > Titles */
+.yk-mt__accordion-section-title {
+	-webkit-transition: all ease .15s !important;
+	transition: all ease .15s !important;
+}
+
+/* Shortcode > Accordion > Content */
+.yk-mt-act-r {
+	-webkit-transition: background-color ease .2s;
+	transition: background-color ease .2s;
 }
 
 /* Shortcode > Modal > Header */
