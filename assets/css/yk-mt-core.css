@@ -160,6 +160,8 @@ Components
 
 .yk-mt__input[type='checkbox'] {
 	margin: 0 .5rem 0 0;
+	padding: 0 !important;
+	line-height: 1 !important;
 	vertical-align: middle;
 }
 
