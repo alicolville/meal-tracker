@@ -3,8 +3,8 @@ Contributors: aliakro
 Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food
 Requires at least: 5.0
-Tested up to: 5.3
-Stable tag: 1.2
+Tested up to: 5.4
+Stable tag: 2.0
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -50,14 +50,18 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 == Changelog ==
 
-= 1.2 =
-
-* Improvement: Added Arabic translations (thanks @Saeed)
+= 2.0 =
 
 TODO:
 
   * When adding or editing a meal form, the Quantity field is not validated correctly.
 
+
+  * Improvement: Added unified look that ensures it looks more consistent across various themes.
+
+= 1.2 =
+
+* Improvement: Added Arabic translations (thanks @Saeed)
 * Bug fix: Minor bug fixes throwing PHP errors.
 * Bug fix: Incorrect slug used for localisation.
 * Bug fix: Warning being thrown for missing array index.
