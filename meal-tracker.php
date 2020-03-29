@@ -64,6 +64,11 @@ include_once YK_MT_ABSPATH . 'core/sources-weight-tracker.php';
 include_once YK_MT_ABSPATH . 'core/cron.php';
 include_once YK_MT_ABSPATH . 'core/meta.php';
 
+// If Premium, include external databases
+if ( true === $is_premium ) {
+	include_once YK_MT_ABSPATH . 'core/external-sources.php';
+}
+
 // Admin pages
 include_once YK_MT_ABSPATH . 'core/admin-pages/user/data-dashboard.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/user/data-entry.php';
