@@ -490,11 +490,15 @@ jQuery( document ).ready( function( $ ) {
         let value = $( '#yk-mt-add-meal-unit' ).val();
         let quantity_row = $( '#yk-mt-add-meal-quantity-row' );
 
-        if (true === yk_mt_hide_quantity(value)) {
-            $('#yk-mt-add-meal-quantity').prop( 'disabled', true );
-            $('#yk-mt-add-meal-quantity').val('');
+        if ( true === yk_mt_hide_quantity( value ) ) {
+            $( '#yk-mt-add-meal-quantity' ).prop( 'disabled', true );
+            $( '#yk-mt-add-meal-quantity' ).prop( 'required', false );
+            $( '#yk-mt-add-meal-quantity' ).val('');
+            quantity_row.hide();
         } else {
-            $('#yk-mt-add-meal-quantity').prop( 'disabled', false );
+            $( '#yk-mt-add-meal-quantity' ).prop( 'disabled', false );
+            $( '#yk-mt-add-meal-quantity' ).prop( 'required', true );
+            quantity_row.show();
         }
     }
 
@@ -768,7 +772,7 @@ jQuery( document ).ready( function( $ ) {
                                 <div class="yk-mt__table-cell yk-mt__table-cell-total-text">Total:</div>
                                 <div class="yk-mt__table-cell yk-mt__table-cell-total yk-mt-cq">
                                     ${total}${unit}
-                                </div>	
+                                </div>
                                 <div class="yk-mt__table-cell yk-mt-o">
                                 </div>
                         </div>`;
