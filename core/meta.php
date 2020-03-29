@@ -3,6 +3,16 @@
 defined('ABSPATH') or die("Jog on!");
 
 /**
+ * Are meta fields enabled?
+ * @return bool
+ */
+function yk_mt_meta_is_enabled() {
+
+	return true; // TODO
+
+	return ( true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) );
+}
+/**
  * Return all meta fields where key meets certain value
  *
  * @param $key
@@ -39,7 +49,7 @@ function yk_mt_meta_fields() {
 
 	// Macro Nutrient columns: Protein, fat and carbs
 	if ( true === $is_premium &&
-			true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) ) {
+			true === yk_mt_meta_is_enabled() ) {
 
 		// Protein
 		$fields[] = [
