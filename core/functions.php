@@ -474,12 +474,22 @@ function yk_mt_entry( $entry_id = NULL ) {
 }
 
 /**
+ * Get current URL and fudge with a dummy QS value. This allows us to add as a base URL and just append QS values knowing the ? has already been added
+ * @return string
+ */
+function yk_mt_current_url() {
+
+	$url = $url = get_permalink();
+
+	return add_query_arg( 'yk-mt', 'y', $url );
+}
+/**
  * Return an array for config values for AJAX localize
  * @return array
  */
 function yk_mt_ajax_config() {
-    return [
-        'page-url'                          => get_permalink(),
+	return [
+        'page-url'                          => yk_mt_current_url(),
         'plugin-url'                        => YK_MT_PLUGIN_URL,
         'ajax-url'                          => admin_url('admin-ajax.php'),
         'ajax-security-nonce'               => wp_create_nonce( 'yk-mt-nonce' ),
