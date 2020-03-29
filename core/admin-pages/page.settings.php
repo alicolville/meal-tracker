@@ -190,6 +190,22 @@ function yk_mt_settings_page_generic() {
                                                     yk_mt_display_pro_upgrade_notice();
                                                 }
                                             ?>
+											<h3><?php echo __( 'CSS Theme' , YK_MT_SLUG); ?></h3>
+											<table class="form-table">
+												<tr>
+													<th scope="row"><?php echo __( 'Enabled' , YK_MT_SLUG); ?></th>
+													<td>
+														<?php
+															$css_enabled = yk_mt_site_options_as_bool('css-theme-enabled' );
+														?>
+														<select id="css-theme-enabled" name="css-theme-enabled">
+															<option value="true" <?php selected( $css_enabled, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
+															<option value="false" <?php selected( $css_enabled, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
+														</select>
+														<p><?php echo __( 'If set to "Yes", the additional theme CSS shall be included. If you wish to add more of your own styling, you may wish to disable the bundled theme.', YK_MT_SLUG )?></p>
+													</td>
+												</tr>
+											</table>
                                             <h3><?php echo __( 'Meal Tracker Shortcode' , YK_MT_SLUG); ?></h3>
                                             <table class="form-table">
                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
@@ -230,6 +246,7 @@ function yk_mt_settings_page_generic() {
 function yk_mt_register_settings(){
 
     register_setting( 'yk-mt-options-group', 'caching-enabled' );
+	register_setting( 'yk-mt-options-group', 'css-theme-enabled' );
 
     // Pro only open
     if( true ===  yk_mt_license_is_premium() ){

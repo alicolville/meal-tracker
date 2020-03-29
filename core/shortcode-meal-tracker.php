@@ -129,7 +129,7 @@
      * Display chart JS and summary data
      */
 	function yk_mt_shortcode_meal_tracker_summary() {
-    
+
         return '
             <div class="yk-mt__summary">
                 <div class="yk-mt__summary-title"><span class="fa fa-check-circle"></span> Today\'s summary</div>
@@ -337,7 +337,7 @@
                             <span class="yk-mt__btn-icon fa fa-close"></span>
                             <span class="yk-mt__btn-text">%2$s</span>
                         </button>
-                     </div>   
+                     </div>
                      <div class="yk-mt__modal-quick-search">
                         <div class="yk-mt-hide-if-editing">
                             <form id="yk-mt-form-add-meal-to-entry">
@@ -370,9 +370,9 @@
             }
         }
 
-        $html .= sprintf('   
-                            </div> 
-                        </div> 
+        $html .= sprintf('
+                            </div>
+                        </div>
                     </div>
                 </form>
                 <div class="yk-mt__modal-auto-close yk-mt-flex">
@@ -394,7 +394,7 @@
         $html .= '</div></div>
 
                 <div class="yk-mt__modal-bg"></div>
-                <a id="yk-mt-open-dialog-edit" class="yk-mt-meal-button-edit yk-mt-add-meal-prompt yk-mt-hide"></a>               
+                <a id="yk-mt-open-dialog-edit" class="yk-mt-meal-button-edit yk-mt-add-meal-prompt yk-mt-hide"></a>
         ';
 
 		return $html;
@@ -441,7 +441,7 @@
 				}
 			}
 		}
-    
+
 		$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', '', yk_mt_units() );
 
 		$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity', '', '', 1, 1, 99999, true, false, true );
@@ -591,10 +591,7 @@
         $chart_font  = '\'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif';
         $chart_color = '#000000';
 
-        // Styles > Theme
-        $is_themed = apply_filters( 'yk-mt-filter-enable-theme', true );
-
-        if ( true === $is_themed ) {
+        if ( true === yk_mt_site_options_as_bool('css-theme-enabled' ) ) {
             wp_enqueue_style( 'mt-theme', plugins_url( 'assets/css/yk-mt-theme' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         }
 

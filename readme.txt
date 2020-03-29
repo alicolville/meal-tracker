@@ -56,8 +56,8 @@ TODO:
 
   * When adding or editing a meal form, the Quantity field is not validated correctly.
 
-
-  * Improvement: Added unified look that ensures it looks more consistent across various themes.
+* Improvment: Major overhaul of CSS.
+* Improvement: Added unified look that ensures it looks more consistent across various themes.
 
 = 1.2 =
 
