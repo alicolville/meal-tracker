@@ -637,8 +637,8 @@ function yk_mt_form_text( $title, $name, $value ='', $max_length = 60, $required
     $name = 'yk-mt-' . $name;
 
     return sprintf(
-		'   <label for="%1$s">%2$s</label>
-				<input type="text" name="%1$s" id="%1$s" maxlength="%3$d" value="%4$s" %5$s />',
+		'   <label class="yk-mt__label" for="%1$s">%2$s</label>
+				<input type="text" class="yk-mt__input" name="%1$s" id="%1$s" maxlength="%3$d" value="%4$s" %5$s />',
 		$name,
 		$title,
 		(int) $max_length,
@@ -660,8 +660,8 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
     $name = 'yk-mt-' . $name;
 
 	$html = sprintf( '<div id="%1$s-row" class="yk-mt-form-row">
-						<label for="%1$s">%2$s</label>
-							<select name="%1$s" id="%1$s" class="" %s>', $name, $title, $placeholder );
+						<label class="yk-mt__label" for="%1$s">%2$s</label>
+							<select name="%1$s" id="%1$s" class="yk-mt__select" %s>', $name, $title, $placeholder );
 
 	if ( false === empty( $placeholder ) ) {
         $html .= '<option>' . $placeholder . '</option>';
@@ -707,10 +707,10 @@ function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step =
 	$html = sprintf( '<div id="%1$s-row" class="yk-mt-form-row">', $name );
 
 	if ( true === $show_label ) {
-		$html .= sprintf( '<label for="%1$s" class="%3$s">%2$s</label>', $name, $title, $css_class );
+		$html .= sprintf( '<label for="%1$s" class="yk-mt__label %3$s">%2$s</label>', $name, $title, $css_class );
 	}
 
-	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s class="%7$s" %8$s />',
+	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s class="yk-mt__input %7$s" %8$s />',
 		$name,
 		(int) $min,
 		(int) $max,
@@ -1097,7 +1097,7 @@ function yk_mt_display_pro_upgrade_notice( ) {
     <div class="postbox yk-mt-advertise-premium">
         <h3 class="hndle"><span><?php echo __( 'Upgrade Meal Tracker and get more features!', YK_MT_SLUG ); ?> </span></h3>
         <div style="padding: 0px 15px 0px 15px">
-            <p><?php echo __( 'Upgrade to the Premium version of this plugin to view your user\'s data, record entries for multiple days, extrernal data sources and much more!', YK_MT_SLUG ); ?></p>
+            <p><?php echo __( 'Upgrade to the Premium version of this plugin to view your user\'s data, record entries for multiple days, external data sources and much more!', YK_MT_SLUG ); ?></p>
             <p><a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-license') ); ?>" class="button-primary"><?php echo __( 'Read more and upgrade to Premium Version', YK_MT_SLUG ); ?></a></p>
         </div>
     </div>

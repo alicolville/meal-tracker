@@ -28,7 +28,7 @@
 
 		$entry_id = ( true === $is_pro ) ? yk_mt_entry_id_from_qs() : NULL;
 
-		$html .= '<div id="yk-mt-shortcode-meal-tracker" class="yk-mt-shortcode-meal-tracker">';
+		$html .= '<div id="yk-mt-shortcode-meal-tracker" class="yk-mt yk-mt-shortcode-meal-tracker">';
 
         // This is used to create an empty entry if one doesn't already exist for this user / day
         yk_mt_entry_get_id_or_create();
@@ -55,9 +55,15 @@
 
 			$html .= yk_mt_shortcode_meal_tracker_meal_types();
 
-            $html .= sprintf( '<br /><button href="%s" class="yk-mt-button-small yk-mt-button-secondary yk-mt-clickable">%s</button>',
-                                yk_mt_shortcode_get_current_url( 'settings' ),
-                                __( 'Settings', YK_MT_SLUG )
+            $html .= sprintf( '<br />
+                <div class="yk-mt__btn-wrap">
+                    <button href="%s" class="yk-mt__btn yk-mt__btn--medium yk-mt-clickable">
+                        <span class="yk-mt__btn-icon fa fa-cog"></span>
+                        <span class="yk-mt__btn-text">%s</span>
+                    </button>
+                </div>',
+                yk_mt_shortcode_get_current_url( 'settings' ),
+                __( 'Settings', YK_MT_SLUG )
             );
 
 			// Embed hidden form / dialog required for adding a meal
@@ -82,33 +88,38 @@
 
         $entry = yk_mt_db_entry_get( $todays_entry_id );
 
-	    $html = '<div class="yk-mt-t yk-mt-navigation-table">
-                    <div class="yk-mt-r">
-                        <div class="yk-mt-c">';
+	    $html = '<div class="yk-mt__table yk-mt__table--nav">
+                    <div class="yk-mt__table-row">
+                        <div class="yk-mt__table-cell">';
 
 	                    $i = 0;
 
 	                    foreach ( $links[ 'nav' ] as $link ) {
-	                        $html .= sprintf( '%4$s<a href="%1$s" class="%2$s">%3$s</a>',
-                                                        yk_mt_entry_url( $link[ 'id' ] ),
-                                                        ( $todays_entry_id === $link[ 'id' ] ) ? 'yk-mt-selected' : '',
-                                                        $link[ 'label' ],
-                                                        ( 0 !== $i ) ? ' &middot; ' : ''
+	                        $html .= sprintf(
+	                            '<a href="%1$s" class="yk-mt__btn yk-mt__btn--small %2$s">
+                                    <span class="yk-mt__btn-text">%3$s</span>
+                                </a>',
+                                yk_mt_entry_url( $link[ 'id' ] ),
+                                ( $todays_entry_id === $link[ 'id' ] ) ? 'yk-mt-selected' : '',
+                                $link[ 'label' ],
+                                ( 0 !== $i ) ? ' &middot; ' : ''
                             );
 
                             $i++;
                         }
 
-        $html .=       sprintf('</div>
-                                                <div class="yk-mt-c yk-mt-datepicker-cell">
-                                                    %1$s
-                                                    &middot;
-                                                    <a class="mt-datepicker">%2$s</a>
-                                                </div>
-                                           </div>
-                                        </div>',
-                                        yk_mt_date_format( $entry[ 'date' ]),
-                                        __( 'Select a date', YK_MT_SLUG )
+        $html .= sprintf(
+            '</div>
+                    <div class="yk-mt__table-cell yk-mt__table-cell--date">
+                        <span class="yk-mt__date-text">%1$s</span>
+                        <a class="yk-mt__btn yk-mt__btn--small mt-datepicker">
+                            <span class="yk-mt__btn-text">%2$s</span>
+                        </a>
+                    </div>
+                </div>
+            </div>',
+            yk_mt_date_format( $entry[ 'date' ]),
+            __( 'Select a date', YK_MT_SLUG )
         );
 
 	    return $html;
@@ -118,15 +129,19 @@
      * Display chart JS and summary data
      */
 	function yk_mt_shortcode_meal_tracker_summary() {
-
-		return '<div class="yk-mt-t yk-mt-summary-table">
-			                <div class="yk-mt-r" >
-			                        <div class="yk-mt-c yk-mt-summary-chart-slot">
-			                            <canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
-			                        </div>
-
-			                </div>
-	                    </div>';
+    
+        return '
+            <div class="yk-mt__summary">
+                <div class="yk-mt__summary-title"><span class="fa fa-check-circle"></span> Today\'s summary</div>
+                <div class="yk-mt__table yk-mt__table--summary">
+                    <div class="yk-mt__table-row" >
+                        <div class="yk-mt__table-cell yk-mt__table--summary-chart-slot">
+                            <canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ';
     }
 
 	/**
@@ -209,7 +224,7 @@
 
 	    $html .= yk_mt_html_accordion_close();
 
-	    $html .= sprintf( '<br /><button id="yk-mt-button-save-settings" class="yk-mt-button-secondary">%1$s</button>
+	    $html .= sprintf( '<br /><button id="yk-mt-button-save-settings" class="yk-mt__btn yk-mt__btn--medium">%1$s</button>
                                     &nbsp;<button href="%2$s" class="yk-mt-button-cancel yk-mt-clickable">%3$s</button>
                                     </form></div>',
             __( 'Save Settings', YK_MT_SLUG ),
@@ -238,15 +253,15 @@
 
 			$active_tab = true;
 
-            $localised_strings = yk_mt_localised_strings();
-
 			// For each meal type, display an accordion and relevant meal data
 			foreach ( $meal_types as $meal_type ) {
 
                 // Add the "Add Meal" prompt now
-                $meal_type_html = sprintf( '<p>%s</p>', yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type['id'] ) );
+                $meal_type_html = sprintf( '<div class="yk-mt__btn-wrap">%s</div>', yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type['id'] ) );
 
-                $meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt-t yk-mt-list-of-meals' );
+                $meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt__table yk-mt-list-of-meals' );
+
+                $localised_strings = yk_mt_localised_strings();
 
                 $meal_type_html .= sprintf( '<div id="meals-table-%d" class="%s">%s.</div>',
                                                     $meal_type['id'],
@@ -280,7 +295,7 @@
 	 *
 	 * @return string
 	 */
-	function yk_mt_shortcode_meal_tracker_add_meal_button( $button_text, $meal_type_id = NULL, $default_css_class = 'yk-mt-button-small' ) {
+	function yk_mt_shortcode_meal_tracker_add_meal_button( $button_text, $meal_type_id = NULL, $default_css_class = 'yk-mt__btn--medium' ) {
 
 		global $yk_mt_add_meal_button_id;
 
@@ -289,12 +304,16 @@
 		$css_class      = apply_filters( 'yk_mt_shortcode_button_meal_add_css', $default_css_class );
 		$button_text    = apply_filters( 'yk_mt_shortcode_button_meal_add_text', $button_text );
 
-		return sprintf( '<button href="#yk-mt-add-meal-dialog" class="%1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d">%4$s</button>',
-						esc_attr( $css_class ),
-						(int) $meal_type_id,
-						(int) $yk_mt_add_meal_button_id,
-						esc_html( $button_text )
-			       );
+		return sprintf( '
+            <button href="#yk-mt-add-meal-dialog" class="yk-mt__btn %1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d">
+                <span class="yk-mt__btn-icon fa fa-plus"></span>
+                <span class="yk-mt__btn-text">%4$s</span>
+            </button>',
+            esc_attr( $css_class ),
+            (int) $meal_type_id,
+            (int) $yk_mt_add_meal_button_id,
+            esc_html( $button_text )
+       );
 	}
 
 	/**
@@ -308,22 +327,25 @@
 
 		$top = apply_filters( 'yk_mt_shortcode_dialog_top', 30 );
 
-        $html = sprintf( '<div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-type="0" class="yk-mt-hide">
-                             <div class="yk-mt-modal-header">
-                                <h3 class="yk-mt-hide-if-editing">%3$s</h3>
-                                <h3 class="yk-mt-hide-if-adding">%4$s</h3>
-                                <button id="btn-close-modal" class="close-yk-mt-add-meal-dialog yk-mt-button-silent">
-                                    %2$s
-                                </button>
-                             </div>
-                			 <div class="yk-mt-modal-content">
-                			    <div class="yk-mt-hide-if-editing">
-                			    <form id="yk-mt-form-add-meal-to-entry">
-				                ',
-				            $top,
-                            __( 'Close', YK_MT_SLUG ),
-                            __( 'Log a meal', YK_MT_SLUG ),
-                            __( 'Edit meal', YK_MT_SLUG )
+        $html = sprintf( '
+            <div id="yk-mt-add-meal-dialog" style="%1$dpx" data-meal-type="0" class="yk-mt__modal yk-mt-hide">
+                 <div class="yk-mt__modal-wrap">
+                     <div class="yk-mt__modal-header yk-mt-flex">
+                        <h3 class="yk-mt__modal-title yk-mt-hide-if-editing">%3$s</h3>
+                        <h3 class="yk-mt__modal-title yk-mt-hide-if-adding">%4$s</h3>
+                        <button id="btn-close-modal" class="yk-mt__btn yk-mt__btn--medium close-yk-mt-add-meal-dialog">
+                            <span class="yk-mt__btn-icon fa fa-close"></span>
+                            <span class="yk-mt__btn-text">%2$s</span>
+                        </button>
+                     </div>   
+                     <div class="yk-mt__modal-quick-search">
+                        <div class="yk-mt-hide-if-editing">
+                            <form id="yk-mt-form-add-meal-to-entry">
+            ',
+            $top,
+            __( 'Close', YK_MT_SLUG ),
+            __( 'Log a meal', YK_MT_SLUG ),
+            __( 'Edit meal', YK_MT_SLUG )
         );
 
         // Build HTML for "Add Meal" tab
@@ -332,26 +354,34 @@
         // Do we have any existing meals for this user?
         if ( false === empty( $add_form ) ) {
 
-            $html .= sprintf('  <h5>%1$s</h5>', __( 'Quick Search', YK_MT_SLUG ) );
+            $html .= sprintf('  <h4 class="yk-mt__modal-subtitle">%1$s</h4>', __( 'Quick Search', YK_MT_SLUG ) );
 
 	        $html .= $add_form;
 
-            $html .= sprintf('  <div class="yk-mt-quantity-row"><label>%1$s:</label>', __( 'Add', YK_MT_SLUG ) );
+            $html .= sprintf(
+                '<div class="yk-mt-quantity-row">
+                            <label class="yk-mt__label">%1$s:</label>
+                            <div class="yk-mt__modal-quantity">',
+                __( 'Add', YK_MT_SLUG )
+            );
 
             for ( $i = 1; $i <= 10; $i++ ) {
-                 $html .= sprintf( '<button id="yk-mt-button-add-meal-%1$d" data-quantity="%1$d" class="yk-mt-meal-button-add yk-mt-button-silent">%1$d</button>', $i );
+                 $html .= sprintf( '<button id="yk-mt-button-add-meal-%1$d" data-quantity="%1$d" class="yk-mt__btn yk-mt__btn--add-meal-quantity yk-mt-meal-button-add">%1$d</button>', $i );
             }
         }
 
-        $html .= sprintf('    </div>
-                                  </form>
-                                  <div class="yk-mt-auto-close">
-                                        <input type="checkbox" id="%1$s" checked="checked" />
-                                        <label for="%1$s">%2$s</label>
-                                  </div>
-                                </div>',
-                                'yk-mt-button-add-meal-close',
-                                __( 'Close screen after adding meal(s)', YK_MT_SLUG )
+        $html .= sprintf('   
+                            </div> 
+                        </div> 
+                    </div>
+                </form>
+                <div class="yk-mt__modal-auto-close yk-mt-flex">
+                    <input class="yk-mt__input" type="checkbox" id="%1$s" checked="checked" />
+                    <label class="yk-mt__label" for="%1$s">%2$s</label>
+                </div>
+            </div>',
+            'yk-mt-button-add-meal-close',
+            __( 'Close screen after adding meal(s)', YK_MT_SLUG )
         );
 
         // Form to add a new meal
@@ -362,7 +392,9 @@
         }
 
         $html .= '</div></div>
-                <a id="yk-mt-open-dialog-edit" class="yk-mt-meal-button-edit yk-mt-add-meal-prompt yk-mt-hide"></a>
+
+                <div class="yk-mt__modal-bg"></div>
+                <a id="yk-mt-open-dialog-edit" class="yk-mt-meal-button-edit yk-mt-add-meal-prompt yk-mt-hide"></a>               
         ';
 
 		return $html;
@@ -376,7 +408,7 @@
 
 		$html = sprintf( '  <div class="yk-mt-add-new-meal-form">
                                         <form id="yk-mt-form-add-new-meal">
-								<h5 id="yk-mt-header-meal-add" class="yk-mt-hide-if-editing">%s</h5>', __( 'Add new meal', YK_MT_SLUG ) );
+								<h4 id="yk-mt-header-meal-add" class="yk-mt__modal-subtitle yk-mt-hide-if-editing">%s</h4>', __( 'Add new meal', YK_MT_SLUG ) );
 
 		$html .= yk_mt_form_text( __( 'Name', YK_MT_SLUG ),	'add-meal-name' );
 
@@ -384,9 +416,14 @@
 
 		$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories', '', '', 1,0 );
 
-        $html .= sprintf( ' <p class="yk-mt-info yk-mt-hide-if-adding">%1$s</p>',
+        $html .= sprintf( '
+            <p class="yk-mt__info-box yk-mt-info yk-mt-hide-if-adding">
+                <span class="fa fa-info-circle"></span>
+                <span class="yk-mt__info-box-text">%1$s</span>
+            </p>',
             __( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
         );
+
 
         // If premium, do we have any additional fields for the meal?
         if ( true === yk_mt_license_is_premium() ) {
@@ -404,16 +441,26 @@
 				}
 			}
 		}
-
+    
 		$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', '', yk_mt_units() );
 
 		$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity', '', '', 1, 1, 99999, true, false, true );
 
-		$html .= sprintf( ' <button id="yk-mt-button-meal-add" class="yk-mt-button-add-new-meal yk-mt-button-secondary yk-mt-hide-if-editing">%1$s</button>',
+		$html .= sprintf( '
+            <div class="yk-mt__modal-footer">
+                <button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-add-new-meal yk-mt-hide-if-editing">
+                    <span class="yk-mt__btn-icon fa fa-plus"></span>
+                    <span class="yk-mt__btn-text">%1$s</span>
+                </button>',
 			__( 'Add a new meal', YK_MT_SLUG )
 		);
 
-        $html .= sprintf( ' <button id="yk-mt-button-meal-edit" class="yk-mt-button-secondary yk-mt-hide-if-adding">%1$s</button>',
+        $html .= sprintf( '
+                <button id="yk-mt-button-meal-edit" class="yk-mt__btn yk-mt__btn--medium yk-mt-hide-if-adding">
+                    <span class="yk-mt__btn-icon fa fa-edit"></span>
+                    <span class="yk-mt__btn-text">%1$s</span>
+                </button>
+            </div>',
             __( 'Edit meal', YK_MT_SLUG )
         );
 
@@ -446,7 +493,7 @@
 	 */
 	function yk_mt_html_accordion_open( $id = '' ) {
 
-		$accordion_class = apply_filters( 'yk_mt_shortcode_meal_tracker_accordion', 'yk-mt-accordion' );
+		$accordion_class = apply_filters( 'yk_mt_shortcode_meal_tracker_accordion', 'yk-mt__accordion' );
 
 		return sprintf( '<div class="%s" %s>', esc_attr( $accordion_class ), ( false === empty( $id ) ? ' id="' . esc_attr( $id ) . '" ' : '' ) );
 	}
@@ -475,16 +522,18 @@
 
 		$accordion_section_class = apply_filters( 'yk_mt_shortcode_meal_tracker_accordion_section', '' );
 
-		$html = sprintf( '  <div class="yk-mt-accordion-section%2$s" id="%1$d">
-									<%6$s class="yk-mt-accordion-section-title%3$s" href="#yk-mt-acc-%1$d">%4$s</%6$s>
-									<div id="yk-mt-acc-%1$d" class="yk-mt-accordion-section-content">
+		$title = yk_mt_lang_translate_known_meal_type_from_english( $options['title'] );
+
+		$html = sprintf( '  <div class="yk-mt__accordion-section%2$s" id="%1$d">
+									<%6$s class="yk-mt__accordion-section-title%3$s" href="#yk-mt-acc-%1$d">%4$s</%6$s>
+									<div id="yk-mt-acc-%1$d" class="yk-mt__accordion-section-content">
 										%5$s
 									</div>
 								</div>',
 			(int) $options['id'],
 			esc_attr( $accordion_section_class ),
 			( true === $options['is-active'] ) ? ' initial-active' : '',
-			esc_html( $options['title'] ),
+			esc_html( $title ),
 			$options['content'],
             ( true === $accordion_enabled ) ? 'a' : 'span'
 		);
@@ -529,19 +578,49 @@
 
         $minified = yk_mt_use_minified();
 
+		// Styles
 		wp_enqueue_style( 'mt-meal-tracker-normalize', plugins_url( 'assets/css/normalize.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-animate', plugins_url( 'assets/css/animate.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-selectize', plugins_url( 'assets/css/selectize.default.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_style( 'meal-tracker', plugins_url( 'assets/css/frontend' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_style( 'mt-forced', plugins_url( 'assets/css/forced' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
+        // Styles > Core
+        wp_enqueue_style( 'mt-core', plugins_url( 'assets/css/yk-mt-core' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'mt-font-icons', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
+
+        // Styles > Core > Vars
+        $chart_font  = '\'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif';
+        $chart_color = '#000000';
+
+        // Styles > Theme
+        $is_themed = apply_filters( 'yk-mt-filter-enable-theme', true );
+
+        if ( true === $is_themed ) {
+            wp_enqueue_style( 'mt-theme', plugins_url( 'assets/css/yk-mt-theme' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+        }
+
+        // Scripts
 		wp_enqueue_script( 'mt-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-selectize', plugins_url( 'assets/js/selectize.min.js', __DIR__ ), [], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-loading-overlay', plugins_url( 'assets/js/loadingoverlay.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-chart-js', plugins_url( 'assets/js/Chart.bundle.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
         wp_enqueue_script( 'mt-notify', plugins_url( 'assets/js/notify.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
-
         wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart' . $minified . '.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
+
+        // Scripts > ChartJS > Localized scripts
+        if ( true === $is_themed ) {
+
+            // Styles > Theme > Fonts
+            wp_enqueue_style( 'mt-font-nunito', 'https://fonts.googleapis.com/css?family=Nunito:700,800&display=swap', [], YK_MT_PLUGIN_VERSION );
+
+            // Styles > Theme > Vars
+            $chart_font  = apply_filters( 'yk-mt-filter-chart-font', '\'Nunito\', \'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif' );
+            $chart_color = apply_filters( 'yk-mt-filter-chart-color', '#fb8e2e' );
+        }
+
+        wp_localize_script( 'mt-chart', 'yk_mt_chart', [
+            'chartFont'  => $chart_font,
+            'chartColor' => $chart_color,
+        ] );
 
         wp_enqueue_script( 'meal-tracker', plugins_url( 'assets/js/core' . $minified . '.js', __DIR__ ),
                         [ 'mt-modal', 'mt-selectize', 'mt-loading-overlay', 'mt-notify', 'mt-chart' ], YK_MT_PLUGIN_VERSION, true );
@@ -550,6 +629,7 @@
         if ( true === yk_mt_license_is_premium() ) {
             wp_enqueue_script( 'mt-datepicker', plugins_url( 'assets/js/zebra_datepicker.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
             wp_enqueue_style( 'mt-datepicker', plugins_url( 'assets/css/zebra/zebra_datepicker.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+            wp_enqueue_style( 'mt-datepicker-theme', plugins_url( 'assets/css/yk-mt-zebra' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
             wp_enqueue_script( 'mt-pro', plugins_url( 'assets/js/pro.js', __DIR__ ), [ 'meal-tracker', 'mt-datepicker' ], YK_MT_PLUGIN_VERSION, true );
         }
@@ -558,7 +638,7 @@
 
         $yk_mt_shortcode_meal_tracker_modal_enqueued = true;
 	}
-    add_action( 'wp_enqueue_scripts', 'yk_mt_shortcode_meal_tracker_enqueue_scripts');
+    add_action( 'wp_enqueue_scripts', 'yk_mt_shortcode_meal_tracker_enqueue_scripts', 99 );
 
 	/**
 	 * Add relevant data into JS object
@@ -581,7 +661,6 @@
 		wp_localize_script( 'meal-tracker', 'yk_mt_sc_meal_tracker', [
 			'mode'              => $args[ 'mode' ],
 			'accordion-enabled' => yk_mt_site_options_for_js_bool( 'accordion-enabled', true ),
-			'macros-enabled'    => yk_mt_site_options_for_js_bool( 'macronutrients-enabled', false ),
 			'dialog-options'    => json_encode( $dialog_options ),
             'localise'          => yk_mt_localised_strings(),
             'todays-entry'      => yk_mt_entry( $args[ 'entry-id' ] ),

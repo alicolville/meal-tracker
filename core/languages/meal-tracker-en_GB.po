@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Meal Tracker\n"
-"POT-Creation-Date: 2020-01-01 21:27+0000\n"
-"PO-Revision-Date: 2020-01-01 21:27+0000\n"
+"POT-Creation-Date: 2020-01-22 18:13+0000\n"
+"PO-Revision-Date: 2020-01-22 18:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -21,27 +21,27 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: core/activate.php:32
+#: core/activate.php:32 core/functions.php:1193
 msgid "Breakfast"
 msgstr ""
 
-#: core/activate.php:33
+#: core/activate.php:33 core/functions.php:1194
 msgid "Mid-morning"
 msgstr ""
 
-#: core/activate.php:34
+#: core/activate.php:34 core/functions.php:1195
 msgid "Lunch"
 msgstr ""
 
-#: core/activate.php:35
+#: core/activate.php:35 core/functions.php:1196
 msgid "Afternoon"
 msgstr ""
 
-#: core/activate.php:36
+#: core/activate.php:36 core/functions.php:1197
 msgid "Dinner"
 msgstr ""
 
-#: core/activate.php:37
+#: core/activate.php:37 core/functions.php:1198
 msgid "Evening"
 msgstr ""
 
@@ -61,20 +61,8 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: core/admin-pages/page.help.php:71 core/admin-pages/page.help.php:75
-msgid "Are you sure?"
-msgstr ""
-
-#: core/admin-pages/page.help.php:72
-msgid "Are you sure you wish to remove all issued awards?"
-msgstr ""
-
-#: core/admin-pages/page.help.php:76
-msgid "Are you sure you wish to clear all log entries?"
-msgstr ""
-
 #: core/admin-pages/page.license.php:10 core/admin-pages/page.settings.php:8
-#: core/functions.admin.php:135
+#: core/functions.admin.php:136
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
@@ -183,7 +171,7 @@ msgid ""
 msgstr ""
 
 #: core/admin-pages/page.settings.php:87 core/functions.pages.php:70
-#: core/functions.pages.php:208
+#: core/functions.pages.php:218
 msgid "Meals"
 msgstr ""
 
@@ -309,16 +297,20 @@ msgstr ""
 msgid "Summary"
 msgstr ""
 
-#: core/admin-pages/user/data-dashboard.php:29
-msgid "Latest 100"
-msgstr ""
-
-#: core/admin-pages/user/data-dashboard.php:30
+#: core/admin-pages/user/data-dashboard.php:28
 msgid "Today 's entries"
 msgstr ""
 
+#: core/admin-pages/user/data-dashboard.php:29
+msgid "Last 7 days"
+msgstr ""
+
+#: core/admin-pages/user/data-dashboard.php:30
+msgid "Latest 100"
+msgstr ""
+
 #: core/admin-pages/user/data-dashboard.php:31
-msgid "This week's entries"
+msgid "Latest 500"
 msgstr ""
 
 #: core/admin-pages/user/data-entry.php:35
@@ -378,51 +370,59 @@ msgstr ""
 msgid "No search terms were specified"
 msgstr ""
 
-#: core/admin-pages/user/data-user.php:33
+#: core/admin-pages/user/data-user.php:46
 msgid "Chart"
 msgstr ""
 
-#: core/admin-pages/user/data-user.php:41
+#: core/admin-pages/user/data-user.php:54
 msgid "Latest 15 entries"
 msgstr ""
 
-#: core/admin-pages/user/data-user.php:44
+#: core/admin-pages/user/data-user.php:57
 msgid "No results"
 msgstr ""
 
-#: core/admin-pages/user/data-user.php:50
+#: core/admin-pages/user/data-user.php:63
 msgid "Entries for this user"
 msgstr ""
 
-#: core/ajax.php:236 core/db.php:370 core/db.php:381 core/functions.php:449
-#: core/functions.php:1112
+#: core/ajax.php:236 core/db.php:382 core/db.php:393 core/functions.php:495
+#: core/functions.php:1160
 msgid "kcal"
 msgstr ""
 
-#: core/functions.admin.php:86 core/functions.pages.php:32
+#: core/functions.admin.php:87 core/functions.pages.php:32
 msgid "Date"
 msgstr ""
 
-#: core/functions.admin.php:88
+#: core/functions.admin.php:89
 msgid "User"
 msgstr ""
 
-#: core/functions.admin.php:90 core/functions.chart.php:72
+#: core/functions.admin.php:91 core/functions.chart.php:72
 #: core/functions.pages.php:36
 msgid "Calories Allowed"
 msgstr ""
 
-#: core/functions.admin.php:91 core/functions.chart.php:81
+#: core/functions.admin.php:92 core/functions.chart.php:81
 #: core/functions.pages.php:58
 msgid "Calories Used"
 msgstr ""
 
-#: core/functions.admin.php:92 core/functions.pages.php:62
+#: core/functions.admin.php:93 core/functions.pages.php:62
 msgid "Calories Remaining"
 msgstr ""
 
-#: core/functions.admin.php:93
+#: core/functions.admin.php:94
 msgid "Percentage Used"
+msgstr ""
+
+#: core/functions.admin.php:250
+msgid "The above table updates every"
+msgstr ""
+
+#: core/functions.admin.php:250
+msgid "minutes"
 msgstr ""
 
 #: core/functions.chart.php:14
@@ -502,301 +502,330 @@ msgstr ""
 msgid "Set Target: "
 msgstr ""
 
-#: core/functions.pages.php:177 core/functions.pages.php:194
+#: core/functions.pages.php:177 core/functions.pages.php:204
 msgid "User Search"
 msgstr ""
 
-#: core/functions.pages.php:200
+#: core/functions.pages.php:184
+msgid "Delete Data"
+msgstr ""
+
+#: core/functions.pages.php:186
+msgid "All Entries"
+msgstr ""
+
+#: core/functions.pages.php:188
+msgid ""
+"All of the user's meals will be marked as deleted. They will still reside in "
+"the system, yet can only be viewed against old entries. They can no longer "
+"be added to entries"
+msgstr ""
+
+#: core/functions.pages.php:189
+msgid "All Meals"
+msgstr ""
+
+#: core/functions.pages.php:210
 msgid "Summary Counts"
 msgstr ""
 
-#: core/functions.pages.php:204
+#: core/functions.pages.php:214
 msgid "Entries"
 msgstr ""
 
-#: core/functions.pages.php:212
+#: core/functions.pages.php:222
 msgid "Meals added to entries"
 msgstr ""
 
-#: core/functions.pages.php:216
+#: core/functions.pages.php:226
 msgid "WordPress users"
 msgstr ""
 
-#: core/functions.pages.php:220
+#: core/functions.pages.php:230
 msgid "Users with an entry"
 msgstr ""
 
-#: core/functions.pages.php:224
+#: core/functions.pages.php:234
 msgid "Entries on target"
 msgstr ""
 
-#: core/functions.pages.php:228
+#: core/functions.pages.php:238
 msgid "Entries over target"
 msgstr ""
 
-#: core/functions.pages.php:232
+#: core/functions.pages.php:242
 msgid "last updated at "
 msgstr ""
 
-#: core/functions.pages.php:274
+#: core/functions.pages.php:284
 msgid "Back"
 msgstr ""
 
-#: core/functions.pages.php:276
+#: core/functions.pages.php:286
 msgid "WordPress Record"
 msgstr ""
 
-#: core/functions.pages.php:278 core/hooks.php:143
+#: core/functions.pages.php:288 core/hooks.php:148
 msgid "Meal Tracker Record"
 msgstr ""
 
-#: core/functions.pages.php:497
+#: core/functions.pages.php:513
 msgid "Enter a user's email, display name or username then click \"Search\"."
 msgstr ""
 
-#: core/functions.php:237
+#: core/functions.php:283
 msgid "As specified by Admin"
 msgstr ""
 
-#: core/functions.php:238
+#: core/functions.php:284
 msgid "by Admin"
 msgstr ""
 
-#: core/functions.php:245
+#: core/functions.php:291
 msgid "Your own target"
 msgstr ""
 
-#: core/functions.php:246
+#: core/functions.php:292
 msgid "by User"
 msgstr ""
 
-#: core/functions.php:420
+#: core/functions.php:466
 msgid "kcal used"
 msgstr ""
 
-#: core/functions.php:421
+#: core/functions.php:467
 msgid "out of"
 msgstr ""
 
-#: core/functions.php:448
+#: core/functions.php:494
 msgid "Just Added:"
 msgstr ""
 
-#: core/functions.php:450
+#: core/functions.php:496
 msgid "Remove"
 msgstr ""
 
-#: core/functions.php:451
+#: core/functions.php:497
 msgid "Edit"
 msgstr ""
 
-#: core/functions.php:452
+#: core/functions.php:498
 msgid "used"
 msgstr ""
 
-#: core/functions.php:453
+#: core/functions.php:499
 msgid "remaining"
 msgstr ""
 
-#: core/functions.php:454
+#: core/functions.php:500
 msgid "Target"
 msgstr ""
 
-#: core/functions.php:455
+#: core/functions.php:501
 msgid "No data has been entered"
 msgstr ""
 
-#: core/functions.php:456 core/functions.php:458
+#: core/functions.php:502 core/functions.php:504
 msgid "The meal has been added"
 msgstr ""
 
-#: core/functions.php:457 core/functions.php:459
+#: core/functions.php:503 core/functions.php:505
 msgid "Added"
 msgstr ""
 
-#: core/functions.php:460
+#: core/functions.php:506
 msgid "Select a meal"
 msgstr ""
 
-#: core/functions.php:461
+#: core/functions.php:507
 msgid "The meal has been removed"
 msgstr ""
 
-#: core/functions.php:462
+#: core/functions.php:508
 msgid "There was error saving your changes"
 msgstr ""
 
-#: core/functions.php:463
+#: core/functions.php:509
 msgid "There was error loading your data"
 msgstr ""
 
-#: core/functions.php:464
+#: core/functions.php:510
 msgid "Your settings have been saved"
 msgstr ""
 
-#: core/functions.php:489
+#: core/functions.php:511
+msgid "Are you sure?"
+msgstr ""
+
+#: core/functions.php:512
+msgid ""
+"Proceeding will cause user data to be deleted. This data can not be "
+"recovered. Are you sure you wish to proceed?"
+msgstr ""
+
+#: core/functions.php:537
 msgid "N/A"
 msgstr ""
 
-#: core/functions.php:492
+#: core/functions.php:540
 msgid "Small"
 msgstr ""
 
-#: core/functions.php:493
+#: core/functions.php:541
 msgid "Medium"
 msgstr ""
 
-#: core/functions.php:494
+#: core/functions.php:542
 msgid "Large"
 msgstr ""
 
-#: core/functions.php:845 core/functions.php:887
+#: core/functions.php:893 core/functions.php:935
 msgid "Yesterday"
 msgstr ""
 
-#: core/functions.php:855 core/functions.php:883
+#: core/functions.php:903 core/functions.php:931
 msgid "Today"
 msgstr ""
 
-#: core/functions.php:857 core/functions.php:891
+#: core/functions.php:905 core/functions.php:939
 msgid "Tomorrow"
 msgstr ""
 
-#: core/functions.php:942
+#: core/functions.php:990
 msgid "Upgrade to Premium for "
 msgstr ""
 
-#: core/functions.php:944
+#: core/functions.php:992
 msgid "a year "
 msgstr ""
 
-#: core/functions.php:1010
+#: core/functions.php:1058
 msgid "Create and view entries"
 msgstr ""
 
-#: core/functions.php:1010
+#: core/functions.php:1058
 msgid "Allow your users to create and view entries for any day"
 msgstr ""
 
-#: core/functions.php:1011
+#: core/functions.php:1059
 msgid "Edit entries"
 msgstr ""
 
-#: core/functions.php:1011
+#: core/functions.php:1059
 msgid "Allow your users to edit their entries for any given day"
 msgstr ""
 
-#: core/functions.php:1012
+#: core/functions.php:1060
 msgid "Edit meals"
 msgstr ""
 
-#: core/functions.php:1012
+#: core/functions.php:1060
 msgid "Allow your users to edit their stored meals"
 msgstr ""
 
-#: core/functions.php:1013
+#: core/functions.php:1061
 msgid "Calorie sources"
 msgstr ""
 
-#: core/functions.php:1013
+#: core/functions.php:1061
 msgid ""
 "Fetch daily calorie limits from other sources e.g. YeKen's Weight Tracker"
 msgstr ""
 
-#: core/functions.php:1014
+#: core/functions.php:1062
 msgid "Compress meal items"
 msgstr ""
 
-#: core/functions.php:1014
+#: core/functions.php:1062
 msgid "Compress multiple meal lines for an entry into one line"
 msgstr ""
 
-#: core/functions.php:1015
+#: core/functions.php:1063
 msgid "Unlimited meals per user"
 msgstr ""
 
-#: core/functions.php:1015
+#: core/functions.php:1063
 msgid ""
 "Your users are no longer limited to a maximum of 40 meals and may add as "
 "many as they wish"
 msgstr ""
 
-#: core/functions.php:1016
+#: core/functions.php:1064
 msgid "View your user's data"
 msgstr ""
 
-#: core/functions.php:1016
+#: core/functions.php:1064
 msgid "View all of your user entries, meals and calorie intake"
 msgstr ""
 
-#: core/functions.php:1017
+#: core/functions.php:1065
 msgid "Set calorie allowances"
 msgstr ""
 
-#: core/functions.php:1017
+#: core/functions.php:1065
 msgid "Set daily calorie allowances for your users"
 msgstr ""
 
-#: core/functions.php:1018
+#: core/functions.php:1066
 msgid "Summary Statistics"
 msgstr ""
 
-#: core/functions.php:1018
+#: core/functions.php:1066
 msgid ""
 "View summary statistics of your Meal Tracker data and it's usage by your "
 "users"
 msgstr ""
 
-#: core/functions.php:1019
+#: core/functions.php:1067
 msgid "Calorie Allowance sources"
 msgstr ""
 
-#: core/functions.php:1019
+#: core/functions.php:1067
 msgid "Specify one or more sources for calorie allowance"
 msgstr ""
 
-#: core/functions.php:1020
+#: core/functions.php:1068
 msgid "Additional settings"
 msgstr ""
 
-#: core/functions.php:1020
+#: core/functions.php:1068
 msgid "Additional settings for customising your Meal Tracker usage"
 msgstr ""
 
-#: core/functions.php:1021
+#: core/functions.php:1069
 msgid "Admin Search"
 msgstr ""
 
-#: core/functions.php:1021
+#: core/functions.php:1069
 msgid "Search for users by name and email address"
 msgstr ""
 
-#: core/functions.php:1031
+#: core/functions.php:1079
 msgid ""
 "If require plugin modifications to Meal Tracker, or need a new plugin built, "
 "or perhaps you need a developer to help you with your website then please "
 "don't hesitate get in touch!"
 msgstr ""
 
-#: core/functions.php:1032 core/setup.wizard.php:87
+#: core/functions.php:1080 core/setup.wizard.php:87
 msgid "We provide fixed priced quotes."
 msgstr ""
 
-#: core/functions.php:1049
+#: core/functions.php:1097
 msgid "Upgrade Meal Tracker and get more features!"
 msgstr ""
 
-#: core/functions.php:1051
+#: core/functions.php:1099
 msgid ""
 "Upgrade to the Premium version of this plugin to view your user's data, "
-"record entries for multiple days, extrernal data sources and much more!"
+"record entries for multiple days, external data sources and much more!"
 msgstr ""
 
-#: core/functions.php:1052
+#: core/functions.php:1100
 msgid "Read more and upgrade to Premium Version"
 msgstr ""
 
-#: core/functions.php:1092
+#: core/functions.php:1140
 msgid "Error: The user does not appear to exist"
 msgstr ""
 
@@ -820,7 +849,7 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: core/hooks.php:127
+#: core/hooks.php:132
 msgid "Meal entries"
 msgstr ""
 

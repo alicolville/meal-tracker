@@ -22,7 +22,7 @@ add_action( 'yk_mt_settings_admin_saved', 'yk_mt_actions_settings_post_save' );
 function yk_mt_body_class( $classes ) {
 
     if ( true === yk_mt_site_options_as_bool( 'accordion-enabled', false ) ) {
-        $classes[] = 'yk-mt-accordion-enabled';
+        $classes[] = 'yk-mt__accordion-enabled';
     }
 
     return $classes;

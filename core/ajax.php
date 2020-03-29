@@ -96,7 +96,7 @@ function yk_mt_ajax_meal_add() {
         }
 
     }
-
+  
     // If a unit that doesn't expect a quantity, then clear quantity
 	if ( true === in_array( $post_data[ 'unit' ], yk_mt_units_where( 'drop-quantity' ) ) ) {
 		$post_data[ 'quantity' ] = '';

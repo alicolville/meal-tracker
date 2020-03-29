@@ -923,10 +923,7 @@ function yk_mt_db_mysql_formats( $data ) {
         'deleted'               => '%d',
         'favourite'             => '%d',
         'unit'                  => '%s',
-        'json'                  => '%s',
-        'proteins'              => '%f',
-        'fats'                  => '%f',
-        'carbs'                 => '%f'
+        'json'                  => '%s'
     ];
 
     $return = [];

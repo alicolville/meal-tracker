@@ -1,0 +1,191 @@
+/*
+Plugin Name: YeKen Meal Tracker
+Plugin URI:
+Author: Robert Paul
+Author URI:
+Description: Zebra calendar picker styles for the YeKen Meal Tracker plugin.
+Version: x.x.x
+*/
+
+.Zebra_DatePicker {
+	padding: 16px; /* Fallback */
+	padding: var(--yk-mt-unit-base);
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif !important; /* Fallback */
+	font-family: var(--yk-mt-font-display) !important;
+}
+
+/* Zebra Calendar Picker > Tables */
+.Zebra_DatePicker table {
+	margin-top: 16px; /* Fallback */
+	margin-top: var(--yk-mt-unit-base);
+	margin-bottom: 16px; /* Fallback */
+	margin-bottom: var(--yk-mt-unit-base);
+	border: 0 !important;
+	border-radius: 0 !important;
+}
+
+/* Zebra Calendar Picker > Tables > Reset */
+.Zebra_DatePicker .dp_header,
+.Zebra_DatePicker .dp_header tbody,
+.Zebra_DatePicker .dp_header tr,
+.Zebra_DatePicker .dp_footer,
+.Zebra_DatePicker .dp_footer tbody,
+.Zebra_DatePicker .dp_footer tr {
+	display: block;
+}
+
+.Zebra_DatePicker .dp_actions .dp_caption {
+	border: 0;
+}
+
+/* Zebra Calendar Picker > Header */
+.Zebra_DatePicker .dp_actions .dp_previous,
+.Zebra_DatePicker .dp_actions .dp_next {
+	position: absolute;
+	top: 0;
+	display: block;
+	padding: 0;
+	border: 2px solid #000;
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
+	background-color: #fff;
+	font-family: var(--yk-mt-font-icons);
+	font-size: 13px;
+	color: transparent;
+
+	-webkit-box-sizing: border-box !important;
+	box-sizing: border-box !important;
+	border-radius: 50%;
+}
+
+.Zebra_DatePicker .dp_actions .dp_previous:before,
+.Zebra_DatePicker .dp_actions .dp_next:before {
+	display: block;
+	width: 26px;
+	height: 28px;
+	line-height: 28px;
+	color: #000;
+}
+
+.Zebra_DatePicker .dp_actions .dp_previous,
+.Zebra_DatePicker .dp_actions .dp_next,
+.Zebra_DatePicker .dp_actions .dp_previous:before,
+.Zebra_DatePicker .dp_actions .dp_next:before {
+	-webkit-transition: all ease .2s;
+	-o-transition: all ease .2s;
+	transition: all ease .2s;
+}
+
+.Zebra_DatePicker .dp_actions .dp_previous {
+	left: 0;
+}
+
+.Zebra_DatePicker .dp_actions .dp_previous:before {
+	content: '\f053';
+}
+
+.Zebra_DatePicker .dp_actions .dp_next {
+	right: 0;
+}
+
+.Zebra_DatePicker .dp_actions .dp_next:before {
+	content: '\f054';
+}
+
+.Zebra_DatePicker .dp_actions .dp_next:hover,
+.Zebra_DatePicker .dp_actions .dp_previous:hover {
+	background-color: #000;
+}
+
+.Zebra_DatePicker .dp_actions .dp_next:hover:before,
+.Zebra_DatePicker .dp_actions .dp_previous:hover:before {
+	color: #fff;
+}
+
+.Zebra_DatePicker th {
+	border: 0 !important;
+}
+
+.Zebra_DatePicker td:hover {
+	background-color: #eee;
+	color: #000;
+}
+
+.Zebra_DatePicker th,
+.Zebra_DatePicker td {
+	white-space: nowrap;
+	border-radius: 0;
+}
+
+.Zebra_DatePicker .dp_header {
+	margin: 0;
+}
+
+.Zebra_DatePicker .dp_header tr {
+	position: relative;
+	padding-left: 32px;
+	padding-right: 32px;
+}
+
+.Zebra_DatePicker .dp_daypicker th {
+	border-color: #000;
+	background-color: #000;
+	font-weight: 900;
+	color: #fff;
+}
+
+/* Zebra Calendar Picker > Content */
+.Zebra_DatePicker .dp_body .dp_current {
+	background-color: #555;
+	color: #fff;
+}
+
+/* Zebra Calendar Picker > Footer */
+.Zebra_DatePicker .dp_footer {
+	margin-bottom: 0;
+}
+
+.Zebra_DatePicker .dp_footer td {
+	display: inline-block;
+	padding: 0 16px; /* Fallback */
+	padding: 0 var(--yk-mt-unit-base);
+	border: 2px solid #000;
+	line-height: 200%;
+	font-weight: 900;
+	font-size: 87.5%;
+	text-transform: uppercase;
+	text-decoration: none !important;
+	background-color: #fff;
+	color: #000;
+	border-radius: 32px;
+	border-radius: calc(var(--yk-mt-unit-base) * 2);
+
+	-webkit-transition: all ease .2s !important;
+	-o-transition: all ease .2s !important;
+	transition: all ease .2s !important;
+
+	-webkit-box-sizing: border-box !important;
+	box-sizing: border-box !important;
+}
+
+.Zebra_DatePicker .dp_footer td:hover,
+.Zebra_DatePicker .dp_footer td:active,
+.Zebra_DatePicker .dp_footer td:focus {
+	background-color: #000;
+	color: #fff;
+}
+
+/****************
+@supports queries
+****************/
+
+/* @supports flexbox */
+@supports (display: flex) {
+
+	.Zebra_DatePicker .dp_header tr {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+	}
+}

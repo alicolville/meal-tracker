@@ -25,13 +25,13 @@ jQuery( document ).ready( function( $ ) {
         // Close all sections (probably none open in the first place)
         yk_mt_accordion_close_sections();
 
-        $( '.yk-mt-accordion-section .initial-active' ).each( function() {
+        $( '.yk-mt__accordion-section .initial-active' ).each( function() {
             var currentAttrValue = $( this ).attr( 'href' );
             $( this ).addClass( 'active' );
-            $( '.yk-mt-accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
+            $( '.yk-mt__accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
         });
 
-        $( '.yk-mt-accordion-section-title' ).click( function( e ) {
+        $( '.yk-mt__accordion-section-title' ).click( function( e ) {
 
             // Grab current anchor value
             var currentAttrValue = $( this ).attr( 'href' );
@@ -44,7 +44,7 @@ jQuery( document ).ready( function( $ ) {
                 // Add active class to section title
                 $( this ).addClass( 'active' );
                 // Open up the hidden content panel
-                $( '.yk-mt-accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
+                $( '.yk-mt__accordion ' + currentAttrValue ).slideDown( 300 ).addClass('open');
             }
 
             e.preventDefault();
@@ -52,8 +52,8 @@ jQuery( document ).ready( function( $ ) {
     }
 
     function yk_mt_accordion_close_sections() {
-        $( '.yk-mt-accordion .yk-mt-accordion-section-title' ).removeClass( 'active' );
-        $( '.yk-mt-accordion .yk-mt-accordion-section-content' ).slideUp(300).removeClass( 'open' );
+        $( '.yk-mt__accordion .yk-mt__accordion-section-title' ).removeClass( 'active' );
+        $( '.yk-mt__accordion .yk-mt__accordion-section-content' ).slideUp(300).removeClass( 'open' );
     }
 
     /**
@@ -297,7 +297,7 @@ jQuery( document ).ready( function( $ ) {
         }
     }
 
-    /**
+     /**
      * Delete meal from entry
      * @param meal_entry_id
      */
@@ -430,6 +430,7 @@ jQuery( document ).ready( function( $ ) {
      * @param quantity
      * @param unit
      */
+
     function yk_mt_post_api_add_meal( name, description, calories, quantity, unit, meta_fields ) {
 
         var data = {
@@ -734,20 +735,24 @@ jQuery( document ).ready( function( $ ) {
      * @constructor
      */
     const MealRow = ({ meal_entry_id, meal_type, name, calories, quantity, d, id }) => `
-                        <div class="yk-mt-r" data-mt="${meal_type}">
-                            <div class="yk-mt-c">
-                                 ${name}
+                        <div class="yk-mt__table-row" data-mt="${meal_type}">
+                            <div class="yk-mt__table-cell yk-mt__table-cell-meal">
+                                <span class="yk-mt__meal-name">${name}</span>
                             </div>
-                            <div class="yk-mt-c yk-mt-cq">
-                                ${d}
+                            <div class="yk-mt__table-cell yk-mt__table-cell-quantity yk-mt-cq">
+                                <span class="yk-mt__meal-data">${d}</span>
                             </div>
-                            <div class="yk-mt-c yk-mt-o">
-                                <button data-meal-id="${id}" class="yk-mt-act-r yk-mt-hide-if-not-pro yk-mt-meal-button-edit-inline" >
-                                    <img src="${yk_mt[ 'plugin-url' ]}assets/images/icons/edit.png" alt="${yk_mt_sc_meal_tracker[ 'localise' ][ 'edit-text' ]}" />
-                                </button>
-                                <button data-id="${meal_entry_id}" class="yk-mt-act-r" onclick="yk_mt_trigger_meal_entry_delete( ${meal_entry_id} )">
-                                    <img src="${yk_mt[ 'plugin-url' ]}assets/images/icons/delete.png" alt="${yk_mt_sc_meal_tracker[ 'localise' ][ 'remove-text' ]}" />
-                                </button>
+                            <div class="yk-mt__table-cell yk-mt__table-cell-controls yk-mt-o">
+                                <div class="yk-mt__btn-group yk-mt-inline-flex">
+                                    <button data-meal-id="${id}" class="yk-mt-act-r yk-mt-act-r--edit yk-mt-hide-if-not-pro yk-mt-meal-button-edit-inline" >
+                                        <span class="fa fa-edit"></span>
+                                        <span class="yk-mt-r__text">${yk_mt_sc_meal_tracker[ 'localise' ][ 'edit-text' ]}</span>
+                                    </button>
+                                    <button data-id="${meal_entry_id}" class="yk-mt-act-r yk-mt-act-r--remove" onclick="yk_mt_trigger_meal_entry_delete( ${meal_entry_id} )">
+                                        <span class="fa fa-close"></span>
+                                        <span class="yk-mt-r__text">${yk_mt_sc_meal_tracker[ 'localise' ][ 'remove-text' ]}</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>`;
 
@@ -759,13 +764,12 @@ jQuery( document ).ready( function( $ ) {
      * @constructor
      */
     const SummaryRow = ({ total, unit }) => `
-                        <div class="yk-mt-r" >
-                                <div class="yk-mt-c">
-                                </div>
-                                <div class="yk-mt-c yk-mt-cq">
+                        <div class="yk-mt__table-row yk-mt__table-row-totals">
+                                <div class="yk-mt__table-cell yk-mt__table-cell-total-text">Total:</div>
+                                <div class="yk-mt__table-cell yk-mt__table-cell-total yk-mt-cq">
                                     ${total}${unit}
                                 </div>	
-                                <div class="yk-mt-c yk-mt-o">
+                                <div class="yk-mt__table-cell yk-mt-o">
                                 </div>
                         </div>`;
 
@@ -777,7 +781,7 @@ jQuery( document ).ready( function( $ ) {
      */
     function yk_mt_render_meal_rows( table_id, meals, total ) {
 
-        let html = yk_mt_sc_meal_tracker[ 'localise' ][ 'no-data' ] + '.';
+        let html = '<p class="yk-mt__no-meals">' + yk_mt_sc_meal_tracker[ 'localise' ][ 'no-data' ] + '.' + '</p>';
 
         if ( 0 !== meals.length ) {
 

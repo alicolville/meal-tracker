@@ -104,22 +104,6 @@ function yk_mt_settings_page_generic() {
                                                     </td>
                                                 </tr>
                                             </table>
-                                            <table class="form-table">
-                                                <h3><?php echo __( 'Macronutrients' , YK_MT_SLUG); ?></h3>
-                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
-                                                    <th scope="row"><?php echo __( 'Enable' , YK_MT_SLUG); ?></th>
-                                                    <td>
-                                                        <?php
-                                                        $macronutrients = yk_mt_site_options_as_bool('macronutrients-enabled', false );
-                                                        ?>
-                                                        <select id="macronutrients-enabled" name="macronutrients-enabled">
-                                                            <option value="false" <?php selected( $macronutrients, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
-                                                            <option value="true" <?php selected( $macronutrients, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
-                                                        </select>
-                                                        <p><?php echo __( 'If set to "Yes", Macronutrients (fat, protein and carbohydrates) can be stored and set against each meal. These values will then be displayed and summed in various interfaces. ', YK_MT_SLUG )?></p>
-                                                    </td>
-                                                </tr>
-                                            </table>
                                             <h3><?php echo __( 'New Entries' , YK_MT_SLUG); ?></h3>
                                             <table class="form-table">
                                                 <tr class="<?php echo $disable_if_not_premium_class; ?>">
@@ -247,7 +231,7 @@ function yk_mt_register_settings(){
 
     register_setting( 'yk-mt-options-group', 'caching-enabled' );
 
-    // Premium options
+    // Pro only open
     if( true ===  yk_mt_license_is_premium() ){
 
         register_setting( 'yk-mt-options-group', 'accordion-enabled' );
@@ -259,7 +243,6 @@ function yk_mt_register_settings(){
         register_setting( 'yk-mt-options-group', 'new-entries-past' );
         register_setting( 'yk-mt-options-group', 'new-entries-future' );
         register_setting( 'yk-mt-options-group', 'macronutrients-enabled' );
-
     }
 }
 add_action( 'admin_init', 'yk_mt_register_settings' );
