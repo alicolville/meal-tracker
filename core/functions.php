@@ -562,7 +562,8 @@ function yk_mt_units_where( $field, $equals = true, $just_keys = true ) {
 
 	foreach ( yk_mt_units_raw() as $unit => $details ) {
 
-		if ( $equals === $details[ $field ] ) {
+		if ( false === empty( $details[ $field ] ) &&
+				$equals === $details[ $field ] ) {
 			$units[ $unit ] = $details[ 'label' ];
 		}
 	}
@@ -1035,7 +1036,7 @@ function yk_mt_features_display() {
                                             <td scope="row" style="padding-left:30px"><label for="tablecell">
                                                     &middot; <strong>%2$s:</strong> %3$s.
                                                 </label></td>
-                            
+
                                         </tr>',
                     $class,
                     esc_html( $title ),
@@ -1176,27 +1177,4 @@ function yk_mt_cache_temp_get( $key ) {
  */
 function yk_mt_cache_temp_set( $key, $value ) {
     do_action( 'yk_mt_cache_temp_set', $key, $value );
-}
-
-/**
- * Translate known meal types from English into locale.
- * @param $meal_type
- * @return mixed|string
- */
-function yk_mt_lang_translate_known_meal_type_from_english( $meal_type ) {
-
-    if ( true === empty( $meal_type ) ) {
-        return '';
-    }
-
-    $lookup = [
-                    'Breakfast'     => __( 'Breakfast', YK_MT_SLUG ),
-                    'Mid-morning'   => __( 'Mid-morning', YK_MT_SLUG ),
-                    'Lunch'         => __( 'Lunch', YK_MT_SLUG ),
-                    'Afternoon'     => __( 'Afternoon', YK_MT_SLUG ),
-                    'Dinner'        => __( 'Dinner', YK_MT_SLUG ),
-                    'Evening'       => __( 'Evening', YK_MT_SLUG )
-    ];
-
-    return ( false === empty( $lookup[ $meal_type ] ) ) ? $lookup[ $meal_type ] : '';
 }

@@ -54,6 +54,14 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 * Improvement: Added Arabic translations (thanks @Saeed)
 
+TODO:
+
+  * When adding or editing a meal form, the Quantity field is not validated correctly.
+
+* Bug fix: Minor bug fixes throwing PHP errors.
+* Bug fix: Incorrect slug used for localisation.
+* Bug fix: Warning being thrown for missing array index.
+
 = 1.1 =
 
 * Improvement: Added meal description to "View Entry" page in admin. (#66)

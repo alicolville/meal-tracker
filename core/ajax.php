@@ -76,6 +76,27 @@ function yk_mt_ajax_meal_add() {
     // Ensure we have a calorie value (can be 0)
 	$post_data[ 'calories' ] = yk_mt_ajax_extract_and_validate_post_data_single( 'calories', false );
 
+	$meta_field_keys = yk_mt_meta_fields_visible_user_keys();
+
+	// If meta fields are enabled then look for an array of values. Validate add add to DB call.
+    if ( false === empty( $meta_field_keys ) ) {
+
+        if ( true === empty( $_POST[ 'meta-fields' ] ) || false === is_array( $_POST[ 'meta-fields' ] ) ) {
+            return wp_send_json( [ 'error' => 'missing-meta-fields-array' ] );
+        }
+
+        $meta_fields = $_POST[ 'meta-fields' ];
+
+        foreach ( yk_mt_meta_fields_visible_user_keys() as $key ) {
+            if ( false === isset( $meta_fields[ $key ] ) ) {
+                return wp_send_json( [ 'error' => 'missing-meta-field-' . $key ] );
+            }
+
+            $post_data[ $key ] = (int) $meta_fields[ $key ];
+        }
+
+    }
+  
     // If a unit that doesn't expect a quantity, then clear quantity
 	if ( true === in_array( $post_data[ 'unit' ], yk_mt_units_where( 'drop-quantity' ) ) ) {
 		$post_data[ 'quantity' ] = '';

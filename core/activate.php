@@ -21,6 +21,8 @@
 			if ( true === empty( yk_mt_db_meal_types_all() ) ) {
 				yk_mt_db_defaults_meal_types();
 			}
+
+			do_action( 'yk_mt_db_upgrade' );
 		}
 	}
 	add_action('admin_init', 'yk_wt_upgrade');

@@ -129,7 +129,7 @@
      * Display chart JS and summary data
      */
 	function yk_mt_shortcode_meal_tracker_summary() {
-
+    
         return '
             <div class="yk-mt__summary">
                 <div class="yk-mt__summary-title"><span class="fa fa-check-circle"></span> Today\'s summary</div>
@@ -392,6 +392,7 @@
         }
 
         $html .= '</div></div>
+
                 <div class="yk-mt__modal-bg"></div>
                 <a id="yk-mt-open-dialog-edit" class="yk-mt-meal-button-edit yk-mt-add-meal-prompt yk-mt-hide"></a>               
         ';
@@ -423,6 +424,24 @@
             __( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
         );
 
+
+        // If premium, do we have any additional fields for the meal?
+        if ( true === yk_mt_license_is_premium() ) {
+
+			$meta_fields = yk_mt_meta_fields_where( 'visible_user', true );
+
+			foreach ( $meta_fields as $field ) {
+
+				// TODO: Support additional field types.
+
+				// Integer fields
+				if ( 'int' === $field[ 'type' ] ) {
+
+					$html .= yk_mt_form_number( $field[ 'title' ], sprintf( 'add-meal-%s', $field[ 'db_col' ] ), '', '', 1,0 );
+				}
+			}
+		}
+    
 		$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', '', yk_mt_units() );
 
 		$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity', '', '', 1, 1, 99999, true, false, true );
@@ -646,7 +665,8 @@
             'localise'          => yk_mt_localised_strings(),
             'todays-entry'      => yk_mt_entry( $args[ 'entry-id' ] ),
             'load-entry'        => true,
-            'is-admin'          => false
+            'is-admin'          => false,
+			'meta-fields' 		=> yk_mt_meta_js_config()
 		] );
 	}
 
