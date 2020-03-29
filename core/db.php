@@ -338,7 +338,7 @@ function yk_mt_db_entry_get( $id = NULL ) {
         $entry = yk_mt_db_entry_calculate_stats( $entry );
 
         $sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity, m.unit, m.description,
-                                em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m 
+                                em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
                                 Inner Join ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em
                                 on em.meal_id = m.id
                                 where em.entry_id = %d
@@ -444,13 +444,26 @@ function yk_mt_db_entry_calculate_stats( $entry ) {
  */
 function yk_mt_db_entry_calories_count( $entry_id ) {
 
-    global $wpdb;
+    return yk_mt_db_entry_sum_int_column( $entry_id );
+}
 
-    $sql = $wpdb->prepare( 'Select sum( calories ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em 
+/**
+ * Count an integer columnn for given entry
+ *
+ * @param $entry_id
+ *
+ * @param string $column
+ * @return null|string
+ */
+function yk_mt_db_entry_sum_int_column( $entry_id, $column = 'calories' ) {
+
+	global $wpdb;
+
+	$sql = $wpdb->prepare( 'Select sum( ' . $column . ' ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em
             inner join ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
             on em.meal_id = m.id where entry_id = %d', $entry_id );
 
-    return $wpdb->get_var( $sql );
+	return $wpdb->get_var( $sql );
 }
 
 /**
@@ -926,6 +939,8 @@ function yk_mt_db_mysql_formats( $data ) {
         'json'                  => '%s'
     ];
 
+    $formats = apply_filters( 'yk_mt_db_formats', $formats );
+
     $return = [];
 
     foreach ( $data as $key => $value) {
@@ -957,10 +972,10 @@ function yk_wt_db_tables_create() {
     $sql = "CREATE TABLE $table_name (
                 id mediumint(9) NOT NULL AUTO_INCREMENT,
                 added_by int NOT NULL,
-                name varchar(60) NOT NULL, 
+                name varchar(60) NOT NULL,
                 calories float DEFAULT 0 NOT NULL,
                 quantity float DEFAULT 0 NOT NULL,
-                unit varchar(10) DEFAULT 'g' NOT NULL, 
+                unit varchar(10) DEFAULT 'g' NOT NULL,
                 description varchar(200) NULL,
                 deleted bit DEFAULT 0,
                 favourite bit DEFAULT 0,
@@ -1010,7 +1025,7 @@ function yk_wt_db_tables_create() {
 
     $sql = "CREATE TABLE $table_name (
                 id mediumint(9) NOT NULL AUTO_INCREMENT,
-                name varchar(60) NOT NULL, 
+                name varchar(60) NOT NULL,
                 sort int DEFAULT 100 NOT NULL,
                 deleted bit DEFAULT 0,
               UNIQUE KEY id (id)

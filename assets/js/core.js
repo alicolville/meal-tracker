@@ -67,7 +67,7 @@ jQuery( document ).ready( function( $ ) {
      */
     $( '.yk-mt-add-meal-prompt' ).click( function( e ) {
 
-        var meal_type = $( e.target ).data( 'meal-type' );
+        let meal_type = $( e.target ).data( 'meal-type' );
 
         yk_mt_selected_meal_type = meal_type;
 

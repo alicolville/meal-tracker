@@ -12,14 +12,16 @@ function yk_mt_meta_is_enabled() {
 
 	return ( true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) );
 }
+
 /**
  * Return all meta fields where key meets certain value
  *
  * @param $key
  * @param $value
+ * @param null $column
  * @return array
  */
-function yk_mt_meta_fields_where( $key, $value ) {
+function yk_mt_meta_fields_where( $key, $value, $column = NULL ) {
 
 	// TODO: This should be cached when the number of fields gets larger.
 
@@ -33,6 +35,11 @@ function yk_mt_meta_fields_where( $key, $value ) {
 
 			$return[] = $field;
 		}
+	}
+
+	if ( false === empty( $return ) &&
+			NULL !== $column ) {
+		$return = wp_list_pluck( $return, $column );
 	}
 
 	return $return;
@@ -57,7 +64,8 @@ function yk_mt_meta_fields() {
 			'title' 			=> __( 'Proteins', YK_MT_SLUG ),
 			'visible_user' 		=> true,
 			'visible_admin' 	=> true,
-			'type'				=> 'int'
+			'type'				=> 'int',
+			'required'			=> true
 		];
 
 		// Fats
@@ -66,7 +74,8 @@ function yk_mt_meta_fields() {
 			'title' 			=> __( 'Fats', YK_MT_SLUG ),
 			'visible_user' 		=> true,
 			'visible_admin' 	=> true,
-			'type'				=> 'int'
+			'type'				=> 'int',
+			'required'			=> true
 		];
 
 		// Carbs
@@ -75,7 +84,8 @@ function yk_mt_meta_fields() {
 			'title' 			=> __( 'Carbs', YK_MT_SLUG ),
 			'visible_user' 		=> true,
 			'visible_admin' 	=> true,
-			'type'				=> 'int'
+			'type'				=> 'int',
+			'required'			=> true
 		];
 
 	}
@@ -160,7 +170,6 @@ function yk_mt_meta_db_columns_create() {
 					$default = '';
 			}
 		}
-
 	}
 
 	if ( true === empty( $sql_to_execute ) ) {
@@ -177,3 +186,43 @@ function yk_mt_meta_db_columns_create() {
 }
 add_action( 'yk_mt_settings_saved', 'yk_mt_meta_db_columns_create' );	// Admin settings page saved
 add_action( 'yk_mt_db_upgrade', 'yk_mt_meta_db_columns_create' );		// Fresh install / Version change
+
+/**
+ * Extend core DB formats to include int meta fields
+ * @param $formats
+ * @return mixed
+ */
+function yk_mt_meta_db_formats( $formats ) {
+
+	$columns = yk_mt_meta_fields_where( 'type', 'int', 'db_col' );
+
+	foreach( $columns as $column ) {
+		$formats[ $column ] = '%d';
+	}
+
+	return $formats;
+}
+add_filter( 'yk_mt_db_formats', 'yk_mt_meta_db_formats' );
+
+/**
+ * When updating calories used for an entry, total any (int) meta fields and update entry table
+ * @param $entry_id
+ */
+function yk_mt_meta_db_entry_totals_refresh( $entry_id ) {
+
+	$columns = yk_mt_meta_fields_where( 'type', 'int', 'db_col' );
+
+	if ( true === empty( $columns ) ) {
+		return;
+	}
+
+	$data 	= [ 'id' => $entry_id ];
+
+	foreach ( $columns as $column ) {
+
+		$data[ $column ] = yk_mt_db_entry_sum_int_column( $entry_id, $column );
+	}
+
+	yk_mt_db_entry_update( $data );
+}
+add_action( 'yk_mt_entry_calculate_refresh', 'yk_mt_meta_db_entry_totals_refresh' );

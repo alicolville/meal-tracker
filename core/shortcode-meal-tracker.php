@@ -306,8 +306,8 @@
 
 		return sprintf( '
             <button href="#yk-mt-add-meal-dialog" class="yk-mt__btn %1$s yk-mt-add-meal-prompt" id="%3$d" data-meal-type="%2$d">
-                <span class="yk-mt__btn-icon fa fa-plus"></span>
-                <span class="yk-mt__btn-text">%4$s</span>
+                <span class="yk-mt__btn-icon fa fa-plus" data-meal-type="%2$d"></span>
+                <span class="yk-mt__btn-text" data-meal-type="%2$d">%4$s</span>
             </button>',
             esc_attr( $css_class ),
             (int) $meal_type_id,
@@ -437,7 +437,7 @@
 				// Integer fields
 				if ( 'int' === $field[ 'type' ] ) {
 
-					$html .= yk_mt_form_number( $field[ 'title' ], sprintf( 'add-meal-%s', $field[ 'db_col' ] ), '', '', 1,0 );
+					$html .= yk_mt_form_number( $field[ 'title' ], sprintf( 'add-meal-%s', $field[ 'db_col' ] ), '', '', 1,0, 9999, true, $field[ 'required' ] );
 				}
 			}
 		}

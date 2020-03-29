@@ -52,11 +52,9 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 2.0 =
 
-TODO:
 
-  * When adding or editing a meal form, the Quantity field is not validated correctly.
-
-* Improvment: Major overhaul of CSS.
+* Bug fix: Fixed quantity error handling.
+* Improvement: Major overhaul of CSS.
 * Improvement: Added unified look that ensures it looks more consistent across various themes.
 
 = 1.2 =
