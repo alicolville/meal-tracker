@@ -591,7 +591,9 @@
         $chart_font  = '\'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif';
         $chart_color = '#000000';
 
-        if ( true === yk_mt_site_options_as_bool('css-theme-enabled' ) ) {
+        $is_themed = yk_mt_site_options_as_bool('css-theme-enabled' );
+
+        if ( true === $is_themed ) {
             wp_enqueue_style( 'mt-theme', plugins_url( 'assets/css/yk-mt-theme' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
         }
 
