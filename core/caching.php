@@ -434,9 +434,10 @@ add_filter( 'yk_mt_db_settings_get', 'yk_mt_cache_filter_settings_get', 10, 2 );
  *
  * @param $key
  * @param $value
+ * @param $duration
  */
-function yk_mt_cache_temp_hook_set( $key, $value ) {
-    yk_mt_cache_set( 'temp-' . $key, $value, 300 ); // Cache for 5 minutes
+function yk_mt_cache_temp_hook_set( $key, $value, $duration ) {
+    yk_mt_cache_set( 'temp-' . $key, $value, $duration );
 }
 add_action( 'yk_mt_cache_temp_set', 'yk_mt_cache_temp_hook_set', 10, 3 );
 

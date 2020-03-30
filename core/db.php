@@ -979,6 +979,14 @@ function yk_wt_db_tables_create() {
                 description varchar(200) NULL,
                 deleted bit DEFAULT 0,
                 favourite bit DEFAULT 0,
+                source varchar(20) DEFAULT 'user' NOT NULL,
+                meta_proteins int DEFAULT 0 NOT NULL,
+                meta_fats int DEFAULT 0 NOT NULL,
+                meta_carbs int DEFAULT 0 NOT NULL,
+                ext_id int NULL,
+                ext_image varchar( 300 ) NULL,
+                ext_url varchar( 300 ) NULL,
+                added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
              UNIQUE KEY id (id)
             ) $charset_collate;";
 
