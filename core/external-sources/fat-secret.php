@@ -52,8 +52,13 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 		];
 	}
 
+	/**
+	 * This isn't supported as there is no need to fetch a recipe at the moment.
+	 * @param $id
+	 * @return bool|mixed
+	 */
 	public function get( $id ){
-
+		return false;
 	}
 
 	public function is_authenticated(){
