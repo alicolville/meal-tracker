@@ -14,6 +14,7 @@ abstract class YK_MT_EXT_SOURCE {
 	protected $no_results 	= 0;
 	protected $page_number 	= 0;
 	protected $page_size 	= 0;
+	protected $cache_hit	= false;
 	protected $auth			= false;
 	protected $error		= false;
 
@@ -27,6 +28,8 @@ abstract class YK_MT_EXT_SOURCE {
 		$this->args = $args;
 
 		$this->authenticate();
+
+		$this->search_reset();
 	}
 
 	/**
@@ -49,10 +52,38 @@ abstract class YK_MT_EXT_SOURCE {
 	abstract protected function search( $terms );
 
 	/**
-	 * Once search() has been performed, call this for results.
+	 * Reset search
+	 */
+	protected function search_reset() {
+		$this->results 		= 0;
+		$this->no_results 	= 0;
+		$this->page_number 	= 0;
+		$this->page_size 	= 0;
+		$this->cache_hit	= false;
+	}
+
+	/**
+	 * Each child class shall have a formatter to return an API result into a generic format
+	 * @param $result
 	 * @return mixed
 	 */
-	abstract protected function results();
+	abstract protected function format_result( $result );
+
+	/**
+	 * Once search() has been performed, call this for formatted results.
+	 * @return mixed
+	 */
+	protected function results() {
+		return $this->results;
+	}
+
+	/**
+	 * Any results?
+	 * @return bool
+	 */
+	public function has_results() {
+		return ( false === empty( $this->no_results ) );
+	}
 
 	/**
 	 * Fetch an individual meal from API endpoint
@@ -98,6 +129,14 @@ abstract class YK_MT_EXT_SOURCE {
 		$value = yk_mt_cache_temp_get( $key );
 
 		return ( false === empty( $value ) ) ? $value : $default;
+	}
+
+	/**
+	 * Was data fetched from cache?
+	 * @return bool
+	 */
+	protected function cache_hit() {
+		return $this->cache_hit;
 	}
 
 }

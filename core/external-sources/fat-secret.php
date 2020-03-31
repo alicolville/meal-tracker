@@ -8,6 +8,8 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 
 	public function search( $terms ) {
 
+		$this->search_reset();
+
 		$args = [ 'body' => [ 'method' => 'recipes.search', 'search_expression' => $terms ] ];
 
 		$results = $this->api_get( $args );
@@ -17,16 +19,37 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 			return false;
 		}
 
-		$this->results 		= $results[ 'recipes' ][ 'recipe' ];
-		$this->no_results 	= $results[ 'recipes' ][ 'total_results' ];
-		$this->page_number 	= $results[ 'recipes' ][ 'page_number' ];
-		$this->page_size 	= $results[ 'recipes' ][ 'max_results' ];
+		if ( $results[ 'recipes' ][ 'total_results' ] > 0 ) {
+
+			$this->results 		= $results[ 'recipes' ][ 'recipe' ];
+			$this->no_results 	= $results[ 'recipes' ][ 'total_results' ];
+			$this->page_number 	= $results[ 'recipes' ][ 'page_number' ];
+			$this->page_size 	= $results[ 'recipes' ][ 'max_results' ];
+
+		}
+
+		$this->results = array_map( array( $this, 'format_result' ), $this->results );
 
 		return true;
 	}
 
-	public function results() {
+	function format_result( $result ) {
 
+		return [
+			'name'			=> $result[ 'recipe_name' ],
+			'description'	=> $result[ 'recipe_description' ],
+			'calories'		=> $result[ 'recipe_nutrition' ][ 'calories' ],
+			'meta_proteins' => $result[ 'recipe_nutrition' ][ 'protein' ],
+			'meta_fats'		=> $result[ 'recipe_nutrition' ][ 'fat' ],
+			'meta_carbs'	=> $result[ 'recipe_nutrition' ][ 'carbohydrate' ],
+			'source'		=> 'fat-secrets',
+			'ext_id'		=> $result[ 'recipe_id' ],
+			'ext_url'		=> $result[ 'recipe_url' ],
+			'ext_image'		=> ( false === empty( $result[ 'recipe_image' ] ) ) ? $result[ 'recipe_image' ] : '',
+			'quantity'		=> '0',
+			'unit'			=> 'na',
+			// 'original'		=> $result
+		];
 	}
 
 	public function get( $id ){
@@ -40,16 +63,20 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 	/**
 	 * Call out to FatSecrets API
 	 * @param $args
+	 * @param bool $use_cache
 	 * @return bool
 	 */
 	private function api_get( $args, $use_cache = true ) {
 
-		$cache_key 	= 'fatsecret-api-get-' . md5( json_encode( $this->args ) );
+		$cache_key 	= 'fatsecret-api-get-' . md5( json_encode( $args ) );
 
 		if ( true === $use_cache ) {
 			$cache = $this->cache_get( $cache_key, false );
 
 			if ( false !== $cache ) {
+
+				$this->cache_hit = true;
+
 				return $cache;
 			}
 		}

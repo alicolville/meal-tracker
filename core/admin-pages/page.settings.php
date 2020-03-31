@@ -67,7 +67,7 @@ function yk_mt_settings_page_generic() {
                                                             <option value="true" <?php selected( $cache_enabled, true ); ?>><?php echo __('Yes', YK_MT_SLUG); ?></option>
                                                             <option value="false" <?php selected( $cache_enabled, false ); ?>><?php echo __('No', YK_MT_SLUG); ?></option>
                                                         </select>
-                                                        <p><?php echo __('If enabled, additional caching will be performed to reduce database queries. It is highly recommended that this remains enabled and only disabled for testing or to enable other caching mechanisms.', YK_MT_SLUG); ?></p>
+                                                        <p><?php echo __('If enabled, additional caching will be performed to reduce database queries and calls to external APIs. It is highly recommended that this remains enabled and only disabled for testing or to enable other caching mechanisms.', YK_MT_SLUG); ?></p>
                                                     </td>
                                                 </tr>
                                             </table>
