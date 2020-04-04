@@ -14,6 +14,11 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 
 		$results = $this->api_get( $args );
 
+		// Error hit?
+		if ( true === $this->has_error() ) {
+			return $this->get_error();
+		}
+
 		if ( false === isset( $results[ 'recipes' ][ 'total_results' ] ) ) {
 			$this->error = 'There was an issue processing the results.';
 			return false;
