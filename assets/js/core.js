@@ -110,6 +110,8 @@ jQuery( document ).ready( function( $ ) {
         $( '#yk-mt-add-meal-dialog' ).addClass( 'yk-mt-mode-add' );
 
         $( '#yk-mt-form-add-new-meal' ).trigger("reset");
+
+      $( '.yk-mt-hide-if-no-meals-results' ).hide();
     }
 
     /**
@@ -185,11 +187,23 @@ jQuery( document ).ready( function( $ ) {
                     error: function() {
                         callback();
                     },
-                    success: function(res) {
+                    success: function( res ) {
+
+                      if ( false === res ) {
+                        console.log('hiding')
+                        $( '.yk-mt-hide-if-no-meals-results' ).fadeOut( 'slow' );
+                      }
+
+                      console.log(res);
+
                         callback( res );
                     }
                 });
-            }
+            },
+          onChange: function() {
+
+            $( '.yk-mt-hide-if-no-meals-results' ).fadeIn( 'slow' );
+          }
         });
     }
 

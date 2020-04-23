@@ -354,15 +354,15 @@
         // Do we have any existing meals for this user?
         if ( false === empty( $add_form ) ) {
 
-            $html .= sprintf('  <h4 class="yk-mt__modal-subtitle">%1$s</h4>', __( 'Quick Search', YK_MT_SLUG ) );
+            $html .= sprintf('  <h4 class="yk-mt__modal-subtitle">%1$s</h4>', __( 'Search your meal collection', YK_MT_SLUG ) );
 
 	        $html .= $add_form;
 
             $html .= sprintf(
-                '<div class="yk-mt-quantity-row">
-                            <label class="yk-mt__label">%1$s:</label>
+                '<div class="yk-mt-quantity-row yk-mt-hide-if-no-meals-results" style="display: none;">
+                            <label class="yk-mt__label">%1$s</label>
                             <div class="yk-mt__modal-quantity">',
-                __( 'Add', YK_MT_SLUG )
+                __( 'How many have you had today?', YK_MT_SLUG )
             );
 
             for ( $i = 1; $i <= 10; $i++ ) {
@@ -375,7 +375,7 @@
                         </div>
                     </div>
                 </form>
-                <div class="yk-mt__modal-auto-close yk-mt-flex">
+                <div class="yk-mt__modal-auto-close yk-mt-flex yk-mt-hide-if-no-meals-results" style="display: none;">
                     <input class="yk-mt__input" type="checkbox" id="%1$s" checked="checked" />
                     <label class="yk-mt__label" for="%1$s">%2$s</label>
                 </div>
@@ -408,7 +408,7 @@
 
 		$html = sprintf( '  <div class="yk-mt-add-new-meal-form">
                                         <form id="yk-mt-form-add-new-meal">
-								<h4 id="yk-mt-header-meal-add" class="yk-mt__modal-subtitle yk-mt-hide-if-editing">%s</h4>', __( 'Add new meal', YK_MT_SLUG ) );
+								<h4 id="yk-mt-header-meal-add" class="yk-mt__modal-subtitle yk-mt-hide-if-editing">%s</h4>', __( 'Add a new meal to your collection', YK_MT_SLUG ) );
 
 		$html .= yk_mt_form_text( __( 'Name', YK_MT_SLUG ),	'add-meal-name' );
 
@@ -598,7 +598,7 @@
         }
 
         // Scripts
-		wp_enqueue_script( 'mt-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+		wp_enqueue_script( 'mt-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery', 'jquery-ui-core', 'jquery-effects-core' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-selectize', plugins_url( 'assets/js/selectize.min.js', __DIR__ ), [], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-loading-overlay', plugins_url( 'assets/js/loadingoverlay.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
         wp_enqueue_script( 'mt-chart-js', plugins_url( 'assets/js/Chart.bundle.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );

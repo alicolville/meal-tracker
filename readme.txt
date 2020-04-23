@@ -52,6 +52,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 2.0 =
 
+TODO: minify CSS
 
 * Bug fix: Fixed quantity error handling.
 * Improvement: Major overhaul of CSS.
