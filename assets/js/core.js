@@ -190,19 +190,21 @@ jQuery( document ).ready( function( $ ) {
                     success: function( res ) {
 
                       if ( false === res ) {
-                        console.log('hiding')
                         $( '.yk-mt-hide-if-no-meals-results' ).fadeOut( 'slow' );
                       }
 
-                      console.log(res);
-
-                        callback( res );
+                      callback( res );
                     }
                 });
             },
-          onChange: function() {
+          onChange: function( value ) {
 
-            $( '.yk-mt-hide-if-no-meals-results' ).fadeIn( 'slow' );
+              if ( '' === value ) {
+                  $( '.yk-mt-hide-if-no-meals-results' ).fadeOut( 'slow' );
+                  return;
+              }
+
+              $( '.yk-mt-hide-if-no-meals-results' ).fadeIn( 'slow' );
           }
         });
     }
