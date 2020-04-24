@@ -25,6 +25,10 @@ function yk_mt_body_class( $classes ) {
         $classes[] = 'yk-mt__accordion-enabled';
     }
 
+    if ( true === yk_mt_ext_enabled() ) {
+		$classes[] = 'yk-mt__ext-enabled';
+	}
+
     return $classes;
 }
 add_filter( 'body_class','yk_mt_body_class' );

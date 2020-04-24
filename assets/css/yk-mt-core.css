@@ -740,7 +740,7 @@ Fallbacks
 
 	/* Shortcode > Modal > Wrap */
 	.yk-mt__modal-wrap {
-		max-width: 60%;
+		max-width: 80%;
 	}
 }
 

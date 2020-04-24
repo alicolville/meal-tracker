@@ -162,6 +162,8 @@ Version: x.x.x
 .yk-mt__modal-subtitle {
 	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif !important; /* Fallback */
 	font-family: var(--yk-mt-font-display) !important;
+  margin-top: 10px !important;
+  margin-bottom: 5px !important;
 }
 
 /* Selectize */
@@ -187,6 +189,14 @@ Version: x.x.x
 .yk-mt-shortcode-meal-tracker .selectize-control.loading:before {
 	opacity: .4;
 }
+/* @media queries: screen, <=500px */
+@media only screen and (max-width: 500px) {
+
+  .yk-mt__ext-enabled #yk-mt-form-add-new-meal-nav .yk-mt__btn-text {
+    display: none;
+  }
+
+}
 
 /* @media queries: screen, <=767px */
 @media only screen and (max-width: 767px) {
@@ -194,4 +204,5 @@ Version: x.x.x
 	.yk-mt__modal-header .yk-mt__btn {
 		background-color: #000 !important;
 	}
+
 }

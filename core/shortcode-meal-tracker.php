@@ -354,7 +354,11 @@
         // Do we have any existing meals for this user?
         if ( false === empty( $add_form ) ) {
 
-            $html .= sprintf('  <h4 class="yk-mt__modal-subtitle">%1$s</h4>', __( 'Search your meal collection', YK_MT_SLUG ) );
+            $html .= sprintf('  	<h4 class="yk-mt__modal-subtitle">%1$s</h4>
+  										<p>%2$s:</p>',
+										__( 'Search your existing meal collection', YK_MT_SLUG ),
+										__( 'Search and select a meal from your existing collection', YK_MT_SLUG )
+			);
 
 	        $html .= $add_form;
 
@@ -401,14 +405,67 @@
 	}
 
 	/**
+	 * Render HTMl for add meal nav
+	 *
+	 * @return string
+	 */
+	function yk_mt_shortcode_meal_tracker_add_new_meal_form_navigation() {
+
+		$have_external_sources = yk_mt_ext_enabled();
+
+		$html = sprintf( '  	<h4 id="yk-mt-header-meal-add" class="yk-mt__modal-subtitle yk-mt-hide-if-editing">%1$s</h4>
+  									<div id="yk-mt-form-add-new-meal-nav">',
+								__( 'Add a new meal to your collection', YK_MT_SLUG )
+		);
+
+		/**
+		 * If we have one or more external source, then show button for search form
+		 */
+		if ( true === $have_external_sources ) {
+
+			$html .= sprintf( '	<button id="yk-mt-button-meal-nav-search" class="yk-mt__btn yk-mt__btn--medium" title="%1$s" >
+											<span class="yk-mt__btn-icon fa fa-search"></span>
+											<span class="yk-mt__btn-text">%1$s</span>
+										</button>',
+				__( 'Search', YK_MT_SLUG )
+			);
+
+		}
+
+		$html .= sprintf( '		<button id="yk-mt-button-meal-nav-manually-add" class="yk-mt__btn yk-mt__btn--medium" title="%1$s">
+											<span class="yk-mt__btn-icon fa fa-keyboard-o"></span>
+											<span class="yk-mt__btn-text">%1$s</span>
+										</button>',
+			__( 'Manually Enter', YK_MT_SLUG )
+		);
+
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	/**
 	 * Render Add new meal form
 	 * @return string
 	 */
 	function yk_mt_shortcode_meal_tracker_add_new_meal_form() {
 
-		$html = sprintf( '  <div class="yk-mt-add-new-meal-form">
-                                        <form id="yk-mt-form-add-new-meal">
-								<h4 id="yk-mt-header-meal-add" class="yk-mt__modal-subtitle yk-mt-hide-if-editing">%s</h4>', __( 'Add a new meal to your collection', YK_MT_SLUG ) );
+		$html = yk_mt_shortcode_meal_tracker_add_new_meal_form_navigation();
+
+		$html .= sprintf( '
+            <div class="yk-mt-add-new-meal-form-search-external" style="display: none">SEARCH
+            <div class="yk-mt__modal-footer">
+                <button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-reset-meal-nav yk-mt-hide-if-editing">
+                    <span class="yk-mt__btn-icon fa fa-arrow-left"></span>
+                    <span class="yk-mt__btn-text">%1$s</span>
+                </button>
+            </div></div>
+                ',
+			__( 'Cancel', YK_MT_SLUG )
+		);
+
+		$html.= '<div class="yk-mt-add-new-meal-form" style="display: none">
+                                        <form id="yk-mt-form-add-new-meal">';
 
 		$html .= yk_mt_form_text( __( 'Name', YK_MT_SLUG ),	'add-meal-name' );
 
@@ -447,12 +504,15 @@
 		$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity', '', '', 1, 1, 99999, true, false, true );
 
 		$html .= sprintf( '
-            <div class="yk-mt__modal-footer">
+           	 <div class="yk-mt__modal-footer">
+                <button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-reset-meal-nav yk-mt-hide-if-editing">
+                    <span class="yk-mt__btn-icon fa fa-arrow-left"></span>
+                </button>
                 <button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-add-new-meal yk-mt-hide-if-editing">
                     <span class="yk-mt__btn-icon fa fa-plus"></span>
                     <span class="yk-mt__btn-text">%1$s</span>
                 </button>',
-			__( 'Add a new meal', YK_MT_SLUG )
+			__( 'Save', YK_MT_SLUG )
 		);
 
         $html .= sprintf( '
@@ -461,7 +521,7 @@
                     <span class="yk-mt__btn-text">%1$s</span>
                 </button>
             </div>',
-            __( 'Edit meal', YK_MT_SLUG )
+            __( 'Save', YK_MT_SLUG )
         );
 
 		$html .= '</form></div>';

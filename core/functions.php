@@ -493,7 +493,8 @@ function yk_mt_ajax_config() {
         'plugin-url'                        => YK_MT_PLUGIN_URL,
         'ajax-url'                          => admin_url('admin-ajax.php'),
         'ajax-security-nonce'               => wp_create_nonce( 'yk-mt-nonce' ),
-	    'units-hide-quantity'               => yk_mt_units_where( 'drop-quantity', true, true )
+	    'units-hide-quantity'               => yk_mt_units_where( 'drop-quantity', true, true ),
+		'external-source'					=> false
     ];
 }
 

@@ -104,6 +104,8 @@ jQuery( document ).ready( function( $ ) {
 
         yk_meal_tracker_dialog_mode = 'add';
 
+        $( 'body' ).trigger( 'meal-tracker-dialog-closing' );
+
         yk_mt_dialog_meal_type_reset();
 
         $( '#yk-mt-add-meal-dialog' ).removeClass( 'yk-mt-mode-edit');
@@ -111,7 +113,9 @@ jQuery( document ).ready( function( $ ) {
 
         $( '#yk-mt-form-add-new-meal' ).trigger("reset");
 
-      $( '.yk-mt-hide-if-no-meals-results' ).hide();
+        $( '.yk-mt-hide-if-no-meals-results' ).hide();
+
+        $( 'body' ).trigger( 'meal-tracker-dialog-closed' );
     }
 
     /**
@@ -569,6 +573,8 @@ jQuery( document ).ready( function( $ ) {
               });
             }
 
+            yk_mt_meal_add_nav_show( 'manual' );
+
             yk_mt_dialog_open();
 
         } else {
@@ -625,7 +631,86 @@ jQuery( document ).ready( function( $ ) {
     }
 
     /**
-     * ------ ---------------------------------------------------------------------------------
+     * ---------------------------------------------------------------------------------------
+     * Add a meal navigation
+     * ---------------------------------------------------------------------------------------
+     */
+
+    /**
+     * When dialog closes, reset add meal navigation
+     */
+    $( 'body' ).on( 'meal-tracker-dialog-closing', function( event ) {
+      yk_mt_meal_add_nav_reset();
+    });
+
+    /**
+     * Determine display mode of add meal form
+     * @param state
+     */
+    function yk_mt_meal_add_nav_show( state ) {
+
+        switch( state ) {
+          case 'manual':
+              $( '#yk-mt-form-add-new-meal-nav' ).hide();
+              $( '.yk-mt__modal-quick-search' ).hide();
+              $( '.yk-mt-add-new-meal-form' ).fadeIn( 'slow' );
+            break;
+          case 'search':
+            $( '#yk-mt-form-add-new-meal-nav' ).hide();
+            $( '.yk-mt__modal-quick-search' ).hide();
+            $( '.yk-mt-add-new-meal-form-search-external' ).fadeIn( 'slow' );
+
+          break;
+        default:  // show navigation
+          yk_mt_meal_add_nav_reset();
+      }
+
+    }
+
+    /**
+     * Reset meal add form back
+     */
+    function yk_mt_meal_add_nav_reset() {
+      $( '.yk-mt-add-new-meal-form' ).hide();
+      $( '.yk-mt-add-new-meal-form-search-external' ).hide();
+      $( '#yk-mt-form-add-new-meal-nav' ).fadeIn( 'slow' );
+      $( '.yk-mt__modal-quick-search' ).fadeIn( 'slow' );
+    }
+
+    /**
+     * Display Meal Add form
+     */
+    $( '#yk-mt-button-meal-nav-manually-add' ).click( function( e ) {
+
+      e.preventDefault();
+
+      yk_mt_meal_add_nav_show( 'manual' );
+
+    });
+
+    /**
+     * Display Meal Search form
+     */
+    $( '#yk-mt-button-meal-nav-search' ).click( function( e ) {
+
+      e.preventDefault();
+
+      yk_mt_meal_add_nav_show( 'search' );
+
+    });
+
+    /**
+     * Hide meal add forms and reset navigation
+     */
+    $( '.yk-mt-button-reset-meal-nav' ).click( function( e ) {
+
+      e.preventDefault();
+
+      yk_mt_meal_add_nav_reset();
+    });
+
+    /**
+     * ---------------------------------------------------------------------------------------
      * Save Settings form
      * ---------------------------------------------------------------------------------------
      */
