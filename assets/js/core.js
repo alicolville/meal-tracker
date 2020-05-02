@@ -661,6 +661,8 @@ jQuery( document ).ready( function ( $ ) {
         $('.yk-mt__modal-quick-search').hide();
         $('.yk-mt-add-new-meal-form-search-external').fadeIn('slow');
 
+        yk_mk_selectize_external_init();
+
         break;
       default:  // show navigation
         yk_mt_meal_add_nav_reset();
@@ -676,6 +678,8 @@ jQuery( document ).ready( function ( $ ) {
     $('.yk-mt-add-new-meal-form-search-external').hide();
     $('#yk-mt-form-add-new-meal-nav').fadeIn('slow');
     $('.yk-mt__modal-quick-search').fadeIn('slow');
+
+    // TODO: Destroy selectize for external search?
   }
 
   /**
@@ -709,6 +713,58 @@ jQuery( document ).ready( function ( $ ) {
 
     yk_mt_meal_add_nav_reset();
   });
+
+  /**
+   * ---------------------------------------------------------------------------------------
+   * External Form
+   * ---------------------------------------------------------------------------------------
+   */
+
+  /*
+      Initialise the Meal picker
+   */
+  function yk_mk_selectize_external_init() {
+
+    // TODO: Need to check here? Do we need to re-init if already done?
+
+    let yk_mt_meal_selector = $( '#yk-mt-search-external' ).selectize({
+      preload: true,
+      valueField: 'id',
+      labelField: 'name',
+      searchField: 'name',
+      options: [],
+      load: function (query, callback) {
+
+        this.clearOptions();
+
+        $.ajax({
+          url: yk_mt['ajax-url'],
+          type: 'POST',
+          data: { action: 'external_search', security: yk_mt['ajax-security-nonce'], search: query },
+          error: function () {
+            callback();
+          },
+          success: function (res) {
+
+            if (false === res) {
+              $('.yk-mt-hide-if-no-meals-results').fadeOut('slow');
+            }
+
+            callback(res);
+          }
+        });
+      },
+      onChange: function (value) {
+
+        // if ('' === value) {
+        //   $('.yk-mt-hide-if-no-meals-results').fadeOut('slow');
+        //   return;
+        // }
+        //
+        // $('.yk-mt-hide-if-no-meals-results').fadeIn('slow');
+      }
+    });
+  }
 
   /**
    * ---------------------------------------------------------------------------------------

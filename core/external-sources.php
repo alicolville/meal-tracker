@@ -5,6 +5,19 @@ defined('ABSPATH') or die("Jog on!");
 include_once YK_MT_ABSPATH . 'core/external-sources/base.php';
 include_once YK_MT_ABSPATH . 'core/external-sources/fat-secret.php';
 
+/**
+ * Do we have any external sources enabled?
+ * @return bool
+ */
+function yk_mt_ext_enabled() {
+
+	if ( false === yk_mt_license_is_premium() ) {
+		return false;
+	}
+
+	return true;	// todo
+}
+
 function yk_mt_ext_source_create_instance() {
 
 	global $external_source;
@@ -73,12 +86,12 @@ function yk_mt_ext_source_search( $search_term ) {
 }
 
 
-function test() {
-
-	$r = yk_mt_ext_source_search( 'cup cakes' ) ;
-
-	print_r( $r );
-die;
-}
-add_action( 'init', 'test' );
-
+//function test() {
+//
+//	$r = yk_mt_ext_source_search( 'cup cakes' ) ;
+//
+//	print_r( $r );
+//die;
+//}
+//add_action( 'init', 'test' );
+//

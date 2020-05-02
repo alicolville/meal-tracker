@@ -96,7 +96,7 @@ function yk_mt_ajax_meal_add() {
         }
 
     }
-  
+
     // If a unit that doesn't expect a quantity, then clear quantity
 	if ( true === in_array( $post_data[ 'unit' ], yk_mt_units_where( 'drop-quantity' ) ) ) {
 		$post_data[ 'quantity' ] = '';
@@ -188,6 +188,27 @@ function yk_mt_ajax_meals() {
 	wp_send_json( $meals );
 }
 add_action( 'wp_ajax_meals', 'yk_mt_ajax_meals' );
+
+/**
+ * Search external for meals
+ */
+function yk_mt_ajax_external_search() {
+
+	if ( false === yk_mt_ext_enabled() ) {
+		return false;
+	}
+
+	check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+	$meals = [
+			[ 'id' => 1, 'name' => 'Meal one' ],
+			[ 'id' => 2, 'name' => 'Meal two' ],
+	];
+
+	wp_send_json( $meals );
+}
+add_action( 'wp_ajax_external_search', 'yk_mt_ajax_external_search' );
+
 
 /**
  * Save Settings for user
