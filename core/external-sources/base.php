@@ -70,10 +70,10 @@ abstract class YK_MT_EXT_SOURCE {
 	abstract protected function format_result( $result );
 
 	/**
-	 * Once search() has been performed, call this for formatted results.
+	 * Once search() has been performed, call this for results.
 	 * @return mixed
 	 */
-	protected function results() {
+	public function results() {
 		return $this->results;
 	}
 

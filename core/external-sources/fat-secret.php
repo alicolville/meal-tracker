@@ -63,7 +63,28 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 	 * @return bool|mixed
 	 */
 	public function get( $id ){
-		return false;
+
+		$args = [ 'body' => [ 'method' => 'recipe.get', 'recipe_id' => $id ] ];
+
+		$result = $this->api_get( $args );
+
+		// Error hit?
+		if ( true === $this->has_error() ) {
+			return $this->get_error();
+		}
+
+		if ( true === empty( $result[ 'recipe' ] ) )  {
+			return false;
+		}
+
+		// Shoe horn the array that comes back to the format expected by format_result
+		$result = $result[ 'recipe' ];
+
+		if ( false === empty( $result[ 'serving_sizes' ][ 'serving' ] ) ) {
+			$result[ 'recipe_nutrition' ] = $result[ 'serving_sizes' ][ 'serving' ];
+		}
+
+		return $this->format_result( $result );
 	}
 
 	public function is_authenticated(){

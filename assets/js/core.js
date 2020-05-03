@@ -733,7 +733,41 @@ jQuery( document ).ready( function ( $ ) {
       labelField: 'name',
       searchField: 'name',
       options: [],
+      render: {
+        option: function(item, escape) {
+
+          let html = '<div>';
+
+          html = html + '<img src="' + escape( item.ext_image ) + '" width="96"/>';
+          html = html + '<span class="name">' + escape( item.name ) + '</span>';
+          html = html + '<span class="description">' + escape( item.description ) + '</span>';
+
+          html = html + '<div>';
+
+
+          //  TODO:
+          //   return '<div>' +
+          //               '<span class="title">' +
+          //               '<span class="name"><i class="icon ' + ( item.name ? 'fork' : 'source') + '"></i>' + escape(item.name) + '</span>' +
+          //               '<span class="by">' + escape(item.name) + '</span>' +
+          //               '</span>' +
+          //               '<span class="description">' + escape(item.name) + '</span>' +
+          //               '<ul class="meta">' +
+          //               (item.name ? '<li class="language">' + escape(item.name) + '</li>' : '') +
+          //               '<li class="watchers"><span>' + escape(item.name) + '</span> watchers</li>' +
+          //               '<li class="forks"><span>' + escape(item.name) + '</span> forks</li>' +
+          //               '</ul>' +
+          //               '</div>';
+          // }
+
+          return html;
+        }
+      },
       load: function (query, callback) {
+
+        if ( '' == query ) {
+          return;
+        }
 
         this.clearOptions();
 
@@ -746,22 +780,15 @@ jQuery( document ).ready( function ( $ ) {
           },
           success: function (res) {
 
-            if (false === res) {
-              $('.yk-mt-hide-if-no-meals-results').fadeOut('slow');
+            if ( false === res || 0 == res ) {
+              $( '.yk-mt-button-external-add-and-close, .yk-mt-button-external-add' ).fadeOut('slow');
+            } else {
+              $( '.yk-mt-button-external-add-and-close, .yk-mt-button-external-add' ).fadeIn('slow');
             }
 
             callback(res);
           }
         });
-      },
-      onChange: function (value) {
-
-        // if ('' === value) {
-        //   $('.yk-mt-hide-if-no-meals-results').fadeOut('slow');
-        //   return;
-        // }
-        //
-        // $('.yk-mt-hide-if-no-meals-results').fadeIn('slow');
       }
     });
   }

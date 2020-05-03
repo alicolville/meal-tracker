@@ -66,10 +66,27 @@ function yk_mt_ext_source_test() {
 	return true;
 }
 
+function yk_mt_ext_source_get( $id ) {
+
+	//TODO:
+
+	// Check the following cache first
+	//	yk_mt_cache_temp_get( 'ext-meal-' . $meal[ 'ext_id' ] );
+
+	$external_source = yk_mt_ext_source_create_instance();
+
+	// An errors?
+	if ( $external_source->has_error() ) {
+		return false;
+	}
+
+	return $external_source->get( $id );
+}
+
 /**
- * Perform a search and return a EXT_SOURCE class with results
+ * Perform a search and return results
  * @param $search_term
- * @return YK_MT_EXT_SOURCE
+ * @return array|true
  */
 function yk_mt_ext_source_search( $search_term ) {
 
@@ -82,10 +99,14 @@ function yk_mt_ext_source_search( $search_term ) {
 
 	$external_source->search( $search_term );
 
-	return $external_source;
+	if ( ! $external_source->has_results() ) {
+		return false;
+	}
+
+	return $external_source->results();
 }
 
-
+// TODO
 //function test() {
 //
 //	$r = yk_mt_ext_source_search( 'cup cakes' ) ;
@@ -94,4 +115,15 @@ function yk_mt_ext_source_search( $search_term ) {
 //die;
 //}
 //add_action( 'init', 'test' );
+
+
 //
+//
+//function test() {
+//
+//	$r = yk_mt_ext_source_get( 447533 ) ;
+//
+//	print_r( $r );
+//die;
+//}
+//add_action( 'init', 'test' );

@@ -535,15 +535,24 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_external_form() {
 
 	$html .= sprintf( '
 		<div class="yk-mt-add-new-meal-form-search-external" style="display: none">
-		<table id="yk-mt-"></table>
 		<div class="yk-mt__modal-footer">
-			<button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-reset-meal-nav yk-mt-hide-if-editing">
+			<button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-reset-meal-nav">
 				<span class="yk-mt__btn-icon fa fa-arrow-left"></span>
 				<span class="yk-mt__btn-text">%1$s</span>
 			</button>
+			<button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-external-add" style="display: none">
+				<span class="yk-mt__btn-icon fa fa-plus"></span>
+				<span class="yk-mt__btn-text">%2$s</span>
+			</button>
+			<button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-external-add-and-close" style="display: none">
+				<span class="yk-mt__btn-icon fa fa-plus"></span>
+				<span class="yk-mt__btn-text">%3$s</span>
+			</button>
 		</div></div>
 			',
-		__( 'Cancel', YK_MT_SLUG )
+		__( 'Cancel', YK_MT_SLUG ),
+		__( 'Add', YK_MT_SLUG ),
+		__( 'Add and Close', YK_MT_SLUG )
 	);
 
 	return $html;

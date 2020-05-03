@@ -198,17 +198,54 @@ function yk_mt_ajax_external_search() {
 		return false;
 	}
 
+	if ( empty( $_POST[ 'search' ] ) ) {
+		return [];
+	}
+
 	check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-	$meals = [
-			[ 'id' => 1, 'name' => 'Meal one' ],
-			[ 'id' => 2, 'name' => 'Meal two' ],
-	];
+	$cache_key = 'ext-search-' . md5( $_POST[ 'search' ] );
+
+	if ( $cache = yk_mt_cache_temp_get( $cache_key ) )  {
+		wp_send_json( $cache );
+	}
+
+	$meals = yk_mt_ext_source_search( $_POST[ 'search' ] );
+
+	// Compress meal objects to reduce data returned via AJAX
+	if ( false === empty( $meals ) ) {
+		$meals = array_map( 'yk_mt_ajax_external_prep_meal', $meals );
+	}
+
+	// Cache data for this search term ( for 5 mins )
+	yk_mt_cache_temp_set( $cache_key, $meals );
 
 	wp_send_json( $meals );
 }
 add_action( 'wp_ajax_external_search', 'yk_mt_ajax_external_search' );
 
+/**
+ * Strip back a meal object ready for transmission via AJAX
+ * @param $meal
+ * @return mixed
+ */
+function yk_mt_ajax_external_prep_meal( $meal ) {
+
+	if ( true === is_array( $meal ) ) {
+
+		/**
+		 * Since we have the full meal object here (i.e. we're about to display it in search results), let's cache it for 5 minutes. That way,
+		 * if a user selects it, we have the relevant data for the meal cached (if not, we will need to call out to external API again).
+		 */
+		yk_mt_cache_temp_set( 'ext-meal-' . $meal[ 'ext_id' ], $meal );
+
+		$meal[ 'id' ] = $meal[ 'ext_id' ];
+
+		$meal = yk_mt_array_strip_keys( $meal, [ 'ext_id', 'calories', 'unit', 'meta_proteins', 'meta_fats', 'meta_carbs', 'source' ] );
+	}
+
+	return $meal;
+}
 
 /**
  * Save Settings for user
