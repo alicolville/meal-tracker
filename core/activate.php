@@ -35,6 +35,8 @@
 		yk_wt_db_tables_create();
 
 		yk_mt_db_defaults_meal_types();
+
+		do_action( 'yk_mt_db_fixed' );
 	}
 
 	/**

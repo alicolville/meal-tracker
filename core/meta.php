@@ -186,6 +186,7 @@ function yk_mt_meta_db_columns_create() {
 }
 add_action( 'yk_mt_settings_saved', 'yk_mt_meta_db_columns_create' );	// Admin settings page saved
 add_action( 'yk_mt_db_upgrade', 'yk_mt_meta_db_columns_create' );		// Fresh install / Version change
+add_action( 'yk_mt_db_fixed', 'yk_mt_meta_db_columns_create' );			// Admin clicked "Rebuild now" for missing columns
 
 /**
  * Extend core DB formats to include int meta fields
