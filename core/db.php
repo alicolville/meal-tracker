@@ -832,11 +832,14 @@ function yk_mt_db_meal_types_add( $meal_type ) {
 /**
  * Get all meal types
  *
- * @param $key
+ * @param bool $use_cache
+ * @return array|bool|mixed|object|void
  */
-function yk_mt_db_meal_types_all() {
+function yk_mt_db_meal_types_all( $use_cache = true) {
 
-    if ( $cache = apply_filters( 'yk_mt_db_meal_types_all', NULL ) ) {
+	$cache = ( true === $use_cache ) ? apply_filters( 'yk_mt_db_meal_types_all', NULL ) : NULL;
+
+    if ( false === empty( $cache ) ) {
         return $cache;
     }
 
