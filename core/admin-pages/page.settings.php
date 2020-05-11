@@ -5,7 +5,7 @@ defined('ABSPATH') or die('Jog on!');
 function yk_mt_settings_page_generic() {
 
     if ( !current_user_can( 'manage_options' ) )  {
-        wp_die( __( 'You do not have sufficient permissions to access this page.' , YK_MT_SLUG) );
+        wp_die( __( 'You do not have sufficient permissions to access this page.' , YK_MT_SLUG ) );
     }
 
     $is_premium = yk_mt_license_is_premium();
@@ -16,6 +16,26 @@ function yk_mt_settings_page_generic() {
 		do_action( 'yk_mt_settings_saved' );
 	}
 
+	// Rebuild mysql tables?
+	if ( false === empty( $_GET[ 'recreate-tables' ] ) ) {
+		yk_mt_missing_database_table_fix();
+	}
+
+	$mysql_table_check = yk_mt_missing_database_table_any_issues();
+
+	if ( false !== $mysql_table_check ) {
+
+		printf(
+			'<div class="error">
+						<p>%1$s</p>
+						<p><a href="%2$s?page=yk-mt-settings&amp;recreate-tables=y">%3$s</a></p>
+					</div>',
+			__( 'One or more database tables are missing for this plugin. They must be rebuilt if you wish to use the plugin.', YK_MT_SLUG ),
+			get_permalink(),
+			__( 'Rebuild them now', YK_MT_SLUG )
+
+		);
+	}
     ?>
     <div id="icon-options-general" class="icon32"></div>
 
