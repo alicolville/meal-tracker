@@ -58,6 +58,7 @@ TODO: minify CSS
 * Improvement: Fat Secret integration (look up meals from them).
 * Improvement: Major overhaul of CSS.
 * Improvement: Added unified look that ensures it looks more consistent across various themes.
+* Improvement: Added a check on Settings page to check that all MySQL tables are present for the plugin. Option to rebuild them if not.
 * Bug fix: Fixed quantity error handling.
 
 = 1.2 =
