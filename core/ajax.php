@@ -194,7 +194,7 @@ add_action( 'wp_ajax_meals', 'yk_mt_ajax_meals' );
  */
 function yk_mt_ajax_external_search() {
 
-	if ( false === yk_mt_ext_enabled() ) {
+	if ( false === YK_MT_HAS_EXTERNAL_SOURCES ) {
 		return false;
 	}
 
@@ -205,6 +205,7 @@ function yk_mt_ajax_external_search() {
 	check_ajax_referer( 'yk-mt-nonce', 'security' );
 
 	$cache_key = 'ext-search-' . md5( $_POST[ 'search' ] );
+	//$cache_key = 'ext-search-' .  $_POST[ 'search' ] ; //todo:
 
 	if ( $cache = yk_mt_cache_temp_get( $cache_key ) )  {
 		wp_send_json( $cache );
@@ -214,11 +215,14 @@ function yk_mt_ajax_external_search() {
 
 	// Compress meal objects to reduce data returned via AJAX
 	if ( false === empty( $meals ) ) {
+
 		$meals = array_map( 'yk_mt_ajax_external_prep_meal', $meals );
 	}
 
 	// Cache data for this search term ( for 5 mins )
-	yk_mt_cache_temp_set( $cache_key, $meals );
+	if ( false === empty( $meals ) ) {
+		yk_mt_cache_temp_set( $cache_key, $meals );
+	}
 
 	wp_send_json( $meals );
 }

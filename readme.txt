@@ -54,9 +54,11 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 TODO: minify CSS
 
-* Bug fix: Fixed quantity error handling.
+* Improvement: Underlying framework for supporting lookup of meals from external APIs.
+* Improvement: Fat Secret integration (look up meals from them).
 * Improvement: Major overhaul of CSS.
 * Improvement: Added unified look that ensures it looks more consistent across various themes.
+* Bug fix: Fixed quantity error handling.
 
 = 1.2 =
 

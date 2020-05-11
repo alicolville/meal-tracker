@@ -728,7 +728,7 @@ jQuery( document ).ready( function ( $ ) {
     // TODO: Need to check here? Do we need to re-init if already done?
 
     let yk_mt_meal_selector = $( '#yk-mt-search-external' ).selectize({
-      preload: true,
+      preload: false,
       valueField: 'id',
       labelField: 'name',
       searchField: 'name',
@@ -743,22 +743,6 @@ jQuery( document ).ready( function ( $ ) {
           html = html + '<span class="description">' + escape( item.description ) + '</span>';
 
           html = html + '<div>';
-
-
-          //  TODO:
-          //   return '<div>' +
-          //               '<span class="title">' +
-          //               '<span class="name"><i class="icon ' + ( item.name ? 'fork' : 'source') + '"></i>' + escape(item.name) + '</span>' +
-          //               '<span class="by">' + escape(item.name) + '</span>' +
-          //               '</span>' +
-          //               '<span class="description">' + escape(item.name) + '</span>' +
-          //               '<ul class="meta">' +
-          //               (item.name ? '<li class="language">' + escape(item.name) + '</li>' : '') +
-          //               '<li class="watchers"><span>' + escape(item.name) + '</span> watchers</li>' +
-          //               '<li class="forks"><span>' + escape(item.name) + '</span> forks</li>' +
-          //               '</ul>' +
-          //               '</div>';
-          // }
 
           return html;
         }
@@ -781,17 +765,43 @@ jQuery( document ).ready( function ( $ ) {
           success: function (res) {
 
             if ( false === res || 0 == res ) {
+
+              yk_mt_info( yk_mt_sc_meal_tracker['localise']['search-no-results'] );
+
               $( '.yk-mt-button-external-add-and-close, .yk-mt-button-external-add' ).fadeOut('slow');
+
             } else {
               $( '.yk-mt-button-external-add-and-close, .yk-mt-button-external-add' ).fadeIn('slow');
             }
 
-            callback(res);
+            callback( res );
           }
         });
       }
     });
   }
+
+  /**
+   * Add a meal to today's entry
+   */
+  $('.yk-mt-button-external-add').click(function (e) {
+
+    e.preventDefault();
+
+    let id = $(this).attr('id');
+
+    let ext_select = $( '#yk-mt-search-external' )[0].selectize;
+
+    console.log(ext_select.getValue());
+
+    let selected_id = ext_select.getValue();
+
+    if ( '' === selected_id ) {
+      yk_mt_info( 'shit' );
+    }
+    //yk_mt_info( $( '#yk-mt-search-external' )[0].selectize.getValue() );
+
+  });
 
   /**
    * ---------------------------------------------------------------------------------------
@@ -818,7 +828,7 @@ jQuery( document ).ready( function ( $ ) {
 
     if (false === response['error']) {
 
-      yk_mt_success(yk_mt_sc_meal_tracker['localise']['settings-saved-success']);
+      yk_mt_success( yk_mt_sc_meal_tracker['localise']['settings-saved-success'] );
 
       setTimeout(function () {
         window.location.replace(yk_mt['page-url']);

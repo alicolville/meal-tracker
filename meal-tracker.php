@@ -69,6 +69,10 @@ if ( true === $is_premium ) {
 	include_once YK_MT_ABSPATH . 'core/external-sources.php';
 }
 
+$has_external = yk_mt_ext_enabled();
+
+define( 'YK_MT_HAS_EXTERNAL_SOURCES', $has_external );
+
 // Admin pages
 include_once YK_MT_ABSPATH . 'core/admin-pages/user/data-dashboard.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/user/data-entry.php';

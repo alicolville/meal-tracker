@@ -25,7 +25,7 @@ function yk_mt_body_class( $classes ) {
         $classes[] = 'yk-mt__accordion-enabled';
     }
 
-    if ( true === yk_mt_ext_enabled() ) {
+    if ( true === YK_MT_HAS_EXTERNAL_SOURCES ) {
 		$classes[] = 'yk-mt__ext-enabled';
 	}
 

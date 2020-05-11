@@ -411,8 +411,6 @@ function yk_mt_shortcode_meal_tracker_add_meal_dialog() {
  */
 function yk_mt_shortcode_meal_tracker_add_new_meal_form_navigation() {
 
-	$have_external_sources = yk_mt_ext_enabled();
-
 	$html = sprintf( '  	<h4 id="yk-mt-header-meal-add" class="yk-mt__modal-subtitle yk-mt-hide-if-editing">%1$s</h4>
 								<div id="yk-mt-form-add-new-meal-nav">',
 							__( 'Add a new meal to your collection', YK_MT_SLUG )
@@ -421,7 +419,7 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form_navigation() {
 	/**
 	 * If we have one or more external source, then show button for search form
 	 */
-	if ( true === $have_external_sources ) {
+	if ( true === YK_MT_HAS_EXTERNAL_SOURCES ) {
 
 		$html .= sprintf( '	<button id="yk-mt-button-meal-nav-search" class="yk-mt__btn yk-mt__btn--medium" title="%1$s" >
 										<span class="yk-mt__btn-icon fa fa-search"></span>
@@ -450,11 +448,9 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form_navigation() {
  */
 function yk_mt_shortcode_meal_tracker_add_new_meal_form() {
 
-	$have_external_sources = yk_mt_ext_enabled();
-
 	$html = yk_mt_shortcode_meal_tracker_add_new_meal_form_navigation();
 
-	if ( true === $have_external_sources ) {
+	if ( true === YK_MT_HAS_EXTERNAL_SOURCES ) {
 		$html .= yk_mt_shortcode_meal_tracker_add_new_meal_external_form();
 	}
 
@@ -536,15 +532,15 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_external_form() {
 	$html .= sprintf( '
 		<div class="yk-mt-add-new-meal-form-search-external" style="display: none">
 		<div class="yk-mt__modal-footer">
-			<button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-reset-meal-nav">
+			<button class="yk-mt__btn yk-mt__btn--medium yk-mt-button-reset-meal-nav">
 				<span class="yk-mt__btn-icon fa fa-arrow-left"></span>
 				<span class="yk-mt__btn-text">%1$s</span>
 			</button>
-			<button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-external-add" style="display: none">
+			<button id="yk-mt-button-external-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-external-add" style="display: none">
 				<span class="yk-mt__btn-icon fa fa-plus"></span>
 				<span class="yk-mt__btn-text">%2$s</span>
 			</button>
-			<button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-external-add-and-close" style="display: none">
+			<button id="yk-mt-button-external-meal-add-close" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-external-add" style="display: none">
 				<span class="yk-mt__btn-icon fa fa-plus"></span>
 				<span class="yk-mt__btn-text">%3$s</span>
 			</button>
@@ -685,7 +681,7 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 	}
 
 	// Any external sources? If so, we'll need footables
-	if ( true === yk_mt_ext_enabled() ) {
+	if ( true === YK_MT_HAS_EXTERNAL_SOURCES ) {
 		yk_mt_enqueue_scripts_footable();
 	}
 

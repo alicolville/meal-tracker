@@ -24,18 +24,19 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 			return false;
 		}
 
-		if ( $results[ 'recipes' ][ 'total_results' ] > 0 ) {
-
-			$this->results 		= $results[ 'recipes' ][ 'recipe' ];
-			$this->no_results 	= $results[ 'recipes' ][ 'total_results' ];
-			$this->page_number 	= $results[ 'recipes' ][ 'page_number' ];
-			$this->page_size 	= $results[ 'recipes' ][ 'max_results' ];
-
+		if ( 0 == $results[ 'recipes' ][ 'total_results' ] ) {
+			return false;
 		}
+
+		$this->results 		= $results[ 'recipes' ][ 'recipe' ];
+		$this->no_results 	= $results[ 'recipes' ][ 'total_results' ];
+		$this->page_number 	= $results[ 'recipes' ][ 'page_number' ];
+		$this->page_size 	= $results[ 'recipes' ][ 'max_results' ];
 
 		$this->results = array_map( array( $this, 'format_result' ), $this->results );
 
 		return true;
+
 	}
 
 	function format_result( $result ) {

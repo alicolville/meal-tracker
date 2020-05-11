@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection */
 
 defined('ABSPATH') or die('Naw ya dinnie!');
 
@@ -488,7 +488,7 @@ function yk_mt_current_url() {
  * @return array
  */
 function yk_mt_ajax_config() {
-	return [
+	$config = [
         'page-url'                          => yk_mt_current_url(),
         'plugin-url'                        => YK_MT_PLUGIN_URL,
         'ajax-url'                          => admin_url('admin-ajax.php'),
@@ -496,6 +496,8 @@ function yk_mt_ajax_config() {
 	    'units-hide-quantity'               => yk_mt_units_where( 'drop-quantity', true, true ),
 		'external-source'					=> false
     ];
+
+	return apply_filters( 'yk_mt_config', $config );
 }
 
 /**
@@ -503,7 +505,8 @@ function yk_mt_ajax_config() {
  * @return array
  */
 function yk_mt_localised_strings( ) {
-    return [
+
+    $config = [
         'just-added'                    => __( 'Just Added:', YK_MT_SLUG ),
         'calorie-unit'                  => __( 'kcal', YK_MT_SLUG ),
         'remove-text'                   => __( 'Remove', YK_MT_SLUG ),
@@ -522,8 +525,10 @@ function yk_mt_localised_strings( ) {
         'db-error-loading'              => __( 'There was error loading your data', YK_MT_SLUG ),
 	    'settings-saved-success'        => __( 'Your settings have been saved', YK_MT_SLUG ),
         'confirm-title'                 => __( 'Are you sure?', YK_MT_SLUG ),
-        'confirm-content'               => __( 'Proceeding will cause user data to be deleted. This data can not be recovered. Are you sure you wish to proceed?', YK_MT_SLUG ),
+        'confirm-content'               => __( 'Proceeding will cause user data to be deleted. This data can not be recovered. Are you sure you wish to proceed?', YK_MT_SLUG )
     ];
+
+	return apply_filters( 'yk_mt_config_locale', $config );
 }
 
 /**
