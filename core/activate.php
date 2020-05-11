@@ -39,9 +39,9 @@
 
 	/**
 	 * Check all database tables exist!
-	 * @return bool|int
+	 * @return bool - return true if any tables are missing
 	 */
-	function yk_mt_missing_database_table_check() {
+	function yk_mt_missing_database_table_any_issues() {
 
 		$error_text = '';
 		global $wpdb;
@@ -53,20 +53,9 @@
 			$wpdb->prefix . YK_WT_DB_SETTINGS
 		];
 
-		// Check each table exists!
-		foreach( $tables_to_check as $table_name ) {
+		$count = $wpdb->get_var( 'SELECT COUNT(1) FROM information_schema.tables WHERE table_schema="' . DB_NAME .'" AND table_name in ( "' . implode('", "', $tables_to_check ) . '" )' );
 
-			$count = $wpdb->get_var( 'SELECT COUNT(1) FROM information_schema.tables WHERE table_schema="' . DB_NAME .'" AND table_name="' . $table_name . '"' );
-
-			if ( true === empty( $count ) ) {
-				$error_text .= sprintf( '<li>%s</li>', $table_name );
-			}
-		}
-
-		// Return error message if tables missing
-		return ( false === empty( $error_text ) ) ?
-				sprintf('%s: <ul>%s</ul>', __( 'The following MySQL tables are missing for this plugin' , YK_MT_SLUG ), $error_text ) :
-					false;
+		return ! ( count( $tables_to_check ) === (int) $count );
 	}
 
 	/**
