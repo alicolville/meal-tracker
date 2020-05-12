@@ -528,8 +528,7 @@ jQuery( document ).ready( function ( $ ) {
    * Edit Meal
    * ---------------------------------------------------------------------------------------
    */
-
-  $('.yk-mt-meal-button-edit-inline').live('click', function (e) {
+  $( 'body' ).on('click', '.yk-mt-meal-button-edit-inline', function (e) {
 
     e.preventDefault();
 

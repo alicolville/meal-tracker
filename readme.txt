@@ -52,7 +52,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 2.0 =
 
-TODO: minify CSS
+TODO: minify CSS / JS
 
 * Improvement: Underlying framework for supporting lookup of meals from external APIs.
 * Improvement: Fat Secret integration (look up meals from them).
@@ -60,6 +60,7 @@ TODO: minify CSS
 * Improvement: Added unified look that ensures it looks more consistent across various themes.
 * Improvement: Added a check on Settings page to check that all MySQL tables are present for the plugin. Option to rebuild them if not.
 * Bug fix: Fixed quantity error handling.
+* Bug fix: Replaced deprecated jQuery code.
 
 = 1.2 =
 
