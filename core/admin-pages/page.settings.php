@@ -55,6 +55,18 @@ function yk_mt_settings_page_generic() {
                             </span>
                         </h3>
                         <div class="inside">
+							<?php if ( false === empty( $_GET[ 'test-search' ] ) ): ?>
+								<h3><?php echo __( 'API Test Results' , YK_MT_SLUG); ?></h3>
+								<table class="form-table">
+									<tr>
+										<th scope="row"><?php echo __( 'Test Results' , YK_MT_SLUG); ?></th>
+										<td>
+											<textarea class="large-text" rows="20"><?php echo esc_html( yk_mt_ext_source_test() ); ?></textarea>
+										</td>
+									</tr>
+								</table>
+								<br />
+							<?php endif; ?>
                             <form method="post" action="options.php">
                                 <?php
 
@@ -64,10 +76,10 @@ function yk_mt_settings_page_generic() {
                                 ?>
                                 <div id="yk-mt-tabs">
                                     <ul>
-                                        <li><a><?php echo __( 'General', YK_MT_SLUG ); ?><span><?php echo __( 'General settings', YK_MT_SLUG ); ?></span></a></li>
-                                        <li><a><?php echo __( 'Calorie Allowance', YK_MT_SLUG ); ?><span><?php echo __( 'Specify the sources for determining a user\'s calorie allowance', YK_MT_SLUG ); ?></span></a></li>
-										<li><a><?php echo __( 'External Sources', YK_MT_SLUG ); ?><span><?php echo __( 'Specify an external source to allow your user\'s to search for meals', YK_MT_SLUG ); ?></span></a></li>
-                                        <li><a><?php echo __( 'Display', YK_MT_SLUG ); ?><span><?php echo __( 'Specify how the plugin looks', YK_MT_SLUG ); ?></span></a></li>
+                                        <li id="general"><a><?php echo __( 'General', YK_MT_SLUG ); ?><span><?php echo __( 'General settings', YK_MT_SLUG ); ?></span></a></li>
+                                        <li id="calorie-allowance"><a><?php echo __( 'Calorie Allowance', YK_MT_SLUG ); ?><span><?php echo __( 'Specify the sources for determining a user\'s calorie allowance', YK_MT_SLUG ); ?></span></a></li>
+										<li id="external-sources"><a><?php echo __( 'External Sources', YK_MT_SLUG ); ?><span><?php echo __( 'Specify an external source to allow your user\'s to search for meals', YK_MT_SLUG ); ?></span></a></li>
+                                        <li id="display"><a><?php echo __( 'Display', YK_MT_SLUG ); ?><span><?php echo __( 'Specify how the plugin looks', YK_MT_SLUG ); ?></span></a></li>
                                     </ul>
                                     <div>
                                         <div>
@@ -215,7 +227,29 @@ function yk_mt_settings_page_generic() {
 												<?php echo __( 'Specify API credentials for your preferred external service. Meal Tracker will then allow your user\'s to search their database, select meals and copy the data to the user\'s meal collection' , YK_MT_SLUG); ?>.
 												<strong><?php echo __( 'Only one API can be used' , YK_MT_SLUG); ?>. <?php echo __( 'If more than one has been specified, then the plugin will pick the one itself.' , YK_MT_SLUG); ?>.</strong>
 											</p>
-											<h3><?php echo __( 'FatSecret API' , YK_MT_SLUG); ?></h3>
+											<?php
+
+												$current_source = yk_mt_ext_source_which_is_enabled();
+
+											?>
+											<h3><?php echo __( 'Enabled Source' , YK_MT_SLUG ); ?></h3>
+											<table class="form-table">
+												<tr>
+													<th scope="row"><?php echo __( 'Enabled Source' , YK_MT_SLUG); ?></th>
+													<td>
+														<?php echo esc_html( ( false === empty( $current_source ) ? $current_source : __( 'API credentials missing for all APIs' , YK_MT_SLUG ) ) ); ?>
+													</td>
+												</tr>
+												<?php if ( false !== $current_source ): ?>
+													<tr>
+														<th scope="row"><?php echo __( 'Test API' , YK_MT_SLUG); ?></th>
+														<td>
+															<a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-settings&test-search=true#external-sources') ); ?>" class="button"><?php echo __( 'Perform a test search for "Apples"' , YK_MT_SLUG); ?></a>
+														</td>
+													</tr>
+												<?php endif; ?>
+											</table>
+											<h3><?php echo __( 'FatSecret API' , YK_MT_SLUG ); ?></h3>
 											<p><?php echo __( 'You are able to create the required REST API OAuth 2.0 Credentials a the following page:' , YK_MT_SLUG); ?> <a href="https://platform.fatsecret.com/api/Default.aspx?screen=myk" target="_blank">https://platform.fatsecret.com/api/Default.aspx?screen=myk</a></p>
 											<table class="form-table">
 												<tr>

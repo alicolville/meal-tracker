@@ -17,6 +17,7 @@ abstract class YK_MT_EXT_SOURCE {
 	protected $cache_hit	= false;
 	protected $auth			= false;
 	protected $error		= false;
+	protected $api_response	= false;
 
 	/**
 	 * Initialise class
@@ -106,6 +107,14 @@ abstract class YK_MT_EXT_SOURCE {
 	 */
 	public function get_error() {
 		return $this->error;
+	}
+
+	/**
+	 * Get API response
+	 * @return bool
+	 */
+	public function get_api_response() {
+		return $this->api_response;
 	}
 
 	/**

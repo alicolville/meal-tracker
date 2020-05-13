@@ -127,6 +127,8 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 
 		$response = wp_remote_get( $this->base_url, $args );
 
+		$this->api_response = $response;
+
 		$response_code = wp_remote_retrieve_response_code( $response );
 
 		if ( 200 !== $response_code ) {

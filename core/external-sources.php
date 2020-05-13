@@ -70,21 +70,29 @@ function yk_mt_ext_source_test() {
 
 	// An errors?
 	if ( $external_source->has_error() ) {
-		return sprintf( '%s: %s', __( 'Error', YK_MT_SLUG ), $external_source->get_error() );
+		return sprintf( "%s: %s\n\n", __( 'Error', YK_MT_SLUG ), $external_source->get_error() );
 	}
 
 	// Perform a test search for something obvious. We should get results!
-	$external_source->search('apple' );
+	$external_source->search('apples' );
+
+	$details = '';
 
 	if ( $external_source->has_error() ) {
-		return sprintf( '%s: %s', __( 'Error', YK_MT_SLUG ), $external_source->get_error() );
+		$details .= sprintf( '%s: %s', __( 'Error', YK_MT_SLUG ), $external_source->get_error() );
 	}
 
 	if ( false === $external_source->has_results() ) {
-		return __( 'Error: No search results could be found for the term "apple"' );
+		$details .= __( 'Error: No search results could be found for the term "apples"' );
+	} else {
+		$details .= __( 'Success: Results have been found for "apples"' );
+
+		$details .= print_r( $external_source->results(), true );
 	}
 
-	return true;
+	$details .= print_r( $external_source->get_api_response(), true );
+
+	return $details;
 }
 
 function yk_mt_ext_source_get( $id ) {
