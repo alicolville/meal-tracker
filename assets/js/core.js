@@ -763,7 +763,13 @@ jQuery( document ).ready( function ( $ ) {
           },
           success: function (res) {
 
-            if ( false === res || 0 == res ) {
+            if ( 'error' == res ) {
+
+              yk_mt_warn( yk_mt_sc_meal_tracker['localise']['search-error'] );
+
+              $( '.yk-mt-button-external-add-and-close, .yk-mt-button-external-add' ).fadeOut('slow');
+
+            } else if ( false === res || 0 == res ) {
 
               yk_mt_info( yk_mt_sc_meal_tracker['localise']['search-no-results'] );
 

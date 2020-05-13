@@ -199,19 +199,23 @@ function yk_mt_ajax_external_search() {
 	}
 
 	if ( empty( $_POST[ 'search' ] ) ) {
-		return [];
+		wp_send_json( [] );
 	}
 
 	check_ajax_referer( 'yk-mt-nonce', 'security' );
 
 	$cache_key = 'ext-search-' . md5( $_POST[ 'search' ] );
-	//$cache_key = 'ext-search-' .  $_POST[ 'search' ] ; //todo:
 
 	if ( $cache = yk_mt_cache_temp_get( $cache_key ) )  {
 		wp_send_json( $cache );
 	}
 
 	$meals = yk_mt_ext_source_search( $_POST[ 'search' ] );
+
+	// Do we have an error?
+	if ( 'ERR' === $meals ) {
+		wp_send_json( 'error' );
+	}
 
 	// Compress meal objects to reduce data returned via AJAX
 	if ( false === empty( $meals ) ) {

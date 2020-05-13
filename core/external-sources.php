@@ -99,8 +99,17 @@ function yk_mt_ext_source_search( $search_term ) {
 
 	$external_source->search( $search_term );
 
+	// Do we have an error?
+	if ( $external_source->has_error() ) {
+
+		// Log to PHP error log
+		yk_mt_log_error( $external_source->get_error() );
+
+		return 'ERR';
+	}
+
 	if ( ! $external_source->has_results() ) {
-		return false;
+		return [];
 	}
 
 	return $external_source->results();
@@ -133,7 +142,8 @@ function yk_mt_ext_filters_locale( $locale ) {
 		return $locale;
 	}
 
-	$locale[ 'search-no-results' ] = __( 'No meals could be found', YK_MT_SLUG );
+	$locale[ 'search-no-results' ] 	= __( 'No meals could be found', YK_MT_SLUG );
+	$locale[ 'search-error' ] 		= __( 'Then was an error searching our database. Please try again.', YK_MT_SLUG );
 
 	return $locale;
 }

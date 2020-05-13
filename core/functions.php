@@ -1220,3 +1220,13 @@ function yk_mt_lang_translate_known_meal_type_from_english( $meal_type ) {
 
 	return ( false === empty( $lookup[ $meal_type ] ) ) ? $lookup[ $meal_type ] : '';
 }
+
+/**
+ * Log to PHP error log
+ * @param $text
+ */
+function yk_mt_log_error( $text ) {
+	if ( false === empty( $text ) ) {
+		error_log( $text );
+	}
+}

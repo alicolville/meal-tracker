@@ -130,7 +130,14 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 		$response_code = wp_remote_retrieve_response_code( $response );
 
 		if ( 200 !== $response_code ) {
-			$this->error = sprintf( 'There was an issue communicating with FatSecrets. HTTP Code %d', $response_code );
+
+			$error = sprintf( 'There was an issue communicating with FatSecrets. HTTP Code %d.', $response_code );
+
+			if ( false === empty( $response[ 'body' ] ) ) {
+				$error .= $response[ 'body' ];
+			}
+
+			$this->error = sprintf( 'There was an issue communicating with FatSecrets. HTTP Code %d. %s' , $response_code, $error );
 			return false;
 		}
 
