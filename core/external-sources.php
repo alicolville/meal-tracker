@@ -15,7 +15,28 @@ function yk_mt_ext_enabled() {
 		return false;
 	}
 
-	return true;	// todo
+	if ( false !== yk_mt_ext_source_which_is_enabled() ) {
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * Based on the settings, determine what externals source is enabled.
+ * @return bool|string
+ */
+function yk_mt_ext_source_which_is_enabled() {
+
+	// FatSecret
+	$client_id 		= yk_mt_site_options( 'external-fatsecret-id', '' );
+	$client_secret 	= yk_mt_site_options( 'external-fatsecret-secret', '' );
+
+	if ( false === empty( $client_id ) && false === empty( $client_secret ) ){
+		return 'fat-secret';
+	}
+
+	return false;
 }
 
 function yk_mt_ext_source_create_instance() {
