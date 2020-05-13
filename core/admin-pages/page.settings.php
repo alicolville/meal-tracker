@@ -66,6 +66,7 @@ function yk_mt_settings_page_generic() {
                                     <ul>
                                         <li><a><?php echo __( 'General', YK_MT_SLUG ); ?><span><?php echo __( 'General settings', YK_MT_SLUG ); ?></span></a></li>
                                         <li><a><?php echo __( 'Calorie Allowance', YK_MT_SLUG ); ?><span><?php echo __( 'Specify the sources for determining a user\'s calorie allowance', YK_MT_SLUG ); ?></span></a></li>
+										<li><a><?php echo __( 'External Sources', YK_MT_SLUG ); ?><span><?php echo __( 'Specify an external source to allow your user\'s to search for meals', YK_MT_SLUG ); ?></span></a></li>
                                         <li><a><?php echo __( 'Display', YK_MT_SLUG ); ?><span><?php echo __( 'Specify how the plugin looks', YK_MT_SLUG ); ?></span></a></li>
                                     </ul>
                                     <div>
@@ -204,6 +205,33 @@ function yk_mt_settings_page_generic() {
                                                 </tr>
                                             </table>
                                         </div>
+										<div>
+											<?php
+												if ( false === $is_premium ) {
+													yk_mt_display_pro_upgrade_notice();
+												}
+											?>
+											<p>
+												<?php echo __( 'Specify API credentials for your preferred external service. Meal Tracker will then allow your user\'s to search their database, select meals and copy the data to the user\'s meal collection' , YK_MT_SLUG); ?>.
+												<strong><?php echo __( 'Only one API can be used' , YK_MT_SLUG); ?>. <?php echo __( 'If more than one has been specified, then the plugin will pick the one itself.' , YK_MT_SLUG); ?>.</strong>
+											</p>
+											<h3><?php echo __( 'FatSecret API' , YK_MT_SLUG); ?></h3>
+											<p><?php echo __( 'You are able to create the required REST API OAuth 2.0 Credentials a the following page:' , YK_MT_SLUG); ?> <a href="https://platform.fatsecret.com/api/Default.aspx?screen=myk" target="_blank">https://platform.fatsecret.com/api/Default.aspx?screen=myk</a></p>
+											<table class="form-table">
+												<tr>
+													<th scope="row"><?php echo __( 'Client ID' , YK_MT_SLUG); ?></th>
+													<td>
+														<input type="text" name="external-fatsecret-id" id="external-fatsecret-id" value="<?php echo esc_attr( yk_mt_site_options( 'external-fatsecret-id', '' ) ); ?>" class="large-text" maxlength="40" />
+													</td>
+												</tr>
+												<tr>
+													<th scope="row"><?php echo __( 'Client Secret' , YK_MT_SLUG); ?></th>
+													<td>
+														<input type="text" name="external-fatsecret-secret" id="external-fatsecret-secret" value="<?php echo esc_attr( yk_mt_site_options( 'external-fatsecret-secret', '' ) ); ?>" class="large-text" maxlength="40" />
+													</td>
+												</tr>
+											</table>
+										</div>
                                         <div>
                                             <?php
                                                 if ( false === $is_premium ) {
@@ -280,6 +308,9 @@ function yk_mt_register_settings(){
         register_setting( 'yk-mt-options-group', 'new-entries-past' );
         register_setting( 'yk-mt-options-group', 'new-entries-future' );
         register_setting( 'yk-mt-options-group', 'macronutrients-enabled' );
+
+		register_setting( 'yk-mt-options-group', 'external-fatsecret-id' );
+		register_setting( 'yk-mt-options-group', 'external-fatsecret-secret' );
     }
 }
 add_action( 'admin_init', 'yk_mt_register_settings' );

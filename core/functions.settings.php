@@ -56,9 +56,12 @@ function yk_mt_settings_set( $key, $value, $user_id = NULL ) {
 function yk_mt_settings_allowed_keys() {
     return [ 'allowed-calories', 'allowed-calories-admin', 'calorie-source' ];
 }
+
 /**
  * Fetch a site option
  * @param $key
+ * @param bool $default
+ * @return bool|mixed|void
  */
 function yk_mt_site_options( $key, $default = true ) {
     return get_option( $key, $default );
