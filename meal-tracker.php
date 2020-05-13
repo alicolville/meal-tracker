@@ -64,12 +64,14 @@ include_once YK_MT_ABSPATH . 'core/sources-weight-tracker.php';
 include_once YK_MT_ABSPATH . 'core/cron.php';
 include_once YK_MT_ABSPATH . 'core/meta.php';
 
+$has_external = false;
+
 // If Premium, include external databases
 if ( true === $is_premium ) {
 	include_once YK_MT_ABSPATH . 'core/external-sources.php';
-}
 
-$has_external = yk_mt_ext_enabled();
+	$has_external = yk_mt_ext_enabled();
+}
 
 define( 'YK_MT_HAS_EXTERNAL_SOURCES', $has_external );
 
