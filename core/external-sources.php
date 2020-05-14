@@ -95,12 +95,17 @@ function yk_mt_ext_source_test() {
 	return $details;
 }
 
+/**
+ * Fetch meal from external API
+ * @param $id
+ * @return array|bool|mixed
+ */
 function yk_mt_ext_source_get( $id ) {
 
-	//TODO:
-
-	// Check the following cache first
-	//	yk_mt_cache_temp_get( 'ext-meal-' . $meal[ 'ext_id' ] );
+	// Has the meal been cached? If so, don't bother calling out to the external API
+	if ( $cache = yk_mt_cache_temp_get( 'ext-meal-' . $id ) ) {
+		//return $cache;
+	}
 
 	$external_source = yk_mt_ext_source_create_instance();
 
@@ -109,7 +114,11 @@ function yk_mt_ext_source_get( $id ) {
 		return false;
 	}
 
-	return $external_source->get( $id );
+	$meal = $external_source->get( $id );
+
+	yk_mt_cache_temp_set( 'ext-meal-' . $id, $meal );
+
+	return $meal;
 }
 
 /**
@@ -178,24 +187,22 @@ function yk_mt_ext_filters_locale( $locale ) {
 }
 add_filter( 'yk_mt_config_locale', 'yk_mt_ext_filters_locale' );
 
-// TODO
-//function test() {
-//
-//	$r = yk_mt_ext_source_search( 'cup cakes' ) ;
-//
-//	print_r( $r );
-//die;
-//}
-//add_action( 'init', 'test' );
+/**
+ * Add an external meal to the user's meal collection
+ * @param $ext_id
+ * @param null $user_id
+ * @return bool
+ */
+function yk_mt_ext_add_meal_to_user_collection( $ext_id, $user_id = NULL ) {
 
+	$ext_meal = yk_mt_ext_source_get( $ext_id );
 
-//
-//
-//function test() {
-//
-//	$r = yk_mt_ext_source_get( 447533 ) ;
-//
-//	print_r( $r );
-//die;
-//}
-//add_action( 'init', 'test' );
+	// No meal found?
+	if ( true === empty( $ext_meal ) ) {
+		return false;
+	}
+
+	$ext_meal[ 'added_by' ] = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+	return yk_mt_db_meal_add( $ext_meal );
+}
