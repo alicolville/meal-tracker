@@ -229,7 +229,7 @@ function yk_mt_settings_page_generic() {
 											</p>
 											<?php
 
-												$current_source = yk_mt_ext_source_which_is_enabled();
+												$current_source = yk_mt_ext_source_credentials();
 
 											?>
 											<h3><?php echo __( 'Enabled Source' , YK_MT_SLUG ); ?></h3>
@@ -237,7 +237,7 @@ function yk_mt_settings_page_generic() {
 												<tr>
 													<th scope="row"><?php echo __( 'Enabled Source' , YK_MT_SLUG); ?></th>
 													<td>
-														<?php echo esc_html( ( false === empty( $current_source ) ? $current_source : __( 'API credentials missing for all APIs' , YK_MT_SLUG ) ) ); ?>
+														<?php echo esc_html( ( false === empty( $current_source ) ? print_r( $current_source, true ) : __( 'API credentials missing for all APIs' , YK_MT_SLUG ) ) ); ?>
 													</td>
 												</tr>
 												<?php if ( false !== $current_source ): ?>

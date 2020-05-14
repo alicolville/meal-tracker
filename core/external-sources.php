@@ -15,7 +15,7 @@ function yk_mt_ext_enabled() {
 		return false;
 	}
 
-	if ( false !== yk_mt_ext_source_which_is_enabled() ) {
+	if ( false !== yk_mt_ext_source_credentials() ) {
 		return false;
 	}
 
@@ -26,35 +26,35 @@ function yk_mt_ext_enabled() {
  * Based on the settings, determine what externals source is enabled.
  * @return bool|string
  */
-function yk_mt_ext_source_which_is_enabled() {
+function yk_mt_ext_source_credentials() {
 
 	// FatSecret
 	$client_id 		= yk_mt_site_options( 'external-fatsecret-id', '' );
 	$client_secret 	= yk_mt_site_options( 'external-fatsecret-secret', '' );
 
 	if ( false === empty( $client_id ) && false === empty( $client_secret ) ){
-		return 'fat-secret';
+		return [ 'source' => 'fat-secret', 'credentials' => [ 'client_id' => $client_id, 'client_secret' => $client_secret ] ];
 	}
 
 	return false;
 }
 
+/**
+ * Depending on external source settings, create an instance of external search class
+ * @return YK_MT_EXT_FAT_SECRET
+ */
 function yk_mt_ext_source_create_instance() {
 
-	global $external_source;
+	$external_credentials = yk_mt_ext_source_credentials();
 
-	/**
-	 * Notes:
-	 *
-	 * Fat Secret.
-	 *
-	 * 		Requires Client ID and Secret for Bearer token
-	 * 		!! IP address of server must be whitelisted here: https://platform.fatsecret.com/api/Default.aspx?screen=mykd&id=16104
-	 */
+	// Do we have API credentials for an external source?
+	if ( false === $external_credentials ) {
+		return false;
+	}
 
-	$fat_secret_credentials = [	'client_id' => '7e823ae975674e68975177a282aa9516', 'client_secret' => '53962ac81c2f46e1ac77c171d0170c8c' ];
+	$external_source = new YK_MT_EXT_FAT_SECRET( $external_credentials[ 'credentials' ] );
 
-	$external_source = new YK_MT_EXT_FAT_SECRET( $fat_secret_credentials );
+	// TODO: Add support for more External APIs
 
 	return $external_source;
 }
