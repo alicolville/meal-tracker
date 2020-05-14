@@ -15,7 +15,7 @@ function yk_mt_ext_enabled() {
 		return false;
 	}
 
-	if ( false !== yk_mt_ext_source_credentials() ) {
+	if ( false === yk_mt_ext_source_credentials() ) {
 		return false;
 	}
 
