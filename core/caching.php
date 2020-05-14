@@ -99,7 +99,7 @@ function yk_mt_cache_group_delete( $group_key, $key = NULL ) {
 function yk_mt_cache_get( $key ) {
 
     if( true === yk_mt_cache_is_enabled() ) {
-        $key = yk_mt_cache_generate_key($key);
+        $key = yk_mt_cache_generate_key( $key );
         return get_transient( $key );
     }
 
