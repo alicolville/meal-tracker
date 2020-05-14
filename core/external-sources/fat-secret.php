@@ -54,7 +54,7 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 			'ext_image'		=> ( false === empty( $result[ 'recipe_image' ] ) ) ? $result[ 'recipe_image' ] : '',
 			'quantity'		=> '0',
 			'unit'			=> 'na',
-			// 'original'		=> $result
+			'source'		=> 'fat-secret'
 		];
 	}
 
@@ -71,7 +71,7 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 
 		// Error hit?
 		if ( true === $this->has_error() ) {
-			return $this->get_error();
+			return false;
 		}
 
 		if ( true === empty( $result[ 'recipe' ] ) )  {
@@ -83,6 +83,10 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 
 		if ( false === empty( $result[ 'serving_sizes' ][ 'serving' ] ) ) {
 			$result[ 'recipe_nutrition' ] = $result[ 'serving_sizes' ][ 'serving' ];
+		}
+
+		if ( false === empty( $result[ 'recipe_images' ][ 'recipe_image' ] ) ) {
+			$result[ 'recipe_image' ] = $result[ 'recipe_images' ][ 'recipe_image' ];
 		}
 
 		return $this->format_result( $result );
