@@ -1189,12 +1189,12 @@ function yk_mt_cache_temp_get( $key ) {
 }
 
 /**
- * Handy function for temp caching (if caching.php included) - default 5 mins
+ * Handy function for temp caching (if caching.php included) - default 15 mins
  * @param $key
  * @param $value
  * @param int $duration
  */
-function yk_mt_cache_temp_set( $key, $value, $duration = 300 ) {
+function yk_mt_cache_temp_set( $key, $value, $duration = 1500 ) {
     do_action( 'yk_mt_cache_temp_set', $key, $value, $duration );
 }
 
