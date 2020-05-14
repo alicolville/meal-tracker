@@ -780,6 +780,7 @@ jQuery( document ).ready( function ( $ ) {
             }
 
             callback( res );
+
           }
         });
       }
@@ -787,7 +788,7 @@ jQuery( document ).ready( function ( $ ) {
   }
 
   /**
-   * Add a meal to today's entry
+   * Take the meal from the External API, trigger it to be copied to the user's meal collection.
    */
   $('.yk-mt-button-external-add').click(function (e) {
 
@@ -795,17 +796,42 @@ jQuery( document ).ready( function ( $ ) {
 
     let id = $(this).attr('id');
 
-    let ext_select = $( '#yk-mt-search-external' )[0].selectize;
-
-    console.log(ext_select.getValue());
-
+    let ext_select  = $( '#yk-mt-search-external' )[0].selectize;
     let selected_id = ext_select.getValue();
 
+    // No meal has been selected.
     if ( '' === selected_id ) {
-      yk_mt_info( 'shit' );
+      return;
     }
-    //yk_mt_info( $( '#yk-mt-search-external' )[0].selectize.getValue() );
 
+    // TODO: Refactor to use yk_mt_post
+
+    $.ajax( {
+      url: yk_mt['ajax-url'],
+      type: 'POST',
+      data: { action: 'external_add_to_collection', security: yk_mt['ajax-security-nonce'], meal_id: selected_id },
+      error: function () {
+
+      },
+      success: function (res) {
+
+        if ( 'error' == res ) {
+
+          yk_mt_warn( yk_mt_sc_meal_tracker['localise']['db-error'] );
+
+
+
+        } else if ( false === res || 0 == res ) {
+
+
+
+        } else {
+
+        }
+
+       // callback( res );
+      }
+    });
   });
 
   /**

@@ -233,6 +233,40 @@ function yk_mt_ajax_external_search() {
 add_action( 'wp_ajax_external_search', 'yk_mt_ajax_external_search' );
 
 /**
+ * Add an external meal to the user's meal collection
+ */
+function yk_mt_ajax_external_add_to_collection() {
+
+	if ( false === YK_MT_HAS_EXTERNAL_SOURCES ) {
+		return false;
+	}
+
+	if ( empty( $_POST[ 'meal_id' ] ) ) {
+		wp_send_json( false );
+	}
+
+	check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+	$meal_id = yk_mt_ext_add_meal_to_user_collection( $_POST[ 'meal_id' ] );
+
+	// No meal found?
+	if ( false === $meal_id ) {
+		wp_send_json ( 'error' );
+	}
+
+
+
+	// TODO: Auto add to selected entry?
+
+
+	// TODO: Return meal id of new user meal OR 'error' if issue
+
+wp_Send_json ( $meal_id );
+
+}
+add_action( 'wp_ajax_external_add_to_collection', 'yk_mt_ajax_external_add_to_collection' );
+
+/**
  * Strip back a meal object ready for transmission via AJAX
  * @param $meal
  * @return mixed
