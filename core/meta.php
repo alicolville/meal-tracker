@@ -64,7 +64,7 @@ function yk_mt_meta_fields() {
 			'title' 			=> __( 'Proteins', YK_MT_SLUG ),
 			'visible_user' 		=> true,
 			'visible_admin' 	=> true,
-			'type'				=> 'int',
+			'type'				=> 'float',
 			'required'			=> true
 		];
 
@@ -74,7 +74,7 @@ function yk_mt_meta_fields() {
 			'title' 			=> __( 'Fats', YK_MT_SLUG ),
 			'visible_user' 		=> true,
 			'visible_admin' 	=> true,
-			'type'				=> 'int',
+			'type'				=> 'float',
 			'required'			=> true
 		];
 
@@ -84,7 +84,7 @@ function yk_mt_meta_fields() {
 			'title' 			=> __( 'Carbs', YK_MT_SLUG ),
 			'visible_user' 		=> true,
 			'visible_admin' 	=> true,
-			'type'				=> 'int',
+			'type'				=> 'float',
 			'required'			=> true
 		];
 
@@ -195,10 +195,10 @@ add_action( 'yk_mt_db_fixed', 'yk_mt_meta_db_columns_create' );			// Admin click
  */
 function yk_mt_meta_db_formats( $formats ) {
 
-	$columns = yk_mt_meta_fields_where( 'type', 'int', 'db_col' );
+	$columns = yk_mt_meta_fields_where( 'type', 'float', 'db_col' );
 
 	foreach( $columns as $column ) {
-		$formats[ $column ] = '%d';
+		$formats[ $column ] = '%f';
 	}
 
 	return $formats;

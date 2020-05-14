@@ -939,7 +939,11 @@ function yk_mt_db_mysql_formats( $data ) {
         'deleted'               => '%d',
         'favourite'             => '%d',
         'unit'                  => '%s',
-        'json'                  => '%s'
+        'json'                  => '%s',
+		'source'				=> '%s',
+		'ext_id'				=> '%d',
+		'ext_image'				=> '%s',
+		'ext_url'				=> '%s',
     ];
 
     $formats = apply_filters( 'yk_mt_db_formats', $formats );
