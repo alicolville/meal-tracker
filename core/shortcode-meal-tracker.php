@@ -473,7 +473,7 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form() {
 
 
 	// If premium, do we have any additional fields for the meal?
-	if ( true === yk_mt_license_is_premium() ) {
+	if ( true === yk_mt_meta_is_enabled() ) {
 
 		$meta_fields = yk_mt_meta_fields_where( 'visible_user', true );
 

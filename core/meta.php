@@ -8,6 +8,9 @@ defined('ABSPATH') or die("Jog on!");
  */
 function yk_mt_meta_is_enabled() {
 
+	if ( false ===  yk_mt_license_is_premium() ) {
+		return false;
+	}
 	return true; // TODO
 
 	return ( true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) );
@@ -102,6 +105,10 @@ function yk_mt_meta_fields() {
  * @return bool
  */
 function yk_mt_meta_fields_visible_user_keys() {
+
+	if ( false === yk_mt_meta_is_enabled() ) {
+		return [];
+	}
 
 	$meta_fields = yk_mt_meta_fields_where( 'visible_user', true );
 
