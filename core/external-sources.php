@@ -154,22 +154,6 @@ function yk_mt_ext_source_search( $search_term ) {
 }
 
 /**
- * Return default config used for external sources
- * @param $config
- * @return mixed
- */
-//function yk_mt_ext_config( $config = [] ) {
-//
-//	if ( ! YK_MT_HAS_EXTERNAL_SOURCES ) {
-//		return $config;
-//	}
-//
-//	$config[ 'external' ] = [ 'max-results' => 20 ];
-//
-//	return $config;
-//}
-
-/**
  * Add locale strings to JS config
  * @param $locale
  * @return mixed
