@@ -470,8 +470,7 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form() {
 		</p>',
 		__( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
 	);
-
-
+var_Dump(yk_mt_meta_is_enabled());
 	// If premium, do we have any additional fields for the meal?
 	if ( true === yk_mt_meta_is_enabled() ) {
 
@@ -481,10 +480,10 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form() {
 
 			// TODO: Support additional field types.
 
-			// Integer fields
-			if ( 'int' === $field[ 'type' ] ) {
+			// Float fields
+			if ( 'float' === $field[ 'type' ] ) {
 
-				$html .= yk_mt_form_number( $field[ 'title' ], sprintf( 'add-meal-%s', $field[ 'db_col' ] ), '', '', 1,0, 9999, true, $field[ 'required' ] );
+				$html .= yk_mt_form_number( $field[ 'title' ], sprintf( 'add-meal-%s', $field[ 'db_col' ] ), '', '', 0.1,0, 9999, true, $field[ 'required' ] );
 			}
 		}
 	}
