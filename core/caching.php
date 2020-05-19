@@ -176,7 +176,7 @@ function yk_mt_cache_delete_all() {
  * @return string
  */
 function yk_mt_cache_generate_key( $key ){
-    return sprintf( '%s-%s-%s', YK_MT_SLUG, YK_MT_PLUGIN_VERSION, $key);
+    return sprintf( '%s-%s-%s-%s', YK_MT_SLUG, YK_MT_IS_PREMIUM, YK_MT_PLUGIN_VERSION, $key);
 }
 
 // -------------------------------------------------------------
