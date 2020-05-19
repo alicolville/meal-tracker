@@ -732,7 +732,7 @@ function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step =
 		$name,
 		(int) $min,
 		(int) $max,
-		(int) $step,
+		(float) $step,
 		$value,
         ( true === $required ) ? ' required' : '',
         $css_class,

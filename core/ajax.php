@@ -92,7 +92,7 @@ function yk_mt_ajax_meal_add() {
                 return wp_send_json( [ 'error' => 'missing-meta-field-' . $key ] );
             }
 
-            $post_data[ $key ] = (int) $meta_fields[ $key ];
+            $post_data[ $key ] = (float) $meta_fields[ $key ];
         }
 
     }

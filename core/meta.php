@@ -129,6 +129,7 @@ function yk_mt_meta_js_config() {
 
 		switch ( $field[ 'type' ] ) {
 			case 'int':
+			case 'float':
 				$default = 0;
 				break;
 			default:
@@ -170,8 +171,8 @@ function yk_mt_meta_db_columns_create() {
 		if ( false === in_array( $field[ 'db_col' ], $existing_fields ) ) {
 
 			switch ( $field[ 'type' ] ) {
-				case 'int':
-					$sql_to_execute[] = ' ADD ' . $field[ 'db_col' ]. ' INT(1) NULL DEFAULT 0';
+				case 'float':
+					$sql_to_execute[] = ' ADD ' . $field[ 'db_col' ]. ' float NULL DEFAULT 0';
 					break;
 				default:
 					$default = '';
