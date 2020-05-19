@@ -137,6 +137,22 @@ function yk_mt_settings_page_generic() {
                                                     </td>
                                                 </tr>
                                             </table>
+											<h3><?php echo __( 'Macronutrients' , YK_MT_SLUG); ?></h3>
+											<table class="form-table">
+												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+													<th scope="row"><?php echo __( 'Enable Macronutrients?' , YK_MT_SLUG); ?></th>
+													<td>
+														<?php
+														$value = yk_mt_site_options_as_bool('macronutrients-enabled', false );
+														?>
+														<select id="macronutrients-enabled" name="macronutrients-enabled">
+															<option value="false" <?php selected( $value, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
+															<option value="true" <?php selected( $value, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
+														</select>
+														<p><?php echo __( 'Please note, there is only basic support for Macronutrient fields at the moment. The framework has been build for specifying and storing these values against meals. Future releases will further integrate the values into the user interface.', YK_MT_SLUG )?></p>
+													</td>
+												</tr>
+											</table>
                                             <h3><?php echo __( 'New Entries' , YK_MT_SLUG); ?></h3>
                                             <table class="form-table">
                                                 <tr class="<?php echo $disable_if_not_premium_class; ?>">
