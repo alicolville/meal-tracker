@@ -249,20 +249,12 @@ function yk_mt_ajax_external_add_to_collection() {
 
 	$meal_id = yk_mt_ext_add_meal_to_user_collection( $_POST[ 'meal_id' ] );
 
-	// No meal found?
+	// No meal ID returned? Then we failed to find it in the user's meal collection of from the external source!
 	if ( false === $meal_id ) {
 		wp_send_json ( 'error' );
 	}
 
-
-
-	// TODO: Auto add to selected entry?
-
-
-	// TODO: Return meal id of new user meal OR 'error' if issue
-
-wp_Send_json ( $meal_id );
-
+	wp_send_json ( $meal_id );
 }
 add_action( 'wp_ajax_external_add_to_collection', 'yk_mt_ajax_external_add_to_collection' );
 
