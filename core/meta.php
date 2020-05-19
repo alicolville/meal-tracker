@@ -11,8 +11,8 @@ function yk_mt_meta_is_enabled() {
 	if ( false ===  yk_mt_license_is_premium() ) {
 		return false;
 	}
-	return true; // TODO
 
+	// TODO: This is a temporary boolean. Currently meta fields only support MacroN. The meta framework is built, just not utilised yet.
 	return ( true === yk_mt_site_options_as_bool( 'macronutrients-enabled', false ) );
 }
 
