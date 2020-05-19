@@ -59,6 +59,8 @@ TODO: minify CSS / JS
 * Improvement: Major overhaul of CSS.
 * Improvement: Added unified look that ensures it looks more consistent across various themes.
 * Improvement: Added a check on Settings page to check that all MySQL tables are present for the plugin. Option to rebuild them if not.
+* Improvement: Basic support for specifying fats, proteins and carbs against meals. This will be expanded in the future to render totals and allow sites to focus on totals other than calories.
+* Improvement: Added the underlying frame work for custom fields (although currently only utilised for MacroN fields).
 * Bug fix: Fixed quantity error handling.
 * Bug fix: Replaced deprecated jQuery code.
 
