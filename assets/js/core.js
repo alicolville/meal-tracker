@@ -794,8 +794,6 @@ jQuery( document ).ready( function ( $ ) {
 
     e.preventDefault();
 
-    let id = $(this).attr('id');
-
     let ext_select  = $( '#yk-mt-search-external' )[0].selectize;
     let selected_id = ext_select.getValue();
 
@@ -804,35 +802,40 @@ jQuery( document ).ready( function ( $ ) {
       return;
     }
 
-    // TODO: Refactor to use yk_mt_post
+    // Do we wish to auto close?
+    let auto_close = ( 'yk-mt-button-external-meal-add-close' === $(this).attr('id') );
 
-    $.ajax( {
-      url: yk_mt['ajax-url'],
-      type: 'POST',
-      data: { action: 'external_add_to_collection', security: yk_mt['ajax-security-nonce'], meal_id: selected_id },
-      error: function () {
+    let data = { meal_id: selected_id, name: ext_select.getItem( ext_select.getValue() )[0].innerHTML, close: auto_close };
 
-      },
-      success: function (res) {
+    yk_mt_post('external_add_to_collection', data, yk_mt_post_api_external_add_to_collection_callback );
 
-        if ( 'error' == res ) {
-
-          yk_mt_warn( yk_mt_sc_meal_tracker['localise']['db-error'] );
-
-
-
-        } else if ( false === res || 0 == res ) {
-
-
-
-        } else {
-
-        }
-
-       // callback( res );
-      }
-    });
   });
+
+/**
+ * Handle the call back to adding a meal
+ * @param data
+ * @param response
+ */
+function yk_mt_post_api_external_add_to_collection_callback( data, response ) {
+
+  if ( false === response['error'] ) {
+
+    yk_mt_success(yk_mt_sc_meal_tracker['localise']['search-added'] );
+
+    // Add automatically to meal collection selector and select.
+    let new_option = { id: response[ 'meal_id'], name: data[ 'name' ] };
+
+    yk_mk_selectize_add_option( new_option );
+
+    // Close search and return?
+    if ( true === data[ 'close' ] ) {
+      yk_mt_meal_add_nav_reset();
+    }
+
+  } else {
+    yk_mt_warn( yk_mt_sc_meal_tracker['localise']['db-error'] );
+  }
+}
 
   /**
    * ---------------------------------------------------------------------------------------

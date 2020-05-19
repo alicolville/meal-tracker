@@ -251,10 +251,10 @@ function yk_mt_ajax_external_add_to_collection() {
 
 	// No meal ID returned? Then we failed to find it in the user's meal collection of from the external source!
 	if ( false === $meal_id ) {
-		wp_send_json ( 'error' );
+		wp_send_json( [ 'error' => 'no-meal-id' ] );
 	}
 
-	wp_send_json ( $meal_id );
+	wp_send_json( [ 'error' => false, 'meal_id' => $meal_id ] );
 }
 add_action( 'wp_ajax_external_add_to_collection', 'yk_mt_ajax_external_add_to_collection' );
 

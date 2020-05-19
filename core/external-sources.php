@@ -166,6 +166,7 @@ function yk_mt_ext_filters_locale( $locale ) {
 
 	$locale[ 'search-no-results' ] 	= __( 'No meals could be found', YK_MT_SLUG );
 	$locale[ 'search-error' ] 		= __( 'Then was an error searching our database. Please try again.', YK_MT_SLUG );
+	$locale[ 'search-added' ] 		= __( 'Your meal collection has been updated', YK_MT_SLUG );
 
 	return $locale;
 }
