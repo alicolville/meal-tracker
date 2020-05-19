@@ -225,7 +225,7 @@ function yk_mt_settings_page_generic() {
 											?>
 											<p>
 												<?php echo __( 'Specify API credentials for your preferred external service. Meal Tracker will then allow your user\'s to search their database, select meals and copy the data to the user\'s meal collection' , YK_MT_SLUG); ?>.
-												<strong><?php echo __( 'Only one API can be used' , YK_MT_SLUG); ?>. <?php echo __( 'If more than one has been specified, then the plugin will pick the one itself.' , YK_MT_SLUG); ?>.</strong>
+												<strong><?php echo __( 'Only one API can be used' , YK_MT_SLUG); ?>. <?php echo __( 'The plugin will choose just one API if settings for more than one API have been entered' , YK_MT_SLUG); ?>.</strong>
 											</p>
 											<?php
 
