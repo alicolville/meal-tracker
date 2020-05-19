@@ -707,6 +707,22 @@ function yk_mt_db_meal_get( $id, $added_by = false ) {
 }
 
 /**
+ * Get internal meal ID for external meal
+ * @param $ext_id
+ * @param bool $added_by
+ * @return int
+ */
+function yk_mt_db_ext_meal_exist( $ext_id, $added_by = false ) {
+
+	global $wpdb;
+
+	$sql 	= $wpdb->prepare(  'Select id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where ext_id = %d and added_by = %d limit 0, 1', $ext_id, $added_by );
+	$id 	= $wpdb->get_var( $sql );
+
+	return ( false === empty( $id ) ) ? (int) $id : null;
+}
+
+/**
  * Get meals added by a user
  *
  * @param null $user_id

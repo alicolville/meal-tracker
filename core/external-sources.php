@@ -179,6 +179,21 @@ add_filter( 'yk_mt_config_locale', 'yk_mt_ext_filters_locale' );
  */
 function yk_mt_ext_add_meal_to_user_collection( $ext_id, $user_id = NULL ) {
 
+	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+	/*
+	 * Does the user already have this external meal in their own collection? If so, let's not bother
+	 * fetching it again from the external source. Instead, use the local ID to add to the entry!
+	 */
+	$existing_id = yk_mt_db_ext_meal_exist( $ext_id, $user_id );
+
+	if ( false === empty( $existing_id ) ) {
+		return $existing_id;
+	}
+
+	/**
+	 * Call out to external source, if found, copy to local meal collection and return meal ID
+	 */
 	$ext_meal = yk_mt_ext_source_get( $ext_id );
 
 	// No meal found?
@@ -186,7 +201,7 @@ function yk_mt_ext_add_meal_to_user_collection( $ext_id, $user_id = NULL ) {
 		return false;
 	}
 
-	$ext_meal[ 'added_by' ] = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+	$ext_meal[ 'added_by' ] = $user_id;
 
 	return yk_mt_db_meal_add( $ext_meal );
 }
