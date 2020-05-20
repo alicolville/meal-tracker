@@ -743,7 +743,7 @@ jQuery( document ).ready( function ( $ ) {
             html = html + '<img src="' + escape( item.ext_image ) + '" width="96" align="left"/>';
           }
 
-          html = html +  + escape( item.name ) + '</h6>';
+          html = html + escape( item.name ) + '</h6>';
           html = html + '<p class="description">' + escape( item.description ) + '</p>';
           html = html + '<p class="nutrition">' + escape( item.nutrition ) + '</p>';
           html = html + '<div>';
