@@ -273,7 +273,9 @@ function yk_mt_ajax_external_prep_meal( $meal ) {
 		 */
 		yk_mt_cache_temp_set( 'ext-meal-' . $meal[ 'ext_id' ], $meal );
 
-		$meal[ 'id' ] = $meal[ 'ext_id' ];
+		$meal[ 'id' ] 		= $meal[ 'ext_id' ];
+
+		$meal[ 'nutrition'] = yk_mt_format_nutrition_sting( $meal );
 
 		$meal = yk_mt_array_strip_keys( $meal, [ 'ext_id', 'calories', 'unit', 'meta_proteins', 'meta_fats', 'meta_carbs', 'source' ] );
 	}

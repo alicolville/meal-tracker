@@ -548,7 +548,7 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_external_form() {
 			',
 		__( 'Cancel', YK_MT_SLUG ),
 		__( 'Add', YK_MT_SLUG ),
-		__( 'Add and Close', YK_MT_SLUG )
+		__( 'Add and Return', YK_MT_SLUG )
 	);
 
 	$html .= '</div>';

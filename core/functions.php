@@ -1180,6 +1180,32 @@ function yk_mt_format_calories( $number ) {
 }
 
 /**
+ * Helper function for building nutrition string
+ * @param $number
+ * @return string
+ */
+function yk_mt_format_nutrition_sting( $meal, $include_meta = true ) {
+
+	if ( true === empty( $meal ) ) {
+		return '';
+	}
+
+	$text = sprintf( '%s%s', number_format( $meal[ 'calories'] ), __( 'kcal', YK_MT_SLUG ) );
+
+	if ( true === $include_meta ) {
+
+		$sep  	= ' / ';
+		$text .= $sep;
+		$text .= sprintf( '%s: %dg%s', __( 'fats', YK_MT_SLUG ), $meal[ 'meta_fats' ], $sep );
+		$text .= sprintf( '%s: %dg%s', __( 'protein', YK_MT_SLUG ), $meal[ 'meta_proteins' ], $sep );
+		$text .= sprintf( '%s: %dg', __( 'carbs', YK_MT_SLUG ), $meal[ 'meta_carbs' ], $sep );
+
+	}
+
+	return $text;
+}
+
+/**
  * Handy function for temp caching (if caching.php included)
  * @param $key
  * @return mixed

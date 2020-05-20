@@ -733,14 +733,19 @@ jQuery( document ).ready( function ( $ ) {
       searchField: 'name',
       options: [],
       render: {
-        option: function(item, escape) {
+        option: function( item, escape) {
 
-          let html = '<div>';
+          let html = '<div class="external_list_item">';
 
-          html = html + '<img src="' + escape( item.ext_image ) + '" width="96"/>';
-          html = html + '<span class="name">' + escape( item.name ) + '</span>';
-          html = html + '<span class="description">' + escape( item.description ) + '</span>';
+          html = html + '<h6>';
 
+          if ( item.ext_image ) {
+            html = html + '<img src="' + escape( item.ext_image ) + '" width="96" align="left"/>';
+          }
+
+          html = html +  + escape( item.name ) + '</h6>';
+          html = html + '<p class="description">' + escape( item.description ) + '</p>';
+          html = html + '<p class="nutrition">' + escape( item.nutrition ) + '</p>';
           html = html + '<div>';
 
           return html;

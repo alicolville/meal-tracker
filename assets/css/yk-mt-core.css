@@ -611,6 +611,25 @@ Fallbacks
 	right: calc(2 * var(--yk-mt-unit-base));
 }
 
+/********
+External Search drop down
+********/
+.external_list_item {
+  padding: 5px;
+  border-bottom: 1px dotted #000000;
+}
+.external_list_item h6 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.external_list_item h6 img {
+  margin-right: 5px;
+}
+.external_list_item p.nutrition {
+  font-size:11px;
+  font-style: italic;
+}
+
 /*************
 @media queries
 *************/
