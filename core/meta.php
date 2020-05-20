@@ -54,8 +54,9 @@ function yk_mt_meta_fields_where( $key, $value, $column = NULL ) {
  */
 function yk_mt_meta_fields() {
 
-	$fields 	= [];
-	$is_premium = yk_mt_license_is_premium();
+	$fields 				= [];
+	$is_premium 			= yk_mt_license_is_premium();
+	$meta_fields_required 	= yk_mt_site_options_as_bool('macronutrients-required', false );
 
 	// Macro Nutrient columns: Protein, fat and carbs
 	if ( true === $is_premium &&
@@ -68,7 +69,7 @@ function yk_mt_meta_fields() {
 			'visible_user' 		=> true,
 			'visible_admin' 	=> true,
 			'type'				=> 'float',
-			'required'			=> true
+			'required'			=> $meta_fields_required
 		];
 
 		// Fats
@@ -78,7 +79,7 @@ function yk_mt_meta_fields() {
 			'visible_user' 		=> true,
 			'visible_admin' 	=> true,
 			'type'				=> 'float',
-			'required'			=> true
+			'required'			=> $meta_fields_required
 		];
 
 		// Carbs
@@ -88,7 +89,7 @@ function yk_mt_meta_fields() {
 			'visible_user' 		=> true,
 			'visible_admin' 	=> true,
 			'type'				=> 'float',
-			'required'			=> true
+			'required'			=> $meta_fields_required
 		];
 
 	}

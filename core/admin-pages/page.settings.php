@@ -152,6 +152,19 @@ function yk_mt_settings_page_generic() {
 														<p><?php echo __( 'Please note, there is only basic support for Macronutrient fields at the moment. The framework has been build for specifying and storing these values against meals. Future releases will further integrate the values into the user interface.', YK_MT_SLUG )?></p>
 													</td>
 												</tr>
+												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+													<th scope="row"><?php echo __( 'Required?' , YK_MT_SLUG); ?></th>
+													<td>
+														<?php
+														$value = yk_mt_site_options_as_bool('macronutrients-required', false );
+														?>
+														<select id="macronutrients-required" name="macronutrients-required">
+															<option value="false" <?php selected( $value, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
+															<option value="true" <?php selected( $value, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
+														</select>
+														<p><?php echo __( 'Should users be forced to enter values for Macronutrients?', YK_MT_SLUG )?></p>
+													</td>
+												</tr>
 											</table>
                                             <h3><?php echo __( 'New Entries' , YK_MT_SLUG); ?></h3>
                                             <table class="form-table">
@@ -362,6 +375,7 @@ function yk_mt_register_settings(){
         register_setting( 'yk-mt-options-group', 'new-entries-past' );
         register_setting( 'yk-mt-options-group', 'new-entries-future' );
         register_setting( 'yk-mt-options-group', 'macronutrients-enabled' );
+		register_setting( 'yk-mt-options-group', 'macronutrients-required' );
 
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-id' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-secret' );
