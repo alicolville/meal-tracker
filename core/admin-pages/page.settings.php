@@ -256,15 +256,31 @@ function yk_mt_settings_page_generic() {
 												<?php echo __( 'Specify API credentials for your preferred external service. Meal Tracker will then allow your user\'s to search their database, select meals and copy the data to the user\'s meal collection' , YK_MT_SLUG); ?>.
 												<strong><?php echo __( 'Only one API can be used' , YK_MT_SLUG); ?>. <?php echo __( 'The plugin will choose just one API if settings for more than one API have been entered' , YK_MT_SLUG); ?>.</strong>
 											</p>
+											<h3><?php echo __( 'Enabled' , YK_MT_SLUG ); ?></h3>
+											<table class="form-table">
+												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+													<th scope="row"><?php echo __( 'External sources enabled?' , YK_MT_SLUG ); ?></th>
+													<td>
+														<?php
+															$external_source_enabled = yk_mt_site_options_as_bool('external-enabled', false );
+														?>
+														<select id="external-enabled" name="external-enabled">
+															<option value="false" <?php selected( $external_source_enabled, false ); ?>><?php echo __('No', YK_MT_SLUG )?></option>
+															<option value="true" <?php selected( $external_source_enabled, true ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
+														</select>
+														<p><?php echo __('Should users be allowed to search external databases for meals?', YK_MT_SLUG )?></p>
+													</td>
+												</tr>
+											</table>
 											<?php
 
 												$current_source = yk_mt_ext_source_credentials();
 
 											?>
-											<h3><?php echo __( 'Enabled Source' , YK_MT_SLUG ); ?></h3>
+											<h3><?php echo __( 'Active Source' , YK_MT_SLUG ); ?></h3>
 											<table class="form-table">
 												<tr>
-													<th scope="row"><?php echo __( 'Enabled Source' , YK_MT_SLUG); ?></th>
+													<th scope="row"><?php echo __( 'Source' , YK_MT_SLUG); ?></th>
 													<td>
 														<?php echo esc_html( ( false === empty( $current_source ) ? print_r( $current_source, true ) : __( 'API credentials missing for all APIs' , YK_MT_SLUG ) ) ); ?>
 													</td>
@@ -377,6 +393,7 @@ function yk_mt_register_settings(){
         register_setting( 'yk-mt-options-group', 'macronutrients-enabled' );
 		register_setting( 'yk-mt-options-group', 'macronutrients-required' );
 
+		register_setting( 'yk-mt-options-group', 'external-enabled' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-id' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-secret' );
     }

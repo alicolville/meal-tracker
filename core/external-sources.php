@@ -15,6 +15,10 @@ function yk_mt_ext_enabled() {
 		return false;
 	}
 
+	if ( false === yk_mt_site_options_as_bool('external-enabled', false ) ) {
+		return false;
+	}
+
 	if ( false === yk_mt_ext_source_credentials() ) {
 		return false;
 	}
