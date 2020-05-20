@@ -294,7 +294,7 @@ function yk_mt_settings_page_generic() {
 												<tr>
 													<th scope="row"><?php echo __( 'Client Secret' , YK_MT_SLUG); ?></th>
 													<td>
-														<input type="text" name="external-fatsecret-secret" id="external-fatsecret-secret" value="<?php echo esc_attr( yk_mt_site_options( 'external-fatsecret-secret', '' ) ); ?>" class="large-text" maxlength="40" />
+														<input type="password" name="external-fatsecret-secret" id="external-fatsecret-secret" value="<?php echo esc_attr( yk_mt_site_options( 'external-fatsecret-secret', '' ) ); ?>" class="large-text" maxlength="40" />
 													</td>
 												</tr>
 											</table>
