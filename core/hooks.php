@@ -118,8 +118,23 @@ function yk_mt_enqueue_scripts_chart() {
 
     wp_enqueue_script( 'mt-chart-js', plugins_url( 'assets/js/Chart.bundle.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
     wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
+
+	yk_me_enqueue_scripts_localise_chart();
 }
 
+/**
+ * Localise Chart js
+ */
+function yk_me_enqueue_scripts_localise_chart() {
+
+	$chart_font  = apply_filters( 'yk-mt-filter-chart-font', '\'Nunito\', \'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif' );
+	$chart_color = apply_filters( 'yk-mt-filter-chart-color', '#fb8e2e' );
+
+	wp_localize_script( 'mt-chart', 'yk_mt_chart', [
+		'chartFont'  => $chart_font,
+		'chartColor' => $chart_color,
+	] );
+}
 
 /**
  * Add view link alongside WP action links
