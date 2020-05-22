@@ -53,6 +53,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 = 2.0 =
 
 TODO: minify CSS / JS
+TODO: Show macroN values to admin
 
 * Improvement: Underlying framework for supporting lookup of meals from external APIs.
 * Improvement: Fat Secret integration (look up meals from them).

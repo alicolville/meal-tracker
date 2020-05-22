@@ -109,6 +109,8 @@ jQuery( document ).ready( function ( $ ) {
 
     yk_mt_dialog_meal_type_reset();
 
+    yk_mk_selectize_clear();
+
     $('#yk-mt-add-meal-dialog').removeClass('yk-mt-mode-edit');
     $('#yk-mt-add-meal-dialog').addClass('yk-mt-mode-add');
 
@@ -167,6 +169,19 @@ jQuery( document ).ready( function ( $ ) {
 
       selectize.addOption(option);
       selectize.addItem(option['id']);
+    }
+  }
+
+  /**
+   * Clear Selectize value
+   */
+  function yk_mk_selectize_clear() {
+
+    if (false !== yk_mt_meal_selector) {
+
+      var selectize = yk_mt_meal_selector[0].selectize;
+
+      selectize.clear();
     }
   }
 
