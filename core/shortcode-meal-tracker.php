@@ -225,7 +225,7 @@ function yk_mt_shortcode_meal_tracker_settings( $target = NULL ) {
 	$html .= yk_mt_html_accordion_close();
 
 	$html .= sprintf( '<br /><button id="yk-mt-button-save-settings" class="yk-mt__btn yk-mt__btn--medium">%1$s</button>
-								&nbsp;<button href="%2$s" class="yk-mt-button-cancel yk-mt-clickable">%3$s</button>
+								&nbsp;<button href="%2$s" class="yk-mt__btn yk-mt__btn--medium yk-mt-clickable">%3$s</button>
 								</form></div>',
 		__( 'Save Settings', YK_MT_SLUG ),
 		yk_mt_shortcode_get_current_url(),
