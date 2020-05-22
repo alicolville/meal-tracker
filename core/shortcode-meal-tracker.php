@@ -669,7 +669,7 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 	wp_enqueue_style( 'mt-selectize', plugins_url( 'assets/css/selectize.default.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
 	// Styles > Core
-	wp_enqueue_style( 'mt-core', plugins_url( 'assets/css/yk-mt-core' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+	wp_enqueue_style( 'mt-core', plugins_url( 'assets/css/yk-mt-core.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 	wp_enqueue_style( 'mt-font-icons', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
 
 	// Styles > Core > Vars
@@ -679,7 +679,7 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 	$is_themed = yk_mt_site_options_as_bool('css-theme-enabled' );
 
 	if ( true === $is_themed ) {
-		wp_enqueue_style( 'mt-theme', plugins_url( 'assets/css/yk-mt-theme' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+		wp_enqueue_style( 'mt-theme', plugins_url( 'assets/css/yk-mt-theme.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 	}
 
 	// Any external sources? If so, we'll need footables
@@ -718,7 +718,7 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 	if ( true === yk_mt_license_is_premium() ) {
 		wp_enqueue_script( 'mt-datepicker', plugins_url( 'assets/js/zebra_datepicker.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
 		wp_enqueue_style( 'mt-datepicker', plugins_url( 'assets/css/zebra/zebra_datepicker.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-		wp_enqueue_style( 'mt-datepicker-theme', plugins_url( 'assets/css/yk-mt-zebra' . $minified . '.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+		wp_enqueue_style( 'mt-datepicker-theme', plugins_url( 'assets/css/yk-mt-zebra.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
 		wp_enqueue_script( 'mt-pro', plugins_url( 'assets/js/pro.js', __DIR__ ), [ 'meal-tracker', 'mt-datepicker' ], YK_MT_PLUGIN_VERSION, true );
 	}
