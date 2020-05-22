@@ -366,7 +366,7 @@ function yk_mt_shortcode_meal_tracker_add_meal_dialog() {
 			'<div class="yk-mt-quantity-row yk-mt-hide-if-no-meals-results" style="display: none;">
 						<label class="yk-mt__label">%1$s</label>
 						<div class="yk-mt__modal-quantity">',
-			__( 'How many have you had today?', YK_MT_SLUG )
+			__( 'How many have you had?', YK_MT_SLUG )
 		);
 
 		for ( $i = 1; $i <= 10; $i++ ) {
