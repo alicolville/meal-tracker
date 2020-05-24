@@ -619,6 +619,7 @@ External Search drop down
   border-bottom: 1px dotted #000000;
 }
 .external_list_item h6 {
+  font-size: 15px;
   margin-top: 0px;
   margin-bottom: 0px;
 }
