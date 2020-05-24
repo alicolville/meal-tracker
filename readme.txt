@@ -21,6 +21,8 @@ Extend your site by allowing your users to track their meals and calorie intake.
 
 As an administrator, you can view your user's progress and entries.
 
+Support for searching external APIs like FatSecret API (more coming) for external meal collections.
+
 == Installation ==
 
 1. Login into Wordpress Admin Panel
@@ -47,13 +49,15 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 5. Admin UI - view entry details.
 6. Setup Wizard.
 7. [meal-tracker] placement.
+8. Search an external API for meals.
+9. Manually add own meal to meal collection.
 
 == Changelog ==
 
 = 2.0 =
 
 * Improvement: Underlying framework for supporting lookup of meals from external APIs.
-* Improvement: Fat Secret integration (look up meals from them).
+* Improvement: FatSecret integration (look up meals from them).
 * Improvement: Major overhaul of CSS.
 * Improvement: Added unified look that ensures it looks more consistent across various themes.
 * Improvement: Added a check on Settings page to check that all MySQL tables are present for the plugin. Option to rebuild them if not.
