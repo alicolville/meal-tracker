@@ -932,3 +932,10 @@ External Search drop down
 		}
 	}
 }
+
+/**
+    Forcing input fields to 16px to stop iOS / Safari zooming in
+*/
+#yk-mt-add-meal-dialog input, .selectize-input input {
+  font-size: 16px;
+}
