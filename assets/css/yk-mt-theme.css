@@ -4,7 +4,10 @@ Plugin URI:
 Author: Robert Paul
 Author URI:
 Description: Theme styles for the YeKen Meal Tracker plugin.
-Version: x.x.x
+Version: 2.0.0
+
+NOTE:
+This CSS file can be disabled in WP Admin > Meal Tracker > Settings > Display > CSS Theme > Enabled
 */
 
 /* Var overrides */
@@ -31,6 +34,8 @@ Version: x.x.x
 	-webkit-transition: all ease .2s !important;
 	-o-transition: all ease .2s !important;
 	transition: all ease .2s !important;
+
+  border: 2px solid #000 !important;
 }
 
 .yk-mt__btn:hover,
@@ -76,6 +81,10 @@ Version: x.x.x
 }
 
 /* Shortcode > Summary */
+.yk-mt__summary-title {
+  color: #000 !important;
+}
+
 .yk-mt__summary-title .fa {
 	color: #ccc; /* Fallback */
 	color: var(--yk-mt-primary-color);
@@ -97,11 +106,41 @@ Version: x.x.x
 
 /* Shortcode > Accordion */
 .yk-mt__accordion-section-title {
-	border-bottom-color: #ccc; /* Fallback */
-	border-bottom-color: var(--yk-mt-primary-color);
+	border-bottom-color: #ccc !important; /* Fallback */
+	border-bottom-color: var(--yk-mt-primary-color) !important;
 	font-size: 125%;
 	font-weight: 900;
 	background-color: #fff;
+  border-bottom: 2px solid !important;
+}
+
+#yk-mt-add-meal-dialog form *,
+#yk-mt-add-meal-dialog,
+.selectize-input,
+.yk-mt__no-meals {
+  color: #000 !important;
+}
+
+.selectize-input ::-webkit-input-placeholder { /* Chrome and Safari */
+  color: #000 !important;
+}
+
+.selectize-input :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #000 !important;
+  opacity: 1;
+}
+
+.selectize-input ::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #000 !important;
+  opacity: 1;
+}
+
+.selectize-input :-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #000 !important;
+}
+
+.selectize-input ::-ms-input-placeholder { /* Microsoft Edge */
+  color: #000 !important;
 }
 
 .yk-mt__accordion-section-title:hover,
@@ -113,6 +152,10 @@ Version: x.x.x
 
 .yk-mt__meal-name {
 	font-weight: 800;
+}
+
+.yk-mt__table-cell {
+  color: #000;
 }
 
 .yk-mt__table-cell-total {
