@@ -90,6 +90,7 @@ jQuery( document ).ready( function ( $ ) {
       // Depending on the dialog mode, show / hide UI components
       yk_mt_dialog_set_css_class_for_mode();
 
+      $('body').addClass('yk-mt-dialog-is-open');
       $('#yk-mt-add-meal-dialog').removeClass('yk-mt-hide');
 
       yk_mt_add_meal_form_show_quantity();
@@ -104,6 +105,8 @@ jQuery( document ).ready( function ( $ ) {
   function yk_mt_dialog_close() {
 
     yk_meal_tracker_dialog_mode = 'add';
+
+    $('body').removeClass('yk-mt-dialog-is-open');
 
     $('body').trigger('meal-tracker-dialog-closing');
 
