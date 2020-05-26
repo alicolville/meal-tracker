@@ -19,9 +19,23 @@ The initial build of Meal Tracker!
 
 Extend your site by allowing your users to track their meals and calorie intake. Calorie targets for the day can be set by admins, the users or automatically pulled from [Yeken's Weight Tracker](https://wordpress.org/plugins/weight-loss-tracker/ "Yeken's Weight Tracker").
 
-As an administrator, you can view your user's progress and entries.
+Features:
 
-Support for searching external APIs like FatSecret API (more coming) for external meal collections.
+* Your user's can log their meals and calorie intake.
+* Visual graph to show your user the percentage of their daily allowance used.
+* Add meals for Breakfast, Mid-morning, Lunch, Afternoon, Dinner and Evening.
+* View total calorie intake for the entire day or a breakdown.
+* Each user has their own meal collection.
+* Users can create and edit their meals.
+
+Pro Features:
+
+* As an administrator, you can view your user's progress and entries.
+* Unlimited meals.
+* If enabled, allow your users to record meals for any date, future or past.
+* Allow your users to search other user's meals.
+* Support for Macronutrients.
+* Search external APIs (like Fatsecrets) for meals.
 
 == Installation ==
 
