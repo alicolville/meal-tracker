@@ -56,6 +56,13 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 2.0 =
 
+TODO: If meta fields are missing, trying to add a new meal from external source fails as meta_* fields missing!
+TODO: Expose IP of host on external settings
+TODO: Add Create MySQL tables button on homepage
+TODO: This occurred for a new user): Notice: Undefined variable: allowed_calories in /home/sites/2a/0/0dd1f54d3e/public_html_myptpal/wp-content/plugins/meal-tracker/core/sources-weight-tracker.php on line 95
+TODO: This occurred for a new user): (Side bar when viewing profile) Notice: Undefined index: counts in /home/sites/2a/0/0dd1f54d3e/public_html_myptpal/wp-content/plugins/meal-tracker/core/functions.pages.php on line 71
+TODO: This occurred for a new user): (Side bar when viewing profile) Notice: Undefined variable: allowed_calories in /home/sites/2a/0/0dd1f54d3e/public_html_myptpal/wp-content/plugins/meal-tracker/core/sources-weight-tracker.php on line 95
+
 * Improvement: Underlying framework for supporting lookup of meals from external APIs.
 * Improvement: FatSecret integration (look up meals from them).
 * Improvement: Major overhaul of CSS.
