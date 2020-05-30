@@ -24,7 +24,7 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
         <div class="postbox">
             <h2 class="hndle"><?php echo ( false === empty( $_GET[ 'mode' ] ) && 'entry' === $_GET[ 'mode' ] ) ? __( 'Entry summary', YK_MT_SLUG ) : __( 'Today\'s entry', YK_MT_SLUG ) ; ?></h2>
             <div class="inside">
-                <div class="yk-mt-summary-chart-slot">
+                <div class="yk-mt__table--summary-chart-slot">
                     <canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
                 </div>
                 <table class="yk-mt-sidebar-stats">

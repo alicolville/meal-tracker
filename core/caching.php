@@ -99,7 +99,7 @@ function yk_mt_cache_group_delete( $group_key, $key = NULL ) {
 function yk_mt_cache_get( $key ) {
 
     if( true === yk_mt_cache_is_enabled() ) {
-        $key = yk_mt_cache_generate_key($key);
+        $key = yk_mt_cache_generate_key( $key );
         return get_transient( $key );
     }
 
@@ -176,7 +176,7 @@ function yk_mt_cache_delete_all() {
  * @return string
  */
 function yk_mt_cache_generate_key( $key ){
-    return sprintf( '%s-%s-%s', YK_MT_SLUG, YK_MT_PLUGIN_VERSION, $key);
+    return sprintf( '%s-%s-%s-%s', YK_MT_SLUG, YK_MT_IS_PREMIUM, YK_MT_PLUGIN_VERSION, $key);
 }
 
 // -------------------------------------------------------------
@@ -434,9 +434,10 @@ add_filter( 'yk_mt_db_settings_get', 'yk_mt_cache_filter_settings_get', 10, 2 );
  *
  * @param $key
  * @param $value
+ * @param $duration
  */
-function yk_mt_cache_temp_hook_set( $key, $value ) {
-    yk_mt_cache_set( 'temp-' . $key, $value, 300 ); // Cache for 5 minutes
+function yk_mt_cache_temp_hook_set( $key, $value, $duration ) {
+    yk_mt_cache_set( 'temp-' . $key, $value, $duration );
 }
 add_action( 'yk_mt_cache_temp_set', 'yk_mt_cache_temp_hook_set', 10, 3 );
 

@@ -76,6 +76,27 @@ function yk_mt_ajax_meal_add() {
     // Ensure we have a calorie value (can be 0)
 	$post_data[ 'calories' ] = yk_mt_ajax_extract_and_validate_post_data_single( 'calories', false );
 
+	$meta_field_keys = yk_mt_meta_fields_visible_user_keys();
+
+	// If meta fields are enabled then look for an array of values. Validate add add to DB call.
+    if ( false === empty( $meta_field_keys ) ) {
+
+        if ( true === empty( $_POST[ 'meta-fields' ] ) || false === is_array( $_POST[ 'meta-fields' ] ) ) {
+            return wp_send_json( [ 'error' => 'missing-meta-fields-array' ] );
+        }
+
+        $meta_fields = $_POST[ 'meta-fields' ];
+
+        foreach ( yk_mt_meta_fields_visible_user_keys() as $key ) {
+            if ( false === isset( $meta_fields[ $key ] ) ) {
+                return wp_send_json( [ 'error' => 'missing-meta-field-' . $key ] );
+            }
+
+            $post_data[ $key ] = (float) $meta_fields[ $key ];
+        }
+
+    }
+
     // If a unit that doesn't expect a quantity, then clear quantity
 	if ( true === in_array( $post_data[ 'unit' ], yk_mt_units_where( 'drop-quantity' ) ) ) {
 		$post_data[ 'quantity' ] = '';
@@ -167,6 +188,100 @@ function yk_mt_ajax_meals() {
 	wp_send_json( $meals );
 }
 add_action( 'wp_ajax_meals', 'yk_mt_ajax_meals' );
+
+/**
+ * Search external for meals
+ */
+function yk_mt_ajax_external_search() {
+
+	if ( false === YK_MT_HAS_EXTERNAL_SOURCES ) {
+		return false;
+	}
+
+	if ( empty( $_POST[ 'search' ] ) ) {
+		wp_send_json( [] );
+	}
+
+	check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+	$cache_key = 'ext-search-' . md5( $_POST[ 'search' ] );
+
+	if ( $cache = yk_mt_cache_temp_get( $cache_key ) )  {
+		wp_send_json( $cache );
+	}
+
+	$meals = yk_mt_ext_source_search( $_POST[ 'search' ] );
+
+	// Do we have an error?
+	if ( 'ERR' === $meals ) {
+		wp_send_json( 'error' );
+	}
+
+	// Compress meal objects to reduce data returned via AJAX
+	if ( false === empty( $meals ) ) {
+
+		$meals = array_map( 'yk_mt_ajax_external_prep_meal', $meals );
+	}
+
+	// Cache data for this search term ( for 5 mins )
+	if ( false === empty( $meals ) ) {
+		yk_mt_cache_temp_set( $cache_key, $meals );
+	}
+
+	wp_send_json( $meals );
+}
+add_action( 'wp_ajax_external_search', 'yk_mt_ajax_external_search' );
+
+/**
+ * Add an external meal to the user's meal collection
+ */
+function yk_mt_ajax_external_add_to_collection() {
+
+	if ( false === YK_MT_HAS_EXTERNAL_SOURCES ) {
+		return false;
+	}
+
+	if ( empty( $_POST[ 'meal_id' ] ) ) {
+		wp_send_json( false );
+	}
+
+	check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+	$meal_id = yk_mt_ext_add_meal_to_user_collection( $_POST[ 'meal_id' ] );
+
+	// No meal ID returned? Then we failed to find it in the user's meal collection of from the external source!
+	if ( false === $meal_id ) {
+		wp_send_json( [ 'error' => 'no-meal-id' ] );
+	}
+
+	wp_send_json( [ 'error' => false, 'meal_id' => $meal_id ] );
+}
+add_action( 'wp_ajax_external_add_to_collection', 'yk_mt_ajax_external_add_to_collection' );
+
+/**
+ * Strip back a meal object ready for transmission via AJAX
+ * @param $meal
+ * @return mixed
+ */
+function yk_mt_ajax_external_prep_meal( $meal ) {
+
+	if ( true === is_array( $meal ) ) {
+
+		/**
+		 * Since we have the full meal object here (i.e. we're about to display it in search results), let's cache it for 5 minutes. That way,
+		 * if a user selects it, we have the relevant data for the meal cached (if not, we will need to call out to external API again).
+		 */
+		yk_mt_cache_temp_set( 'ext-meal-' . $meal[ 'ext_id' ], $meal );
+
+		$meal[ 'id' ] 		= $meal[ 'ext_id' ];
+
+		$meal[ 'nutrition'] = yk_mt_format_nutrition_sting( $meal );
+
+		$meal = yk_mt_array_strip_keys( $meal, [ 'ext_id', 'calories', 'unit', 'meta_proteins', 'meta_fats', 'meta_carbs', 'source' ] );
+	}
+
+	return $meal;
+}
 
 /**
  * Save Settings for user

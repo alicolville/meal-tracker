@@ -1,0 +1,251 @@
+/*
+Plugin Name: YeKen Meal Tracker
+Plugin URI:
+Author: Robert Paul
+Author URI:
+Description: Theme styles for the YeKen Meal Tracker plugin.
+Version: 2.0.0
+
+NOTE:
+This CSS file can be disabled in WP Admin > Meal Tracker > Settings > Display > CSS Theme > Enabled
+*/
+
+/* Var overrides */
+:root {
+
+	/* Var overrides > Colours */
+	--yk-mt-primary-color: #ccc;
+
+	/* Var overrides > Fonts */
+	--yk-mt-font-display: 'Nunito', sans-serif;
+}
+
+/* Global styles */
+.yk-mt {
+	font-size: var(--yk-mt-unit-base) !important;
+}
+
+/* Components > Buttons */
+.yk-mt__btn {
+	background-color: #fff !important;
+	border-radius: 32px; /* Fallback */
+	border-radius: calc(var(--yk-mt-unit-base) * 2);
+
+	-webkit-transition: all ease .2s !important;
+	-o-transition: all ease .2s !important;
+	transition: all ease .2s !important;
+
+  border: 2px solid #000 !important;
+}
+
+.yk-mt__btn:hover,
+.yk-mt__btn:focus {
+	background-color: #000 !important;
+}
+
+.yk-mt__btn-text {
+	font-weight: 900;
+	text-transform: uppercase;
+}
+
+.yk-mt__btn--medium .yk-mt__btn-text {
+	font-size: 87.5%;
+}
+
+/* Components > Inputs */
+.yk-mt__label {
+	-webkit-transition: color ease .2s !important;
+	-o-transition: color ease .2s !important;
+	transition: color ease .2s !important;
+}
+
+.yk-mt__input,
+.yk-mt__select {
+	margin-bottom: 16px !important; /* Fallback */
+	margin-bottom: var(--yk-mt-unit-base) !important;
+	padding: 0 8px !important; /* Fallback */
+	padding: 0 calc(var(--yk-mt-unit-base) / 2) !important;
+	background-color: #fff !important;
+	font-size: 87.5% !important;
+	border-radius: 3px !important;
+
+	-webkit-transition: all ease .2s;
+	-o-transition: all ease .2s;
+	transition: all ease .2s;
+}
+
+/* Components > Tables */
+.yk-mt-act-r {
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+/* Shortcode > Summary */
+.yk-mt__summary-title {
+  color: #000 !important;
+}
+
+.yk-mt__summary-title .fa {
+	color: #ccc; /* Fallback */
+	color: var(--yk-mt-primary-color);
+}
+
+.yk-mt__table--summary-details {
+	vertical-align: middle !important;
+}
+
+.yk-mt__table--summary-chart-slot {
+	width: 300px ! important;
+}
+
+/* Shortcode > Navigation */
+.yk-mt__table--nav .yk-mt-selected {
+	background-color: #000 !important;
+	color: #fff;
+}
+
+/* Shortcode > Accordion */
+.yk-mt__accordion-section-title {
+	border-bottom-color: #ccc !important; /* Fallback */
+	border-bottom-color: var(--yk-mt-primary-color) !important;
+	font-size: 125%;
+	font-weight: 900;
+	background-color: #fff;
+  border-bottom: 2px solid !important;
+}
+
+#yk-mt-add-meal-dialog form *,
+#yk-mt-add-meal-dialog,
+.selectize-input,
+.yk-mt__no-meals {
+  color: #000 !important;
+}
+
+.selectize-input ::-webkit-input-placeholder { /* Chrome and Safari */
+  color: #000 !important;
+}
+
+.selectize-input :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #000 !important;
+  opacity: 1;
+}
+
+.selectize-input ::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #000 !important;
+  opacity: 1;
+}
+
+.selectize-input :-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #000 !important;
+}
+
+.selectize-input ::-ms-input-placeholder { /* Microsoft Edge */
+  color: #000 !important;
+}
+
+.yk-mt__accordion-section-title:hover,
+.yk-mt__accordion-section-title:focus,
+.yk-mt__accordion-section-title:active {
+	border-bottom-color: #000 !important;
+	color: #000;
+}
+
+.yk-mt__meal-name {
+	font-weight: 800;
+}
+
+.yk-mt__table-cell {
+  color: #000;
+}
+
+.yk-mt__table-cell-total {
+	font-weight: 900;
+}
+
+/* Shortcode > Accordion > Titles */
+.yk-mt__accordion-section-title {
+	-webkit-transition: all ease .15s !important;
+	-o-transition: all ease .15s !important;
+	transition: all ease .15s !important;
+}
+
+/* Shortcode > Accordion > Content */
+.yk-mt-act-r {
+	-webkit-transition: background-color ease .2s;
+	-o-transition: background-color ease .2s;
+	transition: background-color ease .2s;
+}
+
+.yk-mt-act-r--edit {
+	background-color: #333 !important;
+}
+
+.yk-mt-act-r--remove {
+	background-color: #f30 !important;
+}
+
+.yk-mt-act-r:hover,
+.yk-mt-act-r:focus,
+.yk-mt-act-r:active {
+	background-color: #000 !important;
+}
+
+.yk-mt__no-meals {
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif !important; /* Fallback */
+	font-family: var(--yk-mt-font-sans) !important;
+}
+
+/* Shortcode > Modal > Header */
+.yk-mt__modal-title {
+	margin: 0 !important;
+	font-weight: 800;
+}
+
+.yk-mt__modal-title,
+.yk-mt__modal-subtitle {
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif !important; /* Fallback */
+	font-family: var(--yk-mt-font-display) !important;
+  margin-top: 10px !important;
+  margin-bottom: 5px !important;
+}
+
+/* Selectize */
+.yk-mt-shortcode-meal-tracker .selectize-control:before {
+	content: ' ';
+	z-index: 2;
+	position: absolute;
+	top: 50%;
+	right: 34px;
+	display: block;
+	margin: -11px 0 0 0;
+	width: 16px;
+	height: 16px;
+	background-image: url('../images/spinner.gif');
+	background-size: 16px 16px;
+	opacity: 0;
+
+	-webkit-transition: opacity ease .2s;
+	-o-transition: opacity ease .2s;
+	transition: opacity ease .2s;
+}
+
+.yk-mt-shortcode-meal-tracker .selectize-control.loading:before {
+	opacity: .4;
+}
+/* @media queries: screen, <=500px */
+@media only screen and (max-width: 500px) {
+
+  .yk-mt__ext-enabled #yk-mt-form-add-new-meal-nav .yk-mt__btn-text {
+    display: none;
+  }
+
+}
+
+/* @media queries: screen, <=767px */
+@media only screen and (max-width: 767px) {
+
+	.yk-mt__modal-header .yk-mt__btn {
+		background-color: #000 !important;
+	}
+
+}

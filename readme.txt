@@ -3,8 +3,8 @@ Contributors: aliakro
 Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food
 Requires at least: 5.0
-Tested up to: 5.3
-Stable tag: 1.2
+Tested up to: 5.4.1
+Stable tag: 2.0
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,7 +19,23 @@ The initial build of Meal Tracker!
 
 Extend your site by allowing your users to track their meals and calorie intake. Calorie targets for the day can be set by admins, the users or automatically pulled from [Yeken's Weight Tracker](https://wordpress.org/plugins/weight-loss-tracker/ "Yeken's Weight Tracker").
 
-As an administrator, you can view your user's progress and entries.
+Features:
+
+* Your user's can log their meals and calorie intake.
+* Visual graph to show your user the percentage of their daily allowance used.
+* Add meals for Breakfast, Mid-morning, Lunch, Afternoon, Dinner and Evening.
+* View total calorie intake for the entire day or a breakdown.
+* Each user has their own meal collection.
+* Users can create and edit their meals.
+
+Pro Features:
+
+* As an administrator, you can view your user's progress and entries.
+* Your user's can have Unlimited meals.
+* If enabled, allow your users to record meals for any date, future or past.
+* Allow your users to search other user's meals.
+* Support for Macronutrients.
+* Search external APIs (like Fatsecrets) for meals.
 
 == Installation ==
 
@@ -47,12 +63,29 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 5. Admin UI - view entry details.
 6. Setup Wizard.
 7. [meal-tracker] placement.
+8. Search an external API for meals.
+9. Manually add own meal to meal collection.
 
 == Changelog ==
+
+= 2.0 =
+
+* Improvement: Underlying framework for supporting lookup of meals from external APIs.
+* Improvement: FatSecret integration (look up meals from them).
+* Improvement: Major overhaul of CSS.
+* Improvement: Added unified look that ensures it looks more consistent across various themes.
+* Improvement: Added a check on Settings page to check that all MySQL tables are present for the plugin. Option to rebuild them if not.
+* Improvement: Basic support for specifying fats, proteins and carbs against meals. This will be expanded in the future to render totals and allow sites to focus on totals other than calories.
+* Improvement: Added the underlying frame work for custom fields (although currently only utilised for MacroN fields).
+* Bug fix: Fixed quantity error handling.
+* Bug fix: Replaced deprecated jQuery code.
 
 = 1.2 =
 
 * Improvement: Added Arabic translations (thanks @Saeed)
+* Bug fix: Minor bug fixes throwing PHP errors.
+* Bug fix: Incorrect slug used for localisation.
+* Bug fix: Warning being thrown for missing array index.
 
 = 1.1 =
 

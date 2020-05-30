@@ -22,8 +22,12 @@ add_action( 'yk_mt_settings_admin_saved', 'yk_mt_actions_settings_post_save' );
 function yk_mt_body_class( $classes ) {
 
     if ( true === yk_mt_site_options_as_bool( 'accordion-enabled', false ) ) {
-        $classes[] = 'yk-mt-accordion-enabled';
+        $classes[] = 'yk-mt__accordion-enabled';
     }
+
+    if ( true === YK_MT_HAS_EXTERNAL_SOURCES ) {
+		$classes[] = 'yk-mt__ext-enabled';
+	}
 
     return $classes;
 }
@@ -61,7 +65,8 @@ add_action( 'admin_menu', 'yk_mt_build_admin_menu' );
 function yk_mt_enqueue_admin_files() {
 
     // Only include MT dependencies on our pages.
-    if ( false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-settings', 'yk-mt-setup-wizard' ] ) ) {
+    if ( true === empty( $_GET['page'] ) ||
+    	  false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-settings', 'yk-mt-setup-wizard' ] ) ) {
         return;
     }
 
@@ -113,8 +118,23 @@ function yk_mt_enqueue_scripts_chart() {
 
     wp_enqueue_script( 'mt-chart-js', plugins_url( 'assets/js/Chart.bundle.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
     wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
+
+	yk_me_enqueue_scripts_localise_chart();
 }
 
+/**
+ * Localise Chart js
+ */
+function yk_me_enqueue_scripts_localise_chart() {
+
+	$chart_font  = apply_filters( 'yk-mt-filter-chart-font', '\'Nunito\', \'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif' );
+	$chart_color = apply_filters( 'yk-mt-filter-chart-color', '#fb8e2e' );
+
+	wp_localize_script( 'mt-chart', 'yk_mt_chart', [
+		'chartFont'  => $chart_font,
+		'chartColor' => $chart_color,
+	] );
+}
 
 /**
  * Add view link alongside WP action links

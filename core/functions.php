@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection */
 
 defined('ABSPATH') or die('Naw ya dinnie!');
 
@@ -176,6 +176,8 @@ function yk_mt_entry_calories_calculate_update_used( $entry_id ) {
 	$result = yk_mt_db_entry_update( [ 'id' => $entry_id, 'calories_used' => $calories ] );
 
     $user_id = yk_mt_db_entry_user_id( $entry_id );
+
+    do_action( 'yk_mt_entry_calculate_refresh', $entry_id );
 
 	do_action( 'yk_mt_entry_cache_clear', $entry_id, $user_id );
 
@@ -472,17 +474,30 @@ function yk_mt_entry( $entry_id = NULL ) {
 }
 
 /**
+ * Get current URL and fudge with a dummy QS value. This allows us to add as a base URL and just append QS values knowing the ? has already been added
+ * @return string
+ */
+function yk_mt_current_url() {
+
+	$url = $url = get_permalink();
+
+	return add_query_arg( 'yk-mt', 'y', $url );
+}
+/**
  * Return an array for config values for AJAX localize
  * @return array
  */
 function yk_mt_ajax_config() {
-    return [
-        'page-url'                          => get_permalink(),
+	$config = [
+        'page-url'                          => yk_mt_current_url(),
         'plugin-url'                        => YK_MT_PLUGIN_URL,
         'ajax-url'                          => admin_url('admin-ajax.php'),
         'ajax-security-nonce'               => wp_create_nonce( 'yk-mt-nonce' ),
-	    'units-hide-quantity'               => yk_mt_units_where( 'drop-quantity', true, true )
+	    'units-hide-quantity'               => yk_mt_units_where( 'drop-quantity', true, true ),
+		'external-source'					=> false
     ];
+
+	return apply_filters( 'yk_mt_config', $config );
 }
 
 /**
@@ -490,7 +505,8 @@ function yk_mt_ajax_config() {
  * @return array
  */
 function yk_mt_localised_strings( ) {
-    return [
+
+    $config = [
         'just-added'                    => __( 'Just Added:', YK_MT_SLUG ),
         'calorie-unit'                  => __( 'kcal', YK_MT_SLUG ),
         'remove-text'                   => __( 'Remove', YK_MT_SLUG ),
@@ -509,8 +525,10 @@ function yk_mt_localised_strings( ) {
         'db-error-loading'              => __( 'There was error loading your data', YK_MT_SLUG ),
 	    'settings-saved-success'        => __( 'Your settings have been saved', YK_MT_SLUG ),
         'confirm-title'                 => __( 'Are you sure?', YK_MT_SLUG ),
-        'confirm-content'               => __( 'Proceeding will cause user data to be deleted. This data can not be recovered. Are you sure you wish to proceed?', YK_MT_SLUG ),
+        'confirm-content'               => __( 'Proceeding will cause user data to be deleted. This data can not be recovered. Are you sure you wish to proceed?', YK_MT_SLUG )
     ];
+
+	return apply_filters( 'yk_mt_config_locale', $config );
 }
 
 /**
@@ -562,7 +580,8 @@ function yk_mt_units_where( $field, $equals = true, $just_keys = true ) {
 
 	foreach ( yk_mt_units_raw() as $unit => $details ) {
 
-		if ( $equals === $details[ $field ] ) {
+		if ( false === empty( $details[ $field ] ) &&
+				$equals === $details[ $field ] ) {
 			$units[ $unit ] = $details[ 'label' ];
 		}
 	}
@@ -636,8 +655,8 @@ function yk_mt_form_text( $title, $name, $value ='', $max_length = 60, $required
     $name = 'yk-mt-' . $name;
 
     return sprintf(
-		'   <label for="%1$s">%2$s</label>
-				<input type="text" name="%1$s" id="%1$s" maxlength="%3$d" value="%4$s" %5$s />',
+		'   <label class="yk-mt__label" for="%1$s">%2$s</label>
+				<input type="text" class="yk-mt__input" name="%1$s" id="%1$s" maxlength="%3$d" value="%4$s" %5$s />',
 		$name,
 		$title,
 		(int) $max_length,
@@ -659,8 +678,8 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
     $name = 'yk-mt-' . $name;
 
 	$html = sprintf( '<div id="%1$s-row" class="yk-mt-form-row">
-						<label for="%1$s">%2$s</label>
-							<select name="%1$s" id="%1$s" class="" %s>', $name, $title, $placeholder );
+						<label class="yk-mt__label" for="%1$s">%2$s</label>
+							<select name="%1$s" id="%1$s" class="yk-mt__select" %s>', $name, $title, $placeholder );
 
 	if ( false === empty( $placeholder ) ) {
         $html .= '<option>' . $placeholder . '</option>';
@@ -706,14 +725,14 @@ function yk_mt_form_number( $title, $name, $value = '', $css_class = '', $step =
 	$html = sprintf( '<div id="%1$s-row" class="yk-mt-form-row">', $name );
 
 	if ( true === $show_label ) {
-		$html .= sprintf( '<label for="%1$s" class="%3$s">%2$s</label>', $name, $title, $css_class );
+		$html .= sprintf( '<label for="%1$s" class="yk-mt__label %3$s">%2$s</label>', $name, $title, $css_class );
 	}
 
-	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s class="%7$s" %8$s />',
+	$html .= sprintf( '<input type="number" name="%1$s" id="%1$s" min="%2$s" max="%3$s" step="%4$s" value="%5$s" %6$s class="yk-mt__input %7$s" %8$s />',
 		$name,
 		(int) $min,
 		(int) $max,
-		(int) $step,
+		(float) $step,
 		$value,
         ( true === $required ) ? ' required' : '',
         $css_class,
@@ -1035,7 +1054,7 @@ function yk_mt_features_display() {
                                             <td scope="row" style="padding-left:30px"><label for="tablecell">
                                                     &middot; <strong>%2$s:</strong> %3$s.
                                                 </label></td>
-                            
+
                                         </tr>',
                     $class,
                     esc_html( $title ),
@@ -1096,7 +1115,7 @@ function yk_mt_display_pro_upgrade_notice( ) {
     <div class="postbox yk-mt-advertise-premium">
         <h3 class="hndle"><span><?php echo __( 'Upgrade Meal Tracker and get more features!', YK_MT_SLUG ); ?> </span></h3>
         <div style="padding: 0px 15px 0px 15px">
-            <p><?php echo __( 'Upgrade to the Premium version of this plugin to view your user\'s data, record entries for multiple days, extrernal data sources and much more!', YK_MT_SLUG ); ?></p>
+            <p><?php echo __( 'Upgrade to the Premium version of this plugin to view your user\'s data, record entries for multiple days, external data sources and much more!', YK_MT_SLUG ); ?></p>
             <p><a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-license') ); ?>" class="button-primary"><?php echo __( 'Read more and upgrade to Premium Version', YK_MT_SLUG ); ?></a></p>
         </div>
     </div>
@@ -1161,6 +1180,32 @@ function yk_mt_format_calories( $number ) {
 }
 
 /**
+ * Helper function for building nutrition string
+ * @param $number
+ * @return string
+ */
+function yk_mt_format_nutrition_sting( $meal, $include_meta = true ) {
+
+	if ( true === empty( $meal ) ) {
+		return '';
+	}
+
+	$text = sprintf( '%s%s', number_format( $meal[ 'calories'] ), __( 'kcal', YK_MT_SLUG ) );
+
+	if ( true === $include_meta ) {
+
+		$sep  	= ' / ';
+		$text .= $sep;
+		$text .= sprintf( '%s: %dg%s', __( 'fats', YK_MT_SLUG ), $meal[ 'meta_fats' ], $sep );
+		$text .= sprintf( '%s: %dg%s', __( 'protein', YK_MT_SLUG ), $meal[ 'meta_proteins' ], $sep );
+		$text .= sprintf( '%s: %dg', __( 'carbs', YK_MT_SLUG ), $meal[ 'meta_carbs' ], $sep );
+
+	}
+
+	return $text;
+}
+
+/**
  * Handy function for temp caching (if caching.php included)
  * @param $key
  * @return mixed
@@ -1170,12 +1215,13 @@ function yk_mt_cache_temp_get( $key ) {
 }
 
 /**
- * Handy function for temp caching (if caching.php included)
+ * Handy function for temp caching (if caching.php included) - default 15 mins
  * @param $key
  * @param $value
+ * @param int $duration
  */
-function yk_mt_cache_temp_set( $key, $value ) {
-    do_action( 'yk_mt_cache_temp_set', $key, $value );
+function yk_mt_cache_temp_set( $key, $value, $duration = 1500 ) {
+    do_action( 'yk_mt_cache_temp_set', $key, $value, $duration );
 }
 
 /**
@@ -1185,18 +1231,36 @@ function yk_mt_cache_temp_set( $key, $value ) {
  */
 function yk_mt_lang_translate_known_meal_type_from_english( $meal_type ) {
 
-    if ( true === empty( $meal_type ) ) {
-        return '';
-    }
+	if ( true === empty( $meal_type ) ) {
+		return '';
+	}
 
-    $lookup = [
-                    'Breakfast'     => __( 'Breakfast', YK_MT_SLUG ),
-                    'Mid-morning'   => __( 'Mid-morning', YK_MT_SLUG ),
-                    'Lunch'         => __( 'Lunch', YK_MT_SLUG ),
-                    'Afternoon'     => __( 'Afternoon', YK_MT_SLUG ),
-                    'Dinner'        => __( 'Dinner', YK_MT_SLUG ),
-                    'Evening'       => __( 'Evening', YK_MT_SLUG )
-    ];
+	$lookup = [
+		'Breakfast'     => __( 'Breakfast', YK_MT_SLUG ),
+		'Mid-morning'   => __( 'Mid-morning', YK_MT_SLUG ),
+		'Lunch'         => __( 'Lunch', YK_MT_SLUG ),
+		'Afternoon'     => __( 'Afternoon', YK_MT_SLUG ),
+		'Dinner'        => __( 'Dinner', YK_MT_SLUG ),
+		'Evening'       => __( 'Evening', YK_MT_SLUG )
+	];
 
-    return ( false === empty( $lookup[ $meal_type ] ) ) ? $lookup[ $meal_type ] : '';
+	return ( false === empty( $lookup[ $meal_type ] ) ) ? $lookup[ $meal_type ] : '';
+}
+
+/**
+ * Log to PHP error log
+ * @param $text
+ */
+function yk_mt_log_error( $text ) {
+	if ( false === empty( $text ) ) {
+		error_log( $text );
+	}
+}
+
+/**
+ * Get the server IP
+ * @return mixed
+ */
+function yk_mt_server_ip() {
+	return $_SERVER['SERVER_ADDR'];
 }

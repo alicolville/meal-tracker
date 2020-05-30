@@ -40,9 +40,14 @@ function yk_mt_license_validate( $license ) {
     }
 
     // Does site hash in license meet this site's actual hash?
-    if ( true === empty( $license['site-hash'] ) ) {
-        return 'Invalid license hash';
-    }
+	if ( true === empty( $license['site-hash'] ) ) {
+		return 'Invalid license hash';
+	}
+
+	// Does site hash in license meet this site's actual hash?
+	if ( 'mt-premium' !== $license[ 'type' ] ) {
+		return 'Invalid license type';
+	}
 
     // Match this site hash?
     if ( yk_mt_generate_site_hash() !== $license['site-hash'] ) {
