@@ -39,6 +39,8 @@ function yk_mt_help_page() {
                                     );
                                 }
 
+								printf( '<a href="%1$s?page=yk-mt-settings&amp;recreate-tables=y" class="button">%2$s</a>', get_permalink(), __( 'Run MySQL Tool', YK_MT_SLUG ) );
+
                                 ?>
                             </p>
                         </div>

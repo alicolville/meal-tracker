@@ -19,6 +19,8 @@ function yk_mt_settings_page_generic() {
 	// Rebuild mysql tables?
 	if ( false === empty( $_GET[ 'recreate-tables' ] ) ) {
 		yk_mt_missing_database_table_fix();
+
+		printf( '<div class="notice"><p>%1$s.</p></div>', __( 'All database tables have been rebuilt', YK_MT_SLUG ) );
 	}
 
 	$mysql_table_check = yk_mt_missing_database_table_any_issues();
