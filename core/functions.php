@@ -1256,3 +1256,11 @@ function yk_mt_log_error( $text ) {
 		error_log( $text );
 	}
 }
+
+/**
+ * Get the server IP
+ * @return mixed
+ */
+function yk_mt_server_ip() {
+	return $_SERVER['SERVER_ADDR'];
+}

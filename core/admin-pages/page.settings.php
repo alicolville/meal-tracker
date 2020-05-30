@@ -300,7 +300,8 @@ function yk_mt_settings_page_generic() {
 											<p><?php echo __( 'You are able to create the required REST API OAuth 2.0 Credentials a the following page:' , YK_MT_SLUG); ?> <a href="https://platform.fatsecret.com/api/Default.aspx?screen=myk" target="_blank">https://platform.fatsecret.com/api/Default.aspx?screen=myk</a></p>
 											<p>
 												<strong><?php echo __( 'Important' , YK_MT_SLUG); ?></strong>:
-												<?php echo __( 'Please ensure you have whitelisted your server\'s IP address with FatSecret. This can be done by selecting your application (using the above link) and completing the "Allowed IP Addresses" section' , YK_MT_SLUG); ?>
+												<?php echo __( 'Please ensure you have whitelisted your server\'s IP address with FatSecret. This can be done by selecting your application (using the above link) and completing the "Allowed IP Addresses" section. It looks like your server IP may be:' , YK_MT_SLUG); ?>
+												<strong><?php echo yk_mt_server_ip(); ?></strong>
 											</p>
 											<table class="form-table">
 												<tr>
