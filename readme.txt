@@ -31,7 +31,7 @@ Features:
 Pro Features:
 
 * As an administrator, you can view your user's progress and entries.
-* Unlimited meals.
+* Your user's can have Unlimited meals.
 * If enabled, allow your users to record meals for any date, future or past.
 * Allow your users to search other user's meals.
 * Support for Macronutrients.
