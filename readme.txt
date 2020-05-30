@@ -69,8 +69,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 == Changelog ==
 
 = 2.0 =
-!
-TODO: Expose IP of host on external settings
+
 
 TODO: This occurred for a new user): Notice: Undefined variable: allowed_calories in /home/sites/2a/0/0dd1f54d3e/public_html_myptpal/wp-content/plugins/meal-tracker/core/sources-weight-tracker.php on line 95
 TODO: This occurred for a new user): (Side bar when viewing profile) Notice: Undefined index: counts in /home/sites/2a/0/0dd1f54d3e/public_html_myptpal/wp-content/plugins/meal-tracker/core/functions.pages.php on line 71

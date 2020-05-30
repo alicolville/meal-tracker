@@ -44,7 +44,7 @@ function yk_mt_wlt_sources_add( $sources ) {
         $sources['wlt']   = [
             'value'         => __( 'Weight Tracker', YK_MT_SLUG ),
             'admin-message' => __( 'from Weight Tracker', YK_MT_SLUG ),
-            'func'          => 'yk_mt_user_calories_target_from_wlt'
+            'func'          => 'yk_mt_sources_wlt_target'
         ];
     }
 
@@ -70,14 +70,13 @@ add_action( 'wlt-hook-data-added-edited','yk_mt_wlt_calories_allowed_refresh' );
 add_action( 'wlt-hook-data-entry-deleted','yk_mt_wlt_calories_allowed_refresh' );                   // When deletes an entry
 
 /**
- * TODO: Rename this function to format above
  * If plugin is enabled and allowed as an admin option, then fetch allowed calories from Weight Tracker (by YeKen.uk)
  *
  * @param null $user_id
  *
  * @return int
  */
-function yk_mt_user_calories_target_from_wlt( $user_id = NULL ) {
+function yk_mt_sources_wlt_target( $user_id = NULL ) {
 
     $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
@@ -89,10 +88,8 @@ function yk_mt_user_calories_target_from_wlt( $user_id = NULL ) {
         $yeken_wt = ws_ls_harris_benedict_calculate_calories();
 
         if ( true === isset( $yeken_wt[ $yeken_aim ][ 'total' ] ) ) {
-            $allowed_calories = $yeken_wt[ $yeken_aim ][ 'total' ];
+            return (int) $yeken_wt[ $yeken_aim ][ 'total' ];
         }
-
-        return (int) $allowed_calories;
     }
 
     return NULL;
