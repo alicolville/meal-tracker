@@ -56,43 +56,40 @@ function yk_mt_meta_fields() {
 
 	$fields 				= [];
 	$is_premium 			= yk_mt_license_is_premium();
-	$meta_fields_required 	= yk_mt_site_options_as_bool('macronutrients-required', false );
 
 	// Macro Nutrient columns: Protein, fat and carbs
-	if ( true === $is_premium &&
-			true === yk_mt_meta_is_enabled() ) {
+	$meta_enabled 			= ( true === $is_premium && true === yk_mt_meta_is_enabled() );
+	$meta_fields_required 	= yk_mt_site_options_as_bool('macronutrients-required', false );
 
-		// Protein
-		$fields[] = [
-			'db_col' 			=> 'meta_proteins',
-			'title' 			=> __( 'Proteins', YK_MT_SLUG ),
-			'visible_user' 		=> true,
-			'visible_admin' 	=> true,
-			'type'				=> 'float',
-			'required'			=> $meta_fields_required
-		];
+	// Protein
+	$fields[] = [
+		'db_col' 			=> 'meta_proteins',
+		'title' 			=> __( 'Proteins', YK_MT_SLUG ),
+		'visible_user' 		=> $meta_enabled,
+		'visible_admin' 	=> $meta_enabled,
+		'type'				=> 'float',
+		'required'			=> $meta_fields_required
+	];
 
-		// Fats
-		$fields[] = [
-			'db_col' 			=> 'meta_fats',
-			'title' 			=> __( 'Fats', YK_MT_SLUG ),
-			'visible_user' 		=> true,
-			'visible_admin' 	=> true,
-			'type'				=> 'float',
-			'required'			=> $meta_fields_required
-		];
+	// Fats
+	$fields[] = [
+		'db_col' 			=> 'meta_fats',
+		'title' 			=> __( 'Fats', YK_MT_SLUG ),
+		'visible_user' 		=> $meta_enabled,
+		'visible_admin' 	=> $meta_enabled,
+		'type'				=> 'float',
+		'required'			=> $meta_fields_required
+	];
 
-		// Carbs
-		$fields[] = [
-			'db_col' 			=> 'meta_carbs',
-			'title' 			=> __( 'Carbs', YK_MT_SLUG ),
-			'visible_user' 		=> true,
-			'visible_admin' 	=> true,
-			'type'				=> 'float',
-			'required'			=> $meta_fields_required
-		];
-
-	}
+	// Carbs
+	$fields[] = [
+		'db_col' 			=> 'meta_carbs',
+		'title' 			=> __( 'Carbs', YK_MT_SLUG ),
+		'visible_user' 		=> $meta_enabled,
+		'visible_admin' 	=> $meta_enabled,
+		'type'				=> 'float',
+		'required'			=> $meta_fields_required
+	];
 
 	if ( true === $is_premium ) {
 		$fields = apply_filters( 'yk_mt_meta_fields', $fields );
