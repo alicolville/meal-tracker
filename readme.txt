@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food
 Requires at least: 5.0
 Tested up to: 5.4.1
-Stable tag: 2.0
+Stable tag: 2.0.1
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -66,7 +66,15 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 8. Search an external API for meals.
 9. Manually add own meal to meal collection.
 
+== Upgrade Notice ==
+
+2.0 - Complete new look and standardised CSS! Also support for looking meals up from Fatsecrets.
+
 == Changelog ==
+
+= 2.0.1 =
+
+* Bug fix: Always create Macronutrient MySQL columns regardless of being enabled.
 
 = 2.0 =
 
