@@ -1021,7 +1021,7 @@ function yk_mt_post_api_external_add_to_collection_callback( data, response ) {
    */
   const SummaryRow = ({total, unit}) => `
                         <div class="yk-mt__table-row yk-mt__table-row-totals">
-                                <div class="yk-mt__table-cell yk-mt__table-cell-total-text">Total:</div>
+                                <div class="yk-mt__table-cell yk-mt__table-cell-total-text">${yk_mt_sc_meal_tracker['localise']['total']}:</div>
                                 <div class="yk-mt__table-cell yk-mt__table-cell-total yk-mt-cq">
                                     ${total}${unit}
                                 </div>
