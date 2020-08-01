@@ -3,7 +3,7 @@ Contributors: aliakro
 Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food
 Requires at least: 5.0
-Tested up to: 5.4.1
+Tested up to: 5.5
 Stable tag: 2.0.2
 Requires PHP: 7.1
 License: GPLv2 or later
@@ -75,6 +75,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 = 2.0.2 =
 
 * Bug fix: Added missing text for translations.
+* Bug fix: Error being thrown on settings page for external sources.
 
 = 2.0.1 =
 
