@@ -5,7 +5,7 @@ defined('ABSPATH') or die("Jog on!");
 /**
  * Plugin Name: Meal Tracker
  * Description: Allow your users to track their meals and calorie intake for a given day.
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: YeKen
  * Author URI: http://www.YeKen.uk
  * License: GPL2
@@ -28,7 +28,7 @@ defined('ABSPATH') or die("Jog on!");
 */
 
 define( 'YK_MT_ABSPATH', plugin_dir_path( __FILE__ ) );
-define( 'YK_MT_PLUGIN_VERSION', '2.0.1' );
+define( 'YK_MT_PLUGIN_VERSION', '2.0.2' );
 define( 'YK_MT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'YK_MT_SLUG', 'meal-tracker' );
 
@@ -63,15 +63,9 @@ include_once YK_MT_ABSPATH . 'core/hooks.php';
 include_once YK_MT_ABSPATH . 'core/sources-weight-tracker.php';
 include_once YK_MT_ABSPATH . 'core/cron.php';
 include_once YK_MT_ABSPATH . 'core/meta.php';
+include_once YK_MT_ABSPATH . 'core/external-sources.php';
 
-$has_external = false;
-
-// If Premium, include external databases
-if ( true === $is_premium ) {
-	include_once YK_MT_ABSPATH . 'core/external-sources.php';
-
-	$has_external = yk_mt_ext_enabled();
-}
+$has_external = yk_mt_ext_enabled();
 
 define( 'YK_MT_HAS_EXTERNAL_SOURCES', $has_external );
 
