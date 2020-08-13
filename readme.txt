@@ -36,6 +36,7 @@ Pro Features:
 * Allow your users to search other user's meals.
 * Support for Macronutrients.
 * Search external APIs (like Fatsecrets) for meals.
+* FatSecrets Food and Recipe API are supported.
 
 == Installation ==
 
@@ -68,11 +69,14 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 == Upgrade Notice ==
 
-2.0 - Complete new look and standardised CSS! Also support for looking meals up from Fatsecrets.
+2.1 - Support for FatSecrets Food API
 
 == Changelog ==
 
 = 2.1 =
+
+* New Feature: Support for FatSecrets Food API (https://platform.fatsecret.com/api/Default.aspx?screen=rapiref2&method=foods.search)
+* Improvement: Added "Oz" unit for meals.
 
 = 2.0.2 =
 

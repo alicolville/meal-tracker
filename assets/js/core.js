@@ -790,13 +790,88 @@ jQuery( document ).ready( function ( $ ) {
 
               yk_mt_warn( yk_mt_sc_meal_tracker['localise']['search-error'] );
 
-              $( '.yk-mt-button-external-add-and-close, .yk-mt-button-external-add' ).fadeOut('slow');
+              yk_mt_hide_add_buttons();
 
             } else if ( false === res || 0 == res ) {
 
               yk_mt_info( yk_mt_sc_meal_tracker['localise']['search-no-results'] );
 
-              $( '.yk-mt-button-external-add-and-close, .yk-mt-button-external-add' ).fadeOut('slow');
+              yk_mt_hide_add_buttons();
+              $( '.yk-mt-add-new-meal-form-search-servings' ).fadeOut( 'slow' );
+
+            } else if ( false === yk_mt_external_servings_enabled() ) {
+              $( '.yk-mt-button-external-add-and-close, .yk-mt-button-external-add' ).fadeIn('slow');
+            }
+
+            callback( res );
+
+          }
+        });
+      },
+      onChange: function ( value ) {
+
+        if ( false === yk_mt_external_servings_enabled() ) {
+          return;
+        }
+
+        if ( '' !== value ) {
+          yk_mk_selectize_external_servings_init( value );
+        } else {
+          $( '.yk-mt-add-new-meal-form-search-servings' ).fadeOut( 'slow' );
+          yk_mt_hide_add_buttons();
+        }
+      }
+    });
+  }
+
+  function yk_mt_hide_add_buttons() {
+    $( '.yk-mt-button-external-add-and-close, .yk-mt-button-external-add' ).fadeOut('slow');
+  }
+
+  let yk_mt_servings_selector = false;
+
+  function yk_mk_selectize_external_servings_init( food_id ) {
+
+    $( '.yk-mt-add-new-meal-form-search-servings' ).fadeIn( 'slow' );
+
+    if ( false !== yk_mt_servings_selector ) {
+      $( '#yk-mt-search-external-servings' ).selectize()[0].selectize.destroy();
+    }
+
+    yk_mt_servings_selector = $( '#yk-mt-search-external-servings' ).selectize({
+      preload:      true,
+      create:       false,
+      valueField:   'serving_id',
+      labelField:   'display',
+      options:      [],
+      load: function (query, callback) {
+
+        if ( '' == food_id ) {
+          return;
+        }
+
+        this.clearOptions();
+
+        $.ajax({
+          url: yk_mt['ajax-url'],
+          type: 'POST',
+          data: { action: 'external_servings', security: yk_mt['ajax-security-nonce'], search: food_id },
+          error: function () {
+            callback();
+          },
+          success: function (res) {
+
+            if ( 'error' == res ) {
+
+              yk_mt_warn( yk_mt_sc_meal_tracker['localise']['search-error'] );
+
+              yk_mt_hide_add_buttons();
+
+            } else if ( false === res || 0 == res ) {
+
+              yk_mt_info( yk_mt_sc_meal_tracker['localise']['search-no-results'] );
+
+              yk_mt_hide_add_buttons();
 
             } else {
               $( '.yk-mt-button-external-add-and-close, .yk-mt-button-external-add' ).fadeIn('slow');
@@ -806,6 +881,12 @@ jQuery( document ).ready( function ( $ ) {
 
           }
         });
+      },
+      onChange: function ( value ) {
+
+        if ( '' !== value && true === yk_mt_external_servings_enabled() ) {
+          $( '.yk-mt-button-external-add-and-close, .yk-mt-button-external-add' ).fadeIn('slow');
+        }
       }
     });
   }
@@ -819,16 +900,40 @@ jQuery( document ).ready( function ( $ ) {
 
     let ext_select  = $( '#yk-mt-search-external' )[0].selectize;
     let selected_id = ext_select.getValue();
+    let label       = ext_select.getItem( ext_select.getValue() )[0].innerHTML;
 
     // No meal has been selected.
     if ( '' === selected_id ) {
       return;
     }
 
-    // Do we wish to auto close?
-    let auto_close = ( 'yk-mt-button-external-meal-add-close' === $(this).attr('id') );
+    if ( false !== yk_mt_servings_selector ) {
+        let serving_select  = $( '#yk-mt-search-external-servings' ).selectize()[0].selectize;
+        let selected_id     = serving_select.getValue();
 
-    let data = { meal_id: selected_id, name: ext_select.getItem( ext_select.getValue() )[0].innerHTML, close: auto_close };
+      if ( '' !== selected_id ) {
+        label += ' - ' + serving_select.getItem( serving_select.getValue() )[0].innerHTML;
+      }
+    }
+
+    // Do we wish to auto close?
+    let auto_close  = ( 'yk-mt-button-external-meal-add-close' === $(this).attr('id') );
+    let data        = { meal_id: selected_id, name: label, close: auto_close };
+
+    // Was a serving selected?
+    if ( true === yk_mt_external_servings_enabled() ) {
+
+      let ext_serving = $( '#yk-mt-search-external-servings' )[0].selectize;
+      let serving_id  = ext_serving.getValue();
+
+      // No serving has been selected.
+      if ( '' === serving_id ) {
+        yk_mt_warn( yk_mt_sc_meal_tracker['localise']['serving-missing'] );
+        return;
+      }
+
+      data[ 'serving_id' ] = serving_id;
+    }
 
     yk_mt_post('external_add_to_collection', data, yk_mt_post_api_external_add_to_collection_callback );
 
@@ -1154,4 +1259,12 @@ function yk_mt_post_api_external_add_to_collection_callback( data, response ) {
  */
 function yk_mt_trigger_meal_entry_delete(meal_entry_id) {
   jQuery('body').trigger('meal-tracker-meal-entry-delete', [meal_entry_id]);
+}
+
+/**
+ * Are servings enabled for this
+ * @returns {boolean|boolean}
+ */
+function yk_mt_external_servings_enabled() {
+  return ( 'undefined' !== typeof( yk_mt[ 'external-show-servings' ] ) && '1' === yk_mt[ 'external-show-servings' ] );
 }

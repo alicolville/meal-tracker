@@ -556,6 +556,7 @@ function yk_mt_units_raw() {
         'na'        => [ 'label' => __( 'N/A', YK_MT_SLUG ), 'drop-quantity' => true ],
 		'g'         => [ 'label' => 'g' ],
 		'ml'        => [ 'label' => 'ml' ],
+		'oz'		=> [ 'label' => 'oz' ],
 		'small'     => [ 'label' =>  __( 'Small', YK_MT_SLUG ), 'drop-quantity' => true ],
 		'medium'    => [ 'label' =>  __( 'Medium', YK_MT_SLUG ), 'drop-quantity' => true ],
 		'large'     => [ 'label' =>  __( 'Large', YK_MT_SLUG ), 'drop-quantity' => true ],
@@ -1212,7 +1213,13 @@ function yk_mt_format_nutrition_sting( $meal, $include_meta = true ) {
  * @return mixed
  */
 function yk_mt_cache_temp_get( $key ) {
-    return apply_filters( 'yk_mt_cache_temp_get', NULL, $key );
+
+	if ( true === function_exists( 'yk_mt_cache_is_enabled' ) &&
+			true === yk_mt_cache_is_enabled() ) {
+		return yk_mt_cache_get( 'temp-' . $key );
+	}
+
+	return NULL;
 }
 
 /**
@@ -1222,7 +1229,16 @@ function yk_mt_cache_temp_get( $key ) {
  * @param int $duration
  */
 function yk_mt_cache_temp_set( $key, $value, $duration = 1500 ) {
-    do_action( 'yk_mt_cache_temp_set', $key, $value, $duration );
+
+	if ( true === function_exists( 'yk_mt_cache_is_enabled' ) &&
+		 true === yk_mt_cache_is_enabled() ) {
+
+		yk_mt_cache_set( 'temp-' . $key, $value, $duration );
+
+		return true;
+	}
+
+	return false;
 }
 
 /**
