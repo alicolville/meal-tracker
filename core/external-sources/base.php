@@ -53,6 +53,14 @@ abstract class YK_MT_EXT_SOURCE {
 	abstract protected function search( $terms );
 
 	/**
+	 * Fetch servings for ID
+	 * @param $id
+	 *
+	 * @return mixed
+	 */
+	abstract protected function servings( $id );
+
+	/**
 	 * Reset search
 	 */
 	protected function search_reset() {

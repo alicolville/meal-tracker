@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die('Naw ya dinnie!');
 
-class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
+class YK_MT_EXT_FAT_SECRET_FOODS extends YK_MT_EXT_SOURCE {
 
 	private $base_url = 'https://platform.fatsecret.com/rest/server.api';
 
@@ -10,7 +10,7 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 
 		$this->search_reset();
 
-		$args = [ 'body' => [ 'method' => 'recipes.search', 'search_expression' => $terms ] ];
+		$args = [ 'body' => [ 'method' => 'foods.search', 'search_expression' => $terms ] ];
 
 		$results = $this->api_get( $args );
 
@@ -19,19 +19,19 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 			return $this->get_error();
 		}
 
-		if ( false === isset( $results[ 'recipes' ][ 'total_results' ] ) ) {
+		if ( false === isset( $results[ 'foods' ][ 'total_results' ] ) ) {
 			$this->error = 'There was an issue processing the results.';
 			return false;
 		}
 
-		if ( 0 == $results[ 'recipes' ][ 'total_results' ] ) {
+		if ( 0 == $results[ 'foods' ][ 'total_results' ] ) {
 			return false;
 		}
 
-		$this->results 		= $results[ 'recipes' ][ 'recipe' ];
-		$this->no_results 	= $results[ 'recipes' ][ 'total_results' ];
-		$this->page_number 	= $results[ 'recipes' ][ 'page_number' ];
-		$this->page_size 	= $results[ 'recipes' ][ 'max_results' ];
+		$this->results 		= $results[ 'foods' ][ 'food' ];
+		$this->no_results 	= $results[ 'foods' ][ 'total_results' ];
+		$this->page_number 	= $results[ 'foods' ][ 'page_number' ];
+		$this->page_size 	= $results[ 'foods' ][ 'max_results' ];
 
 		$this->results = array_map( array( $this, 'format_result' ), $this->results );
 
@@ -39,22 +39,31 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 
 	}
 
+	public function servings( $id ) {
+
+		$food = $this->get( $id );
+
+		return ( false === empty( $food[ 'servings' ] ) ) ? $food[ 'servings' ] : [];
+	}
+
 	function format_result( $result ) {
 
 		return [
-			'name'			=> $result[ 'recipe_name' ],
-			'description'	=> $result[ 'recipe_description' ],
-			'calories'		=> $result[ 'recipe_nutrition' ][ 'calories' ],
-			'meta_proteins' => $result[ 'recipe_nutrition' ][ 'protein' ],
-			'meta_fats'		=> $result[ 'recipe_nutrition' ][ 'fat' ],
-			'meta_carbs'	=> $result[ 'recipe_nutrition' ][ 'carbohydrate' ],
-			'source'		=> 'fat-secrets',
-			'ext_id'		=> $result[ 'recipe_id' ],
-			'ext_url'		=> $result[ 'recipe_url' ],
-			'ext_image'		=> ( false === empty( $result[ 'recipe_image' ] ) ) ? $result[ 'recipe_image' ] : '',
-			'quantity'		=> '0',
-			'unit'			=> 'na',
-			'source'		=> 'fat-secret'
+			'name'			    => $result[ 'food_name' ],
+			'description'	    => '',
+			'calories'		    => 0,
+			'meta_proteins'     => 0,
+			'meta_fats'		    => 0,
+			'meta_carbs'	    => 0,
+			'source'		    => 'fat-secrets-foods',
+			'ext_id'		    => $result[ 'food_id' ],
+			'ext_url'		    => $result[ 'food_url' ],
+			'ext_image'		    => ( false === empty( $result[ 'recipe_image' ] ) ) ? $result[ 'recipe_image' ] : '',
+			'quantity'		    => '0',
+			'unit'			    => '',
+			'source'		    => 'fat-secret',
+			'hide-nutrition'    => 'yes',
+			'servings'          => ( false === empty( $result[ 'servings' ] ) ) ? $result[ 'servings' ] : []
 		];
 	}
 
@@ -65,31 +74,41 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 	 */
 	public function get( $id ){
 
-		$args = [ 'body' => [ 'method' => 'recipe.get', 'recipe_id' => $id ] ];
-
-		$result = $this->api_get( $args );
+		$result = $this->api_get( [ 'body' => [ 'method' => 'food.get.v2', 'food_id' => $id ] ] );
 
 		// Error hit?
 		if ( true === $this->has_error() ) {
 			return false;
 		}
 
-		if ( true === empty( $result[ 'recipe' ] ) )  {
+		if ( true === empty( $result[ 'food' ] ) )  {
 			return false;
 		}
 
 		// Shoe horn the array that comes back to the format expected by format_result
-		$result = $result[ 'recipe' ];
+		$result = $result[ 'food' ];
 
-		if ( false === empty( $result[ 'serving_sizes' ][ 'serving' ] ) ) {
-			$result[ 'recipe_nutrition' ] = $result[ 'serving_sizes' ][ 'serving' ];
+		$no_servings = ( true === empty( $result[ 'servings' ][ 'serving' ][ 'serving_id' ] ) ) ? count( $result[ 'servings' ][ 'serving' ] ) : 1;
+
+		$result[ 'servings' ] = $result[ 'servings' ][ 'serving' ];
+
+		if ( 1 === $no_servings ) {
+			$result[ 'servings' ] = [ $result[ 'servings' ] ];
 		}
 
-		if ( false === empty( $result[ 'recipe_images' ][ 'recipe_image' ] ) ) {
-			$result[ 'recipe_image' ] = $result[ 'recipe_images' ][ 'recipe_image' ];
-		}
+		$result[ 'servings' ]  = array_map( array( $this, 'serving_format' ), $result[ 'servings' ] );
 
 		return $this->format_result( $result );
+	}
+
+	private function serving_format( $serving ) {
+
+		$serving[ 'display' ] = sprintf( '%s - %s %s', $serving[ 'serving_description' ], $serving[ 'calories' ], __( 'kcal', YK_MT_SLUG ) );
+
+		//$quantity  = ( 'oz' === $serving[ 'metric_serving_unit' ] ) ? $serving[ 'metric_serving_amount' ] * 0.035274 : $serving[ 'metric_serving_amount' ];
+		//$serving[ 'quantity' ] = round( $quantity, 2 );
+
+		return $serving;
 	}
 
 	public function is_authenticated(){
@@ -104,7 +123,7 @@ class YK_MT_EXT_FAT_SECRET extends YK_MT_EXT_SOURCE {
 	 */
 	private function api_get( $args, $use_cache = true ) {
 
-		$cache_key 	= 'fatsecret-api-get-' . md5( json_encode( $args ) );
+		$cache_key 	= 'fs-api-get-' . md5( json_encode( $args ) );
 
 		if ( true === $use_cache ) {
 			$cache = $this->cache_get( $cache_key, false );

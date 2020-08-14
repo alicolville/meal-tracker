@@ -590,6 +590,8 @@ function yk_mt_db_meal_add( $meal ) {
     }
 
     unset( $meal[ 'id' ] );
+	unset( $meal[ 'hide-nutrition' ] );
+	unset( $meal[ 'servings' ] );
 
     global $wpdb;
 
@@ -708,15 +710,24 @@ function yk_mt_db_meal_get( $id, $added_by = false ) {
 
 /**
  * Get internal meal ID for external meal
+ *
  * @param $ext_id
+ * @param null $serving_id
  * @param bool $added_by
+ *
  * @return int
  */
-function yk_mt_db_ext_meal_exist( $ext_id, $added_by = false ) {
+function yk_mt_db_ext_meal_exist( $ext_id, $serving_id = NULL, $added_by = false ) {
 
 	global $wpdb;
 
-	$sql 	= $wpdb->prepare(  'Select id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where ext_id = %d and added_by = %d limit 0, 1', $ext_id, $added_by );
+	$sql 	= $wpdb->prepare(  'Select id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where ext_id = %d and added_by = %d', $ext_id, $added_by );
+
+	if ( false === empty( $serving_id ) ) {
+		$sql .= ' and ext_serving_id = ' . (int) $serving_id;
+	}
+
+	$sql    .= ' limit 0, 1';
 	$id 	= $wpdb->get_var( $sql );
 
 	return ( false === empty( $id ) ) ? (int) $id : null;
@@ -995,7 +1006,7 @@ function yk_wt_db_tables_create() {
     $sql = "CREATE TABLE $table_name (
                 id mediumint(9) NOT NULL AUTO_INCREMENT,
                 added_by int NOT NULL,
-                name varchar(60) NOT NULL,
+                name varchar(100) NOT NULL,
                 calories float DEFAULT 0 NOT NULL,
                 quantity float DEFAULT 0 NOT NULL,
                 unit varchar(10) DEFAULT 'g' NOT NULL,
@@ -1004,6 +1015,7 @@ function yk_wt_db_tables_create() {
                 favourite bit DEFAULT 0,
                 source varchar(20) DEFAULT 'user' NOT NULL,
                 ext_id int NULL,
+                ext_serving_id int NULL,
                 ext_image varchar( 300 ) NULL,
                 ext_url varchar( 300 ) NULL,
                 added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

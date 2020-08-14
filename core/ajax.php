@@ -233,6 +233,43 @@ function yk_mt_ajax_external_search() {
 add_action( 'wp_ajax_external_search', 'yk_mt_ajax_external_search' );
 
 /**
+ * Search setvings for a given meeting
+ */
+function yk_mt_ajax_external_servings() {
+
+	if ( false === YK_MT_HAS_EXTERNAL_SOURCES ) {
+		return false;
+	}
+
+	if ( empty( $_POST[ 'search' ] ) ) {
+		wp_send_json( [] );
+	}
+
+	check_ajax_referer( 'yk-mt-nonce', 'security' );
+
+	$cache_key = 'ext-servings-' . md5( $_POST[ 'search' ] );
+
+	if ( $cache = yk_mt_cache_temp_get( $cache_key ) )  {
+		wp_send_json( $cache );
+	}
+
+	$servings = yk_mt_ext_source_servings( $_POST[ 'search' ] );
+
+	// Do we have an error?
+	if ( 'ERR' === $servings ) {
+		wp_send_json( 'error' );
+	}
+
+	// Cache data for this search term ( for 5 mins )
+	if ( false === empty( $meals ) ) {
+		yk_mt_cache_temp_set( $cache_key, $meals );
+	}
+
+	wp_send_json( $servings );
+}
+add_action( 'wp_ajax_external_servings', 'yk_mt_ajax_external_servings' );
+
+/**
  * Add an external meal to the user's meal collection
  */
 function yk_mt_ajax_external_add_to_collection() {
@@ -247,7 +284,9 @@ function yk_mt_ajax_external_add_to_collection() {
 
 	check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-	$meal_id = yk_mt_ext_add_meal_to_user_collection( $_POST[ 'meal_id' ] );
+	$serving_id = ( false === empty( $_POST[ 'serving_id' ] ) ) ? $_POST[ 'serving_id' ] : NULL;
+
+	$meal_id    = yk_mt_ext_add_meal_to_user_collection( $_POST[ 'meal_id' ], $serving_id );
 
 	// No meal ID returned? Then we failed to find it in the user's meal collection of from the external source!
 	if ( false === $meal_id ) {
@@ -275,7 +314,7 @@ function yk_mt_ajax_external_prep_meal( $meal ) {
 
 		$meal[ 'id' ] 		= $meal[ 'ext_id' ];
 
-		$meal[ 'nutrition'] = yk_mt_format_nutrition_sting( $meal );
+		$meal[ 'nutrition'] = ( true === empty( $meal[ 'hide-nutrition' ] ) ) ? yk_mt_format_nutrition_sting( $meal ) : '';
 
 		$meal = yk_mt_array_strip_keys( $meal, [ 'ext_id', 'calories', 'unit', 'meta_proteins', 'meta_fats', 'meta_carbs', 'source' ] );
 	}

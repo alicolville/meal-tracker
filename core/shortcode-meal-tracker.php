@@ -349,7 +349,7 @@ function yk_mt_shortcode_meal_tracker_add_meal_dialog() {
 	);
 
 	// Build HTML for "Add Meal" tab
-	$add_form = yk_mt_shortcode_meal_tracker_add_meal_select( 'yk-mt-meal-id' );
+	$add_form = yk_mt_shortcode_meal_tracker_select( 'yk-mt-meal-id', __( 'Search for a meal', YK_MT_SLUG ) );
 
 	// Do we have any existing meals for this user?
 	if ( false === empty( $add_form ) ) {
@@ -526,7 +526,9 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_external_form() {
 
 	$html = '<div class="yk-mt-add-new-meal-form-search-external" style="display: none">';
 
-	$html .= yk_mt_shortcode_meal_tracker_add_meal_select( 'yk-mt-search-external' );
+	$html .= yk_mt_shortcode_meal_tracker_select( 'yk-mt-search-external', __( 'Search for a meal', YK_MT_SLUG ) );
+
+	$html .= yk_mt_shortcode_meal_tracker_add_new_meal_servings();
 
 	$html .= sprintf( '
 		<div class="yk-mt-add-new-meal-form-search-external" style="display: none">
@@ -557,17 +559,40 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_external_form() {
 }
 
 /**
- * Render <select> for meals
+ * Add servings drop down
+ * @return string
+ */
+function yk_mt_shortcode_meal_tracker_add_new_meal_servings() {
+
+	if ( false === yk_mt_ext_source_show_servings() ) {
+		return '';
+	}
+
+	$html = '<div class="yk-mt-add-new-meal-form-search-servings" style="display: none">';
+
+	$html .= sprintf( '<h3 class="yk-mt__modal-subtitle yk-mt-hide-if-editing">%1$s</h3>', __( 'Select a serving size', YK_MT_SLUG ) );
+
+	$html .= yk_mt_shortcode_meal_tracker_select( 'yk-mt-search-external-servings', __( 'Select a serving size', YK_MT_SLUG ) );
+
+	$html .= '</div>';
+
+	return $html;
+}
+
+/**
+ * Render <select> for meals / servings
  *
  * @param $select_name
  *
+ * @param string $placeholder
+ *
  * @return string
  */
-function yk_mt_shortcode_meal_tracker_add_meal_select( $select_name ) {
+function yk_mt_shortcode_meal_tracker_select( $select_name, $placeholder = '' ) {
 
 	return sprintf(   '<select id="%1$s" name="%1$s" class="yk-mt-select-meal" placeholder="%2$s..." required ></select>',
 						esc_attr( $select_name ),
-						__( 'Search for a meal', YK_MT_SLUG )
+						esc_html( $placeholder )
 	);
 }
 

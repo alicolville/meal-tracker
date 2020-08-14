@@ -226,7 +226,7 @@ function yk_mt_settings_page_generic() {
                                                             <option value="true" <?php selected( $allow_calorie, true ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
                                                             <option value="false" <?php selected( $allow_calorie, false ); ?>><?php echo __('No', YK_MT_SLUG )?></option>
                                                         </select>
-                                                        <p><?php echo __('Allow a user to specify their own daily calorie intake.', 'WE_LS_SLUG'  )?></p>
+                                                        <p><?php echo __('Allow a user to specify their own daily calorie intake.', YK_MT_SLUG )?></p>
                                                     </td>
                                                 </tr>
                                                 <tr class="<?php echo $disable_if_not_premium_class; ?><?php if ( false === yk_mt_wlt_pro_plus_enabled() ) { echo ' yk-mt-plugin-disabled'; } ?>">
@@ -316,6 +316,25 @@ function yk_mt_settings_page_generic() {
 														<input type="password" name="external-fatsecret-secret" id="external-fatsecret-secret" value="<?php echo esc_attr( yk_mt_site_options( 'external-fatsecret-secret', '' ) ); ?>" class="large-text" maxlength="40" />
 													</td>
 												</tr>
+												<tr>
+													<th scope="row"><?php echo __( 'Which API?' , YK_MT_SLUG ); ?></th>
+													<td>
+														<?php
+														$food_api = yk_mt_site_options('external-fatsecret-food-api', 'recipes' );
+														?>
+														<select id="external-fatsecret-food-api" name="external-fatsecret-food-api">
+															<option value="recipes" <?php selected( $food_api, 'recipes' ); ?>><?php echo __( 'Recipes API', YK_MT_SLUG ); ?></option>
+															<option value="foods" <?php selected( $food_api, 'foods' ); ?>><?php echo __( 'Foods API', YK_MT_SLUG ); ?></option>
+														</select>
+														<?php printf( '<p>%1$s <a href="https://platform.fatsecret.com/api/Default.aspx?screen=rapiref2&method=recipes.search" target="_blank" rel="noopener">%2$s</a> %3$s
+																						<a href="https://platform.fatsecret.com/api/Default.aspx?screen=rapiref2&method=foods.search" target="_blank" rel="noopener">%4$s</a>.</p>',
+																				__( 'Which FatSecrets API would you like to use? Their ', YK_MT_SLUG ),
+																				__( 'Recipes API', YK_MT_SLUG ),
+																				__( 'or', YK_MT_SLUG ),
+																				__( 'Foods API', YK_MT_SLUG ) );
+															?>
+													</td>
+												</tr>
 											</table>
 										</div>
                                         <div>
@@ -399,6 +418,7 @@ function yk_mt_register_settings(){
 		register_setting( 'yk-mt-options-group', 'external-enabled' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-id' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-secret' );
+		register_setting( 'yk-mt-options-group', 'external-fatsecret-food-api' );
     }
 }
 add_action( 'admin_init', 'yk_mt_register_settings' );
