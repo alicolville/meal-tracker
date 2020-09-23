@@ -47,7 +47,9 @@ function yk_mt_build_admin_menu() {
 
     add_submenu_page( 'yk-mt-main-menu', __( 'User Data', YK_MT_SLUG ),  __( 'User Data', YK_MT_SLUG ), $permission_level, 'yk-mt-user', 'yk_mt_admin_page_data_home' );
 
-    if ( true === yk_mt_setup_wizard_show_notice() ) {
+	add_submenu_page( 'yk-mt-main-menu', __( 'Meals', YK_MT_SLUG ),  __( 'Meals', YK_MT_SLUG ), $permission_level, 'yk-mt-meals', 'yk_mt_admin_page_meals_home' );
+
+	if ( true === yk_mt_setup_wizard_show_notice() ) {
         add_submenu_page( 'yk-mt-main-menu', __('Setup Wizard', YK_MT_SLUG ),  __('Setup Wizard', YK_MT_SLUG ), 'manage_options', 'yk-mt-setup-wizard', 'yk_mt_setup_wizard_page' );
     }
 

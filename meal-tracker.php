@@ -79,6 +79,8 @@ include_once YK_MT_ABSPATH . 'core/admin-pages/page.license.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/page.settings.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/page.help.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/page.setup.wizard.php';
+include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-home.php';
+include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-dashboard.php';
 
 // -----------------------------------------------------------------------------------------
 // AC: Load relevant language files
