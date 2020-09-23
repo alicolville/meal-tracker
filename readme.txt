@@ -3,8 +3,8 @@ Contributors: aliakro
 Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food
 Requires at least: 5.0
-Tested up to: 5.5
-Stable tag: 2.1
+Tested up to: 5.5.1
+Stable tag: 2.2
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -72,6 +72,10 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 2.1 - Support for FatSecrets Food API
 
 == Changelog ==
+
+= 2.2 =
+
+
 
 = 2.1 =
 
