@@ -248,6 +248,65 @@ function yk_mt_dashboard_side_bar() {
 }
 
 /**
+ * Display sidebar for dashboard
+ */
+function yk_mt_dashboard_meals_side_bar() {
+
+     $stats = yk_mt_stats();
+
+    ?>
+     <div class="postbox">
+        <h2 class="hndle"><?php echo __( 'Meal Search', YK_MT_SLUG ); ?></h2>
+        <div class="inside">
+            <?php yk_mt_meal_search_form(); ?>
+        </div>
+    </div>
+    <div class="postbox">
+        <h2 class="hndle"><?php echo __( 'Summary Counts', YK_MT_SLUG ); ?></h2>
+        <div class="inside">
+             <table class="yk-mt-sidebar-stats">
+                 <tr>
+                     <th><?php echo __( 'Entries', YK_MT_SLUG ); ?></th>
+                     <td><?php echo yk_mt_format_number( $stats[ 'yk_mt_entry' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'Users Meals', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'yk_mt_meals' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'Admin Meals', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur">TODO</td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'Meals added to entries', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'yk_mt_entry_meals' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'WordPress users', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'wp-users' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'Users with an entry', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'unique-users' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'Entries on target', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'successful-entries' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'Entries over target', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'failed-entries' ] ); ?></td>
+                 </tr>
+                  <tr>
+                     <td colspan="2" class="small"><?php printf( '%s %s', __( 'last updated at ', YK_MT_SLUG ), $stats[ 'last-updated' ] ); ?></td>
+                 </tr>
+             </table>
+    </div>
+
+    <?php
+}
+
+/**
  * Displays a navigational header at top of user data page
  *
  * @param $user_id
@@ -508,12 +567,34 @@ function yk_mt_stats() {
 // User search Search box
 // ------------------------------------------------------------------------------
 
-function yk_mt_user_search_form( $ajax_mode = false ) {
+/**
+ * Render HTML for user search form
+ */
+function yk_mt_user_search_form() {
 
     ?>	<p><?php echo __( 'Enter a user\'s email, display name or username then click "Search".', YK_MT_SLUG ); ?></p>
     <form id="yk-mt-user-search" class="yk-mt-user-search-ajax" >
         <input type="text" name="search" placeholder="" id="yk-mt-search-field" />
         <input type="hidden" name="page" value="yk-mt-user"  />
+        <input type="hidden" name="mode" value="search-results"  />
+        <input type="submit" class="button" value="Search" id="yk-mt-search-button" />
+    </form>
+    <?php
+}
+
+// ------------------------------------------------------------------------------
+// Meal Search box
+// ------------------------------------------------------------------------------
+
+/**
+* Render HTML for meals form
+ */
+function yk_mt_meal_search_form() {
+
+    ?>	<p><?php echo __( 'Enter some or all of a meal\'s title or description', YK_MT_SLUG ); ?></p>
+    <form id="yk-mt-meal-search" class="yk-mt-meal-search-ajax" >
+        <input type="text" name="search" placeholder="" id="yk-mt-search-field" />
+        <input type="hidden" name="page" value="yk-mt-meals"  />
         <input type="hidden" name="mode" value="search-results"  />
         <input type="submit" class="button" value="Search" id="yk-mt-search-button" />
     </form>
