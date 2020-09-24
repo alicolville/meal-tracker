@@ -49,7 +49,7 @@ function yk_mt_admin_page_meals_dashboard() {
 //									break;
 //							}
 
-							$meals  = yk_mt_db_meal_for_user( NULL, [ 'added_by_admin' => true, 'sort-order' => 'asc', 'use-cache' => false ] );
+							$meals  = yk_mt_db_meal_for_user( NULL, [ 'admin-meals-only' => true, 'sort-order' => 'asc', 'use-cache' => false ] );
 
 							yk_mt_table_meals( [ 'meals'   => $meals, 'show-username' => true ] );
 

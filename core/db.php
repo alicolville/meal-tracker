@@ -743,15 +743,16 @@ function yk_mt_db_ext_meal_exist( $ext_id, $serving_id = NULL, $added_by = false
 function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
 
     $options = wp_parse_args( $options, [
-        'exclude-deleted'       => true,
-        'sort'                  => 'name',
-        'sort-order'            => 'asc',
-        'search'                => NULL,
-        'limit'                 => NULL,
-        'count-only'            => false,
-	    'added_by_admin'        => false,
-	    'use-cache'             => true,
-	    'last-x-days'           => NULL
+        'exclude-deleted'       	=> true,
+        'sort'                  	=> 'name',
+        'sort-order'            	=> 'asc',
+        'search'                	=> NULL,
+        'limit'                 	=> NULL,
+        'count-only'            	=> false,
+	    'admin-meals-only'      	=> false,
+		'exclude-admin-meals'  		=> true,
+	    'use-cache'             	=> true,
+	    'last-x-days'          	 	=> NULL
     ]);
 
     $cache_key = md5( json_encode( $options ) );
@@ -768,14 +769,27 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
     $sql = ( true === $options[ 'count-only' ] ) ? 'Select count( id )' : 'select *';
 
     $sql .= ' from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where 1=1 ';
+print_r($options);
+
+// TODO: Fix the below. We need to support a user ID or not. Also need to support the flag about admin searches allowed.
 
     // Restrict to a user?
     if ( false === empty( $user_id ) &&
-            false === $options[ 'added_by_admin' ] ) {
-        $sql .= sprintf( ' and added_by = %d', $user_id );
-    } elseif ( true === $options[ 'added_by_admin' ] ) {
+			true === $options[ 'exclude-admin-meals' ] ) {
+		$sql .= sprintf( ' and ( added_by = %d and added_by_admin is null )', $user_id );
+    } else if ( false === empty( $user_id ) ) {
+		$sql .= sprintf( ' and ( added_by = %d or added_by_admin = 1 )', $user_id );
+	}
+
+    // Admin only meals?
+    if ( true === $options[ 'admin-meals-only' ] ) {
 	    $sql .= ' and added_by_admin = 1';
     }
+
+	// Exclude Admin only meals?
+//	if ( true === $options[ 'exclude-admin-meals' ] ) {
+//		$sql .= ' and added_by_admin is null';
+//	}
 
 	if ( false === empty( $options[ 'last-x-days' ] ) ) {
 		$sql .= sprintf( ' and added >= NOW() - INTERVAL %d DAY and added <= NOW()', $options[ 'last-x-days' ] );
@@ -785,7 +799,7 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
     if ( true === $options[ 'exclude-deleted' ] ) {
         $sql .= ' and deleted = 0';
     }
-
+var_dump($sql);
     if ( true === $options[ 'count-only' ] ) {
         $meals = $wpdb->get_var( $sql );
     } else {
