@@ -157,42 +157,59 @@ function yk_mt_table_meals( $args ) {
 		$args[ 'meals' ] = yk_mt_db_meal_for_user( $args[ 'user-id' ], $args );
 	}
 
+	$meta_fields = ( true === yk_mt_meta_is_enabled() ) ?
+						yk_mt_meta_fields_where( 'visible_user', true ) :
+							NULL;
 	?>
-	<table class="yk-mt-footable yk-mt-footable-basic widefat" data-paging="true" data-sorting="true" data-state="true">
+	<table class="yk-mt-footable yk-mt-footable-basic widefat" data-paging="true" data-sorting="true" data-state="true" data-filtering="true">
 		<thead>
 		<tr>
-			<th data-type="date" data-format-string="D/M/Y"><?php echo __( 'Date', YK_MT_SLUG ); ?></th>
-			<th data-type="text" data-breakpoints="sm"  data-visible="<?php echo ( true == $args[ 'show-username' ] ) ? 'true' : 'false'; ?>">
-				<?php echo __( 'Added By', YK_MT_SLUG ); ?>
-			</th>
 			<th data-breakpoints="xs" data-type="text"><?php echo __( 'Name', YK_MT_SLUG ); ?></th>
-			<th data-breakpoints="sm" data-type="text"><?php echo __( 'Size', YK_MT_SLUG ); ?></th>
+			<th data-breakpoints="sm" data-type="text"><?php echo __( 'Calories', YK_MT_SLUG ); ?></th>
+			<th data-breakpoints="sm" data-type="text"><?php echo __( 'Portion Size', YK_MT_SLUG ); ?></th>
 			<th data-breakpoints="xs" data-type="string"><?php echo __( 'Source', YK_MT_SLUG ); ?></th>
-			<th data-breakpoints="xs" data-sortable="false" width="20"><?php echo __( 'Percentage Used', YK_MT_SLUG ); ?></th>
+			<?php
+
+			if ( false === empty( $meta_fields ) ) {
+				foreach ( $meta_fields as $field ) {
+					printf( '<th data-breakpoints="sm" data-type="text">%s</th>', esc_html( $field[ 'title' ] ) );
+				}
+			}
+
+			?>
 			<th></th>
 		</tr>
 		</thead>
 		<?php
-		foreach ( $args[ 'meals' ] as $meal ) {
+			if ( false === empty( $args[ 'meals' ] ) ) {
+				foreach ( $args[ 'meals' ] as $meal ) {
 
-			printf ( '    <tr>
-                                                <td>%1$s</td>
-                                                <td>%2$s</td>
-                                                <td class="yk-mt-blur">%3$s</td>
-                                                <td class="yk-mt-blur">%4$s</td>
-                                                <td class="yk-mt-blur">%5$s</td>
-                                                <td class="yk-mt-blur">%6$s</td>
-                                                <td><a href="%7$s" class="btn btn-default footable-edit"><i class="fa fa-eye"></i></a></td>
-                                            </tr>',
-				yk_mt_date_format( $meal[ 'added' ] ),
-				yk_mt_link_profile_display_name_link( $meal[ 'added_by' ] ),
-				esc_html( $meal[ 'name' ] ),
-				yk_mt_get_unit_string( $meal ),
-				yk_mt_ext_source_as_string( $meal[ 'source' ] ),
-				'3',
-				'#'
-			);
-		}
+					printf ( '    <tr>
+													<td>%1$s</td>
+													<td class="yk-mt-blur">%2$s</td>
+													<td class="yk-mt-blur">%3$s</td>
+													<td class="yk-mt-blur">%4$s</td>',
+						esc_html( $meal[ 'name' ] ),
+						sprintf( '%s%s', number_format( $meal[ 'calories'] ), __( 'kcal', YK_MT_SLUG ) ),
+						yk_mt_get_unit_string( $meal ),
+						yk_mt_ext_source_as_string( $meal[ 'source' ] )
+					);
+
+					if ( false === empty( $meta_fields ) ) {
+						foreach ( $meta_fields as $field ) {
+							printf('<td class="yk-mt-blur">%s</td>', esc_html( $meal[ $field[ 'db_col' ] ] ) );
+						}
+					}
+
+					printf( '		<td>
+												<a class="btn btn-default footable-delete"><i class="fa fa-trash"></i></a>
+												<a href="%1$s" class="btn btn-default footable-edit"><i class="fa fa-eye"></i></a>
+		
+		
+											</td>
+										</tr>', '#' );
+				}
+			}
 		?>
 		</tbody>
 	</table>

@@ -75,6 +75,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 2.2 =
 
+TODO: Add a setting to disable admin emails being searched.
 
 
 = 2.1 =

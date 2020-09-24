@@ -256,11 +256,13 @@ function yk_mt_dashboard_meals_side_bar() {
 
     ?>
      <div class="postbox">
-        <h2 class="hndle"><?php echo __( 'Meal Search', YK_MT_SLUG ); ?></h2>
+        <h2 class="hndle"><?php echo __( 'Options', YK_MT_SLUG ); ?></h2>
         <div class="inside">
-            <?php yk_mt_meal_search_form(); ?>
+        	<center>
+        		<a href="" class="button-primary yk-mt-button-confirm"><?php echo __( 'Add a new meal', YK_MT_SLUG ); ?></span></a>
+			</center>
         </div>
-    </div>
+     </div>
     <div class="postbox">
         <h2 class="hndle"><?php echo __( 'Summary Counts', YK_MT_SLUG ); ?></h2>
         <div class="inside">
@@ -578,25 +580,6 @@ function yk_mt_user_search_form() {
     <form id="yk-mt-user-search" class="yk-mt-user-search-ajax" >
         <input type="text" name="search" placeholder="" id="yk-mt-search-field" />
         <input type="hidden" name="page" value="yk-mt-user"  />
-        <input type="hidden" name="mode" value="search-results"  />
-        <input type="submit" class="button" value="Search" id="yk-mt-search-button" />
-    </form>
-    <?php
-}
-
-// ------------------------------------------------------------------------------
-// Meal Search box
-// ------------------------------------------------------------------------------
-
-/**
-* Render HTML for meals form
- */
-function yk_mt_meal_search_form() {
-
-    ?>	<p><?php echo __( 'Enter some or all of a meal\'s title or description', YK_MT_SLUG ); ?></p>
-    <form id="yk-mt-meal-search" class="yk-mt-meal-search-ajax" >
-        <input type="text" name="search" placeholder="" id="yk-mt-search-field" />
-        <input type="hidden" name="page" value="yk-mt-meals"  />
         <input type="hidden" name="mode" value="search-results"  />
         <input type="submit" class="button" value="Search" id="yk-mt-search-button" />
     </form>
