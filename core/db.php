@@ -740,7 +740,7 @@ function yk_mt_db_ext_meal_exist( $ext_id, $serving_id = NULL, $added_by = false
  * @param array $options
  * @return array|null
  */
-function yk_mt_db_meal_for_user( $user_id = NULL, $options  = []  ) {
+function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
 
     $options = wp_parse_args( $options, [
         'exclude-deleted'       => true,
@@ -748,14 +748,18 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options  = []  ) {
         'sort-order'            => 'asc',
         'search'                => NULL,
         'limit'                 => NULL,
-        'count-only'            => false
+        'count-only'            => false,
+	    'added_by_admin'        => false,
+	    'use-cache'             => true,
+	    'last-x-days'           => NULL
     ]);
 
     $cache_key = md5( json_encode( $options ) );
 
     $cache = apply_filters( 'yk_mt_db_meals', [], $user_id, $cache_key );
 
-    if ( false === empty( $cache ) ) {
+    if ( false === empty( $cache ) &&
+            true === $options[ 'use-cache' ] ) {
         return $cache;
     }
 
@@ -766,9 +770,16 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options  = []  ) {
     $sql .= ' from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where 1=1 ';
 
     // Restrict to a user?
-    if ( false === empty( $user_id ) ) {
+    if ( false === empty( $user_id ) &&
+            false === $options[ 'added_by_admin' ] ) {
         $sql .= sprintf( ' and added_by = %d', $user_id );
+    } elseif ( true === $options[ 'added_by_admin' ] ) {
+	    $sql .= ' and added_by_admin = 1';
     }
+
+	if ( false === empty( $options[ 'last-x-days' ] ) ) {
+		$sql .= sprintf( ' and added >= NOW() - INTERVAL %d DAY and added <= NOW()', $options[ 'last-x-days' ] );
+	}
 
     // Exclude deleted?
     if ( true === $options[ 'exclude-deleted' ] ) {

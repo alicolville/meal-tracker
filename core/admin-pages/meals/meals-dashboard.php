@@ -48,9 +48,9 @@ function yk_mt_admin_page_meals_dashboard() {
 									break;
 							}
 
-							$entries  = yk_mt_db_entries_summary( $db_args );
+							$meals  = yk_mt_db_meal_for_user( NULL, $db_args );
 
-							yk_mt_table_user_entries( [ 'entries'   => $entries, 'show-username' => true ] );
+							yk_mt_table_meals( [ 'meals'   => $meals, 'show-username' => true ] );
 
 							yk_mt_admin_option_links( 'summary-meal-fetch', 'today', $option_links, 5, __( 'Meals Added', YK_MT_SLUG ). ': ', 'yk-mt-meals' );
 

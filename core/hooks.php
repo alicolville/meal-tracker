@@ -68,7 +68,7 @@ function yk_mt_enqueue_admin_files() {
 
     // Only include MT dependencies on our pages.
     if ( true === empty( $_GET['page'] ) ||
-    	  false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-settings', 'yk-mt-setup-wizard' ] ) ) {
+    	  false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-settings', 'yk-mt-setup-wizard', 'yk-mt-meals' ] ) ) {
         return;
     }
 
@@ -86,7 +86,7 @@ function yk_mt_enqueue_admin_files() {
         wp_enqueue_style( 'mt-tabs-flat', plugins_url( '../assets/css/tabs.flat.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
     }
 
-    if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu' ] ) ) {
+    if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-meals' ] ) ) {
 
         wp_enqueue_style( 'mt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
 
