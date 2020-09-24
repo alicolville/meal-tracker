@@ -917,7 +917,8 @@ function yk_mt_db_mysql_count( $mode = 'unique-users', $use_cache = true ) {
 
     global $wpdb;
 
-    $sql_statements = [
+    $sql_statements = [     'meals-user'            => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where added_by_admin is null',
+                            'meals-admin'           => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where added_by_admin = 1',
                             'unique-users'          => 'Select count( distinct( user_id ) ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY,
                             'successful-entries'    => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where calories_used <= calories_allowed',
                             'failed-entries'        => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where calories_used > calories_allowed'

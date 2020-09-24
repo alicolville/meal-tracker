@@ -271,11 +271,11 @@ function yk_mt_dashboard_meals_side_bar() {
                  </tr>
                  <tr>
                      <th><?php echo __( 'Users Meals', YK_MT_SLUG ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'yk_mt_meals' ] ); ?></td>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'meals-user' ] ); ?></td>
                  </tr>
                  <tr>
                      <th><?php echo __( 'Admin Meals', YK_MT_SLUG ); ?></th>
-                     <td class="yk-mt-blur">TODO</td>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'meals-admin' ] ); ?></td>
                  </tr>
                  <tr>
                      <th><?php echo __( 'Meals added to entries', YK_MT_SLUG ); ?></th>
@@ -550,6 +550,8 @@ function yk_mt_stats() {
         YK_WT_DB_MEALS          => yk_mt_db_mysql_count_table( YK_WT_DB_MEALS, false ),
         YK_WT_DB_ENTRY          => yk_mt_db_mysql_count_table( YK_WT_DB_ENTRY, false ),
         YK_WT_DB_ENTRY_MEAL     => yk_mt_db_mysql_count_table( YK_WT_DB_ENTRY_MEAL, false ),
+        'meals-user'			=> yk_mt_db_mysql_count( 'meals-user', false ),
+        'meals-admin'			=> yk_mt_db_mysql_count( 'meals-admin', false ),
         'wp-users'              => yk_mt_db_mysql_count_table( 'users', false ),
         'unique-users'          => yk_mt_db_mysql_count( 'unique-users', false ),
         'successful-entries'    => yk_mt_db_mysql_count( 'successful-entries', false ),
