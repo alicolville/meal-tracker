@@ -55,12 +55,26 @@ function yk_mt_blur_text( $text, $number_format = true ) {
 
     return $text;
 }
+
 /**
  * Return base URL for user data
  * @return string
  */
 function yk_mt_link_user_data() {
-    return admin_url( 'admin.php?page=yk-mt-user' );
+    return yk_mt_link_admin_page( 'yk-mt-user' );
+}
+
+/**
+ * Build Admin URL link
+ * @param $slug
+ *
+ * @return string|void
+ */
+function yk_mt_link_admin_page( $slug ) {
+
+	$url = sprintf( 'admin.php?page=%s', $slug );
+
+	return admin_url( $url );
 }
 
 /**
@@ -218,12 +232,15 @@ function yk_mt_admin_option_links_clicked( $key ) {
 
 /**
  * Render out links for options
+ *
  * @param $key
  * @param $default
  * @param $options
  * @param null $cache_notice
+ * @param null $prepend
+ * @param string $page_slug
  */
-function yk_mt_admin_option_links( $key, $default,  $options, $cache_notice = NULL ) {
+function yk_mt_admin_option_links( $key, $default,  $options, $cache_notice = NULL, $prepend = NULL, $page_slug = 'yk-mt-user' ) {
 
     if ( false === is_array( $options ) ||
             true === empty( $options ) ) {
@@ -232,9 +249,13 @@ function yk_mt_admin_option_links( $key, $default,  $options, $cache_notice = NU
 
     $current_selected = yk_mt_site_options( $key, $default );
 
-    $url = yk_mt_link_user_data();
+    $url = yk_mt_link_admin_page( $page_slug );
 
     echo '<div class="yk-mt-link-group">';
+
+    if ( false === empty( $prepend ) ) {
+    	echo esc_html( $prepend );
+	}
 
     foreach ( $options as $option_key => $option_name ) {
         printf(     '<a href="%1$s" class="%2$s">%3$s</a> &middot; ',
