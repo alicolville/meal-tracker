@@ -454,8 +454,19 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form() {
 		$html .= yk_mt_shortcode_meal_tracker_add_new_meal_external_form();
 	}
 
-	$html.= '<div class="yk-mt-add-new-meal-form" style="display: none">
-									<form id="yk-mt-form-add-new-meal">';
+	$html.= yk_mt_shortcode_meal_tracker_manual_meal_entry_form();
+
+	return $html;
+}
+
+/**
+ * Form required for adding a new meal
+ * @return string
+ */
+function yk_mt_shortcode_meal_tracker_manual_meal_entry_form() {
+
+	$html = sprintf( '<div class="yk-mt-add-new-meal-form" style="%s">
+									<form id="yk-mt-form-add-new-meal">', ( false === is_admin() ? 'display: none' : '' ) );
 
 	$html .= yk_mt_form_text( __( 'Name', YK_MT_SLUG ),	'add-meal-name' );
 
@@ -504,16 +515,17 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form() {
 		__( 'Save', YK_MT_SLUG )
 	);
 
-	$html .= sprintf( '
+	if ( false === is_admin() ) {
+		$html .= sprintf( '
 			<button id="yk-mt-button-meal-edit" class="yk-mt__btn yk-mt__btn--medium yk-mt-hide-if-adding">
 				<span class="yk-mt__btn-icon fa fa-edit"></span>
 				<span class="yk-mt__btn-text">%1$s</span>
-			</button>
-		</div>',
-		__( 'Save', YK_MT_SLUG )
-	);
+			</button>',
+			__( 'Save', YK_MT_SLUG )
+		);
+	}
 
-	$html .= '</form></div>';
+	$html .= '</div></form></div>';
 
 	return $html;
 }
