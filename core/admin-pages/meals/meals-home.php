@@ -14,9 +14,9 @@ function yk_mt_admin_page_meals_home() {
 //        case 'user':
 //            yk_mt_admin_page_user_summary();
 //            break;
-//        case 'entry':
-//            yk_mt_admin_page_entry_view();
-//            break;
+        case 'meal':
+            yk_mt_admin_page_meals_add_edit();
+            break;
 //        case 'search-results':
 //            yk_mt_admin_page_search_results();
 //            break;

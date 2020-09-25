@@ -474,13 +474,15 @@ function yk_mt_shortcode_meal_tracker_manual_meal_entry_form() {
 
 	$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories', '', '', 1,0 );
 
-	$html .= sprintf( '
-		<p class="yk-mt__info-box yk-mt-info yk-mt-hide-if-adding">
-			<span class="fa fa-info-circle"></span>
-			<span class="yk-mt__info-box-text">%1$s</span>
-		</p>',
-		__( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
-	);
+	if ( false === is_admin() ) {
+
+		$html .= sprintf( '<p class="yk-mt__info-box yk-mt-info yk-mt-hide-if-adding">
+								<span class="fa fa-info-circle"></span>
+								<span class="yk-mt__info-box-text">%1$s</span>
+							</p>',
+							__( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
+		);
+	}
 
 	// If premium, do we have any additional fields for the meal?
 	if ( true === yk_mt_meta_is_enabled() ) {

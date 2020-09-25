@@ -81,6 +81,7 @@ include_once YK_MT_ABSPATH . 'core/admin-pages/page.help.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/page.setup.wizard.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-home.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-dashboard.php';
+include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-add-edit.php';
 
 // -----------------------------------------------------------------------------------------
 // AC: Load relevant language files

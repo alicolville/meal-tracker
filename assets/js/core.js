@@ -516,6 +516,7 @@ jQuery( document ).ready( function ( $ ) {
 
   /**
    * Toggle show / hide of quantity field dependant on unit selected
+   * ( also in admin.js )
    */
   $('#yk-mt-add-meal-unit').change(function () {
     yk_mt_add_meal_form_show_quantity();
@@ -523,6 +524,7 @@ jQuery( document ).ready( function ( $ ) {
 
   /**
    * Show  / Hide quantity field depending on the unit selected
+   * ( also in admin.js )
    */
   function yk_mt_add_meal_form_show_quantity() {
 

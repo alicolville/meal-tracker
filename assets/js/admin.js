@@ -121,4 +121,47 @@ jQuery( document ).ready(function ($) {
             }
         });
     });
+
+  /**
+   * Toggle show / hide of quantity field dependant on unit selected
+   * ( also in admin.js )
+   */
+  $('#yk-mt-add-meal-unit').change(function () {
+    yk_mt_add_meal_form_show_quantity();
+  });
+
+  if ( 'meal' === yk_mt_sc_meal_tracker[ 'mode' ] ) {
+    yk_mt_add_meal_form_show_quantity();
+  }
+  
+  /**
+   * Show  / Hide quantity field depending on the unit selected
+   * ( also in admin.js )
+   */
+  function yk_mt_add_meal_form_show_quantity() {
+
+    let value = $('#yk-mt-add-meal-unit').val();
+    let quantity_row = $('#yk-mt-add-meal-quantity-row');
+
+    if ( true === yk_mt_hide_quantity( value ) ) {
+      $('#yk-mt-add-meal-quantity').prop('disabled', true);
+      $('#yk-mt-add-meal-quantity').prop('required', false);
+      $('#yk-mt-add-meal-quantity').val('');
+      quantity_row.hide();
+    } else {
+      $('#yk-mt-add-meal-quantity').prop('disabled', false);
+      $('#yk-mt-add-meal-quantity').prop('required', true);
+      quantity_row.show();
+    }
+  }
+
+  /**
+   * Is this a unit that we should hide quantity for?
+   * @param key
+   * @returns bool
+   */
+  function yk_mt_hide_quantity(key) {
+    return (-1 !== $.inArray(key, yk_mt_sc_meal_tracker['units-hide-quantity']));
+  }
+
 });

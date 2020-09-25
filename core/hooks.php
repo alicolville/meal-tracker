@@ -88,6 +88,8 @@ function yk_mt_enqueue_admin_files() {
 
     if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-meals' ] ) ) {
 
+	    wp_enqueue_style( 'mt-core', plugins_url( 'assets/css/yk-mt-core.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+
         wp_enqueue_style( 'mt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
 
         // Confirmation dialogs
