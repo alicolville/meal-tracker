@@ -178,7 +178,7 @@ function yk_mt_ajax_meals() {
                     NULL :
                         get_current_user_id();
 
-	$options[ 'exclude-admin-meals' ] = ! yk_mt_site_options_as_bool('search-admin-meals', true );
+	$options[ 'include-admin-meals' ] = yk_mt_site_options_as_bool('search-admin-meals', true );
 
 	$meals = yk_mt_db_meal_for_user( $user_id, $options );
 

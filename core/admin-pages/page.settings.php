@@ -148,7 +148,7 @@ function yk_mt_settings_page_generic() {
 															<option value="true" <?php selected( $search_admin_meals, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
 															<option value="false" <?php selected( $search_admin_meals, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
 														</select>
-														<p><?php echo __( 'If set to "Yes", users are allowed to search meals with the admin MEal Collection.', YK_MT_SLUG )?></p>
+														<p><?php echo __( 'If set to "Yes", users are allowed to search meals with the admin meal collection.', YK_MT_SLUG )?></p>
 													</td>
 												</tr>
                                             </table>

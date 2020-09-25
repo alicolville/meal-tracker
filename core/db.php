@@ -750,7 +750,7 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
         'limit'                 	=> NULL,
         'count-only'            	=> false,
 	    'admin-meals-only'      	=> false,
-		'exclude-admin-meals'  		=> true,
+		'include-admin-meals'  		=> false,
 	    'use-cache'             	=> true,
 	    'last-x-days'          	 	=> NULL
     ]);
@@ -769,27 +769,22 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
     $sql = ( true === $options[ 'count-only' ] ) ? 'Select count( id )' : 'select *';
 
     $sql .= ' from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where 1=1 ';
-print_r($options);
-
-// TODO: Fix the below. We need to support a user ID or not. Also need to support the flag about admin searches allowed.
 
     // Restrict to a user?
-    if ( false === empty( $user_id ) &&
-			true === $options[ 'exclude-admin-meals' ] ) {
-		$sql .= sprintf( ' and ( added_by = %d and added_by_admin is null )', $user_id );
-    } else if ( false === empty( $user_id ) ) {
-		$sql .= sprintf( ' and ( added_by = %d or added_by_admin = 1 )', $user_id );
-	}
+    if ( false === empty( $user_id ) ) {
+
+    	if ( false === $options[ 'include-admin-meals' ] ) {
+		    $sql .= sprintf( ' and ( added_by = %d and added_by_admin is null )', $user_id );
+	    } else {
+		    $sql .= sprintf( ' and ( added_by = %d or added_by_admin = 1 )', $user_id );
+	    }
+
+    }
 
     // Admin only meals?
     if ( true === $options[ 'admin-meals-only' ] ) {
 	    $sql .= ' and added_by_admin = 1';
     }
-
-	// Exclude Admin only meals?
-//	if ( true === $options[ 'exclude-admin-meals' ] ) {
-//		$sql .= ' and added_by_admin is null';
-//	}
 
 	if ( false === empty( $options[ 'last-x-days' ] ) ) {
 		$sql .= sprintf( ' and added >= NOW() - INTERVAL %d DAY and added <= NOW()', $options[ 'last-x-days' ] );
@@ -799,7 +794,7 @@ print_r($options);
     if ( true === $options[ 'exclude-deleted' ] ) {
         $sql .= ' and deleted = 0';
     }
-var_dump($sql);
+
     if ( true === $options[ 'count-only' ] ) {
         $meals = $wpdb->get_var( $sql );
     } else {
