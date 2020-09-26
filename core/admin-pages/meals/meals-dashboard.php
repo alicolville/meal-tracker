@@ -23,10 +23,14 @@ function yk_mt_admin_page_meals_dashboard() {
 							<p><?php echo __( 'The following meals can be searched by your users and added to their daily entries.', YK_MT_SLUG ); ?></p>
 							<?php
 
+							yk_mt_admin_option_links_clicked( 'search-admin-meals' );
+
 							if ( false === yk_mt_site_options_as_bool('search-admin-meals', false ) ) {
-								printf( '<p class="yk-mt-error-red"><strong>%s</strong>. %s.</p>',
+								printf( '<p class="yk-mt-error-red"><strong>%s</strong>. %s. <a href="%s">%s</a>.</p>',
 											__( 'Admin Collection not searchable', YK_MT_SLUG ),
-											__( 'As an administrator, you can add, edit and delete meals. However, the setting "Admin\'s meal collection" under "Searching meals" has been disabled which means your users can not search this collection', YK_MT_SLUG )
+											__( 'As an administrator, you can add, edit and delete meals. However, the setting "Admin\'s meal collection" under "Searching meals" has been disabled which means your users can not search this collection', YK_MT_SLUG ),
+											esc_url( admin_url( 'admin.php?page=yk-mt-meals&search-admin-meals=true' ) ),
+											__( 'Enable now', YK_MT_SLUG )
 								);
 							}
 
