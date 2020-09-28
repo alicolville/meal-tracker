@@ -26,7 +26,7 @@ function yk_mt_admin_page_meals_dashboard() {
 							$delete_id = yk_mt_querystring_value( 'delete' );
 
 							if ( false === empty( $delete_id ) ) {
-								if ( true === yk_mt_db_meal_delete( $delete_id ) ) {
+								if ( true === yk_mt_meal_update_delete( $delete_id ) ) {
 									printf( '<p><strong>%s</strong></p>', __( 'Your meal has been successfully deleted.' ) );
 								}
 							}
