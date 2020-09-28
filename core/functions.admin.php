@@ -188,15 +188,19 @@ function yk_mt_table_meals( $args ) {
 			if ( false === empty( $args[ 'meals' ] ) ) {
 				foreach ( $args[ 'meals' ] as $meal ) {
 
+					$base_url 	= esc_url( admin_url( 'admin.php?page=yk-mt-meals&mode=meal' ) );
+					$edit_link 	= $base_url . esc_url( admin_url( 'admin.php?page=yk-mt-meals&mode=meal&edit=' . (int) $meal[ 'id' ] ) );
+
 					printf ( '    <tr>
-													<td>%1$s</td>
+													<td><a href="%5$s">%1$s</a></td>
 													<td class="yk-mt-blur">%2$s</td>
 													<td class="yk-mt-blur">%3$s</td>
 													<td class="yk-mt-blur">%4$s</td>',
 						esc_html( $meal[ 'name' ] ),
 						sprintf( '%s%s', number_format( $meal[ 'calories'] ), __( 'kcal', YK_MT_SLUG ) ),
 						yk_mt_get_unit_string( $meal ),
-						yk_mt_ext_source_as_string( $meal[ 'source' ] )
+						yk_mt_ext_source_as_string( $meal[ 'source' ] ),
+						$edit_link
 					);
 
 					if ( false === empty( $meta_fields ) ) {
@@ -205,15 +209,13 @@ function yk_mt_table_meals( $args ) {
 						}
 					}
 
-					$base_url = esc_url( admin_url( 'admin.php?page=yk-mt-meals&mode=meal' ) );
-
 					printf( '	<td>
 									<a href="%1$s" class="btn btn-default footable-delete"><i class="fa fa-trash"></i></a>
 									<a href="%2$s" class="btn btn-default footable-edit"><i class="fa fa-edit"></i></a>
 								</td>
 							</tr>',
-							$base_url . esc_url( admin_url( 'admin.php?page=yk-mt-meals&delete=' . (int) $meal[ 'id' ] ) ) ,
-							$base_url . esc_url( admin_url( 'admin.php?page=yk-mt-meals&mode=meal&edit=' . (int) $meal[ 'id' ] ) )
+							$base_url . esc_url( admin_url( 'admin.php?page=yk-mt-meals&delete=' . (int) $meal[ 'id' ] ) ),
+							$edit_link
 					);
 				}
 			}
