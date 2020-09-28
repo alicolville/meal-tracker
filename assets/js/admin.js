@@ -272,7 +272,9 @@ jQuery( document ).ready(function ($) {
 
     e.preventDefault();
 
-    window.location.replace( yk_mt_settings[ 'meals-url' ] );
+    window.history.back();
+
+    // window.location.replace( yk_mt_settings[ 'meals-url' ] );
 
   });
 
