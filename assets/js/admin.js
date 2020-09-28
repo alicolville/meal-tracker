@@ -272,9 +272,11 @@ jQuery( document ).ready(function ($) {
 
     e.preventDefault();
 
-    window.history.back();
-
-    // window.location.replace( yk_mt_settings[ 'meals-url' ] );
+    if ( '#' === yk_mt_sc_meal_tracker['previous-url'] ) {
+      window.history.back();
+    } else {
+      window.location.replace( yk_mt_sc_meal_tracker['previous-url'] )
+    }
 
   });
 

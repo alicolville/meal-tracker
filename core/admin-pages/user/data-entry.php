@@ -73,7 +73,7 @@ function yk_mt_admin_page_entry_view() {
                                                                     <td data-breakpoints="xs" class="yk-mt-blur">%4$s</td>
                                                                 </tr>',
                                                         ( $i < 2 ) ? '' : 'yk-mt-blur',
-                                                        esc_html( $meal[ 'name' ] ),
+														yk_mt_link_admin_page_meal_edit( $meal[ 'id' ], esc_html( $meal[ 'name' ] ) ),
                                                         esc_html( $meal[ 'description' ] ),
                                                         esc_html( $meal[ 'd' ] )
                                                     );

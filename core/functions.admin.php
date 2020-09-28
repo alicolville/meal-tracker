@@ -37,7 +37,8 @@ function yk_mt_admin_localise() {
         'is-admin'          	=> true,
 		'mode'					=> yk_mt_querystring_value( 'mode' ),
 		'units-hide-quantity'   => yk_mt_units_where( 'drop-quantity', true, true ),
-		'meta-fields'			=> yk_mt_meta_js_config()
+		'meta-fields'			=> yk_mt_meta_js_config(),
+		'previous-url'			=> yk_mt_link_previous_url()
     ]);
 }
 

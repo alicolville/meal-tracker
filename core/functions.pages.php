@@ -445,6 +445,31 @@ function yk_mt_link_admin_page_user_render( $user_id, $display_text = NULL ) {
 }
 
 /**
+ * Get link for editing meal
+*
+* @param $meal_id
+* @param string $text
+ *
+* @param bool $add_back_link
+*
+* @return string
+*/
+function yk_mt_link_admin_page_meal_edit( $meal_id, $text = '', $add_back_link = true ) {
+
+	if ( true === empty( $text ) ) {
+		$text = __( 'Edit Meal', YK_MT_SLUG );
+	}
+
+	$base_url = admin_url( 'admin.php?page=yk-mt-meals&mode=meal&edit=' . (int) $meal_id );
+
+	if ( true === $add_back_link ) {
+		$base_url = yk_mt_link_add_back_link( $base_url );
+	}
+
+	return yk_mt_link_render( $base_url, $text );
+}
+
+/**
  * @param $link
  * @param $label
  *
@@ -505,8 +530,11 @@ function yk_mt_link_current_url() {
 
 /**
  * Look in querystring for a previous link
- * @return bool
- */
+*
+* @param string $default
+*
+* @return bool
+*/
 function yk_mt_link_previous_url( $default = '#' ) {
 
     $previous_url = yk_mt_querystring_value( 'yk-mt-prev-url', false );
