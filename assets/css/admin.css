@@ -149,3 +149,11 @@ HEX: #f7786b
 .yk-mt-selected {
     font-weight: bold;
 }
+
+/**
+Core.css overrides
+ */
+
+.yk-mt__label {
+  font-size: 100% !important;
+}

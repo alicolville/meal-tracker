@@ -648,7 +648,10 @@ function yk_mt_is_meal_object( $meal ) {
 /**
  * @param $title
  * @param $name
+ * @param string $value
  * @param int $max_length
+ *
+ * @param bool $required
  *
  * @return string
  */

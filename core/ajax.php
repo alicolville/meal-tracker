@@ -63,15 +63,21 @@ add_action( 'wp_ajax_delete_meal_from_entry', 'yk_mt_ajax_delete_meal_from_entry
 /**
  * Add a new meal
  *
+ * @param array $options
+ *
  * @return mixed
  */
-function yk_mt_ajax_meal_add() {
+function yk_mt_ajax_meal_add( $options = [] ) {
 
-    check_ajax_referer( 'yk-mt-nonce', 'security' );
+	check_ajax_referer( 'yk-mt-nonce', 'security' );
 
 	$post_data = yk_mt_ajax_extract_and_validate_post_data( [ 'name', 'unit' ] );
 
     $post_data[ 'added_by' ] = get_current_user_id();
+
+    if ( false === empty( $options[ 'added_by_admin' ] ) ) {
+	    $post_data[ 'added_by_admin' ] = 1;
+    }
 
     // Ensure we have a calorie value (can be 0)
 	$post_data[ 'calories' ] = yk_mt_ajax_extract_and_validate_post_data_single( 'calories', false );
@@ -138,6 +144,14 @@ function yk_mt_ajax_meal_add() {
     wp_send_json( [ 'error' => false, 'new-meal' => $post_data ] );
 }
 add_action( 'wp_ajax_add_meal', 'yk_mt_ajax_meal_add' );
+
+/**
+ * Meal added by admin?
+ */
+function wp_ajax_add_meal_admin() {
+	yk_mt_ajax_meal_add( [ 'added_by_admin' => 1 ] );
+}
+add_action( 'wp_ajax_add_meal_admin', 'wp_ajax_add_meal_admin' );
 
 /**
  * Fetch the data for a meal

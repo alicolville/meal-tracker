@@ -676,7 +676,10 @@ function yk_mt_db_meal_delete( $id ) {
 /**
  * Get details for a meal
  *
- * @param $key
+ * @param $id
+ * @param bool $added_by
+ *
+ * @return array|bool|mixed|object|void
  */
 function yk_mt_db_meal_get( $id, $added_by = false ) {
 
@@ -841,7 +844,7 @@ function yk_mt_db_meal_delete_entries( $meal_id ) {
     return ( 1 === $result );
 
 }
-add_action( 'yk_mt_meal_deleted', 'yk_mt_meal_delete_entries' );     // Delete all Meal / Entry relationships when a meal has been deleted
+add_action( 'yk_mt_meal_deleted', 'yk_mt_db_meal_delete_entries' );     // Delete all Meal / Entry relationships when a meal has been deleted
 
 /**
  * Add a meal type
@@ -972,6 +975,7 @@ function yk_mt_db_mysql_formats( $data ) {
         'id'                    => '%d',
         'name'                  => '%s',
         'added_by'              => '%d',
+        'added_by_admin'        => '%d',
         'entry_id'              => '%d',
         'gain_loss'             => '%s',
         'calories'              => '%f',

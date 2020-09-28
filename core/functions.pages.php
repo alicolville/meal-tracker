@@ -254,15 +254,17 @@ function yk_mt_dashboard_meals_side_bar() {
 
      $stats = yk_mt_stats();
 
+     if ( 'meal' !== yk_mt_querystring_value( 'mode' ) ) :
     ?>
      <div class="postbox">
         <h2 class="hndle"><?php echo __( 'Options', YK_MT_SLUG ); ?></h2>
         <div class="inside">
         	<center>
-        		<a href="" class="button-primary yk-mt-button-confirm"><?php echo __( 'Add a new meal', YK_MT_SLUG ); ?></span></a>
+        		<a href="<?php echo esc_url( admin_url( 'admin.php?page=yk-mt-meals&mode=meal' ) ); ?>" class="button-primary"><?php echo __( 'Add a new meal', YK_MT_SLUG ); ?></span></a>
 			</center>
         </div>
      </div>
+     <?php endif; ?>
     <div class="postbox">
         <h2 class="hndle"><?php echo __( 'Summary Counts', YK_MT_SLUG ); ?></h2>
         <div class="inside">

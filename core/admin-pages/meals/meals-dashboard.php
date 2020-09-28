@@ -18,10 +18,18 @@ function yk_mt_admin_page_meals_dashboard() {
                         }
                     ?>
                    <div class="postbox">
-                        <h2 class="hndle"><span><?php echo __( 'Meals added by Admin', YK_MT_SLUG ); ?></span></h2>
+                        <h2 class="hndle"><span><?php echo __( 'Your meal collection', YK_MT_SLUG ); ?></span></h2>
                         <div class="inside">
 							<p><?php echo __( 'The following meals can be searched by your users and added to their daily entries.', YK_MT_SLUG ); ?></p>
 							<?php
+
+							$delete_id = yk_mt_querystring_value( 'delete' );
+
+							if ( false === empty( $delete_id ) ) {
+								if ( true === yk_mt_db_meal_delete( $delete_id ) ) {
+									printf( '<p><strong>%s</strong></p>', __( 'Your meal has been successfully deleted.' ) );
+								}
+							}
 
 							yk_mt_admin_option_links_clicked( 'search-admin-meals' );
 
