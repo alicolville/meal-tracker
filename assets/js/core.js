@@ -214,6 +214,8 @@ jQuery( document ).ready( function ( $ ) {
 
             if (false === res) {
               $('.yk-mt-hide-if-no-meals-results').fadeOut('slow');
+
+              yk_mt_info( yk_mt_sc_meal_tracker['localise']['search-no-results'] );
             }
 
             callback(res);

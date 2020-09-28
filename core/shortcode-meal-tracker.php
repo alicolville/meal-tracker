@@ -469,7 +469,7 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form() {
 function yk_mt_shortcode_meal_tracker_manual_meal_entry_form( $previous_values = [] ) {
 
 	$form_destination = '';
-print_r($previous_values);
+
 	$previous_values = wp_parse_args( $previous_values, [   'name'         => '',
 															'description'  => '',
 															'calories'     => '',
