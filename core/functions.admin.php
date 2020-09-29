@@ -154,7 +154,8 @@ function yk_mt_table_meals( $args ) {
 		'added_by_admin'	=> false,					// Show ony admin meals
 		'meals'       		=> NULL,
 		'show-username' 	=> false,
-		'use-cache'     	=> true
+		'use-cache'     	=> true,
+		'user-id-for-link'	=> ''
 	]);
 
 	// Fetch meals if non specified
@@ -187,10 +188,16 @@ function yk_mt_table_meals( $args ) {
 		</thead>
 		<?php
 			if ( false === empty( $args[ 'meals' ] ) ) {
+
+				$base_url 	= admin_url( 'admin.php?page=yk-mt-meals' );
+
+				if ( false === empty( $args[ 'user-id-for-link' ] ) ) {
+					$base_url = add_query_arg( 'user-id', (int) $args[ 'user-id-for-link' ], $base_url );
+				}
+
 				foreach ( $args[ 'meals' ] as $meal ) {
 
-					$base_url 	= esc_url( admin_url( 'admin.php?page=yk-mt-meals&mode=meal' ) );
-					$edit_link 	= $base_url . esc_url( admin_url( 'admin.php?page=yk-mt-meals&mode=meal&edit=' . (int) $meal[ 'id' ] ) );
+					$edit_link 	= add_query_arg( [ 'edit' => $meal[ 'id' ], 'mode' => 'meal' ], $base_url );
 
 					printf ( '    <tr>
 													<td><a href="%5$s">%1$s</a></td>
@@ -201,7 +208,7 @@ function yk_mt_table_meals( $args ) {
 						sprintf( '%s%s', number_format( $meal[ 'calories'] ), __( 'kcal', YK_MT_SLUG ) ),
 						yk_mt_get_unit_string( $meal ),
 						yk_mt_ext_source_as_string( $meal[ 'source' ] ),
-						$edit_link
+						esc_url( $edit_link )
 					);
 
 					if ( false === empty( $meta_fields ) ) {
@@ -215,7 +222,7 @@ function yk_mt_table_meals( $args ) {
 									<a href="%2$s" class="btn btn-default footable-edit"><i class="fa fa-edit"></i></a>
 								</td>
 							</tr>',
-							$base_url . esc_url( admin_url( 'admin.php?page=yk-mt-meals&delete=' . (int) $meal[ 'id' ] ) ),
+							esc_url( $base_url . '&delete=' . (int) $meal[ 'id' ] ),
 							$edit_link
 					);
 				}

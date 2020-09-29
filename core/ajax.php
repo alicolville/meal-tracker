@@ -150,8 +150,10 @@ add_action( 'wp_ajax_add_meal', 'yk_mt_ajax_meal_add' );
  */
 function wp_ajax_add_meal_admin() {
 
+	$meal_id = yk_mt_ajax_get_post_value_int( 'id' );
+
 	// Only set added by admin if a new entry (i.e. not editing one!)
-	$options = ( false === yk_mt_ajax_get_post_value_int( 'id', false ) ) ?
+	$options = ( true === empty( $meal_id ) ) ?
 					[ 'added_by_admin' => 1 ] :
 						[];
 

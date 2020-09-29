@@ -93,7 +93,14 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
                 </tr>
                 <tr>
                     <th><?php echo __( 'Number of Meals', YK_MT_SLUG ); ?></th>
-                    <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-meals' ] ); ?></td>
+                    <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-meals' ] ); ?>
+                    <?php
+						printf( ' ( <a href="%s">%s</a> ) ',
+							esc_url( admin_url( 'admin.php?page=yk-mt-meals&user-id=' . (int) $user_id ) ),
+							__( 'view', YK_MT_SLUG )
+						);
+					?>
+                    </td>
                 </tr>
             </table>
         </div>
