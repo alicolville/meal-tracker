@@ -199,7 +199,8 @@ function yk_mt_dashboard_side_bar() {
 
      $stats = yk_mt_stats();
 
-     if ( 'meal' !== yk_mt_querystring_value( 'mode' ) ) :
+     if ( 'yk-mt-meals' === yk_mt_querystring_value( 'page' )
+     			&& 'meal' !== yk_mt_querystring_value( 'mode' ) ) :
     ?>
      <div class="postbox">
         <h2 class="hndle"><?php echo __( 'Options', YK_MT_SLUG ); ?></h2>
