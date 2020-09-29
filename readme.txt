@@ -82,7 +82,8 @@ TODO: In UI, don't allow users to edit Admin meals.
 * New feature: "Meal Collection" - ability to create a library of meals that your users can search.
 * New feature: View, edit and delete meals in your user's meal collections.
 * Bug fix: Description is correctly updated when modified by a user.
-
+* Bug fix: Under "Calorie Allowance", allow the setting "User specified" to be saved correctly when not premium
+.
 = 2.1 =
 
 * New Feature: Support for FatSecrets Food API (https://platform.fatsecret.com/api/Default.aspx?screen=rapiref2&method=foods.search)

@@ -413,13 +413,13 @@ function yk_mt_register_settings(){
 
     register_setting( 'yk-mt-options-group', 'caching-enabled' );
 	register_setting( 'yk-mt-options-group', 'css-theme-enabled' );
+	register_setting( 'yk-mt-options-group', 'allow-calorie-override' );
 
-    // Pro only open
+	// Pro only open
     if( true ===  yk_mt_license_is_premium() ){
 
         register_setting( 'yk-mt-options-group', 'accordion-enabled' );
         register_setting( 'yk-mt-options-group', 'allow-calorie-override-admin' );
-        register_setting( 'yk-mt-options-group', 'allow-calorie-override' );
         register_setting( 'yk-mt-options-group', 'allow-calorie-external-wlt' );
         register_setting( 'yk-mt-options-group', 'yk-mt-edit-permissions' );
         register_setting( 'yk-mt-options-group', 'search-others-meals' );
