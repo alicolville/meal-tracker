@@ -337,8 +337,8 @@ function yk_mt_db_entry_get( $id = NULL ) {
 
         $entry = yk_mt_db_entry_calculate_stats( $entry );
 
-        $sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity, m.unit, m.description,
-                                em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
+        $sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity, m.unit, m.description, m.added_by_admin,
+								em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
                                 Inner Join ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em
                                 on em.meal_id = m.id
                                 where em.entry_id = %d
@@ -383,6 +383,10 @@ function yk_mt_db_entry_get( $id = NULL ) {
                         yk_mt_get_unit_string( $meal ),
                         ( $meal_count > 1 ) ? $meal_count . ' x ' : ''
                     );
+
+                    // Hide edit button if the meal was added by admin
+	                $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'css_class' ] =
+		                ( false === empty( $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'added_by_admin' ] ) ) ? 'yk-mt-hide' : '';
 
                 } else {
 
