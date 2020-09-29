@@ -77,8 +77,11 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 2.2 =
 
+TODO: In UI, don't allow users to edit Admin meals.
+
 * New feature: "Meal Collection" - ability to create a library of meals that your users can search.
 * New feature: View, edit and delete meals in your user's meal collections.
+* Bug fix: Description is correctly updated when modified by a user.
 
 = 2.1 =
 

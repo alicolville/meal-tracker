@@ -27,10 +27,12 @@ function yk_mt_admin_page_meals_dashboard() {
                     ?>
                    <div class="postbox">
                         <h2 class="hndle">
-								<span><?php echo __( 'Meal collection', YK_MT_SLUG ); ?>
+								<span>
 									<?php
 										if  ( false === empty( $user_id ) ) {
-											printf( ' %s: %s', __( 'for', YK_MT_SLUG ), yk_mt_user_display_name( $user_id ) );
+											printf( '%s: <em>%s</em>', __( 'Meals added by', YK_MT_SLUG ), yk_mt_user_display_name( $user_id ) );
+										} else {
+											printf( ' %s', __( 'Meal collection', YK_MT_SLUG ) );
 										}
 									?>
 								</span>

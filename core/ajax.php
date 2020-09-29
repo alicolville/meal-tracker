@@ -73,7 +73,8 @@ function yk_mt_ajax_meal_add( $options = [] ) {
 
 	$post_data = yk_mt_ajax_extract_and_validate_post_data( [ 'name', 'unit' ] );
 
-    $post_data[ 'added_by' ] = get_current_user_id();
+    $post_data[ 'added_by' ]    = get_current_user_id();
+	$post_data[ 'description' ] = yk_mt_post_value( 'description', '' );
 
     if ( false === empty( $options[ 'added_by_admin' ] ) ) {
 	    $post_data[ 'added_by_admin' ] = 1;
