@@ -37,6 +37,7 @@ Pro Features:
 * Support for Macronutrients.
 * Search external APIs (like Fatsecrets) for meals.
 * FatSecrets Food and Recipe API are supported.
+* Meal Collection - create a library of meals for your users to search.
 
 == Installation ==
 
@@ -69,13 +70,13 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 == Upgrade Notice ==
 
-2.1 - Support for FatSecrets Food API
+2.2 - Admin Meal Collection and view / edit user's meals
 
 == Changelog ==
 
 = 2.2 =
 
-TODO: Add a setting to disable admin emails being searched.
+* New feature: "Meal Collection" - ability to create a library of meals that your users can search.
 
 
 = 2.1 =
