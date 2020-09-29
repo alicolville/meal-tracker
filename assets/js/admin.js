@@ -258,7 +258,11 @@ jQuery( document ).ready(function ($) {
 
     if ( false === response['error'] ) {
 
-      window.location.replace( yk_mt_settings[ 'meals-url' ] + '&added=y' );
+      if ( '#' === yk_mt_sc_meal_tracker['previous-url'] ) {
+        window.location.replace( yk_mt_settings[ 'meals-url' ] + '&added=y' );
+      } else {
+        window.location.replace( yk_mt_sc_meal_tracker['previous-url'] )
+      }
 
     } else {
       alert( 'There was an error saving your meal' );
