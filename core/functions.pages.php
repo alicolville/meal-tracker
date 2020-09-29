@@ -199,61 +199,6 @@ function yk_mt_dashboard_side_bar() {
 
      $stats = yk_mt_stats();
 
-    ?>
-     <div class="postbox">
-        <h2 class="hndle"><?php echo __( 'User Search', YK_MT_SLUG ); ?></h2>
-        <div class="inside">
-            <?php yk_mt_user_search_form(); ?>
-        </div>
-    </div>
-    <div class="postbox">
-        <h2 class="hndle"><?php echo __( 'Summary Counts', YK_MT_SLUG ); ?></h2>
-        <div class="inside">
-             <table class="yk-mt-sidebar-stats">
-                 <tr>
-                     <th><?php echo __( 'Entries', YK_MT_SLUG ); ?></th>
-                     <td><?php echo yk_mt_format_number( $stats[ 'yk_mt_entry' ] ); ?></td>
-                 </tr>
-                 <tr>
-                     <th><?php echo __( 'Meals', YK_MT_SLUG ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'yk_mt_meals' ] ); ?></td>
-                 </tr>
-                 <tr>
-                     <th><?php echo __( 'Meals added to entries', YK_MT_SLUG ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'yk_mt_entry_meals' ] ); ?></td>
-                 </tr>
-                 <tr>
-                     <th><?php echo __( 'WordPress users', YK_MT_SLUG ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'wp-users' ] ); ?></td>
-                 </tr>
-                 <tr>
-                     <th><?php echo __( 'Users with an entry', YK_MT_SLUG ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'unique-users' ] ); ?></td>
-                 </tr>
-                 <tr>
-                     <th><?php echo __( 'Entries on target', YK_MT_SLUG ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'successful-entries' ] ); ?></td>
-                 </tr>
-                 <tr>
-                     <th><?php echo __( 'Entries over target', YK_MT_SLUG ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'failed-entries' ] ); ?></td>
-                 </tr>
-                  <tr>
-                     <td colspan="2" class="small"><?php printf( '%s %s', __( 'last updated at ', YK_MT_SLUG ), $stats[ 'last-updated' ] ); ?></td>
-                 </tr>
-             </table>
-    </div>
-
-    <?php
-}
-
-/**
- * Display sidebar for dashboard
- */
-function yk_mt_dashboard_meals_side_bar() {
-
-     $stats = yk_mt_stats();
-
      if ( 'meal' !== yk_mt_querystring_value( 'mode' ) ) :
     ?>
      <div class="postbox">
@@ -264,6 +209,13 @@ function yk_mt_dashboard_meals_side_bar() {
 			</center>
         </div>
      </div>
+     <?php else: ?>
+     <div class="postbox">
+        <h2 class="hndle"><?php echo __( 'User Search', YK_MT_SLUG ); ?></h2>
+        <div class="inside">
+            <?php yk_mt_user_search_form(); ?>
+        </div>
+    </div>
      <?php endif; ?>
     <div class="postbox">
         <h2 class="hndle"><?php echo __( 'Summary Counts', YK_MT_SLUG ); ?></h2>
@@ -274,12 +226,12 @@ function yk_mt_dashboard_meals_side_bar() {
                      <td><?php echo yk_mt_format_number( $stats[ 'yk_mt_entry' ] ); ?></td>
                  </tr>
                  <tr>
-                     <th><?php echo __( 'Users Meals', YK_MT_SLUG ); ?></th>
+                     <th><?php echo __( 'Meals added by users', YK_MT_SLUG ); ?></th>
                      <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'meals-user' ] ); ?></td>
                  </tr>
                  <tr>
-                     <th><?php echo __( 'Admin Meals', YK_MT_SLUG ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'meals-admin' ] ); ?></td>
+                     <th><?php echo __( 'Meal Collection', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_link_render( esc_url( admin_url( 'admin.php?page=yk-mt-meals' ) ), yk_mt_format_number( $stats[ 'meals-admin' ] ) ); ?></td>
                  </tr>
                  <tr>
                      <th><?php echo __( 'Meals added to entries', YK_MT_SLUG ); ?></th>
