@@ -63,7 +63,7 @@
                                                 <p>Upgrade to the Premium version of Meal Tracker and get the additional features:</p>
 
                                                 <br />
-                                        <?php
+                                        	<?php
                                                  echo yk_mt_features_display();
 
                                             endif;

@@ -38,6 +38,7 @@ Pro Features:
 * Search external APIs (like Fatsecrets) for meals.
 * FatSecrets Food and Recipe API are supported.
 * Meal Collection - create a library of meals for your users to search.
+* View, edit and delete meals in your user's meal collection.
 
 == Installation ==
 
@@ -77,7 +78,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 = 2.2 =
 
 * New feature: "Meal Collection" - ability to create a library of meals that your users can search.
-
+* New feature: View, edit and delete meals in your user's meal collections.
 
 = 2.1 =
 
