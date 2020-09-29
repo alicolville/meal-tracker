@@ -197,7 +197,8 @@ function yk_mt_table_meals( $args ) {
 
 				foreach ( $args[ 'meals' ] as $meal ) {
 
-					$edit_link 	= add_query_arg( [ 'edit' => $meal[ 'id' ], 'mode' => 'meal' ], $base_url );
+					$edit_link = add_query_arg( [ 'edit' => $meal[ 'id' ], 'mode' => 'meal' ], $base_url );
+					$edit_link = yk_mt_link_add_back_link( $edit_link );
 
 					printf ( '    <tr>
 													<td><a href="%5$s">%1$s</a></td>

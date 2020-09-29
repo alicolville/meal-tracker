@@ -468,6 +468,10 @@ function yk_mt_link_add_back_link( $link ) {
     }
 
     $current_url = yk_mt_link_current_url();
+
+	// Remove &delete= from QS
+	$current_url = remove_query_arg( 'delete', $current_url );
+
     $current_url = base64_encode( $current_url );
 
     return add_query_arg( 'yk-mt-prev-url', $current_url, $link );
