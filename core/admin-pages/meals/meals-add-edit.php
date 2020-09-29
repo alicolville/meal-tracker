@@ -23,11 +23,18 @@ function yk_mt_admin_page_meals_add_edit() {
 							<p>
 							<?php
 
-								// Editing an entry?
-								$meal_id 		= yk_mt_querystring_value( 'edit' );
-								$existing_meal 	= ( false === empty( $meal_id ) ) ? yk_mt_db_meal_get( $meal_id, get_current_user_id() ) : NULL;
+								if ( false === YK_MT_IS_PREMIUM ) {
 
-								echo yk_mt_shortcode_meal_tracker_manual_meal_entry_form( $existing_meal );
+									printf( '<p>%s.</p>', __( 'To add or edit a meal, you must have a Premium license', YK_MT_SLUG ) );
+
+								} else {
+
+									// Editing an entry?
+									$meal_id 		= yk_mt_querystring_value( 'edit' );
+									$existing_meal 	= ( false === empty( $meal_id ) ) ? yk_mt_db_meal_get( $meal_id, get_current_user_id() ) : NULL;
+
+									echo yk_mt_shortcode_meal_tracker_manual_meal_entry_form( $existing_meal );
+								}
 
 							?>
 						</div>

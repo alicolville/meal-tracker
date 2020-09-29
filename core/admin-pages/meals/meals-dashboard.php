@@ -25,7 +25,8 @@ function yk_mt_admin_page_meals_dashboard() {
 
 							$delete_id = yk_mt_querystring_value( 'delete' );
 
-							if ( false === empty( $delete_id ) ) {
+							if ( false === empty( $delete_id ) &&
+									true === YK_MT_IS_PREMIUM ) {
 								if ( true === yk_mt_meal_update_delete( $delete_id ) ) {
 									printf( '<p><strong>%s</strong></p>', __( 'Your meal has been successfully deleted.' ) );
 								}
@@ -33,7 +34,8 @@ function yk_mt_admin_page_meals_dashboard() {
 
 							yk_mt_admin_option_links_clicked( 'search-admin-meals' );
 
-							if ( false === yk_mt_site_options_as_bool('search-admin-meals', false ) ) {
+							if ( false === yk_mt_site_options_as_bool('search-admin-meals', false )
+								 	|| false === YK_MT_IS_PREMIUM ) {
 								printf( '<p class="yk-mt-error-red"><strong>%s</strong>. %s. <a href="%s">%s</a>.</p>',
 											__( 'Admin Collection not searchable', YK_MT_SLUG ),
 											__( 'As an administrator, you can add, edit and delete meals. However, the setting "Admin\'s meal collection" under "Searching meals" has been disabled which means your users can not search this collection', YK_MT_SLUG ),
