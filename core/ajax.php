@@ -151,9 +151,11 @@ add_action( 'wp_ajax_add_meal', 'yk_mt_ajax_meal_add' );
 function wp_ajax_add_meal_admin() {
 
 	// Only set added by admin if a new entry (i.e. not editing one!)
-	if ( false !== yk_mt_ajax_get_post_value_int( 'id', false ) ) {
-		yk_mt_ajax_meal_add( [ 'added_by_admin' => 1 ] );
-	}
+	$options = ( false === yk_mt_ajax_get_post_value_int( 'id', false ) ) ?
+					[ 'added_by_admin' => 1 ] :
+						[];
+
+	yk_mt_ajax_meal_add( $options );
 }
 add_action( 'wp_ajax_add_meal_admin', 'wp_ajax_add_meal_admin' );
 
