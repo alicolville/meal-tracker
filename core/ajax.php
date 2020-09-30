@@ -132,6 +132,13 @@ function yk_mt_ajax_meal_add( $options = [] ) {
 				return wp_send_json( [ 'error' => 'no-permission-update-admin' ] );
 		}
 
+		// If added by a user, ensure the user updating it is the same person (or admin)
+	    if ( false === empty( $meal_before_update[ 'added_by' ] ) &&
+	         true === empty( $options[ 'via-admin' ] ) &&
+	         $meal_before_update[ 'added_by' ] <> $post_data[ 'added_by' ] ) {
+		    return wp_send_json( [ 'error' => 'no-permission-update-user' ] );
+	    }
+
         if ( false === yk_mt_db_meal_update( $post_data ) ) {
             return wp_send_json( [ 'error' => 'updating-db' ] );
         }
