@@ -81,6 +81,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 * New feature: View, edit and delete meals in your user's meal collections.
 * Improvement: Added extra security to Ajax calls to ensure a user cant edit another user's meals.
 * Bug fix: Description is correctly updated when modified by a user.
+* Bug fix: Removed edit button against meals that a user has added from someone else's collection i.e. restrict user's to editing their own meals.
 * Bug fix: Under "Calorie Allowance", allow the setting "User specified" to be saved correctly when not premium
 
 = 2.1 =
