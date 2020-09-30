@@ -118,6 +118,20 @@ function yk_mt_ajax_meal_add( $options = [] ) {
 
     if ( false === empty( $post_data[ 'id' ] ) ) {
 
+    	// Before we update a meal, we must ensure this user has permissions!
+	    // If updating a meal with the flag added_by_email set to true, then they must be making this request from admin UI (i.e. wp_ajax_add_meal_admin)
+		$meal_before_update = yk_mt_db_meal_get( $post_data[ 'id' ] );
+
+		if ( true === empty( $meal_before_update ) ) {
+		    return wp_send_json( [ 'error' => 'not-find-existing' ] );
+	    }
+
+		// Ensure only admins can update an admin meal
+		if ( false === empty( $meal_before_update[ 'added_by_admin' ] ) &&
+		     true === empty( $options[ 'via-admin' ] ) ) {
+				return wp_send_json( [ 'error' => 'no-permission-update-admin' ] );
+		}
+
         if ( false === yk_mt_db_meal_update( $post_data ) ) {
             return wp_send_json( [ 'error' => 'updating-db' ] );
         }
@@ -157,6 +171,8 @@ function wp_ajax_add_meal_admin() {
 	$options = ( true === empty( $meal_id ) ) ?
 					[ 'added_by_admin' => 1 ] :
 						[];
+
+	$options[ 'via-admin' ] = true;
 
 	yk_mt_ajax_meal_add( $options );
 }
