@@ -324,3 +324,29 @@ function yk_mt_ext_add_meal_to_user_collection( $ext_id, $serving_id = NULL, $us
 
 	return yk_mt_db_meal_add( $ext_meal );
 }
+
+/**
+ * Take an external source and put into English
+ * @param $slug
+ *
+ * @return string|void
+ */
+function yk_mt_ext_source_as_string( $slug ) {
+
+	if ( true === empty( $slug ) ||
+			'user' === $slug ) {
+		return __( 'Manual', YK_MT_SLUG );
+	}
+
+	switch ( $slug ) {
+
+		case 'fat-secrets-foods':
+			return __( 'FatSecrets Food', YK_MT_SLUG );
+			break;
+		case 'fat-secret':
+			return __( 'FatSecrets Recipe', YK_MT_SLUG );
+			break;
+	}
+
+	return $slug;
+}

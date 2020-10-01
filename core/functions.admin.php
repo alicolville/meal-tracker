@@ -30,10 +30,16 @@ function yk_mt_admin_localise() {
     }
 
     wp_localize_script( 'yk-mt-admin', 'yk_mt_sc_meal_tracker', [
-        'localise'          => yk_mt_localised_strings(),
-        'todays-entry'      => $entry,
-        'load-entry'        => ! empty( $entry ),
-        'is-admin'          => true
+        'localise'          			=> yk_mt_localised_strings(),
+		'ajax-security-nonce'   		=> wp_create_nonce( 'yk-mt-nonce' ),
+		'ajax-admin-security-nonce'   	=> wp_create_nonce( 'yk-mt-admin-nonce' ),
+        'todays-entry'      			=> $entry,
+        'load-entry'        			=> ! empty( $entry ),
+        'is-admin'          			=> true,
+		'mode'							=> yk_mt_querystring_value( 'mode' ),
+		'units-hide-quantity'   		=> yk_mt_units_where( 'drop-quantity', true, true ),
+		'meta-fields'					=> yk_mt_meta_js_config(),
+		'previous-url'					=> yk_mt_link_previous_url()
     ]);
 }
 
@@ -55,12 +61,26 @@ function yk_mt_blur_text( $text, $number_format = true ) {
 
     return $text;
 }
+
 /**
  * Return base URL for user data
  * @return string
  */
 function yk_mt_link_user_data() {
-    return admin_url( 'admin.php?page=yk-mt-user' );
+    return yk_mt_link_admin_page( 'yk-mt-user' );
+}
+
+/**
+ * Build Admin URL link
+ * @param $slug
+ *
+ * @return string|void
+ */
+function yk_mt_link_admin_page( $slug ) {
+
+	$url = sprintf( 'admin.php?page=%s', $slug );
+
+	return admin_url( $url );
 }
 
 /**
@@ -123,6 +143,96 @@ function yk_mt_table_user_entries( $args ) {
         </tbody>
     </table>
 <?php
+}
+
+/**
+ * Display all user's entries in a data table
+ */
+function yk_mt_table_meals( $args ) {
+
+	$args = wp_parse_args( $args, [
+		'user-id'       	=> get_current_user_id(),
+		'added_by_admin'	=> false,					// Show ony admin meals
+		'meals'       		=> NULL,
+		'show-username' 	=> false,
+		'use-cache'     	=> true,
+		'user-id-for-link'	=> ''
+	]);
+
+	// Fetch meals if non specified
+	if ( NULL === $args[ 'meals' ] ) {
+		$args[ 'meals' ] = yk_mt_db_meal_for_user( $args[ 'user-id' ], $args );
+	}
+
+	$meta_fields = ( true === yk_mt_meta_is_enabled() ) ?
+						yk_mt_meta_fields_where( 'visible_user', true ) :
+							NULL;
+	?>
+	<table class="yk-mt-footable yk-mt-footable-basic widefat" data-paging="true" data-sorting="true" data-state="true" data-filtering="true">
+		<thead>
+		<tr>
+			<th data-breakpoints="xs" data-type="text"><?php echo __( 'Name', YK_MT_SLUG ); ?></th>
+			<th data-breakpoints="sm" data-type="text"><?php echo __( 'Calories', YK_MT_SLUG ); ?></th>
+			<th data-breakpoints="sm" data-type="text"><?php echo __( 'Portion Size', YK_MT_SLUG ); ?></th>
+			<th data-breakpoints="xs" data-type="string"><?php echo __( 'Source', YK_MT_SLUG ); ?></th>
+			<?php
+
+			if ( false === empty( $meta_fields ) ) {
+				foreach ( $meta_fields as $field ) {
+					printf( '<th data-breakpoints="sm" data-type="text">%s</th>', esc_html( $field[ 'title' ] ) );
+				}
+			}
+
+			?>
+			<th></th>
+		</tr>
+		</thead>
+		<?php
+			if ( false === empty( $args[ 'meals' ] ) ) {
+
+				$base_url 	= admin_url( 'admin.php?page=yk-mt-meals' );
+
+				if ( false === empty( $args[ 'user-id-for-link' ] ) ) {
+					$base_url = add_query_arg( 'user-id', (int) $args[ 'user-id-for-link' ], $base_url );
+				}
+
+				foreach ( $args[ 'meals' ] as $meal ) {
+
+					$edit_link = add_query_arg( [ 'edit' => $meal[ 'id' ], 'mode' => 'meal' ], $base_url );
+					$edit_link = yk_mt_link_add_back_link( $edit_link );
+
+					printf ( '    <tr>
+													<td><a href="%5$s">%1$s</a></td>
+													<td class="yk-mt-blur">%2$s</td>
+													<td class="yk-mt-blur">%3$s</td>
+													<td class="yk-mt-blur">%4$s</td>',
+						esc_html( $meal[ 'name' ] ),
+						sprintf( '%s%s', number_format( $meal[ 'calories'] ), __( 'kcal', YK_MT_SLUG ) ),
+						yk_mt_get_unit_string( $meal ),
+						yk_mt_ext_source_as_string( $meal[ 'source' ] ),
+						esc_url( $edit_link )
+					);
+
+					if ( false === empty( $meta_fields ) ) {
+						foreach ( $meta_fields as $field ) {
+							printf('<td class="yk-mt-blur">%s</td>', esc_html( $meal[ $field[ 'db_col' ] ] ) );
+						}
+					}
+
+					printf( '	<td>
+									<a href="%1$s" class="btn btn-default footable-delete"><i class="fa fa-trash"></i></a>
+									<a href="%2$s" class="btn btn-default footable-edit"><i class="fa fa-edit"></i></a>
+								</td>
+							</tr>',
+							esc_url( $base_url . '&delete=' . (int) $meal[ 'id' ] ),
+							$edit_link
+					);
+				}
+			}
+		?>
+		</tbody>
+	</table>
+	<?php
 }
 
 /**
@@ -218,12 +328,15 @@ function yk_mt_admin_option_links_clicked( $key ) {
 
 /**
  * Render out links for options
+ *
  * @param $key
  * @param $default
  * @param $options
  * @param null $cache_notice
+ * @param null $prepend
+ * @param string $page_slug
  */
-function yk_mt_admin_option_links( $key, $default,  $options, $cache_notice = NULL ) {
+function yk_mt_admin_option_links( $key, $default,  $options, $cache_notice = NULL, $prepend = NULL, $page_slug = 'yk-mt-user' ) {
 
     if ( false === is_array( $options ) ||
             true === empty( $options ) ) {
@@ -232,9 +345,13 @@ function yk_mt_admin_option_links( $key, $default,  $options, $cache_notice = NU
 
     $current_selected = yk_mt_site_options( $key, $default );
 
-    $url = yk_mt_link_user_data();
+    $url = yk_mt_link_admin_page( $page_slug );
 
     echo '<div class="yk-mt-link-group">';
+
+    if ( false === empty( $prepend ) ) {
+    	echo esc_html( $prepend );
+	}
 
     foreach ( $options as $option_key => $option_name ) {
         printf(     '<a href="%1$s" class="%2$s">%3$s</a> &middot; ',

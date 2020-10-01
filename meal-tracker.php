@@ -5,7 +5,7 @@ defined('ABSPATH') or die("Jog on!");
 /**
  * Plugin Name: Meal Tracker
  * Description: Allow your users to track their meals and calorie intake for a given day.
- * Version: 2.1
+ * Version: 2.2
  * Author: YeKen
  * Author URI: http://www.YeKen.uk
  * License: GPL2
@@ -28,7 +28,7 @@ defined('ABSPATH') or die("Jog on!");
 */
 
 define( 'YK_MT_ABSPATH', plugin_dir_path( __FILE__ ) );
-define( 'YK_MT_PLUGIN_VERSION', '2.1' );
+define( 'YK_MT_PLUGIN_VERSION', '2.2' );
 define( 'YK_MT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'YK_MT_SLUG', 'meal-tracker' );
 
@@ -79,6 +79,9 @@ include_once YK_MT_ABSPATH . 'core/admin-pages/page.license.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/page.settings.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/page.help.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/page.setup.wizard.php';
+include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-home.php';
+include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-dashboard.php';
+include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-add-edit.php';
 
 // -----------------------------------------------------------------------------------------
 // AC: Load relevant language files

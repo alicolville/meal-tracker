@@ -214,6 +214,8 @@ jQuery( document ).ready( function ( $ ) {
 
             if (false === res) {
               $('.yk-mt-hide-if-no-meals-results').fadeOut('slow');
+
+              yk_mt_info( yk_mt_sc_meal_tracker['localise']['search-no-results'] );
             }
 
             callback(res);
@@ -516,6 +518,7 @@ jQuery( document ).ready( function ( $ ) {
 
   /**
    * Toggle show / hide of quantity field dependant on unit selected
+   * ( also in admin.js )
    */
   $('#yk-mt-add-meal-unit').change(function () {
     yk_mt_add_meal_form_show_quantity();
@@ -523,6 +526,7 @@ jQuery( document ).ready( function ( $ ) {
 
   /**
    * Show  / Hide quantity field depending on the unit selected
+   * ( also in admin.js )
    */
   function yk_mt_add_meal_form_show_quantity() {
 
@@ -1095,7 +1099,7 @@ function yk_mt_post_api_external_add_to_collection_callback( data, response ) {
    * @returns {string}
    * @constructor
    */
-  const MealRow = ({meal_entry_id, meal_type, name, calories, quantity, d, id}) => `
+  const MealRow = ({meal_entry_id, meal_type, name, calories, quantity, d, id, css_class}) => `
                         <div class="yk-mt__table-row" data-mt="${meal_type}">
                             <div class="yk-mt__table-cell yk-mt__table-cell-meal">
                                 <span class="yk-mt__meal-name">${name}</span>
@@ -1105,7 +1109,7 @@ function yk_mt_post_api_external_add_to_collection_callback( data, response ) {
                             </div>
                             <div class="yk-mt__table-cell yk-mt__table-cell-controls yk-mt-o">
                                 <div class="yk-mt__btn-group yk-mt-inline-flex">
-                                    <button data-meal-id="${id}" class="yk-mt-act-r yk-mt-act-r--edit yk-mt-hide-if-not-pro yk-mt-meal-button-edit-inline" >
+                                    <button data-meal-id="${id}" class="yk-mt-act-r yk-mt-act-r--edit yk-mt-hide-if-not-pro yk-mt-meal-button-edit-inline ${css_class}" >
                                         <span class="fa fa-edit"></span>
                                         <span class="yk-mt-r__text">${yk_mt_sc_meal_tracker['localise']['edit-text']}</span>
                                     </button>

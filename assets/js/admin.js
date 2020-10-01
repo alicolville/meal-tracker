@@ -8,6 +8,36 @@ jQuery( document ).ready(function ($) {
     }
 
     /**
+     * Post to AJAX back end
+     * @param action
+     * @param data
+     * @param callback
+     */
+    function yk_mt_post(action, data, callback) {
+
+      data['action']    = action;
+      data['security']  = yk_mt_sc_meal_tracker['ajax-security-nonce'];
+
+      jQuery.post( ajaxurl, data, function (response) {
+
+        callback(data, response);
+      });
+    }
+
+    /**
+     * Fetch all enabled meta fields
+     * @returns {boolean|*}
+     */
+    function yk_mt_meta_fields() {
+
+      if ('undefined' === typeof (yk_mt_sc_meal_tracker['meta-fields'])) {
+        return false;
+      }
+
+      return yk_mt_sc_meal_tracker['meta-fields'];
+    }
+
+    /**
      * Take an entry in JSON format and render into UI
      * @param entry
      */
@@ -121,4 +151,138 @@ jQuery( document ).ready(function ($) {
             }
         });
     });
+
+  /**
+   * Toggle show / hide of quantity field dependant on unit selected
+   * ( also in admin.js )
+   */
+  $('#yk-mt-add-meal-unit').change(function () {
+    yk_mt_add_meal_form_show_quantity();
+  });
+
+  if ( 'meal' === yk_mt_sc_meal_tracker[ 'mode' ] ) {
+    yk_mt_add_meal_form_show_quantity();
+  }
+
+  /**
+   * Show  / Hide quantity field depending on the unit selected
+   * ( also in admin.js )
+   */
+  function yk_mt_add_meal_form_show_quantity() {
+
+    let value = $('#yk-mt-add-meal-unit').val();
+    let quantity_row = $('#yk-mt-add-meal-quantity-row');
+
+    if ( true === yk_mt_hide_quantity( value ) ) {
+      $('#yk-mt-add-meal-quantity').prop('disabled', true);
+      $('#yk-mt-add-meal-quantity').prop('required', false);
+      $('#yk-mt-add-meal-quantity').val('');
+      quantity_row.hide();
+    } else {
+      $('#yk-mt-add-meal-quantity').prop('disabled', false);
+      $('#yk-mt-add-meal-quantity').prop('required', true);
+      quantity_row.show();
+    }
+  }
+
+  /**
+   * Is this a unit that we should hide quantity for?
+   * @param key
+   * @returns bool
+   */
+  function yk_mt_hide_quantity(key) {
+    return (-1 !== $.inArray(key, yk_mt_sc_meal_tracker['units-hide-quantity']));
+  }
+
+  $('#yk-mt-form-add-new-meal').submit(function (event) {
+
+    event.preventDefault();
+
+    let name        = $('#yk-mt-add-meal-name').val();
+    let description = $('#yk-mt-add-meal-description').val();
+    let calories    = $('#yk-mt-add-meal-calories').val();
+    let quantity    = $('#yk-mt-add-meal-quantity').val();
+    let unit        = $('#yk-mt-add-meal-unit').val();
+    let id          = $('#yk-mt-add-meal-meal-id').val();
+
+    let meta_fields = yk_mt_meta_fields();
+
+    // If we have meta fields, populate the object from form fields
+    if ( false !== meta_fields) {
+      $.each(meta_fields, function (index, value) {
+        meta_fields[index] = $('#yk-mt-add-meal-' + index).val();
+      });
+    }
+
+    yk_mt_post_api_add_meal(
+      name,
+      description,
+      calories,
+      quantity,
+      unit,
+      meta_fields,
+      id
+    );
+  });
+
+  /**
+   * Add a new meal
+   * @param name
+   * @param description
+   * @param calories
+   * @param quantity
+   * @param unit
+   */
+
+  function yk_mt_post_api_add_meal(name, description, calories, quantity, unit, meta_fields, id = '') {
+
+    var data = {
+      'admin-security' : yk_mt_sc_meal_tracker['ajax-admin-security-nonce'],
+      'name': name,
+      'description': description,
+      'calories': calories,
+      'quantity': quantity,
+      'unit': unit,
+      'id': id,
+      'meta-fields': meta_fields
+    };
+
+    yk_mt_post('add_meal_admin', data, yk_mt_post_api_add_meal_callback);
+  }
+
+  /**
+   * Handle the call back to adding a meal
+   * @param data
+   * @param response
+   */
+  function yk_mt_post_api_add_meal_callback(data, response) {
+
+    if ( false === response['error'] ) {
+
+      if ( '#' === yk_mt_sc_meal_tracker['previous-url'] ) {
+        window.location.replace( yk_mt_settings[ 'meals-url' ] + '&added=y' );
+      } else {
+        window.location.replace( yk_mt_sc_meal_tracker['previous-url'] )
+      }
+
+    } else {
+      alert( 'There was an error saving your meal' );
+    }
+  }
+
+  /**
+   * Add / Edit admin meal
+   */
+  $( '.yk-mt-button-reset-meal-nav' ).click( function( e ) {
+
+    e.preventDefault();
+
+    if ( '#' === yk_mt_sc_meal_tracker['previous-url'] ) {
+      window.history.back();
+    } else {
+      window.location.replace( yk_mt_sc_meal_tracker['previous-url'] )
+    }
+
+  });
+
 });

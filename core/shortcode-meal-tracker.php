@@ -454,22 +454,58 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form() {
 		$html .= yk_mt_shortcode_meal_tracker_add_new_meal_external_form();
 	}
 
-	$html.= '<div class="yk-mt-add-new-meal-form" style="display: none">
-									<form id="yk-mt-form-add-new-meal">';
+	$html.= yk_mt_shortcode_meal_tracker_manual_meal_entry_form();
 
-	$html .= yk_mt_form_text( __( 'Name', YK_MT_SLUG ),	'add-meal-name' );
+	return $html;
+}
 
-	$html .= yk_mt_form_text( __( 'Description', YK_MT_SLUG ), 'add-meal-description', '', 200, false );
+/**
+ * Form required for adding a new meal
+ *
+ * @param array $previous_values
+ *
+ * @return string
+ */
+function yk_mt_shortcode_meal_tracker_manual_meal_entry_form( $previous_values = [] ) {
 
-	$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories', '', '', 1,0 );
+	$form_destination = '';
 
-	$html .= sprintf( '
-		<p class="yk-mt__info-box yk-mt-info yk-mt-hide-if-adding">
-			<span class="fa fa-info-circle"></span>
-			<span class="yk-mt__info-box-text">%1$s</span>
-		</p>',
-		__( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
+	$previous_values = wp_parse_args( $previous_values, [   'name'         => '',
+															'description'  => '',
+															'calories'     => '',
+															'unit'         => '',
+															'quantity'     => '',
+															'id'           => ''
+	]);
+
+	if ( true === is_admin() ) {
+		$form_destination = sprintf( 'method="post" action="%s" ', esc_url( admin_url( 'admin.php?page=yk-mt-meals&mode=meal&saving=y' ) ) );
+	}
+
+	$html = sprintf( '<div class="yk-mt-add-new-meal-form" style="%s">
+									<form id="yk-mt-form-add-new-meal" %s>',
+									( false === is_admin() ? 'display: none' : '' ),
+									$form_destination
 	);
+
+	// Previous ID?
+	$html .= sprintf( '<input type="hidden" name="meal-id" id="yk-mt-add-meal-meal-id" value="%s" />', esc_attr( $previous_values[ 'id' ] ) );
+
+	$html .= yk_mt_form_text( __( 'Name', YK_MT_SLUG ),	'add-meal-name', $previous_values[ 'name' ] );
+
+	$html .= yk_mt_form_text( __( 'Description', YK_MT_SLUG ), 'add-meal-description', $previous_values[ 'description' ], 200, false );
+
+	$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories', $previous_values[ 'calories' ], '', 1,0 );
+
+	if ( false === is_admin() ) {
+
+		$html .= sprintf( '<p class="yk-mt__info-box yk-mt-info yk-mt-hide-if-adding">
+								<span class="fa fa-info-circle"></span>
+								<span class="yk-mt__info-box-text">%1$s</span>
+							</p>',
+							__( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
+		);
+	}
 
 	// If premium, do we have any additional fields for the meal?
 	if ( true === yk_mt_meta_is_enabled() ) {
@@ -483,37 +519,42 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form() {
 			// Float fields
 			if ( 'float' === $field[ 'type' ] ) {
 
-				$html .= yk_mt_form_number( $field[ 'title' ], sprintf( 'add-meal-%s', $field[ 'db_col' ] ), '', '', 0.01,0, 9999, true, $field[ 'required' ] );
+				$value = ( false === empty( $previous_values[ $field[ 'db_col' ] ] ) ) ? $previous_values[ $field[ 'db_col' ] ] : '';
+
+				$html .= yk_mt_form_number( $field[ 'title' ], sprintf( 'add-meal-%s', $field[ 'db_col' ] ), $value, '', 0.01,0, 9999, true, $field[ 'required' ] );
 			}
 		}
 	}
 
-	$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', '', yk_mt_units() );
+	$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', $previous_values[ 'unit' ], yk_mt_units() );
 
-	$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity', '', '', 1, 1, 99999, true, false, true );
+	$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity', $previous_values[ 'quantity' ], '', 1, 1, 99999, true, false, true );
 
 	$html .= sprintf( '
 		 <div class="yk-mt__modal-footer">
-			<button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-reset-meal-nav yk-mt-hide-if-editing">
+			<button id="yk-mt-button-meal-add" class="%2$s">
 				<span class="yk-mt__btn-icon fa fa-arrow-left"></span>
 			</button>
-			<button id="yk-mt-button-meal-add" class="yk-mt__btn yk-mt__btn--medium yk-mt-button-add-new-meal yk-mt-hide-if-editing">
+			<button id="yk-mt-button-meal-add" class="%3$s">
 				<span class="yk-mt__btn-icon fa fa-plus"></span>
 				<span class="yk-mt__btn-text">%1$s</span>
 			</button>',
-		__( 'Save', YK_MT_SLUG )
+		__( 'Save', YK_MT_SLUG ),
+		( false === is_admin() ? 'yk-mt__btn yk-mt__btn--medium yk-mt-button-reset-meal-nav yk-mt-hide-if-editing' : 'button-secondary yk-mt-button-reset-meal-nav' ),
+		( false === is_admin() ? 'yk-mt__btn yk-mt__btn--medium yk-mt-button-add-new-meal yk-mt-hide-if-editing' : 'button-secondary' )
 	);
 
-	$html .= sprintf( '
+	if ( false === is_admin() ) {
+		$html .= sprintf( '
 			<button id="yk-mt-button-meal-edit" class="yk-mt__btn yk-mt__btn--medium yk-mt-hide-if-adding">
 				<span class="yk-mt__btn-icon fa fa-edit"></span>
 				<span class="yk-mt__btn-text">%1$s</span>
-			</button>
-		</div>',
-		__( 'Save', YK_MT_SLUG )
-	);
+			</button>',
+			__( 'Save', YK_MT_SLUG )
+		);
+	}
 
-	$html .= '</form></div>';
+	$html .= '</div></form></div>';
 
 	return $html;
 }

@@ -648,7 +648,10 @@ function yk_mt_is_meal_object( $meal ) {
 /**
  * @param $title
  * @param $name
+ * @param string $value
  * @param int $max_length
+ *
+ * @param bool $required
  *
  * @return string
  */
@@ -1076,6 +1079,9 @@ function yk_mt_features_display() {
 function yk_mt_features_list() {
 
     return [
+				__( 'External APIs', YK_MT_SLUG )    			=> __( 'Search FatSecrets Recipe and Food APIs', YK_MT_SLUG ),
+				__( 'Own Meal collection', YK_MT_SLUG )     	=> __( 'Create your own meal collection for your users to search', YK_MT_SLUG ),
+				__( 'Edit user\'s meals', YK_MT_SLUG )     		=> __( 'View, edit and delete meals in your user\'s meal collections', YK_MT_SLUG ),
                 __( 'Create and view entries', YK_MT_SLUG )     => __( 'Allow your users to create and view entries for any day', YK_MT_SLUG ),
                 __( 'Edit entries', YK_MT_SLUG )                => __( 'Allow your users to edit their entries for any given day', YK_MT_SLUG ),
                 __( 'Edit meals', YK_MT_SLUG )                  => __( 'Allow your users to edit their stored meals', YK_MT_SLUG ),

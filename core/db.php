@@ -337,8 +337,8 @@ function yk_mt_db_entry_get( $id = NULL ) {
 
         $entry = yk_mt_db_entry_calculate_stats( $entry );
 
-        $sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity, m.unit, m.description,
-                                em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
+        $sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity, m.unit, m.description, m.added_by_admin, m.added_by,
+								em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
                                 Inner Join ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em
                                 on em.meal_id = m.id
                                 where em.entry_id = %d
@@ -383,6 +383,18 @@ function yk_mt_db_entry_get( $id = NULL ) {
                         yk_mt_get_unit_string( $meal ),
                         ( $meal_count > 1 ) ? $meal_count . ' x ' : ''
                     );
+
+	                $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'css_class' ] = '';
+
+                    // Hide edit button if the meal was added by admin
+	                if ( false === empty( $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'added_by_admin' ] ) ) {
+		                $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'css_class' ] = 'yk-mt-hide';
+	                }
+
+	                // Hide edit button if the meal was added by another user
+	                if ( $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'added_by' ] <> get_current_user_id() ) {
+		                $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'css_class' ] = 'yk-mt-hide';
+	                }
 
                 } else {
 
@@ -676,7 +688,10 @@ function yk_mt_db_meal_delete( $id ) {
 /**
  * Get details for a meal
  *
- * @param $key
+ * @param $id
+ * @param bool $added_by
+ *
+ * @return array|bool|mixed|object|void
  */
 function yk_mt_db_meal_get( $id, $added_by = false ) {
 
@@ -740,22 +755,27 @@ function yk_mt_db_ext_meal_exist( $ext_id, $serving_id = NULL, $added_by = false
  * @param array $options
  * @return array|null
  */
-function yk_mt_db_meal_for_user( $user_id = NULL, $options  = []  ) {
+function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
 
     $options = wp_parse_args( $options, [
-        'exclude-deleted'       => true,
-        'sort'                  => 'name',
-        'sort-order'            => 'asc',
-        'search'                => NULL,
-        'limit'                 => NULL,
-        'count-only'            => false
+        'exclude-deleted'       	=> true,
+        'sort'                  	=> 'name',
+        'sort-order'            	=> 'asc',
+        'search'                	=> NULL,
+        'limit'                 	=> NULL,
+        'count-only'            	=> false,
+	    'admin-meals-only'      	=> false,
+		'include-admin-meals'  		=> false,
+	    'use-cache'             	=> true,
+	    'last-x-days'          	 	=> NULL
     ]);
 
     $cache_key = md5( json_encode( $options ) );
 
     $cache = apply_filters( 'yk_mt_db_meals', [], $user_id, $cache_key );
 
-    if ( false === empty( $cache ) ) {
+    if ( false === empty( $cache ) &&
+            true === $options[ 'use-cache' ] ) {
         return $cache;
     }
 
@@ -767,8 +787,23 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options  = []  ) {
 
     // Restrict to a user?
     if ( false === empty( $user_id ) ) {
-        $sql .= sprintf( ' and added_by = %d', $user_id );
+
+    	if ( false === $options[ 'include-admin-meals' ] ) {
+		    $sql .= sprintf( ' and ( added_by = %d and added_by_admin is null )', $user_id );
+	    } else {
+		    $sql .= sprintf( ' and ( added_by = %d or added_by_admin = 1 )', $user_id );
+	    }
+
     }
+
+    // Admin only meals?
+    if ( true === $options[ 'admin-meals-only' ] ) {
+	    $sql .= ' and added_by_admin = 1';
+    }
+
+	if ( false === empty( $options[ 'last-x-days' ] ) ) {
+		$sql .= sprintf( ' and added >= NOW() - INTERVAL %d DAY and added <= NOW()', $options[ 'last-x-days' ] );
+	}
 
     // Exclude deleted?
     if ( true === $options[ 'exclude-deleted' ] ) {
@@ -821,7 +856,7 @@ function yk_mt_db_meal_delete_entries( $meal_id ) {
     return ( 1 === $result );
 
 }
-add_action( 'yk_mt_meal_deleted', 'yk_mt_meal_delete_entries' );     // Delete all Meal / Entry relationships when a meal has been deleted
+add_action( 'yk_mt_meal_deleted', 'yk_mt_db_meal_delete_entries' );     // Delete all Meal / Entry relationships when a meal has been deleted
 
 /**
  * Add a meal type
@@ -917,7 +952,8 @@ function yk_mt_db_mysql_count( $mode = 'unique-users', $use_cache = true ) {
 
     global $wpdb;
 
-    $sql_statements = [
+    $sql_statements = [     'meals-user'            => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where added_by_admin is null',
+                            'meals-admin'           => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where added_by_admin = 1',
                             'unique-users'          => 'Select count( distinct( user_id ) ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY,
                             'successful-entries'    => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where calories_used <= calories_allowed',
                             'failed-entries'        => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where calories_used > calories_allowed'
@@ -951,6 +987,7 @@ function yk_mt_db_mysql_formats( $data ) {
         'id'                    => '%d',
         'name'                  => '%s',
         'added_by'              => '%d',
+        'added_by_admin'        => '%d',
         'entry_id'              => '%d',
         'gain_loss'             => '%s',
         'calories'              => '%f',
@@ -1006,6 +1043,7 @@ function yk_wt_db_tables_create() {
     $sql = "CREATE TABLE $table_name (
                 id mediumint(9) NOT NULL AUTO_INCREMENT,
                 added_by int NOT NULL,
+                added_by_admin int NULL,
                 name varchar(100) NOT NULL,
                 calories float DEFAULT 0 NOT NULL,
                 quantity float DEFAULT 0 NOT NULL,

@@ -3,14 +3,14 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Meal Tracker\n"
-"POT-Creation-Date: 2020-05-22 15:16+0100\n"
+"POT-Creation-Date: 2020-10-01 12:39+0100\n"
 "PO-Revision-Date: 2020-01-01 20:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: meal-tracker.php\n"
@@ -21,28 +21,69 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: core/activate.php:73 core/functions.php:1239
+#: core/activate.php:73 core/functions.php:1262
 msgid "Breakfast"
 msgstr ""
 
-#: core/activate.php:74 core/functions.php:1240
+#: core/activate.php:74 core/functions.php:1263
 msgid "Mid-morning"
 msgstr ""
 
-#: core/activate.php:75 core/functions.php:1241
+#: core/activate.php:75 core/functions.php:1264
 msgid "Lunch"
 msgstr ""
 
-#: core/activate.php:76 core/functions.php:1242
+#: core/activate.php:76 core/functions.php:1265
 msgid "Afternoon"
 msgstr ""
 
-#: core/activate.php:77 core/functions.php:1243
+#: core/activate.php:77 core/functions.php:1266
 msgid "Dinner"
 msgstr ""
 
-#: core/activate.php:78 core/functions.php:1244
+#: core/activate.php:78 core/functions.php:1267
 msgid "Evening"
+msgstr ""
+
+#: core/admin-pages/meals/meals-add-edit.php:21
+msgid "Add / edit a meal"
+msgstr ""
+
+#: core/admin-pages/meals/meals-add-edit.php:28
+msgid "To add or edit a meal, you must have a Premium license"
+msgstr ""
+
+#: core/admin-pages/meals/meals-dashboard.php:33
+msgid "Meals added by"
+msgstr ""
+
+#: core/admin-pages/meals/meals-dashboard.php:35
+msgid "Meal collection"
+msgstr ""
+
+#: core/admin-pages/meals/meals-dashboard.php:48
+msgid "The meal has been successfully deleted."
+msgstr ""
+
+#: core/admin-pages/meals/meals-dashboard.php:54
+msgid ""
+"The following meals can be searched by your users and added to their daily "
+"entries."
+msgstr ""
+
+#: core/admin-pages/meals/meals-dashboard.php:61
+msgid "Admin Collection not searchable"
+msgstr ""
+
+#: core/admin-pages/meals/meals-dashboard.php:62
+msgid ""
+"As an administrator, you can add, edit and delete meals. However, the "
+"setting \"Admin's meal collection\" under \"Searching meals\" has been "
+"disabled which means your users can not search this collection"
+msgstr ""
+
+#: core/admin-pages/meals/meals-dashboard.php:64
+msgid "Enable now"
 msgstr ""
 
 #: core/admin-pages/page.help.php:23
@@ -57,12 +98,16 @@ msgstr ""
 msgid "Show Setup Wizard link"
 msgstr ""
 
-#: core/admin-pages/page.help.php:48
+#: core/admin-pages/page.help.php:42
+msgid "Run MySQL Tool"
+msgstr ""
+
+#: core/admin-pages/page.help.php:50
 msgid "Contact"
 msgstr ""
 
 #: core/admin-pages/page.license.php:10 core/admin-pages/page.settings.php:8
-#: core/functions.admin.php:136
+#: core/functions.admin.php:246
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
@@ -82,140 +127,145 @@ msgstr ""
 msgid "Your Existing License"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:33
+#: core/admin-pages/page.settings.php:23
+msgid "All database tables have been rebuilt"
+msgstr ""
+
+#: core/admin-pages/page.settings.php:35
 msgid ""
 "One or more database tables are missing for this plugin. They must be "
 "rebuilt if you wish to use the plugin."
 msgstr ""
 
-#: core/admin-pages/page.settings.php:35
+#: core/admin-pages/page.settings.php:37
 msgid "Rebuild them now"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:54
+#: core/admin-pages/page.settings.php:56
 msgid " Settings"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:59
+#: core/admin-pages/page.settings.php:61
 msgid "API Test Results"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:62
+#: core/admin-pages/page.settings.php:64
 msgid "Test Results"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:79
+#: core/admin-pages/page.settings.php:81
 msgid "General"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:79
+#: core/admin-pages/page.settings.php:81
 msgid "General settings"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:80
+#: core/admin-pages/page.settings.php:82
 msgid "Calorie Allowance"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:80
+#: core/admin-pages/page.settings.php:82
 msgid "Specify the sources for determining a user's calorie allowance"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:81
+#: core/admin-pages/page.settings.php:83
 msgid "External Sources"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:81
+#: core/admin-pages/page.settings.php:83
 msgid "Specify an external source to allow your user's to search for meals"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:82
+#: core/admin-pages/page.settings.php:84
 msgid "Display"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:82
+#: core/admin-pages/page.settings.php:84
 msgid "Specify how the plugin looks"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:91
+#: core/admin-pages/page.settings.php:93
 msgid "Caching"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:94
+#: core/admin-pages/page.settings.php:96
 msgid "Enable Caching?"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:100
-#: core/admin-pages/page.settings.php:134
-#: core/admin-pages/page.settings.php:150
-#: core/admin-pages/page.settings.php:163
+#: core/admin-pages/page.settings.php:102
+#: core/admin-pages/page.settings.php:136
+#: core/admin-pages/page.settings.php:149
+#: core/admin-pages/page.settings.php:165
 #: core/admin-pages/page.settings.php:178
-#: core/admin-pages/page.settings.php:191
-#: core/admin-pages/page.settings.php:211
-#: core/admin-pages/page.settings.php:224
-#: core/admin-pages/page.settings.php:241
-#: core/admin-pages/page.settings.php:269
-#: core/admin-pages/page.settings.php:333
-#: core/admin-pages/page.settings.php:349
+#: core/admin-pages/page.settings.php:193
+#: core/admin-pages/page.settings.php:206
+#: core/admin-pages/page.settings.php:226
+#: core/admin-pages/page.settings.php:239
+#: core/admin-pages/page.settings.php:256
+#: core/admin-pages/page.settings.php:284
+#: core/admin-pages/page.settings.php:368
+#: core/admin-pages/page.settings.php:384
 msgid "Yes"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:101
-#: core/admin-pages/page.settings.php:133
-#: core/admin-pages/page.settings.php:149
-#: core/admin-pages/page.settings.php:162
-#: core/admin-pages/page.settings.php:179
-#: core/admin-pages/page.settings.php:192
-#: core/admin-pages/page.settings.php:212
-#: core/admin-pages/page.settings.php:225
-#: core/admin-pages/page.settings.php:242
-#: core/admin-pages/page.settings.php:268
-#: core/admin-pages/page.settings.php:334
-#: core/admin-pages/page.settings.php:350
+#: core/admin-pages/page.settings.php:103
+#: core/admin-pages/page.settings.php:135
+#: core/admin-pages/page.settings.php:148
+#: core/admin-pages/page.settings.php:164
+#: core/admin-pages/page.settings.php:177
+#: core/admin-pages/page.settings.php:194
+#: core/admin-pages/page.settings.php:207
+#: core/admin-pages/page.settings.php:227
+#: core/admin-pages/page.settings.php:240
+#: core/admin-pages/page.settings.php:257
+#: core/admin-pages/page.settings.php:283
+#: core/admin-pages/page.settings.php:369
+#: core/admin-pages/page.settings.php:385
 msgid "No"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:103
+#: core/admin-pages/page.settings.php:105
 msgid ""
 "If enabled, additional caching will be performed to reduce database queries "
 "and calls to external APIs. It is highly recommended that this remains "
 "enabled and only disabled for testing or to enable other caching mechanisms."
 msgstr ""
 
-#: core/admin-pages/page.settings.php:107
+#: core/admin-pages/page.settings.php:109
 msgid "Security"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:110
+#: core/admin-pages/page.settings.php:112
 msgid "Who can view and modify user data?"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:116
+#: core/admin-pages/page.settings.php:118
 msgid "Administrators Only"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:117
+#: core/admin-pages/page.settings.php:119
 msgid "Editors and above"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:118
+#: core/admin-pages/page.settings.php:120
 msgid "Authors and above"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:120
+#: core/admin-pages/page.settings.php:122
 msgid ""
 "Specify the minimum level of user role that maybe view or edit user data"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:124 core/functions.pages.php:70
-#: core/functions.pages.php:218
-msgid "Meals"
+#: core/admin-pages/page.settings.php:126
+msgid "Searching for meals"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:127
-msgid "Search other's meals"
+#: core/admin-pages/page.settings.php:129
+msgid "Other user's meals"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:136
+#: core/admin-pages/page.settings.php:138
 msgid ""
 "If set to \"Yes\", users are not restricted to searching their own meal "
 "collections. Instead, a search will be performed across every user's meal "
@@ -223,15 +273,25 @@ msgid ""
 "collections."
 msgstr ""
 
-#: core/admin-pages/page.settings.php:140
+#: core/admin-pages/page.settings.php:142
+msgid "Admin's meal collection"
+msgstr ""
+
+#: core/admin-pages/page.settings.php:151
+msgid ""
+"If set to \"Yes\", users are allowed to search meals with the admin meal "
+"collection."
+msgstr ""
+
+#: core/admin-pages/page.settings.php:155
 msgid "Macronutrients"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:143
+#: core/admin-pages/page.settings.php:158
 msgid "Enable Macronutrients?"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:152
+#: core/admin-pages/page.settings.php:167
 msgid ""
 "Please note, there is only basic support for Macronutrient fields at the "
 "moment. The framework has been build for specifying and storing these values "
@@ -239,174 +299,198 @@ msgid ""
 "user interface."
 msgstr ""
 
-#: core/admin-pages/page.settings.php:156
+#: core/admin-pages/page.settings.php:171
 msgid "Required?"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:165
+#: core/admin-pages/page.settings.php:180
 msgid "Should users be forced to enter values for Macronutrients?"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:169
+#: core/admin-pages/page.settings.php:184
 msgid "New Entries"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:172
+#: core/admin-pages/page.settings.php:187
 msgid "Allow new entries in the past"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:181
+#: core/admin-pages/page.settings.php:196
 msgid "If set to \"Yes\", users can create entries for dates in the past."
 msgstr ""
 
-#: core/admin-pages/page.settings.php:185
+#: core/admin-pages/page.settings.php:200
 msgid "Allow new entries in the future"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:194
+#: core/admin-pages/page.settings.php:209
 msgid "If set to \"Yes\", users can create entries for dates in the future."
 msgstr ""
 
-#: core/admin-pages/page.settings.php:200
+#: core/admin-pages/page.settings.php:215
 msgid "Specify the methods in which a user's daily allowance can be determined"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:201
+#: core/admin-pages/page.settings.php:216
 msgid ""
 "Ensure you specify at least one option or your users will not be able to use "
 "Meal Tracker as no allowance will be set."
 msgstr ""
 
-#: core/admin-pages/page.settings.php:205
+#: core/admin-pages/page.settings.php:220
 msgid "Admin specified"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:214
+#: core/admin-pages/page.settings.php:229
 msgid "Admins can specify a user's daily calorie intake."
 msgstr ""
 
-#: core/admin-pages/page.settings.php:218
+#: core/admin-pages/page.settings.php:233
 msgid "User specified"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:227
+#: core/admin-pages/page.settings.php:242
 msgid "Allow a user to specify their own daily calorie intake."
 msgstr ""
 
-#: core/admin-pages/page.settings.php:233
+#: core/admin-pages/page.settings.php:248
 msgid "YeKen: Weight Tracker"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:244
+#: core/admin-pages/page.settings.php:259
 msgid ""
 "If enabled and Weight Tracker activated, a user's calorie intake can be "
 "taken calculated automatically from YeKen's Weight Tracker"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:256
+#: core/admin-pages/page.settings.php:271
 msgid ""
 "Specify API credentials for your preferred external service. Meal Tracker "
 "will then allow your user's to search their database, select meals and copy "
 "the data to the user's meal collection"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:257
+#: core/admin-pages/page.settings.php:272
 msgid "Only one API can be used"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:257
+#: core/admin-pages/page.settings.php:272
 msgid ""
 "The plugin will choose just one API if settings for more than one API have "
 "been entered"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:259
-#: core/admin-pages/page.settings.php:327
+#: core/admin-pages/page.settings.php:274
+#: core/admin-pages/page.settings.php:362
 msgid "Enabled"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:262
+#: core/admin-pages/page.settings.php:277
 msgid "External sources enabled?"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:271
+#: core/admin-pages/page.settings.php:286
 msgid "Should users be allowed to search external databases for meals?"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:280
+#: core/admin-pages/page.settings.php:295
 msgid "Active Source"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:283 core/functions.pages.php:112
+#: core/admin-pages/page.settings.php:298 core/functions.admin.php:177
+#: core/functions.pages.php:119
 msgid "Source"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:285
+#: core/admin-pages/page.settings.php:300
 msgid "API credentials missing for all APIs"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:290
+#: core/admin-pages/page.settings.php:305
 msgid "Test API"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:292
+#: core/admin-pages/page.settings.php:307
 msgid "Perform a test search for \"Apples\""
 msgstr ""
 
-#: core/admin-pages/page.settings.php:297
+#: core/admin-pages/page.settings.php:312
 msgid "FatSecret API"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:298
+#: core/admin-pages/page.settings.php:313
 msgid ""
 "You are able to create the required REST API OAuth 2.0 Credentials a the "
 "following page:"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:300
+#: core/admin-pages/page.settings.php:315
 msgid "Important"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:301
+#: core/admin-pages/page.settings.php:316
 msgid ""
 "Please ensure you have whitelisted your server's IP address with FatSecret. "
 "This can be done by selecting your application (using the above link) and "
-"completing the \"Allowed IP Addresses\" section"
+"completing the \"Allowed IP Addresses\" section. It looks like your server "
+"IP may be:"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:305
+#: core/admin-pages/page.settings.php:321
 msgid "Client ID"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:311
+#: core/admin-pages/page.settings.php:327
 msgid "Client Secret"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:324
+#: core/admin-pages/page.settings.php:333
+msgid "Which API?"
+msgstr ""
+
+#: core/admin-pages/page.settings.php:339
+#: core/admin-pages/page.settings.php:345
+msgid "Recipes API"
+msgstr ""
+
+#: core/admin-pages/page.settings.php:340
+#: core/admin-pages/page.settings.php:347
+msgid "Foods API"
+msgstr ""
+
+#: core/admin-pages/page.settings.php:344
+msgid "Which FatSecrets API would you like to use? Their "
+msgstr ""
+
+#: core/admin-pages/page.settings.php:346
+msgid "or"
+msgstr ""
+
+#: core/admin-pages/page.settings.php:359
 msgid "CSS Theme"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:336
+#: core/admin-pages/page.settings.php:371
 msgid ""
 "If set to \"Yes\", the additional theme CSS shall be included. If you wish "
 "to add more of your own styling, you may wish to disable the bundled theme."
 msgstr ""
 
-#: core/admin-pages/page.settings.php:340
+#: core/admin-pages/page.settings.php:375
 msgid "Meal Tracker Shortcode"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:343
+#: core/admin-pages/page.settings.php:378
 msgid "Accordion Enabled"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:352
+#: core/admin-pages/page.settings.php:387
 msgid ""
 "If set to \"Yes\", the main meal tracker will use accordions to display meal "
 "data."
 msgstr ""
 
-#: core/admin-pages/page.setup.wizard.php:24 core/hooks.php:51
+#: core/admin-pages/page.setup.wizard.php:24 core/hooks.php:53
 msgid "Setup Wizard"
 msgstr ""
 
@@ -470,7 +554,7 @@ msgstr ""
 msgid "Meal"
 msgstr ""
 
-#: core/admin-pages/user/data-entry.php:41 core/shortcode-meal-tracker.php:462
+#: core/admin-pages/user/data-entry.php:41 core/shortcode-meal-tracker.php:496
 msgid "Description"
 msgstr ""
 
@@ -535,66 +619,95 @@ msgstr ""
 msgid "Entries for this user"
 msgstr ""
 
-#: core/ajax.php:351 core/db.php:382 core/db.php:393 core/functions.php:511
-#: core/functions.php:1179 core/functions.php:1193
+#: core/ajax.php:446 core/db.php:382 core/db.php:405
+#: core/external-sources/fat-secret-foods.php:106 core/functions.admin.php:210
+#: core/functions.php:511 core/functions.php:1187 core/functions.php:1201
 msgid "kcal"
 msgstr ""
 
-#: core/external-sources.php:77 core/external-sources.php:86
+#: core/external-sources.php:99 core/external-sources.php:108
 msgid "Error"
 msgstr ""
 
-#: core/external-sources.php:90
+#: core/external-sources.php:112
 msgid "Error: No search results could be found for the term \"apples\""
 msgstr ""
 
-#: core/external-sources.php:92
+#: core/external-sources.php:114
 msgid "Success: Results have been found for \"apples\""
 msgstr ""
 
-#: core/external-sources.php:171
+#: core/external-sources.php:252
 msgid "No meals could be found"
 msgstr ""
 
-#: core/external-sources.php:172
-msgid "Then was an error searching our database. Please try again."
+#: core/external-sources.php:253
+msgid "There was an error searching our database. Please try again."
 msgstr ""
 
-#: core/external-sources.php:173
+#: core/external-sources.php:254
 msgid "Your meal collection has been updated"
 msgstr ""
 
-#: core/functions.admin.php:87 core/functions.pages.php:32
+#: core/external-sources.php:255
+msgid "Please select a serving size"
+msgstr ""
+
+#: core/external-sources.php:338
+msgid "Manual"
+msgstr ""
+
+#: core/external-sources.php:344
+msgid "FatSecrets Food"
+msgstr ""
+
+#: core/external-sources.php:347
+msgid "FatSecrets Recipe"
+msgstr ""
+
+#: core/functions.admin.php:107 core/functions.pages.php:32
 msgid "Date"
 msgstr ""
 
-#: core/functions.admin.php:89
+#: core/functions.admin.php:109
 msgid "User"
 msgstr ""
 
-#: core/functions.admin.php:91 core/functions.chart.php:72
+#: core/functions.admin.php:111 core/functions.chart.php:72
 #: core/functions.pages.php:36
 msgid "Calories Allowed"
 msgstr ""
 
-#: core/functions.admin.php:92 core/functions.chart.php:81
+#: core/functions.admin.php:112 core/functions.chart.php:81
 #: core/functions.pages.php:58
 msgid "Calories Used"
 msgstr ""
 
-#: core/functions.admin.php:93 core/functions.pages.php:62
+#: core/functions.admin.php:113 core/functions.pages.php:62
 msgid "Calories Remaining"
 msgstr ""
 
-#: core/functions.admin.php:94
+#: core/functions.admin.php:114
 msgid "Percentage Used"
 msgstr ""
 
-#: core/functions.admin.php:250
+#: core/functions.admin.php:174 core/shortcode-meal-tracker.php:494
+msgid "Name"
+msgstr ""
+
+#: core/functions.admin.php:175 core/shortcode-meal-tracker.php:498
+msgid "Calories"
+msgstr ""
+
+#: core/functions.admin.php:176
+msgid "Portion Size"
+msgstr ""
+
+#: core/functions.admin.php:367
 msgid "The above table updates every"
 msgstr ""
 
-#: core/functions.admin.php:250
+#: core/functions.admin.php:367
 msgid "minutes"
 msgstr ""
 
@@ -614,14 +727,18 @@ msgstr ""
 msgid "Calories allowed: "
 msgstr ""
 
-#: core/functions.pages.php:52 core/functions.pages.php:137
-#: core/functions.pages.php:170 core/shortcode-meal-tracker.php:504
-#: core/shortcode-meal-tracker.php:513
+#: core/functions.pages.php:52 core/functions.pages.php:144
+#: core/functions.pages.php:177 core/shortcode-meal-tracker.php:542
+#: core/shortcode-meal-tracker.php:553
 msgid "Save"
 msgstr ""
 
 #: core/functions.pages.php:66
 msgid "Percentage used"
+msgstr ""
+
+#: core/functions.pages.php:70 core/hooks.php:50
+msgid "Meals"
 msgstr ""
 
 #: core/functions.pages.php:79
@@ -640,106 +757,130 @@ msgstr ""
 msgid "Number of Meals"
 msgstr ""
 
-#: core/functions.pages.php:103
+#: core/functions.pages.php:100
+msgid "view"
+msgstr ""
+
+#: core/functions.pages.php:110
 msgid "Allowed calories source"
 msgstr ""
 
-#: core/functions.pages.php:105
+#: core/functions.pages.php:112
 msgid ""
 "When a new entry is created for this user, their allowed calories will be "
 "set in the following way"
 msgstr ""
 
-#: core/functions.pages.php:141
+#: core/functions.pages.php:148
 msgid "You must specify one or more calorie sources in settings."
 msgstr ""
 
-#: core/functions.pages.php:147
+#: core/functions.pages.php:154
 msgid "Current allowance"
 msgstr ""
 
-#: core/functions.pages.php:156
+#: core/functions.pages.php:163
 msgid "Specify admin allowance for the user"
 msgstr ""
 
-#: core/functions.pages.php:157
+#: core/functions.pages.php:164
 msgid ""
 "Please be aware that the user can override this value if other calories "
 "sources have been enabled within the plugin's settings."
 msgstr ""
 
-#: core/functions.pages.php:160
+#: core/functions.pages.php:167
 msgid "Set Target: "
 msgstr ""
 
-#: core/functions.pages.php:177 core/functions.pages.php:204
+#: core/functions.pages.php:184 core/functions.pages.php:222
 msgid "User Search"
 msgstr ""
 
-#: core/functions.pages.php:184
+#: core/functions.pages.php:191
 msgid "Delete Data"
 msgstr ""
 
-#: core/functions.pages.php:186
+#: core/functions.pages.php:193
 msgid "All Entries"
 msgstr ""
 
-#: core/functions.pages.php:188
+#: core/functions.pages.php:195
 msgid ""
 "All of the user's meals will be marked as deleted. They will still reside in "
 "the system, yet can only be viewed against old entries. They can no longer "
 "be added to entries"
 msgstr ""
 
-#: core/functions.pages.php:189
+#: core/functions.pages.php:196
 msgid "All Meals"
 msgstr ""
 
-#: core/functions.pages.php:210
+#: core/functions.pages.php:213
+msgid "Options"
+msgstr ""
+
+#: core/functions.pages.php:216
+msgid "Add a new meal"
+msgstr ""
+
+#: core/functions.pages.php:229
 msgid "Summary Counts"
 msgstr ""
 
-#: core/functions.pages.php:214
+#: core/functions.pages.php:233
 msgid "Entries"
 msgstr ""
 
-#: core/functions.pages.php:222
+#: core/functions.pages.php:237
+msgid "Meals added by users"
+msgstr ""
+
+#: core/functions.pages.php:241 core/hooks.php:50
+msgid "Meal Collection"
+msgstr ""
+
+#: core/functions.pages.php:245
 msgid "Meals added to entries"
 msgstr ""
 
-#: core/functions.pages.php:226
+#: core/functions.pages.php:249
 msgid "WordPress users"
 msgstr ""
 
-#: core/functions.pages.php:230
+#: core/functions.pages.php:253
 msgid "Users with an entry"
 msgstr ""
 
-#: core/functions.pages.php:234
+#: core/functions.pages.php:257
 msgid "Entries on target"
 msgstr ""
 
-#: core/functions.pages.php:238
+#: core/functions.pages.php:261
 msgid "Entries over target"
 msgstr ""
 
-#: core/functions.pages.php:242
+#: core/functions.pages.php:265
 msgid "last updated at "
 msgstr ""
 
-#: core/functions.pages.php:284
+#: core/functions.pages.php:307
 msgid "Back"
 msgstr ""
 
-#: core/functions.pages.php:286
+#: core/functions.pages.php:309
 msgid "WordPress Record"
 msgstr ""
 
-#: core/functions.pages.php:288 core/hooks.php:168
+#: core/functions.pages.php:311 core/hooks.php:172
 msgid "Meal Tracker Record"
 msgstr ""
 
-#: core/functions.pages.php:513
+#: core/functions.pages.php:420
+msgid "Edit Meal"
+msgstr ""
+
+#: core/functions.pages.php:573
 msgid "Enter a user's email, display name or username then click \"Search\"."
 msgstr ""
 
@@ -776,238 +917,266 @@ msgid "Remove"
 msgstr ""
 
 #: core/functions.php:513
-msgid "Edit"
+msgid "Total"
 msgstr ""
 
 #: core/functions.php:514
-msgid "used"
+msgid "Edit"
 msgstr ""
 
 #: core/functions.php:515
-msgid "remaining"
+msgid "used"
 msgstr ""
 
 #: core/functions.php:516
-msgid "Target"
+msgid "remaining"
 msgstr ""
 
 #: core/functions.php:517
+msgid "Target"
+msgstr ""
+
+#: core/functions.php:518
 msgid "No data has been entered"
 msgstr ""
 
-#: core/functions.php:518 core/functions.php:520
+#: core/functions.php:519 core/functions.php:521
 msgid "The meal has been added"
 msgstr ""
 
-#: core/functions.php:519 core/functions.php:521
+#: core/functions.php:520 core/functions.php:522
 msgid "Added"
 msgstr ""
 
-#: core/functions.php:522
+#: core/functions.php:523
 msgid "Select a meal"
 msgstr ""
 
-#: core/functions.php:523
+#: core/functions.php:524
 msgid "The meal has been removed"
 msgstr ""
 
-#: core/functions.php:524
+#: core/functions.php:525
 msgid "There was error saving your changes"
 msgstr ""
 
-#: core/functions.php:525
+#: core/functions.php:526
 msgid "There was error loading your data"
 msgstr ""
 
-#: core/functions.php:526
+#: core/functions.php:527
 msgid "Your settings have been saved"
 msgstr ""
 
-#: core/functions.php:527
+#: core/functions.php:528
 msgid "Are you sure?"
 msgstr ""
 
-#: core/functions.php:528
+#: core/functions.php:529
 msgid ""
 "Proceeding will cause user data to be deleted. This data can not be "
 "recovered. Are you sure you wish to proceed?"
 msgstr ""
 
-#: core/functions.php:555
+#: core/functions.php:556
 msgid "N/A"
 msgstr ""
 
-#: core/functions.php:558
+#: core/functions.php:560
 msgid "Small"
 msgstr ""
 
-#: core/functions.php:559
+#: core/functions.php:561
 msgid "Medium"
 msgstr ""
 
-#: core/functions.php:560
+#: core/functions.php:562
 msgid "Large"
 msgstr ""
 
-#: core/functions.php:912 core/functions.php:954
+#: core/functions.php:917 core/functions.php:959
 msgid "Yesterday"
 msgstr ""
 
-#: core/functions.php:922 core/functions.php:950
+#: core/functions.php:927 core/functions.php:955
 msgid "Today"
 msgstr ""
 
-#: core/functions.php:924 core/functions.php:958
+#: core/functions.php:929 core/functions.php:963
 msgid "Tomorrow"
 msgstr ""
 
-#: core/functions.php:1009
+#: core/functions.php:1014
 msgid "Upgrade to Premium for "
 msgstr ""
 
-#: core/functions.php:1011
+#: core/functions.php:1016
 msgid "a year "
 msgstr ""
 
-#: core/functions.php:1077
+#: core/functions.php:1082
+msgid "External APIs"
+msgstr ""
+
+#: core/functions.php:1082
+msgid "Search FatSecrets Recipe and Food APIs"
+msgstr ""
+
+#: core/functions.php:1083
+msgid "Own Meal collection"
+msgstr ""
+
+#: core/functions.php:1083
+msgid "Create your own meal collection for your users to search"
+msgstr ""
+
+#: core/functions.php:1084
+msgid "Edit user's meals"
+msgstr ""
+
+#: core/functions.php:1084
+msgid "View, edit and delete meals in your user's meal collections"
+msgstr ""
+
+#: core/functions.php:1085
 msgid "Create and view entries"
 msgstr ""
 
-#: core/functions.php:1077
+#: core/functions.php:1085
 msgid "Allow your users to create and view entries for any day"
 msgstr ""
 
-#: core/functions.php:1078
+#: core/functions.php:1086
 msgid "Edit entries"
 msgstr ""
 
-#: core/functions.php:1078
+#: core/functions.php:1086
 msgid "Allow your users to edit their entries for any given day"
 msgstr ""
 
-#: core/functions.php:1079
+#: core/functions.php:1087
 msgid "Edit meals"
 msgstr ""
 
-#: core/functions.php:1079
+#: core/functions.php:1087
 msgid "Allow your users to edit their stored meals"
 msgstr ""
 
-#: core/functions.php:1080
+#: core/functions.php:1088
 msgid "Calorie sources"
 msgstr ""
 
-#: core/functions.php:1080
+#: core/functions.php:1088
 msgid ""
 "Fetch daily calorie limits from other sources e.g. YeKen's Weight Tracker"
 msgstr ""
 
-#: core/functions.php:1081
+#: core/functions.php:1089
 msgid "Compress meal items"
 msgstr ""
 
-#: core/functions.php:1081
+#: core/functions.php:1089
 msgid "Compress multiple meal lines for an entry into one line"
 msgstr ""
 
-#: core/functions.php:1082
+#: core/functions.php:1090
 msgid "Unlimited meals per user"
 msgstr ""
 
-#: core/functions.php:1082
+#: core/functions.php:1090
 msgid ""
 "Your users are no longer limited to a maximum of 40 meals and may add as "
 "many as they wish"
 msgstr ""
 
-#: core/functions.php:1083
+#: core/functions.php:1091
 msgid "View your user's data"
 msgstr ""
 
-#: core/functions.php:1083
+#: core/functions.php:1091
 msgid "View all of your user entries, meals and calorie intake"
 msgstr ""
 
-#: core/functions.php:1084
+#: core/functions.php:1092
 msgid "Set calorie allowances"
 msgstr ""
 
-#: core/functions.php:1084
+#: core/functions.php:1092
 msgid "Set daily calorie allowances for your users"
 msgstr ""
 
-#: core/functions.php:1085
+#: core/functions.php:1093
 msgid "Summary Statistics"
 msgstr ""
 
-#: core/functions.php:1085
+#: core/functions.php:1093
 msgid ""
 "View summary statistics of your Meal Tracker data and it's usage by your "
 "users"
 msgstr ""
 
-#: core/functions.php:1086
+#: core/functions.php:1094
 msgid "Calorie Allowance sources"
 msgstr ""
 
-#: core/functions.php:1086
+#: core/functions.php:1094
 msgid "Specify one or more sources for calorie allowance"
 msgstr ""
 
-#: core/functions.php:1087
+#: core/functions.php:1095
 msgid "Additional settings"
 msgstr ""
 
-#: core/functions.php:1087
+#: core/functions.php:1095
 msgid "Additional settings for customising your Meal Tracker usage"
 msgstr ""
 
-#: core/functions.php:1088
+#: core/functions.php:1096
 msgid "Admin Search"
 msgstr ""
 
-#: core/functions.php:1088
+#: core/functions.php:1096
 msgid "Search for users by name and email address"
 msgstr ""
 
-#: core/functions.php:1098
+#: core/functions.php:1106
 msgid ""
 "If require plugin modifications to Meal Tracker, or need a new plugin built, "
 "or perhaps you need a developer to help you with your website then please "
 "don't hesitate get in touch!"
 msgstr ""
 
-#: core/functions.php:1099 core/setup.wizard.php:87
+#: core/functions.php:1107 core/setup.wizard.php:87
 msgid "We provide fixed priced quotes."
 msgstr ""
 
-#: core/functions.php:1116
+#: core/functions.php:1124
 msgid "Upgrade Meal Tracker and get more features!"
 msgstr ""
 
-#: core/functions.php:1118
+#: core/functions.php:1126
 msgid ""
 "Upgrade to the Premium version of this plugin to view your user's data, "
 "record entries for multiple days, external data sources and much more!"
 msgstr ""
 
-#: core/functions.php:1119
+#: core/functions.php:1127
 msgid "Read more and upgrade to Premium Version"
 msgstr ""
 
-#: core/functions.php:1159
+#: core/functions.php:1167
 msgid "Error: The user does not appear to exist"
 msgstr ""
 
-#: core/functions.php:1199
+#: core/functions.php:1207
 msgid "fats"
 msgstr ""
 
-#: core/functions.php:1200
+#: core/functions.php:1208
 msgid "protein"
 msgstr ""
 
-#: core/functions.php:1201
+#: core/functions.php:1209
 msgid "carbs"
 msgstr ""
 
@@ -1015,23 +1184,23 @@ msgstr ""
 msgid "User Data"
 msgstr ""
 
-#: core/hooks.php:54
+#: core/hooks.php:56
 msgid "Your License"
 msgstr ""
 
-#: core/hooks.php:54
+#: core/hooks.php:56
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: core/hooks.php:57 core/shortcode-meal-tracker.php:66
+#: core/hooks.php:59 core/shortcode-meal-tracker.php:66
 msgid "Settings"
 msgstr ""
 
-#: core/hooks.php:58
+#: core/hooks.php:60
 msgid "Help"
 msgstr ""
 
-#: core/hooks.php:152
+#: core/hooks.php:156
 msgid "Meal entries"
 msgstr ""
 
@@ -1039,15 +1208,15 @@ msgstr ""
 msgid "License missing"
 msgstr ""
 
-#: core/meta.php:68
+#: core/meta.php:67
 msgid "Proteins"
 msgstr ""
 
-#: core/meta.php:78
+#: core/meta.php:77
 msgid "Fats"
 msgstr ""
 
-#: core/meta.php:88
+#: core/meta.php:87
 msgid "Carbs"
 msgstr ""
 
@@ -1076,6 +1245,10 @@ msgstr ""
 
 #: core/shortcode-meal-tracker.php:122
 msgid "Select a date"
+msgstr ""
+
+#: core/shortcode-meal-tracker.php:135
+msgid "Today's summary"
 msgstr ""
 
 #: core/shortcode-meal-tracker.php:168
@@ -1122,7 +1295,7 @@ msgstr ""
 msgid "Save Settings"
 msgstr ""
 
-#: core/shortcode-meal-tracker.php:232 core/shortcode-meal-tracker.php:549
+#: core/shortcode-meal-tracker.php:232 core/shortcode-meal-tracker.php:592
 msgid "Cancel"
 msgstr ""
 
@@ -1140,6 +1313,10 @@ msgstr ""
 
 #: core/shortcode-meal-tracker.php:348
 msgid "Edit meal"
+msgstr ""
+
+#: core/shortcode-meal-tracker.php:352 core/shortcode-meal-tracker.php:570
+msgid "Search for a meal"
 msgstr ""
 
 #: core/shortcode-meal-tracker.php:359
@@ -1176,38 +1353,30 @@ msgstr ""
 msgid "Manually"
 msgstr ""
 
-#: core/shortcode-meal-tracker.php:460
-msgid "Name"
-msgstr ""
-
-#: core/shortcode-meal-tracker.php:464
-msgid "Calories"
-msgstr ""
-
-#: core/shortcode-meal-tracker.php:471
+#: core/shortcode-meal-tracker.php:506
 msgid ""
 "Today's calorie count shall be adjusted if a meal's calorific value is "
 "modified. Other entries will only be re-counted if done manually."
 msgstr ""
 
-#: core/shortcode-meal-tracker.php:491
+#: core/shortcode-meal-tracker.php:529
 msgid "Unit"
 msgstr ""
 
-#: core/shortcode-meal-tracker.php:493
+#: core/shortcode-meal-tracker.php:531
 msgid "Quantity"
 msgstr ""
 
-#: core/shortcode-meal-tracker.php:550
+#: core/shortcode-meal-tracker.php:593
 msgid "Add"
 msgstr ""
 
-#: core/shortcode-meal-tracker.php:551
+#: core/shortcode-meal-tracker.php:594
 msgid "Add and Return"
 msgstr ""
 
-#: core/shortcode-meal-tracker.php:570
-msgid "Search for a meal"
+#: core/shortcode-meal-tracker.php:614 core/shortcode-meal-tracker.php:616
+msgid "Select a serving size"
 msgstr ""
 
 #: core/sources-weight-tracker.php:45

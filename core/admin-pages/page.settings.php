@@ -123,10 +123,10 @@ function yk_mt_settings_page_generic() {
                                                     </td>
                                                 </tr>
                                             </table>
-                                            <h3><?php echo __( 'Meals' , YK_MT_SLUG); ?></h3>
+                                            <h3><?php echo __( 'Searching for meals' , YK_MT_SLUG); ?></h3>
                                             <table class="form-table">
                                                 <tr class="<?php echo $disable_if_not_premium_class; ?>">
-                                                    <th scope="row"><?php echo __( 'Search other\'s meals' , YK_MT_SLUG); ?></th>
+                                                    <th scope="row"><?php echo __( 'Other user\'s meals' , YK_MT_SLUG); ?></th>
                                                     <td>
                                                         <?php
                                                         $search_others = yk_mt_site_options_as_bool('search-others-meals', false );
@@ -138,6 +138,19 @@ function yk_mt_settings_page_generic() {
                                                         <p><?php echo __( 'If set to "Yes", users are not restricted to searching their own meal collections. Instead, a search will be performed across every user\'s meal collection. Please note, this may cause search to slow across large meal collections.', YK_MT_SLUG )?></p>
                                                     </td>
                                                 </tr>
+												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+													<th scope="row"><?php echo __( 'Admin\'s meal collection' , YK_MT_SLUG); ?></th>
+													<td>
+														<?php
+														$search_admin_meals = yk_mt_site_options_as_bool('search-admin-meals', false );
+														?>
+														<select id="search-admin-meals" name="search-admin-meals">
+															<option value="false" <?php selected( $search_admin_meals, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
+															<option value="true" <?php selected( $search_admin_meals, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
+														</select>
+														<p><?php echo __( 'If set to "Yes", users are allowed to search meals with the admin meal collection.', YK_MT_SLUG )?></p>
+													</td>
+												</tr>
                                             </table>
 											<h3><?php echo __( 'Macronutrients' , YK_MT_SLUG); ?></h3>
 											<table class="form-table">
@@ -400,16 +413,17 @@ function yk_mt_register_settings(){
 
     register_setting( 'yk-mt-options-group', 'caching-enabled' );
 	register_setting( 'yk-mt-options-group', 'css-theme-enabled' );
+	register_setting( 'yk-mt-options-group', 'allow-calorie-override' );
 
-    // Pro only open
+	// Pro only open
     if( true ===  yk_mt_license_is_premium() ){
 
         register_setting( 'yk-mt-options-group', 'accordion-enabled' );
         register_setting( 'yk-mt-options-group', 'allow-calorie-override-admin' );
-        register_setting( 'yk-mt-options-group', 'allow-calorie-override' );
         register_setting( 'yk-mt-options-group', 'allow-calorie-external-wlt' );
         register_setting( 'yk-mt-options-group', 'yk-mt-edit-permissions' );
         register_setting( 'yk-mt-options-group', 'search-others-meals' );
+		register_setting( 'yk-mt-options-group', 'search-admin-meals' );
         register_setting( 'yk-mt-options-group', 'new-entries-past' );
         register_setting( 'yk-mt-options-group', 'new-entries-future' );
         register_setting( 'yk-mt-options-group', 'macronutrients-enabled' );

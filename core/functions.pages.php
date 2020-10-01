@@ -93,7 +93,14 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
                 </tr>
                 <tr>
                     <th><?php echo __( 'Number of Meals', YK_MT_SLUG ); ?></th>
-                    <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-meals' ] ); ?></td>
+                    <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-meals' ] ); ?>
+                    <?php
+						printf( ' ( <a href="%s">%s</a> ) ',
+							esc_url( admin_url( 'admin.php?page=yk-mt-meals&user-id=' . (int) $user_id ) ),
+							__( 'view', YK_MT_SLUG )
+						);
+					?>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -199,13 +206,25 @@ function yk_mt_dashboard_side_bar() {
 
      $stats = yk_mt_stats();
 
+     if ( 'yk-mt-meals' === yk_mt_querystring_value( 'page' )
+     			&& 'meal' !== yk_mt_querystring_value( 'mode' ) ) :
     ?>
+     <div class="postbox">
+        <h2 class="hndle"><?php echo __( 'Options', YK_MT_SLUG ); ?></h2>
+        <div class="inside">
+        	<center>
+        		<a href="<?php echo esc_url( admin_url( 'admin.php?page=yk-mt-meals&mode=meal' ) ); ?>" class="button-primary"><?php echo __( 'Add a new meal', YK_MT_SLUG ); ?></span></a>
+			</center>
+        </div>
+     </div>
+     <?php else: ?>
      <div class="postbox">
         <h2 class="hndle"><?php echo __( 'User Search', YK_MT_SLUG ); ?></h2>
         <div class="inside">
             <?php yk_mt_user_search_form(); ?>
         </div>
     </div>
+     <?php endif; ?>
     <div class="postbox">
         <h2 class="hndle"><?php echo __( 'Summary Counts', YK_MT_SLUG ); ?></h2>
         <div class="inside">
@@ -215,8 +234,12 @@ function yk_mt_dashboard_side_bar() {
                      <td><?php echo yk_mt_format_number( $stats[ 'yk_mt_entry' ] ); ?></td>
                  </tr>
                  <tr>
-                     <th><?php echo __( 'Meals', YK_MT_SLUG ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'yk_mt_meals' ] ); ?></td>
+                     <th><?php echo __( 'Meals added by users', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'meals-user' ] ); ?></td>
+                 </tr>
+                 <tr>
+                     <th><?php echo __( 'Meal Collection', YK_MT_SLUG ); ?></th>
+                     <td class="yk-mt-blur"><?php echo yk_mt_link_render( esc_url( admin_url( 'admin.php?page=yk-mt-meals' ) ), yk_mt_format_number( $stats[ 'meals-admin' ] ) ); ?></td>
                  </tr>
                  <tr>
                      <th><?php echo __( 'Meals added to entries', YK_MT_SLUG ); ?></th>
@@ -382,6 +405,31 @@ function yk_mt_link_admin_page_user_render( $user_id, $display_text = NULL ) {
 }
 
 /**
+ * Get link for editing meal
+*
+* @param $meal_id
+* @param string $text
+ *
+* @param bool $add_back_link
+*
+* @return string
+*/
+function yk_mt_link_admin_page_meal_edit( $meal_id, $text = '', $add_back_link = true ) {
+
+	if ( true === empty( $text ) ) {
+		$text = __( 'Edit Meal', YK_MT_SLUG );
+	}
+
+	$base_url = admin_url( 'admin.php?page=yk-mt-meals&mode=meal&edit=' . (int) $meal_id );
+
+	if ( true === $add_back_link ) {
+		$base_url = yk_mt_link_add_back_link( $base_url );
+	}
+
+	return yk_mt_link_render( $base_url, $text );
+}
+
+/**
  * @param $link
  * @param $label
  *
@@ -420,6 +468,10 @@ function yk_mt_link_add_back_link( $link ) {
     }
 
     $current_url = yk_mt_link_current_url();
+
+	// Remove &delete= from QS
+	$current_url = remove_query_arg( 'delete', $current_url );
+
     $current_url = base64_encode( $current_url );
 
     return add_query_arg( 'yk-mt-prev-url', $current_url, $link );
@@ -442,8 +494,11 @@ function yk_mt_link_current_url() {
 
 /**
  * Look in querystring for a previous link
- * @return bool
- */
+*
+* @param string $default
+*
+* @return bool
+*/
 function yk_mt_link_previous_url( $default = '#' ) {
 
     $previous_url = yk_mt_querystring_value( 'yk-mt-prev-url', false );
@@ -491,6 +546,8 @@ function yk_mt_stats() {
         YK_WT_DB_MEALS          => yk_mt_db_mysql_count_table( YK_WT_DB_MEALS, false ),
         YK_WT_DB_ENTRY          => yk_mt_db_mysql_count_table( YK_WT_DB_ENTRY, false ),
         YK_WT_DB_ENTRY_MEAL     => yk_mt_db_mysql_count_table( YK_WT_DB_ENTRY_MEAL, false ),
+        'meals-user'			=> yk_mt_db_mysql_count( 'meals-user', false ),
+        'meals-admin'			=> yk_mt_db_mysql_count( 'meals-admin', false ),
         'wp-users'              => yk_mt_db_mysql_count_table( 'users', false ),
         'unique-users'          => yk_mt_db_mysql_count( 'unique-users', false ),
         'successful-entries'    => yk_mt_db_mysql_count( 'successful-entries', false ),
@@ -508,7 +565,10 @@ function yk_mt_stats() {
 // User search Search box
 // ------------------------------------------------------------------------------
 
-function yk_mt_user_search_form( $ajax_mode = false ) {
+/**
+ * Render HTML for user search form
+ */
+function yk_mt_user_search_form() {
 
     ?>	<p><?php echo __( 'Enter a user\'s email, display name or username then click "Search".', YK_MT_SLUG ); ?></p>
     <form id="yk-mt-user-search" class="yk-mt-user-search-ajax" >

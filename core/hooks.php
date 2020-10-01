@@ -47,7 +47,9 @@ function yk_mt_build_admin_menu() {
 
     add_submenu_page( 'yk-mt-main-menu', __( 'User Data', YK_MT_SLUG ),  __( 'User Data', YK_MT_SLUG ), $permission_level, 'yk-mt-user', 'yk_mt_admin_page_data_home' );
 
-    if ( true === yk_mt_setup_wizard_show_notice() ) {
+	add_submenu_page( 'yk-mt-main-menu', __( 'Meals', YK_MT_SLUG ),  __( 'Meal Collection', YK_MT_SLUG ), $permission_level, 'yk-mt-meals', 'yk_mt_admin_page_meals_home' );
+
+	if ( true === yk_mt_setup_wizard_show_notice() ) {
         add_submenu_page( 'yk-mt-main-menu', __('Setup Wizard', YK_MT_SLUG ),  __('Setup Wizard', YK_MT_SLUG ), 'manage_options', 'yk-mt-setup-wizard', 'yk_mt_setup_wizard_page' );
     }
 
@@ -66,7 +68,7 @@ function yk_mt_enqueue_admin_files() {
 
     // Only include MT dependencies on our pages.
     if ( true === empty( $_GET['page'] ) ||
-    	  false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-settings', 'yk-mt-setup-wizard' ] ) ) {
+    	  false === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-settings', 'yk-mt-setup-wizard', 'yk-mt-meals' ] ) ) {
         return;
     }
 
@@ -75,7 +77,7 @@ function yk_mt_enqueue_admin_files() {
     // Enqueue admin.js regardless (needed to dismiss notices)
     wp_enqueue_script( 'yk-mt-admin', plugins_url('../assets/js/admin.js', __FILE__), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
 
-    wp_localize_script( 'yk-mt-admin', 'yk_mt_settings', [ 'premium' => YK_MT_IS_PREMIUM ] );
+    wp_localize_script( 'yk-mt-admin', 'yk_mt_settings', [ 'premium' => YK_MT_IS_PREMIUM, 'meals-url' => admin_url( 'admin.php?page=yk-mt-meals' ) ] );
 
     // Settings page
     if ( false === empty( $_GET['page'] ) && true === in_array( $_GET[ 'page' ], [ 'yk-mt-settings', 'yk-mt-setup-wizard' ] ) ) {
@@ -84,7 +86,9 @@ function yk_mt_enqueue_admin_files() {
         wp_enqueue_style( 'mt-tabs-flat', plugins_url( '../assets/css/tabs.flat.min.css', __FILE__ ), [], YK_MT_PLUGIN_VERSION );
     }
 
-    if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu' ] ) ) {
+    if ( false === empty( $_GET['page'] ) && true === in_array( $_GET['page'], [ 'yk-mt-user', 'yk-mt-main-menu', 'yk-mt-meals' ] ) ) {
+
+	    wp_enqueue_style( 'mt-core', plugins_url( 'assets/css/yk-mt-core.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
         wp_enqueue_style( 'mt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
 

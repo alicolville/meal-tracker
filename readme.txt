@@ -3,8 +3,8 @@ Contributors: aliakro
 Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food
 Requires at least: 5.0
-Tested up to: 5.5
-Stable tag: 2.1
+Tested up to: 5.5.1
+Stable tag: 2.2
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -37,6 +37,8 @@ Pro Features:
 * Support for Macronutrients.
 * Search external APIs (like Fatsecrets) for meals.
 * FatSecrets Food and Recipe API are supported.
+* Meal Collection - create a library of meals for your users to search.
+* View, edit and delete meals in your user's meal collection.
 
 == Installation ==
 
@@ -69,9 +71,18 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 == Upgrade Notice ==
 
-2.1 - Support for FatSecrets Food API
+2.2 - Admin Meal Collection and view / edit user's meals
 
 == Changelog ==
+
+= 2.2 =
+
+* New feature: "Meal Collection" - ability to create a library of meals that your users can search.
+* New feature: View, edit and delete meals in your user's meal collections.
+* Improvement: Added extra security to Ajax calls to ensure a user cant edit another user's meals.
+* Bug fix: Description is correctly updated when modified by a user.
+* Bug fix: Removed edit button against meals that a user has added from someone else's collection i.e. restrict user's to editing their own meals.
+* Bug fix: Under "Calorie Allowance", allow the setting "User specified" to be saved correctly when not premium
 
 = 2.1 =
 

@@ -108,6 +108,9 @@ HEX: #f7786b
 .yk-mt-error {
     color: #ffdede;
 }
+.yk-mt-error-red {
+  color: red;
+}
 .yk-mt-sidebar-stats .small, .yk-mt-admin-form .small {
     font-style: italic;
     font-size: 12px;
@@ -145,4 +148,12 @@ HEX: #f7786b
 }
 .yk-mt-selected {
     font-weight: bold;
+}
+
+/**
+Core.css overrides
+ */
+
+.yk-mt__label {
+  font-size: 100% !important;
 }
