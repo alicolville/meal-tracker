@@ -237,6 +237,7 @@ jQuery( document ).ready(function ($) {
   function yk_mt_post_api_add_meal(name, description, calories, quantity, unit, meta_fields, id = '') {
 
     var data = {
+      'admin-security' : yk_mt_sc_meal_tracker['ajax-admin-security-nonce'],
       'name': name,
       'description': description,
       'calories': calories,

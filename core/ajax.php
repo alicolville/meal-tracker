@@ -172,6 +172,8 @@ add_action( 'wp_ajax_add_meal', 'yk_mt_ajax_meal_add' );
  */
 function wp_ajax_add_meal_admin() {
 
+	check_ajax_referer( 'yk-mt-admin-nonce', 'admin-security' );
+
 	$meal_id = yk_mt_ajax_get_post_value_int( 'id' );
 
 	// Only set added by admin if a new entry (i.e. not editing one!)

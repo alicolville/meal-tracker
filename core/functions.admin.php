@@ -30,15 +30,16 @@ function yk_mt_admin_localise() {
     }
 
     wp_localize_script( 'yk-mt-admin', 'yk_mt_sc_meal_tracker', [
-        'localise'          	=> yk_mt_localised_strings(),
-		'ajax-security-nonce'   => wp_create_nonce( 'yk-mt-nonce' ),
-        'todays-entry'      	=> $entry,
-        'load-entry'        	=> ! empty( $entry ),
-        'is-admin'          	=> true,
-		'mode'					=> yk_mt_querystring_value( 'mode' ),
-		'units-hide-quantity'   => yk_mt_units_where( 'drop-quantity', true, true ),
-		'meta-fields'			=> yk_mt_meta_js_config(),
-		'previous-url'			=> yk_mt_link_previous_url()
+        'localise'          			=> yk_mt_localised_strings(),
+		'ajax-security-nonce'   		=> wp_create_nonce( 'yk-mt-nonce' ),
+		'ajax-admin-security-nonce'   	=> wp_create_nonce( 'yk-mt-admin-nonce' ),
+        'todays-entry'      			=> $entry,
+        'load-entry'        			=> ! empty( $entry ),
+        'is-admin'          			=> true,
+		'mode'							=> yk_mt_querystring_value( 'mode' ),
+		'units-hide-quantity'   		=> yk_mt_units_where( 'drop-quantity', true, true ),
+		'meta-fields'					=> yk_mt_meta_js_config(),
+		'previous-url'					=> yk_mt_link_previous_url()
     ]);
 }
 
