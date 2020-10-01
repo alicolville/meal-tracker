@@ -139,6 +139,12 @@ function yk_mt_ajax_meal_add( $options = [] ) {
 		    return wp_send_json( [ 'error' => 'no-permission-update-user' ] );
 	    }
 
+	    // If an admin is editing a meal, then drop the added_by column (otherwise the user ID will be replaced
+	    // with admin ID editing)
+	    if ( false === empty( $options[ 'via-admin' ] ) ) {
+	    	unset( $post_data[ 'added_by' ] );
+	    }
+
         if ( false === yk_mt_db_meal_update( $post_data ) ) {
             return wp_send_json( [ 'error' => 'updating-db' ] );
         }
