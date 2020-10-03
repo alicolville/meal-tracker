@@ -1047,6 +1047,8 @@ function yk_wt_db_tables_create() {
                 name varchar(100) NOT NULL,
                 calories float DEFAULT 0 NOT NULL,
                 quantity float DEFAULT 0 NOT NULL,
+                fraction_parent int NULL,
+                fraction float DEFAULT 0 NOT NULL,
                 unit varchar(10) DEFAULT 'g' NOT NULL,
                 description varchar(200) NULL,
                 deleted bit DEFAULT 0,
