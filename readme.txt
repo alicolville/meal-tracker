@@ -75,6 +75,10 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 == Changelog ==
 
+= 2.3 =
+
+TODO: Setting for fractions
+
 = 2.2 =
 
 * New feature: "Meal Collection" - ability to create a library of meals that your users can search.

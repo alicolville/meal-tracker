@@ -3,6 +3,45 @@
 defined('ABSPATH') or die('Naw ya dinnie!');
 
 /**
+ * Meal fractions enabled?
+ * @return bool
+ */
+function yk_mt_fractions_enabled() {
+
+	if ( false === YK_MT_IS_PREMIUM ) {
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * Do we have a fraction?
+ * @param $fraction
+ *
+ * @return bool
+ */
+function yk_mt_fractions_valid( $fraction ) {
+
+	if ( false === yk_mt_fractions_enabled() ) {
+		return false;
+	}
+
+	$fractions = yk_mt_fractions_all();
+
+	return ! empty( $fractions[ $fraction  ] );
+}
+
+/**
+ * Return list of fractions allowed?
+ *
+ * @return string[]
+ */
+function yk_mt_fractions_all() {
+	return [ '0.25' => '1/4', '0.5' => '1/2', '0.75' => '3/4' ];
+}
+
+/**
  * Get the URL to view / edit a certain entry ID
  * @param $entry_id
  * @return mixed
