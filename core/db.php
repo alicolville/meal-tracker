@@ -604,6 +604,7 @@ function yk_mt_db_meal_add( $meal ) {
     unset( $meal[ 'id' ] );
 	unset( $meal[ 'hide-nutrition' ] );
 	unset( $meal[ 'servings' ] );
+	unset( $meal[ 'added' ] );
 
     global $wpdb;
 
@@ -723,6 +724,24 @@ function yk_mt_db_meal_get( $id, $added_by = false ) {
     return $meal;
 }
 
+/**
+ * Get meal ID for a fractioned meal
+ *
+ * @param $meal_id
+ * @param $fraction
+ * @return int
+ */
+function yk_mt_db_meal_fraction_exist( $meal_id, $fraction ) {
+
+	global $wpdb;
+
+	$sql 	= $wpdb->prepare(  'Select id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where fraction_parent = %d and fraction = %f', $meal_id, $fraction );
+
+	$sql    .= ' limit 0, 1';
+	$id 	= $wpdb->get_var( $sql );
+
+	return ( false === empty( $id ) ) ? (int) $id : null;
+}
 /**
  * Get internal meal ID for external meal
  *
@@ -1006,8 +1025,11 @@ function yk_mt_db_mysql_formats( $data ) {
         'json'                  => '%s',
 		'source'				=> '%s',
 		'ext_id'				=> '%d',
+		'ext_serving_id'		=> '%d',
 		'ext_image'				=> '%s',
 		'ext_url'				=> '%s',
+		'fraction_parent'		=> '%d',
+		'fraction'				=> '%f'
     ];
 
     $formats = apply_filters( 'yk_mt_db_formats', $formats );

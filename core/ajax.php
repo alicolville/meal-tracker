@@ -26,11 +26,15 @@ function yk_mt_ajax_add_meal_to_entry() {
     // Do we have a fraction of a meal?
 	if ( true === yk_mt_fractions_valid( $post_data[ 'quantity' ] ) ) {
 
-		// For this meal ID, look for a child meal / fraction, if found, use the child meal ID.
+		$fractioned_id = yk_mt_fraction_clone_meal( $post_data[ 'meal-id' ], $post_data[ 'quantity' ], $post_data[ 'user-id' ] );
 
-		// If not, insert a new meal with divided fractions
-		$meal_id = yk_mt_fraction_clone_meal( $post_data[ 'meal-id' ], $post_data[ 'quantity' ] );
+		if ( true === empty( $fractioned_id ) ) {
+			return wp_send_json( [ 'error' => 'cloning-meal' ] );
+		}
 
+		// Add one of the new fractioned meal!
+		$post_data[ 'meal-id' ] = $fractioned_id;
+		$quantity 				= 1;
 	}
 
 	// Ensure the user is the owner of the entry.
