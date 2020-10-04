@@ -60,6 +60,7 @@ function yk_mt_fraction_clone_meal( $meal_id, $fraction, $user_id = NULL ) {
 
 	if ( false === empty( $user_id ) ) {
 		$parent_meal[ 'added_by' ] = $user_id;
+		unset( $parent_meal[ 'added_by_admin' ] );
 	}
 
 	if ( true === yk_mt_meta_is_enabled() ) {
