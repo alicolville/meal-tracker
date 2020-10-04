@@ -299,7 +299,7 @@ function yk_mt_ajax_external_search() {
 add_action( 'wp_ajax_external_search', 'yk_mt_ajax_external_search' );
 
 /**
- * Search setvings for a given meeting
+ * Search servings for a given meal
  */
 function yk_mt_ajax_external_servings() {
 
@@ -328,7 +328,7 @@ function yk_mt_ajax_external_servings() {
 
 	// Cache data for this search term ( for 5 mins )
 	if ( false === empty( $meals ) ) {
-		yk_mt_cache_temp_set( $cache_key, $meals );
+		yk_mt_cache_temp_set( $cache_key, $servings );
 	}
 
 	wp_send_json( $servings );
