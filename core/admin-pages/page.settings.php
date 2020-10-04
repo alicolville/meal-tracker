@@ -182,34 +182,50 @@ function yk_mt_settings_page_generic() {
 												</tr>
 											</table>
                                             <h3><?php echo __( 'New Entries' , YK_MT_SLUG); ?></h3>
-                                            <table class="form-table">
-                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
-                                                    <th scope="row"><?php echo __( 'Allow new entries in the past' , YK_MT_SLUG); ?></th>
-                                                    <td>
-                                                        <?php
-                                                        $value = yk_mt_site_options_as_bool('new-entries-past' );
-                                                        ?>
-                                                        <select id="new-entries-past" name="new-entries-past">
-                                                            <option value="true" <?php selected( $value, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
-                                                            <option value="false" <?php selected( $value, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
-                                                        </select>
-                                                        <p><?php echo __( 'If set to "Yes", users can create entries for dates in the past.', YK_MT_SLUG )?></p>
-                                                    </td>
-                                                </tr>
-                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
-                                                    <th scope="row"><?php echo __( 'Allow new entries in the future' , YK_MT_SLUG); ?></th>
-                                                    <td>
-                                                        <?php
-                                                        $value = yk_mt_site_options_as_bool('new-entries-future' );
-                                                        ?>
-                                                        <select id="new-entries-future" name="new-entries-future">
-                                                            <option value="true" <?php selected( $value, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
-                                                            <option value="false" <?php selected( $value, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
-                                                        </select>
-                                                        <p><?php echo __( 'If set to "Yes", users can create entries for dates in the future.', YK_MT_SLUG )?></p>
-                                                    </td>
-                                                </tr>
-                                            </table>
+											<table class="form-table">
+												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+													<th scope="row"><?php echo __( 'Allow new entries in the past' , YK_MT_SLUG); ?></th>
+													<td>
+														<?php
+														$value = yk_mt_site_options_as_bool('new-entries-past' );
+														?>
+														<select id="new-entries-past" name="new-entries-past">
+															<option value="true" <?php selected( $value, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
+															<option value="false" <?php selected( $value, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
+														</select>
+														<p><?php echo __( 'If set to "Yes", users can create entries for dates in the past.', YK_MT_SLUG )?></p>
+													</td>
+												</tr>
+												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+													<th scope="row"><?php echo __( 'Allow new entries in the future' , YK_MT_SLUG); ?></th>
+													<td>
+														<?php
+														$value = yk_mt_site_options_as_bool('new-entries-future' );
+														?>
+														<select id="new-entries-future" name="new-entries-future">
+															<option value="true" <?php selected( $value, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
+															<option value="false" <?php selected( $value, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
+														</select>
+														<p><?php echo __( 'If set to "Yes", users can create entries for dates in the future.', YK_MT_SLUG )?></p>
+													</td>
+												</tr>
+											</table>
+											<h3><?php echo __( 'Allow fractions of meals when adding to an entry?' , YK_MT_SLUG); ?></h3>
+											<table class="form-table">
+												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+													<th scope="row"><?php echo __( 'Enabled' , YK_MT_SLUG); ?></th>
+													<td>
+														<?php
+														$allow_fractions = yk_mt_site_options_as_bool('allow-fractions', false );
+														?>
+														<select id="allow-fractions" name="allow-fractions">
+															<option value="false" <?php selected( $allow_fractions, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
+															<option value="true" <?php selected( $allow_fractions, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
+														</select>
+														<p><?php echo __( 'If enabled, rather than selecting just whole multiples of 1 for meal quantities, additional options of 1/4, 1/2 and 3/4 will be added. Please note: When a user selects a fraction, the meal is cloned and the relevant values divided.', YK_MT_SLUG )?></p>
+													</td>
+												</tr>
+											</table>
                                         </div>
                                         <div>
                                             <p><?php echo __('Specify the methods in which a user\'s daily allowance can be determined', YK_MT_SLUG )?>.
@@ -426,7 +442,8 @@ function yk_mt_register_settings(){
 		register_setting( 'yk-mt-options-group', 'search-admin-meals' );
         register_setting( 'yk-mt-options-group', 'new-entries-past' );
         register_setting( 'yk-mt-options-group', 'new-entries-future' );
-        register_setting( 'yk-mt-options-group', 'macronutrients-enabled' );
+		register_setting( 'yk-mt-options-group', 'allow-fractions' );
+		register_setting( 'yk-mt-options-group', 'macronutrients-enabled' );
 		register_setting( 'yk-mt-options-group', 'macronutrients-required' );
 
 		register_setting( 'yk-mt-options-group', 'external-enabled' );

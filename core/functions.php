@@ -12,7 +12,7 @@ function yk_mt_fractions_enabled() {
 		return false;
 	}
 
-	return true;
+	return yk_mt_site_options_as_bool('allow-fractions', false );
 }
 
 /**
@@ -42,7 +42,7 @@ function yk_mt_fractions_valid( $fraction ) {
 function yk_mt_fraction_clone_meal( $meal_id, $fraction, $user_id = NULL ) {
 
 	// Before trying to fraction a meal, has it already been done?
-	if( $fractioned_id = yk_mt_db_meal_fraction_exist( $meal_id, $fraction ) ) {
+	if( $fractioned_id = yk_mt_db_meal_fraction_exist( $meal_id, $fraction, $user_id ) ) {
 		return $fractioned_id;
 	}
 
