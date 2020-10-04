@@ -32,6 +32,19 @@ function yk_mt_fractions_valid( $fraction ) {
 	return ! empty( $fractions[ $fraction  ] );
 }
 
+function yk_mt_fraction_clone_meal( $meal_id, $fraction ) {
+
+	$parent_meal = yk_mt_db_meal_get( $meal_id );
+
+	if ( true === empty( $parent_meal ) ) {
+		return false;
+	}
+
+	$fraction = (float) $fraction;
+	wp_send_json('fie');
+	print_R($parent_meal);
+}
+
 /**
  * Return list of fractions allowed?
  *
