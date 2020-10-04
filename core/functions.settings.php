@@ -70,6 +70,8 @@ function yk_mt_site_options( $key, $default = true ) {
 /**
  * Get a site option as a bool
  * @param $key
+ * @param bool $default
+ * @return mixed
  */
 function yk_mt_site_options_as_bool( $key, $default = true ) {
 

@@ -369,8 +369,18 @@ function yk_mt_shortcode_meal_tracker_add_meal_dialog() {
 			__( 'How many have you had?', YK_MT_SLUG )
 		);
 
+		if ( true === yk_mt_fractions_enabled() ) {
+
+			$fractions = yk_mt_fractions_all();
+
+			foreach ( $fractions as $value => $label ) {
+				$html .= sprintf( '<button id="yk-mt-button-add-meal-%1$s" data-quantity="%1$s" data-fraction="true" class="yk-mt__btn yk-mt__btn--add-meal-quantity yk-mt-meal-button-add">%2$s</button>', $value, $label );
+			}
+
+		}
+
 		for ( $i = 1; $i <= 10; $i++ ) {
-			 $html .= sprintf( '<button id="yk-mt-button-add-meal-%1$d" data-quantity="%1$d" class="yk-mt__btn yk-mt__btn--add-meal-quantity yk-mt-meal-button-add">%1$d</button>', $i );
+			 $html .= sprintf( '<button id="yk-mt-button-add-meal-%1$d" data-quantity="%1$d" data-fraction="false" class="yk-mt__btn yk-mt__btn--add-meal-quantity yk-mt-meal-button-add">%1$d</button>', $i );
 		}
 	}
 

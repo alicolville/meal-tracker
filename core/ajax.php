@@ -23,6 +23,20 @@ function yk_mt_ajax_add_meal_to_entry() {
         $quantity = 50;
     }
 
+    // Do we have a fraction of a meal?
+	if ( true === yk_mt_fractions_valid( $post_data[ 'quantity' ] ) ) {
+
+		$fractioned_id = yk_mt_fraction_clone_meal( $post_data[ 'meal-id' ], $post_data[ 'quantity' ], $post_data[ 'user-id' ] );
+
+		if ( true === empty( $fractioned_id ) ) {
+			return wp_send_json( [ 'error' => 'cloning-meal' ] );
+		}
+
+		// Add one of the new fractioned meal!
+		$post_data[ 'meal-id' ] = $fractioned_id;
+		$quantity 				= 1;
+	}
+
 	// Ensure the user is the owner of the entry.
 	if ( false === yk_mt_security_entry_owned_by_user( $post_data[ 'entry-id' ], $post_data[ 'user-id' ] ) ) {
 		return wp_send_json( [ 'error' => 'security' ] );
@@ -289,7 +303,7 @@ function yk_mt_ajax_external_search() {
 add_action( 'wp_ajax_external_search', 'yk_mt_ajax_external_search' );
 
 /**
- * Search setvings for a given meeting
+ * Search servings for a given meal
  */
 function yk_mt_ajax_external_servings() {
 
@@ -318,7 +332,7 @@ function yk_mt_ajax_external_servings() {
 
 	// Cache data for this search term ( for 5 mins )
 	if ( false === empty( $meals ) ) {
-		yk_mt_cache_temp_set( $cache_key, $meals );
+		yk_mt_cache_temp_set( $cache_key, $servings );
 	}
 
 	wp_send_json( $servings );

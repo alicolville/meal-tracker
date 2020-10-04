@@ -3,6 +3,107 @@
 defined('ABSPATH') or die('Naw ya dinnie!');
 
 /**
+ * Meal fractions enabled?
+ * @return bool
+ */
+function yk_mt_fractions_enabled() {
+
+	if ( false === YK_MT_IS_PREMIUM ) {
+		return false;
+	}
+
+	return yk_mt_site_options_as_bool('allow-fractions', false );
+}
+
+/**
+ * Do we have a fraction?
+ * @param $fraction
+ *
+ * @return bool
+ */
+function yk_mt_fractions_valid( $fraction ) {
+
+	if ( false === yk_mt_fractions_enabled() ) {
+		return false;
+	}
+
+	$fractions = yk_mt_fractions_all();
+
+	return ! empty( $fractions[ $fraction  ] );
+}
+
+/**
+ * Clone and fraction a meal
+ * @param $meal_id
+ * @param $fraction
+ * @param null $user_id
+ * @return bool|int
+ */
+function yk_mt_fraction_clone_meal( $meal_id, $fraction, $user_id = NULL ) {
+
+	// Before trying to fraction a meal, has it already been done?
+	if( $fractioned_id = yk_mt_db_meal_fraction_exist( $meal_id, $fraction, $user_id ) ) {
+		return $fractioned_id;
+	}
+
+	$parent_meal = yk_mt_db_meal_get( $meal_id );
+
+	if ( true === empty( $parent_meal ) ) {
+		return false;
+	}
+
+	$parent_meal[ 'name' ]				= sprintf( '%s - %s', $parent_meal[ 'name' ], yk_mt_fraction_label( $fraction ) );
+	$parent_meal[ 'fraction_parent' ] 	= $meal_id;
+	$parent_meal[ 'fraction' ] 			= (float) $fraction;
+	$parent_meal[ 'calories' ] 			= (int) ( $parent_meal[ 'calories' ] * $parent_meal[ 'fraction' ] );
+	$parent_meal[ 'quantity' ] 			= ( $parent_meal[ 'quantity' ] > 0 ) ? (int) ( $parent_meal[ 'quantity' ] * $parent_meal[ 'fraction' ] ) : 0;
+
+	if ( false === empty( $user_id ) ) {
+		$parent_meal[ 'added_by' ] = $user_id;
+		unset( $parent_meal[ 'added_by_admin' ] );
+	}
+
+	if ( true === yk_mt_meta_is_enabled() ) {
+
+		$fractionable_meta_fields = yk_mt_meta_fields_where( 'fractionable', true, 'db_col' );
+
+		foreach ( $fractionable_meta_fields as $column_name ) {
+			$parent_meal[ $column_name ] = (int) ( $parent_meal[ $column_name ] * $parent_meal[ 'fraction' ] );
+		}
+	}
+
+	return yk_mt_db_meal_add( $parent_meal );
+}
+
+/**
+ * Return list of fractions allowed?
+ *
+ * @return string[]
+ */
+function yk_mt_fractions_all() {
+
+	$fractions = [ '0.25' => '1/4', '0.5' => '1/2', '0.75' => '3/4' ];
+
+	if ( true === YK_MT_IS_PREMIUM ) {
+		$fractions = apply_filters( 'yk_mt_fractions', $fractions );
+	}
+
+	return $fractions;
+}
+
+/**
+ * Return a label for a given fraction
+ * @param $key
+ * @return string
+ */
+function yk_mt_fraction_label( $key) {
+
+	$all_fractions = yk_mt_fractions_all();
+
+	return ( false === empty( $all_fractions[ $key ] ) ) ? $all_fractions[ $key ] : '';
+}
+
+/**
  * Get the URL to view / edit a certain entry ID
  * @param $entry_id
  * @return mixed
@@ -1094,6 +1195,7 @@ function yk_mt_features_list() {
                 __( 'Calorie Allowance sources', YK_MT_SLUG )   => __( 'Specify one or more sources for calorie allowance', YK_MT_SLUG ),
                 __( 'Additional settings', YK_MT_SLUG )         => __( 'Additional settings for customising your Meal Tracker usage', YK_MT_SLUG ),
                 __( 'Admin Search', YK_MT_SLUG )                => __( 'Search for users by name and email address', YK_MT_SLUG ),
+				__( 'Fractional meal quantities', YK_MT_SLUG )  => __( 'If enabled (via settings) additional quantity settings of 1/4, 1/2 and 3/4 are available when adding meals to an entry', YK_MT_SLUG )
      ];
 }
 
