@@ -729,13 +729,18 @@ function yk_mt_db_meal_get( $id, $added_by = false ) {
  *
  * @param $meal_id
  * @param $fraction
+ * @param bool $added_by
  * @return int
  */
-function yk_mt_db_meal_fraction_exist( $meal_id, $fraction ) {
+function yk_mt_db_meal_fraction_exist( $meal_id, $fraction, $added_by = false ) {
 
 	global $wpdb;
 
 	$sql 	= $wpdb->prepare(  'Select id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where fraction_parent = %d and fraction = %f', $meal_id, $fraction );
+
+	if ( false === empty( $added_by ) ) {
+		$sql .= ' and added_by = ' . (int) $added_by;
+	}
 
 	$sql    .= ' limit 0, 1';
 	$id 	= $wpdb->get_var( $sql );

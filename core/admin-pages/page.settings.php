@@ -222,7 +222,7 @@ function yk_mt_settings_page_generic() {
 															<option value="false" <?php selected( $allow_fractions, false ); ?>><?php echo __( 'No', YK_MT_SLUG )?></option>
 															<option value="true" <?php selected( $allow_fractions, true ); ?>><?php echo __( 'Yes', YK_MT_SLUG )?></option>
 														</select>
-														<p><?php echo __( 'If enabled, rather than selecting just whole multiples of 1 for meal quantities, additional options of 1/4, 1/2 and 3/4 will be added. Please note: When a user selects a fraction, the meal is cloned and the relevant values divided.', YK_MT_SLUG )?></p>
+														<p><?php echo __( 'If enabled, rather than selecting only multiples of 1 for meal quantities, additional options of 1/4, 1/2 and 3/4 will be added. Please note: When a user selects a fraction, the meal is cloned and the relevant values divided.', YK_MT_SLUG )?></p>
 													</td>
 												</tr>
 											</table>

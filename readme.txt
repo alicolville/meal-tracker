@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food
 Requires at least: 5.0
 Tested up to: 5.5.1
-Stable tag: 2.2
+Stable tag: 2.3
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -28,7 +28,7 @@ Features:
 * Each user has their own meal collection.
 * Users can create and edit their meals.
 
-Pro Features:
+Premium Features:
 
 * As an administrator, you can view your user's progress and entries.
 * Your user's can have Unlimited meals.
@@ -38,6 +38,7 @@ Pro Features:
 * Search external APIs (like Fatsecrets) for meals.
 * FatSecrets Food and Recipe API are supported.
 * Meal Collection - create a library of meals for your users to search.
+* Fractional meal quantities - If enabled (via settings) additional quantity settings of 1/4, 1/2 and 3/4 are available when adding meals to an entry.
 * View, edit and delete meals in your user's meal collection.
 
 == Installation ==
@@ -71,13 +72,13 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 == Upgrade Notice ==
 
-2.2 - Admin Meal Collection and view / edit user's meals
+2.3 - Added quantity fractions when adding meals to entries.
 
 == Changelog ==
 
 = 2.3 =
 
-TODO: Setting for fractions
+* New Feature: If enabled (via settings) new quantity settings of 1/4, 1/2 and 3/4 are available when adding meals to an entry.
 
 = 2.2 =
 
