@@ -69,7 +69,8 @@ function yk_mt_meta_fields() {
 		'visible_admin' 	=> $meta_enabled,
 		'type'				=> 'float',
 		'required'			=> $meta_fields_required,
-		'fractionable'      => true
+		'fractionable'      => true,
+		'total'				=> true
 	];
 
 	// Fats
@@ -80,7 +81,8 @@ function yk_mt_meta_fields() {
 		'visible_admin' 	=> $meta_enabled,
 		'type'				=> 'float',
 		'required'			=> $meta_fields_required,
-		'fractionable'      => true
+		'fractionable'      => true,
+		'total'				=> true
 	];
 
 	// Carbs
@@ -91,7 +93,8 @@ function yk_mt_meta_fields() {
 		'visible_admin' 	=> $meta_enabled,
 		'type'				=> 'float',
 		'required'			=> $meta_fields_required,
-		'fractionable'      => true
+		'fractionable'      => true,
+		'total'				=> true
 	];
 
 	if ( true === $is_premium ) {
