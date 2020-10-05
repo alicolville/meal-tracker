@@ -29,6 +29,8 @@ function yk_mt_body_class( $classes ) {
 		$classes[] = 'yk-mt__ext-enabled';
 	}
 
+	$classes[] = sprintf( 'yk-mt-meta-%s', ( true === yk_mt_meta_is_enabled() ) ? 'enabled' : 'disabled' );
+
     return $classes;
 }
 add_filter( 'body_class','yk_mt_body_class' );

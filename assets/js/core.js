@@ -1133,6 +1133,9 @@ function yk_mt_post_api_external_add_to_collection_callback( data, response ) {
                                 <div class="yk-mt__table-cell yk-mt__table-cell-total-text">${yk_mt_sc_meal_tracker['localise']['total']}:</div>
                                 <div class="yk-mt__table-cell yk-mt__table-cell-total yk-mt-cq">
                                     ${total}${unit}
+                                    <span class="yk-mt-meta-totals yk-mt-hide-if-meta-disabled">
+                                      
+                                    </span>
                                 </div>
                                 <div class="yk-mt__table-cell yk-mt-o">
                                 </div>
