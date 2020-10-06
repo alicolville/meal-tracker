@@ -1128,11 +1128,14 @@ function yk_mt_post_api_external_add_to_collection_callback( data, response ) {
    * @returns {string}
    * @constructor
    */
-  const SummaryRow = ({total, unit}) => `
+  const SummaryRow = ({total, unit, meta_totals}) => `
                         <div class="yk-mt__table-row yk-mt__table-row-totals">
                                 <div class="yk-mt__table-cell yk-mt__table-cell-total-text">${yk_mt_sc_meal_tracker['localise']['total']}:</div>
                                 <div class="yk-mt__table-cell yk-mt__table-cell-total yk-mt-cq">
                                     ${total}${unit}
+                                    <span class="yk-mt-meta-totals yk-mt-hide-if-meta-disabled">
+                                      ${meta_totals}
+                                    </span>
                                 </div>
                                 <div class="yk-mt__table-cell yk-mt-o">
                                 </div>
@@ -1144,7 +1147,7 @@ function yk_mt_post_api_external_add_to_collection_callback( data, response ) {
    * @param meals
    * @param total
    */
-  function yk_mt_render_meal_rows(table_id, meals, total) {
+  function yk_mt_render_meal_rows(table_id, meals, total, meta_totals) {
 
     let html = '<p class="yk-mt__no-meals">' + yk_mt_sc_meal_tracker['localise']['no-data'] + '.' + '</p>';
 
@@ -1153,7 +1156,7 @@ function yk_mt_post_api_external_add_to_collection_callback( data, response ) {
       // Get HTML for all meal rows
       html_meals = meals.map(MealRow).join('');
 
-      total = [{total: total, unit: yk_mt_sc_meal_tracker['localise']['calorie-unit']}];
+      total = [ { total: total, unit: yk_mt_sc_meal_tracker['localise']['calorie-unit'], meta_totals: meta_totals } ];
 
       // Get HTML for total row
       html_total = total.map(SummaryRow).join('');
@@ -1178,7 +1181,7 @@ function yk_mt_post_api_external_add_to_collection_callback( data, response ) {
 
     // Render meal rows under each meal type
     $.each(entry.meals, function (meal_type_id, meals) {
-      yk_mt_render_meal_rows(meal_type_id, meals, entry.counts[meal_type_id]);
+      yk_mt_render_meal_rows(meal_type_id, meals, entry.counts[meal_type_id], entry.meta_counts[meal_type_id][ 'summary' ] );
     });
 
     yk_mt_chart_data_set(entry['calories_allowed'],

@@ -304,7 +304,8 @@ function yk_mt_db_entries_summary( $args ) {
 /**
  * Get details for an entry
  *
- * @param $key
+ * @param null $id
+ * @return array|bool|mixed|object|void|null
  */
 function yk_mt_db_entry_get( $id = NULL ) {
 
@@ -318,6 +319,8 @@ function yk_mt_db_entry_get( $id = NULL ) {
     if ( true === empty( $id ) ) {
         return NULL;
     }
+
+    $entry_id = $id;
 
     if ( $cache = apply_filters( 'yk_mt_db_entry_get', NULL, $id ) ) {
         $cache[ 'cache' ] = true;
@@ -335,9 +338,17 @@ function yk_mt_db_entry_get( $id = NULL ) {
     // If an entry was found, fetch all the meals entered for it and additional relevant data
     if ( $entry !== false ) {
 
-        $entry = yk_mt_db_entry_calculate_stats( $entry );
+        $entry		 = yk_mt_db_entry_calculate_stats( $entry );
+		$meta_sql	 = '';
 
-        $sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity, m.unit, m.description, m.added_by_admin, m.added_by,
+		// Which meta fields do we want to display on a line
+		$meta_per_line 	= yk_mt_meta_fields_where( 'visible_user', true );
+
+		if ( false === empty( $meta_per_line ) ) {
+			$meta_sql = ' , m.' . implode( ' , m.', wp_list_pluck( $meta_per_line, 'db_col' ) );
+		}
+
+        $sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity, m.unit, m.description, m.added_by_admin, m.added_by' . $meta_sql . ', 
 								em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
                                 Inner Join ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em
                                 on em.meal_id = m.id
@@ -345,8 +356,10 @@ function yk_mt_db_entry_get( $id = NULL ) {
                                 order by meal_type, em.id asc',
                                 $id
         );
-
+		//echo $sql;
         $meal_type_ids = yk_mt_meal_types_ids();
+
+		$meta_to_total 	= ( true === YK_MT_IS_PREMIUM ) ? yk_mt_meta_fields_where( 'total-these', true ) : [];
 
         $entry['meals'] = [];
         $entry['counts'] = [];
@@ -356,11 +369,16 @@ function yk_mt_db_entry_get( $id = NULL ) {
         foreach ( $meal_type_ids as $id ) {
             $entry['meals'][ $id ] = [];
             $entry['counts'][ $id ] = 0;
+
+            foreach ( $meta_to_total as $meta ) {
+				$entry['meta_counts'][ $id ][ $meta[ 'db_col' ] ] = 0;
+			}
         }
 
         $meals = $wpdb->get_results( $sql, ARRAY_A );
 
         if ( false === empty( $meals ) ) {
+
             foreach ( $meals as $meal ) {
 
                 $entry['counts']['total-meals']++;
@@ -377,11 +395,26 @@ function yk_mt_db_entry_get( $id = NULL ) {
 
                     $meal_count = count( $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'entry_meal_ids' ] );
 
-                    $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'd' ] = sprintf( '%4$s%1$d%2$s / %3$s',
+                    $meta_detail = '';
+
+                    // Do we have any meta fields to add to this line item?
+					if ( false === empty( $meta_per_line ) ) {
+						foreach ( $meta_per_line as $meta ) {
+							$meta_detail .= sprintf( ' <span><em>%s</em>: %s%s</span>', $meta[ 'prefix' ], yk_mt_format_number( $meal[ $meta[ 'db_col'] ] * $meal_count ), $meta[ 'unit' ] );
+						}
+					}
+
+					foreach ( $meta_to_total as $meta ) {
+						$entry['meta_counts'][ $meal['meal_type'] ][ $meta[ 'db_col' ] ] += $meal[ $meta[ 'db_col'] ];
+					}
+
+                    $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'd' ] = sprintf( '%5$s%1$d%2$s%3$s <span><em>%6$s</em>: %4$s</span>',
                         $meal[ 'calories' ] * $meal_count,
                         __( 'kcal', YK_MT_SLUG ),
+						$meta_detail,
                         yk_mt_get_unit_string( $meal ),
-                        ( $meal_count > 1 ) ? $meal_count . ' x ' : ''
+                        ( $meal_count > 1 ) ? $meal_count . ' x ' : '',
+						__( 's', YK_MT_SLUG )
                     );
 
 	                $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'css_class' ] = '';
@@ -418,9 +451,23 @@ function yk_mt_db_entry_get( $id = NULL ) {
                 $meal_types = array_values( $meal_types );
             }
         }
+
+		// Update meta summary
+		foreach ( $meal_type_ids as $meal_type_id ) {
+
+			$entry[ 'meta_counts' ][ $meal_type_id ][ 'summary' ] = '';
+			$meta_detail								= '';
+
+			foreach ( $meta_to_total as $meta ) {
+
+				$meta_detail .= sprintf( ' <span><em>%s</em>: %s%s</span>', $meta[ 'prefix' ], yk_mt_format_number( $entry[ 'meta_counts' ][ $meal_type_id ][ $meta[ 'db_col'] ] ), $meta[ 'unit' ] );
+
+				$entry[ 'meta_counts' ][ $meal_type_id ][ 'summary' ] = $meta_detail;
+			}
+		}
     }
 
-    do_action( 'yk_mt_entry_lookup', $id, $entry );
+    do_action( 'yk_mt_entry_lookup', $entry_id, $entry );
 
     return $entry;
 }

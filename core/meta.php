@@ -65,33 +65,42 @@ function yk_mt_meta_fields() {
 	$fields[] = [
 		'db_col' 			=> 'meta_proteins',
 		'title' 			=> __( 'Proteins', YK_MT_SLUG ),
+		'prefix'			=> __( 'p', YK_MT_SLUG ),
+		'unit'				=> __( 'g', YK_MT_SLUG ),
 		'visible_user' 		=> $meta_enabled,
 		'visible_admin' 	=> $meta_enabled,
 		'type'				=> 'float',
 		'required'			=> $meta_fields_required,
-		'fractionable'      => true
+		'fractionable'      => true,
+		'total-these'		=> $meta_enabled
 	];
 
 	// Fats
 	$fields[] = [
 		'db_col' 			=> 'meta_fats',
 		'title' 			=> __( 'Fats', YK_MT_SLUG ),
+		'prefix'			=> __( 'f', YK_MT_SLUG ),
+		'unit'				=> __( 'g', YK_MT_SLUG ),
 		'visible_user' 		=> $meta_enabled,
 		'visible_admin' 	=> $meta_enabled,
 		'type'				=> 'float',
 		'required'			=> $meta_fields_required,
-		'fractionable'      => true
+		'fractionable'      => true,
+		'total-these'		=> $meta_enabled
 	];
 
 	// Carbs
 	$fields[] = [
 		'db_col' 			=> 'meta_carbs',
 		'title' 			=> __( 'Carbs', YK_MT_SLUG ),
+		'prefix'			=> __( 'c', YK_MT_SLUG ),
+		'unit'				=> __( 'g', YK_MT_SLUG ),
 		'visible_user' 		=> $meta_enabled,
 		'visible_admin' 	=> $meta_enabled,
 		'type'				=> 'float',
 		'required'			=> $meta_fields_required,
-		'fractionable'      => true
+		'fractionable'      => true,
+		'total-these'		=> $meta_enabled
 	];
 
 	if ( true === $is_premium ) {

@@ -101,7 +101,8 @@ function yk_mt_cache_get( $key ) {
     if( true === yk_mt_cache_is_enabled() ) {
 
     	$key = yk_mt_cache_generate_key( $key );
-        return get_transient( $key );
+
+    	return get_transient( $key );
     }
 
     return false;
@@ -177,7 +178,10 @@ function yk_mt_cache_delete_all() {
  * @return string
  */
 function yk_mt_cache_generate_key( $key ){
-    return sprintf( 'mt-%s-%s-%s',  YK_MT_IS_PREMIUM, YK_MT_PLUGIN_VERSION, $key);
+
+	$cache_version = get_option( 'yk-mt-cache-number', YK_MT_INITIAL_CACHE_NUMBER );
+
+    return sprintf( 'mt-%s-%s-%d-%s',  YK_MT_IS_PREMIUM, YK_MT_PLUGIN_VERSION, $cache_version, $key );
 }
 
 // -------------------------------------------------------------
@@ -319,7 +323,7 @@ add_action( 'yk_mt_entry_added', 'yk_mt_cache_entry_ids_and_date_delete_three', 
  * Update / Set cache for given Entry ID
  *
  * @param $id
- * @param $meal
+ * @param $entry
  */
 function yk_mt_cache_hook_entry_set( $id, $entry ) {
 

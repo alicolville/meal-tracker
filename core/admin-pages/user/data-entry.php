@@ -34,7 +34,7 @@ function yk_mt_admin_page_entry_view() {
                     <div class="postbox">
                         <h2 class="hndle"><span><?php echo __('Entry for', YK_MT_SLUG ); ?> <?php echo yk_mt_date_format( $entry[ 'date' ] ); ?></span></h2>
                         <div class="inside">
-                            <table class="yk-mt-footable yk-mt-footable-basic" data-state="true">
+                            <table class="yk-mt-footable yk-mt-footable-basic yk-mt-data-entry" data-state="true">
                                 <thead>
                                     <tr>
                                         <th><?php echo __( 'Meal', YK_MT_SLUG ); ?></th>
@@ -48,12 +48,16 @@ function yk_mt_admin_page_entry_view() {
 
                                             $total_calories = yk_mt_blur_text( $entry[ 'counts' ][ $meal_type[ 'id' ] ] );
 
+											$meta_counts = ( false === empty( $entry[ 'meta_counts' ][ $meal_type[ 'id' ] ][ 'summary' ] ) ) ?
+																yk_mt_blur_text( $entry[ 'meta_counts' ][ $meal_type[ 'id' ] ][ 'summary' ], false ) : '';
+
                                             printf( '<tr class="yk-mt-entry-table-group footable-disabled">
                                                                 <td colspan="2">%1$s</td>
-                                                                <td class="yk-mt-blur">%2$skcal</td>
+                                                                <td class="yk-mt-blur">%2$skcal%3$s</td>
                                                              </tr>',
                                                             esc_html( $meal_type[ 'name' ] ),
-                                                            $total_calories
+                                                            $total_calories,
+															$meta_counts
                                             );
 
                                             if ( true === empty( $entry[ 'meals' ][ $meal_type[ 'id' ] ] ) ) {
@@ -75,7 +79,7 @@ function yk_mt_admin_page_entry_view() {
                                                         ( $i < 2 ) ? '' : 'yk-mt-blur',
 														yk_mt_link_admin_page_meal_edit( $meal[ 'id' ], esc_html( $meal[ 'name' ] ) ),
                                                         esc_html( $meal[ 'description' ] ),
-                                                        esc_html( $meal[ 'd' ] )
+														wp_kses_post( $meal[ 'd' ] )
                                                     );
 
                                                     $i++;

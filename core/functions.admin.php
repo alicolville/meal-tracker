@@ -47,6 +47,8 @@ function yk_mt_admin_localise() {
  * Blur string if incorrect license
  *
  * @param $text
+ * @param bool $number_format
+ * @return string
  */
 function yk_mt_blur_text( $text, $number_format = true ) {
 
