@@ -86,7 +86,7 @@ function yk_mt_meta_fields() {
 		'type'				=> 'float',
 		'required'			=> $meta_fields_required,
 		'fractionable'      => true,
-		'total-these'		=> true
+		'total-these'		=> $meta_enabled
 	];
 
 	// Carbs
@@ -100,7 +100,7 @@ function yk_mt_meta_fields() {
 		'type'				=> 'float',
 		'required'			=> $meta_fields_required,
 		'fractionable'      => true,
-		'total-these'		=> true
+		'total-these'		=> $meta_enabled
 	];
 
 	if ( true === $is_premium ) {

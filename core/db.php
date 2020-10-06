@@ -356,6 +356,8 @@ function yk_mt_db_entry_get( $id = NULL ) {
 		//echo $sql;
         $meal_type_ids = yk_mt_meal_types_ids();
 
+		$meta_to_total 	= ( true === YK_MT_IS_PREMIUM ) ? yk_mt_meta_fields_where( 'total-these', true ) : [];
+
         $entry['meals'] = [];
         $entry['counts'] = [];
         $entry['counts']['total-meals'] = 0;
@@ -364,6 +366,10 @@ function yk_mt_db_entry_get( $id = NULL ) {
         foreach ( $meal_type_ids as $id ) {
             $entry['meals'][ $id ] = [];
             $entry['counts'][ $id ] = 0;
+
+            foreach ( $meta_to_total as $meta ) {
+				$entry['meta_counts'][ $id ][ $meta[ 'db_col' ] ] = 0;
+			}
         }
 
         $meals = $wpdb->get_results( $sql, ARRAY_A );
@@ -391,8 +397,12 @@ function yk_mt_db_entry_get( $id = NULL ) {
                     // Do we have any meta fields to add to this line item?
 					if ( false === empty( $meta_per_line ) ) {
 						foreach ( $meta_per_line as $meta ) {
-							$meta_detail .= sprintf( ' <span><em>%s</em>: %s%s</span>', $meta[ 'prefix' ], $meal[ $meta[ 'db_col'] ]  * $meal_count, $meta[ 'unit' ] );
+							$meta_detail .= sprintf( ' <span><em>%s</em>: %s%s</span>', $meta[ 'prefix' ], yk_mt_format_number( $meal[ $meta[ 'db_col'] ] * $meal_count ), $meta[ 'unit' ] );
 						}
+					}
+
+					foreach ( $meta_to_total as $meta ) {
+						$entry['meta_counts'][ $meal['meal_type'] ][ $meta[ 'db_col' ] ] += $meal[ $meta[ 'db_col'] ] * $meal_count;
 					}
 
                     $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'd' ] = sprintf( '%5$s%1$d%2$s%3$s <span><em>%6$s</em>: %4$s</span>',
@@ -438,6 +448,22 @@ function yk_mt_db_entry_get( $id = NULL ) {
                 $meal_types = array_values( $meal_types );
             }
         }
+
+
+		// Update meta summary
+		foreach ( $meal_type_ids as $id ) {
+
+			$entry[ 'meta_counts' ][ $id ][ 'summary' ] = '';
+			$meta_detail								= '';
+
+			foreach ( $meta_to_total as $meta ) {
+
+				//$entry['meta_counts'][ $id ][ $meta[ 'db_col' ] ]
+				$meta_detail .= sprintf( ' <span><em>%s</em>: %s%s</span>', $meta[ 'prefix' ], yk_mt_format_number( $entry[ 'meta_counts' ][ $id ][ $meta[ 'db_col'] ] ), $meta[ 'unit' ] );
+
+				$entry[ 'meta_counts' ][ $id ][ 'summary' ] = $meta_detail;
+			}
+		}
     }
 
     do_action( 'yk_mt_entry_lookup', $id, $entry );

@@ -364,11 +364,23 @@ Shortcode > Accordion
 	font-weight: 600;
 }
 
+.yk-mt-meta-totals {
+  display: block;
+  font-weight: 200;
+  font-size: 80%;
+}
+
+.yk-mt-meta-totals em {
+  font-weight: 600;
+  margin-left: 10px;
+}
+
 .yk-mt__table-cell-total-text {
 	padding-right: 16px; /* Fallback */
 	padding-right: var(--yk-mt-unit-base);
 	font-size: 100%;
 	text-transform: uppercase;
+  vertical-align: top;
 }
 
 .yk-mt__table-cell-total {
