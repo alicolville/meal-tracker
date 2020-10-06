@@ -304,7 +304,8 @@ function yk_mt_db_entries_summary( $args ) {
 /**
  * Get details for an entry
  *
- * @param $key
+ * @param null $id
+ * @return array|bool|mixed|object|void|null
  */
 function yk_mt_db_entry_get( $id = NULL ) {
 
@@ -318,6 +319,8 @@ function yk_mt_db_entry_get( $id = NULL ) {
     if ( true === empty( $id ) ) {
         return NULL;
     }
+
+    $entry_id = $id;
 
     if ( $cache = apply_filters( 'yk_mt_db_entry_get', NULL, $id ) ) {
         $cache[ 'cache' ] = true;
@@ -450,21 +453,21 @@ function yk_mt_db_entry_get( $id = NULL ) {
         }
 
 		// Update meta summary
-		foreach ( $meal_type_ids as $id ) {
+		foreach ( $meal_type_ids as $meal_type_id ) {
 
-			$entry[ 'meta_counts' ][ $id ][ 'summary' ] = '';
+			$entry[ 'meta_counts' ][ $meal_type_id ][ 'summary' ] = '';
 			$meta_detail								= '';
 
 			foreach ( $meta_to_total as $meta ) {
 
-				$meta_detail .= sprintf( ' <span><em>%s</em>: %s%s</span>', $meta[ 'prefix' ], yk_mt_format_number( $entry[ 'meta_counts' ][ $id ][ $meta[ 'db_col'] ] ), $meta[ 'unit' ] );
+				$meta_detail .= sprintf( ' <span><em>%s</em>: %s%s</span>', $meta[ 'prefix' ], yk_mt_format_number( $entry[ 'meta_counts' ][ $meal_type_id ][ $meta[ 'db_col'] ] ), $meta[ 'unit' ] );
 
-				$entry[ 'meta_counts' ][ $id ][ 'summary' ] = $meta_detail;
+				$entry[ 'meta_counts' ][ $meal_type_id ][ 'summary' ] = $meta_detail;
 			}
 		}
     }
 
-    do_action( 'yk_mt_entry_lookup', $id, $entry );
+    do_action( 'yk_mt_entry_lookup', $entry_id, $entry );
 
     return $entry;
 }

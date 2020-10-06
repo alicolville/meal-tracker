@@ -319,7 +319,7 @@ add_action( 'yk_mt_entry_added', 'yk_mt_cache_entry_ids_and_date_delete_three', 
  * Update / Set cache for given Entry ID
  *
  * @param $id
- * @param $meal
+ * @param $entry
  */
 function yk_mt_cache_hook_entry_set( $id, $entry ) {
 
