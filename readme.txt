@@ -79,6 +79,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 = 2.4 =
 
 * New feature: If enabled, MacroNutrient values are displayed on Meal line items.
+* Improvement:  When settings are saved, entire cache is invalidated.
 
 = 2.3 =
 

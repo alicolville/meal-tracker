@@ -210,3 +210,16 @@ function yk_mt_admin_entry_allowed_calorie_save() {
 }
 add_action( 'init', 'yk_mt_admin_entry_allowed_calorie_save' );
 
+/**
+ * When settings are saved, invalidate existing cache by incrementing cache version number.
+ */
+function yk_mt_admin_hooks_update_cache_version() {
+
+	$current_version = get_option( 'yk-mt-cache-number', YK_MT_INITIAL_CACHE_NUMBER );
+
+	$current_version++;
+
+	update_option( 'yk-mt-cache-number', $current_version );
+
+}
+add_action( 'yk_mt_settings_saved', 'yk_mt_admin_hooks_update_cache_version');
