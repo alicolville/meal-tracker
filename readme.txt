@@ -1,10 +1,10 @@
 === Meal Tracker ===
 Contributors: aliakro
 Donate link: https://www.paypal.me/yeken
-Tags: meal, tracker, calories, weight, food
+Tags: meal, tracker, calories, weight, food, fatsecrets, collection, macronutrients, fractions, search, edit, create
 Requires at least: 5.0
 Tested up to: 5.5.1
-Stable tag: 2.3
+Stable tag: 2.4
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -75,6 +75,10 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 2.3 - Added quantity fractions when adding meals to entries.
 
 == Changelog ==
+
+= 2.4 =
+
+* New feature: If enabled, MacroNutrient values are displayed on Meal line items.
 
 = 2.3 =
 
