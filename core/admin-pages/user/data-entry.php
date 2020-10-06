@@ -48,12 +48,16 @@ function yk_mt_admin_page_entry_view() {
 
                                             $total_calories = yk_mt_blur_text( $entry[ 'counts' ][ $meal_type[ 'id' ] ] );
 
+											$meta_counts = ( false === empty( $entry[ 'meta_counts' ][ $meal_type[ 'id' ] ][ 'summary' ] ) ) ?
+																yk_mt_blur_text( $entry[ 'meta_counts' ][ $meal_type[ 'id' ] ][ 'summary' ], false ) : '';
+
                                             printf( '<tr class="yk-mt-entry-table-group footable-disabled">
                                                                 <td colspan="2">%1$s</td>
-                                                                <td class="yk-mt-blur">%2$skcal</td>
+                                                                <td class="yk-mt-blur">%2$skcal%3$s</td>
                                                              </tr>',
                                                             esc_html( $meal_type[ 'name' ] ),
-                                                            $total_calories
+                                                            $total_calories,
+															$meta_counts
                                             );
 
                                             if ( true === empty( $entry[ 'meals' ][ $meal_type[ 'id' ] ] ) ) {
