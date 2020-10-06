@@ -157,3 +157,9 @@ Core.css overrides
 .yk-mt__label {
   font-size: 100% !important;
 }
+.yk-mt-data-entry span {
+  margin-left: 5px;
+}
+.yk-mt-data-entry em {
+  font-weight: bold;
+}
