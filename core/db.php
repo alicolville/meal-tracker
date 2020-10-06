@@ -402,7 +402,7 @@ function yk_mt_db_entry_get( $id = NULL ) {
 					}
 
 					foreach ( $meta_to_total as $meta ) {
-						$entry['meta_counts'][ $meal['meal_type'] ][ $meta[ 'db_col' ] ] += $meal[ $meta[ 'db_col'] ] * $meal_count;
+						$entry['meta_counts'][ $meal['meal_type'] ][ $meta[ 'db_col' ] ] += $meal[ $meta[ 'db_col'] ];
 					}
 
                     $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'd' ] = sprintf( '%5$s%1$d%2$s%3$s <span><em>%6$s</em>: %4$s</span>',
@@ -449,7 +449,6 @@ function yk_mt_db_entry_get( $id = NULL ) {
             }
         }
 
-
 		// Update meta summary
 		foreach ( $meal_type_ids as $id ) {
 
@@ -458,7 +457,6 @@ function yk_mt_db_entry_get( $id = NULL ) {
 
 			foreach ( $meta_to_total as $meta ) {
 
-				//$entry['meta_counts'][ $id ][ $meta[ 'db_col' ] ]
 				$meta_detail .= sprintf( ' <span><em>%s</em>: %s%s</span>', $meta[ 'prefix' ], yk_mt_format_number( $entry[ 'meta_counts' ][ $id ][ $meta[ 'db_col'] ] ), $meta[ 'unit' ] );
 
 				$entry[ 'meta_counts' ][ $id ][ 'summary' ] = $meta_detail;
