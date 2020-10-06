@@ -790,6 +790,10 @@ External Search drop down
     display: block;
   }
 
+  .yk-mt-meta-totals span {
+    display: block;
+  }
+
 }
 
 /****************
