@@ -223,7 +223,9 @@ function yk_mt_ajax_meal() {
 	    return wp_send_json( [ 'error' => 'loading-meal' ] );
     }
 
-    wp_send_json( [ 'error' => false, 'meal' => $meal ] );
+	$meal = yk_mt_meal_prep_for_display( $meal );
+
+	wp_send_json( [ 'error' => false, 'meal' => $meal ] );
 }
 add_action( 'wp_ajax_meal', 'yk_mt_ajax_meal' );
 
@@ -452,6 +454,8 @@ add_action( 'wp_ajax_get_entry', 'yk_mt_ajax_get_entry' );
 function yk_mt_ajax_prep_meal( $meal ) {
 
     if ( true === is_array( $meal ) ) {
+
+	    $meal = yk_mt_meal_prep_for_display( $meal );
 
     	$meal[ 'name' ] = sprintf( '%1$s ( %2$s / %3$d%4$s )',
                     $meal[ 'name' ],

@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: Meal Tracker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-01 12:43+0100\n"
-"PO-Revision-Date: 2020-10-01 12:43+0100\n"
+"PO-Revision-Date: 2020-10-07 17:26+0000\n"
 "Last-Translator: \n"
-"Language-Team: English (UK)\n"
-"Language: ar_SA\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Loco https://localise.biz/\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: meal-tracker.php\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"X-Loco-Version: 2.3.1; wp-5.3.2\n"
+"X-Loco-Version: 2.4.3; wp-5.5.1\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
@@ -49,30 +49,26 @@ msgid "Evening"
 msgstr "المساء"
 
 #: core/admin-pages/meals/meals-add-edit.php:21
-#, fuzzy
-#| msgid "Add a new meal"
 msgid "Add / edit a meal"
-msgstr "أضف وجبة جديدة"
+msgstr ""
+"أضف وجبة جديدة\n"
 
 #: core/admin-pages/meals/meals-add-edit.php:28
 msgid "To add or edit a meal, you must have a Premium license"
 msgstr ""
 
 #: core/admin-pages/meals/meals-dashboard.php:33
-#, fuzzy
-#| msgid "Meals added to entries"
 msgid "Meals added by"
-msgstr "الوجبات المضافة إلى الإدخالات"
+msgstr "الوجبات المضافة بواسطة"
 
 #: core/admin-pages/meals/meals-dashboard.php:35
 msgid "Meal collection"
-msgstr ""
+msgstr "مجموعة الوجبات"
 
 #: core/admin-pages/meals/meals-dashboard.php:48
-#, fuzzy
-#| msgid "The meal has been added"
 msgid "The meal has been successfully deleted."
-msgstr "تمت إضافة الوجبة"
+msgstr ""
+"\n"
 
 #: core/admin-pages/meals/meals-dashboard.php:54
 msgid ""
@@ -115,7 +111,7 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: core/admin-pages/page.license.php:10 core/admin-pages/page.settings.php:8
+#: core/admin-pages/page.license.php:10 core/admin-pages/page.settings.php:8 
 #: core/functions.admin.php:246
 msgid "You do not have sufficient permissions to access this page."
 msgstr "ليس لديك الصلاحيات الكافية للوصول إلى هذه الصفحة."
@@ -155,16 +151,12 @@ msgid " Settings"
 msgstr "الإعدادات"
 
 #: core/admin-pages/page.settings.php:61
-#, fuzzy
-#| msgid "Search Results"
 msgid "API Test Results"
-msgstr "نتائج البحث"
+msgstr ""
 
 #: core/admin-pages/page.settings.php:64
-#, fuzzy
-#| msgid "Search Results"
 msgid "Test Results"
-msgstr "نتائج البحث"
+msgstr ""
 
 #: core/admin-pages/page.settings.php:81
 msgid "General"
@@ -206,34 +198,34 @@ msgstr ""
 msgid "Enable Caching?"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:102
-#: core/admin-pages/page.settings.php:136
-#: core/admin-pages/page.settings.php:149
-#: core/admin-pages/page.settings.php:165
-#: core/admin-pages/page.settings.php:178
-#: core/admin-pages/page.settings.php:193
-#: core/admin-pages/page.settings.php:206
-#: core/admin-pages/page.settings.php:226
-#: core/admin-pages/page.settings.php:239
-#: core/admin-pages/page.settings.php:256
-#: core/admin-pages/page.settings.php:284
-#: core/admin-pages/page.settings.php:368
+#: core/admin-pages/page.settings.php:102 
+#: core/admin-pages/page.settings.php:136 
+#: core/admin-pages/page.settings.php:149 
+#: core/admin-pages/page.settings.php:165 
+#: core/admin-pages/page.settings.php:178 
+#: core/admin-pages/page.settings.php:193 
+#: core/admin-pages/page.settings.php:206 
+#: core/admin-pages/page.settings.php:226 
+#: core/admin-pages/page.settings.php:239 
+#: core/admin-pages/page.settings.php:256 
+#: core/admin-pages/page.settings.php:284 
+#: core/admin-pages/page.settings.php:368 
 #: core/admin-pages/page.settings.php:384
 msgid "Yes"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:103
-#: core/admin-pages/page.settings.php:135
-#: core/admin-pages/page.settings.php:148
-#: core/admin-pages/page.settings.php:164
-#: core/admin-pages/page.settings.php:177
-#: core/admin-pages/page.settings.php:194
-#: core/admin-pages/page.settings.php:207
-#: core/admin-pages/page.settings.php:227
-#: core/admin-pages/page.settings.php:240
-#: core/admin-pages/page.settings.php:257
-#: core/admin-pages/page.settings.php:283
-#: core/admin-pages/page.settings.php:369
+#: core/admin-pages/page.settings.php:103 
+#: core/admin-pages/page.settings.php:135 
+#: core/admin-pages/page.settings.php:148 
+#: core/admin-pages/page.settings.php:164 
+#: core/admin-pages/page.settings.php:177 
+#: core/admin-pages/page.settings.php:194 
+#: core/admin-pages/page.settings.php:207 
+#: core/admin-pages/page.settings.php:227 
+#: core/admin-pages/page.settings.php:240 
+#: core/admin-pages/page.settings.php:257 
+#: core/admin-pages/page.settings.php:283 
+#: core/admin-pages/page.settings.php:369 
 #: core/admin-pages/page.settings.php:385
 msgid "No"
 msgstr ""
@@ -271,10 +263,9 @@ msgid ""
 msgstr ""
 
 #: core/admin-pages/page.settings.php:126
-#, fuzzy
-#| msgid "Search for an existing meal"
 msgid "Searching for meals"
-msgstr "البحث عن وجبة موجودة"
+msgstr ""
+"البحث عن وجبات\n"
 
 #: core/admin-pages/page.settings.php:129
 msgid "Other user's meals"
@@ -290,7 +281,6 @@ msgstr ""
 
 #: core/admin-pages/page.settings.php:142
 #, fuzzy
-#| msgid "Search for an existing meal"
 msgid "Admin's meal collection"
 msgstr "البحث عن وجبة موجودة"
 
@@ -301,10 +291,8 @@ msgid ""
 msgstr ""
 
 #: core/admin-pages/page.settings.php:155
-#, fuzzy
-#| msgid "Meal entries"
 msgid "Macronutrients"
-msgstr "إدخال الوجبات"
+msgstr "المغذيات"
 
 #: core/admin-pages/page.settings.php:158
 msgid "Enable Macronutrients?"
@@ -399,7 +387,7 @@ msgid ""
 "been entered"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:274
+#: core/admin-pages/page.settings.php:274 
 #: core/admin-pages/page.settings.php:362
 msgid "Enabled"
 msgstr ""
@@ -413,12 +401,11 @@ msgid "Should users be allowed to search external databases for meals?"
 msgstr ""
 
 #: core/admin-pages/page.settings.php:295
-#, fuzzy
-#| msgid "Source"
 msgid "Active Source"
-msgstr "المصدر"
+msgstr ""
+"المصدر\n"
 
-#: core/admin-pages/page.settings.php:298 core/functions.admin.php:177
+#: core/admin-pages/page.settings.php:298 core/functions.admin.php:177 
 #: core/functions.pages.php:119
 msgid "Source"
 msgstr "المصدر"
@@ -469,12 +456,12 @@ msgstr ""
 msgid "Which API?"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:339
+#: core/admin-pages/page.settings.php:339 
 #: core/admin-pages/page.settings.php:345
 msgid "Recipes API"
 msgstr ""
 
-#: core/admin-pages/page.settings.php:340
+#: core/admin-pages/page.settings.php:340 
 #: core/admin-pages/page.settings.php:347
 msgid "Foods API"
 msgstr ""
@@ -549,7 +536,7 @@ msgstr ""
 
 #: core/admin-pages/user/data-dashboard.php:21
 msgid "Summary"
-msgstr ""
+msgstr "ملخص"
 
 #: core/admin-pages/user/data-dashboard.php:28
 msgid "Today 's entries"
@@ -565,7 +552,6 @@ msgstr ""
 
 #: core/admin-pages/user/data-dashboard.php:31
 #, fuzzy
-#| msgid "Latest Entry"
 msgid "Latest 500"
 msgstr "آخر إدخال"
 
@@ -589,7 +575,7 @@ msgstr "التفاصيل"
 msgid "No meals"
 msgstr "لا توجد وجبات"
 
-#: core/admin-pages/user/data-search-results.php:11
+#: core/admin-pages/user/data-search-results.php:11 
 #: core/admin-pages/user/data-search-results.php:17
 msgid "Search Results"
 msgstr "نتائج البحث"
@@ -642,8 +628,8 @@ msgstr "لا يوجد نتائج"
 msgid "Entries for this user"
 msgstr "إدخالات لهذا المستخدم"
 
-#: core/ajax.php:446 core/db.php:382 core/db.php:405
-#: core/external-sources/fat-secret-foods.php:106 core/functions.admin.php:210
+#: core/ajax.php:446 core/db.php:382 core/db.php:405 
+#: core/external-sources/fat-secret-foods.php:106 core/functions.admin.php:210 
 #: core/functions.php:511 core/functions.php:1187 core/functions.php:1201
 msgid "kcal"
 msgstr "سعرة حرارية"
@@ -665,24 +651,21 @@ msgid "No meals could be found"
 msgstr ""
 
 #: core/external-sources.php:253
-#, fuzzy
-#| msgid "There was error loading your data"
 msgid "There was an error searching our database. Please try again."
-msgstr "حدث خطأ أثناء تحميل بياناتك"
+msgstr ""
+"\n"
 
 #: core/external-sources.php:254
-#, fuzzy
-#| msgid "Your license has been applied!"
 msgid "Your meal collection has been updated"
-msgstr "تم تطبيق الترخيص الخاص بك!"
+msgstr "تم تحديث مجموعة وجباتك"
 
 #: core/external-sources.php:255
 msgid "Please select a serving size"
-msgstr ""
+msgstr "الرجاء تحديد حجم الحصة"
 
 #: core/external-sources.php:338
 msgid "Manual"
-msgstr ""
+msgstr "يدوي"
 
 #: core/external-sources.php:344
 msgid "FatSecrets Food"
@@ -700,12 +683,12 @@ msgstr "التاريخ"
 msgid "User"
 msgstr "المستخدم"
 
-#: core/functions.admin.php:111 core/functions.chart.php:72
+#: core/functions.admin.php:111 core/functions.chart.php:72 
 #: core/functions.pages.php:36
 msgid "Calories Allowed"
 msgstr "السعرات الحرارية المسموح بها"
 
-#: core/functions.admin.php:112 core/functions.chart.php:81
+#: core/functions.admin.php:112 core/functions.chart.php:81 
 #: core/functions.pages.php:58
 msgid "Calories Used"
 msgstr "السعرات الحرارية المستخدمة"
@@ -728,7 +711,7 @@ msgstr "سعرات حرارية"
 
 #: core/functions.admin.php:176
 msgid "Portion Size"
-msgstr ""
+msgstr "حجم الحصة"
 
 #: core/functions.admin.php:367
 msgid "The above table updates every"
@@ -736,7 +719,7 @@ msgstr ""
 
 #: core/functions.admin.php:367
 msgid "minutes"
-msgstr ""
+msgstr "دقائق"
 
 #: core/functions.chart.php:14
 msgid "In a chart"
@@ -754,8 +737,8 @@ msgstr "إدخال اليوم"
 msgid "Calories allowed: "
 msgstr "السعرات الحرارية المسموح بها:"
 
-#: core/functions.pages.php:52 core/functions.pages.php:144
-#: core/functions.pages.php:177 core/shortcode-meal-tracker.php:542
+#: core/functions.pages.php:52 core/functions.pages.php:144 
+#: core/functions.pages.php:177 core/shortcode-meal-tracker.php:542 
 #: core/shortcode-meal-tracker.php:553
 msgid "Save"
 msgstr "حفظ"
@@ -766,7 +749,7 @@ msgstr "النسبة المستخدمة"
 
 #: core/functions.pages.php:70 core/hooks.php:50
 msgid "Meals"
-msgstr ""
+msgstr "وجبات"
 
 #: core/functions.pages.php:79
 msgid "User Information"
@@ -831,10 +814,8 @@ msgid "Delete Data"
 msgstr ""
 
 #: core/functions.pages.php:193
-#, fuzzy
-#| msgid "Entries"
 msgid "All Entries"
-msgstr "الإدخالات"
+msgstr "جميع الإدخالات"
 
 #: core/functions.pages.php:195
 msgid ""
@@ -844,10 +825,8 @@ msgid ""
 msgstr ""
 
 #: core/functions.pages.php:196
-#, fuzzy
-#| msgid "Add Meal"
 msgid "All Meals"
-msgstr "أضف وجبة"
+msgstr "جميع الوجبات"
 
 #: core/functions.pages.php:213
 msgid "Options"
@@ -866,14 +845,12 @@ msgid "Entries"
 msgstr "الإدخالات"
 
 #: core/functions.pages.php:237
-#, fuzzy
-#| msgid "Meals added to entries"
 msgid "Meals added by users"
-msgstr "الوجبات المضافة إلى الإدخالات"
+msgstr "الوجبات المضافة من قبل المستخدمين"
 
 #: core/functions.pages.php:241 core/hooks.php:50
 msgid "Meal Collection"
-msgstr ""
+msgstr "مجموعة الوجبات"
 
 #: core/functions.pages.php:245
 msgid "Meals added to entries"
@@ -889,11 +866,11 @@ msgstr ""
 
 #: core/functions.pages.php:257
 msgid "Entries on target"
-msgstr ""
+msgstr "إدخالات على الهدف"
 
 #: core/functions.pages.php:261
 msgid "Entries over target"
-msgstr ""
+msgstr "إدخالات أكثر من الهدف"
 
 #: core/functions.pages.php:265
 msgid "last updated at "
@@ -912,10 +889,9 @@ msgid "Meal Tracker Record"
 msgstr ""
 
 #: core/functions.pages.php:420
-#, fuzzy
-#| msgid "Edit meal"
 msgid "Edit Meal"
-msgstr "تعديل وجبة"
+msgstr ""
+"تعديل وجبة\n"
 
 #: core/functions.pages.php:573
 msgid "Enter a user's email, display name or username then click \"Search\"."
@@ -955,7 +931,7 @@ msgstr "إزالة"
 
 #: core/functions.php:513
 msgid "Total"
-msgstr ""
+msgstr "المجموع"
 
 #: core/functions.php:514
 msgid "Edit"
@@ -1061,7 +1037,7 @@ msgstr ""
 
 #: core/functions.php:1083
 msgid "Own Meal collection"
-msgstr ""
+msgstr "مجموعة الوجبات الخاصة"
 
 #: core/functions.php:1083
 msgid "Create your own meal collection for your users to search"
@@ -1069,7 +1045,6 @@ msgstr ""
 
 #: core/functions.php:1084
 #, fuzzy
-#| msgid "Edit meal"
 msgid "Edit user's meals"
 msgstr "تعديل وجبة"
 
@@ -1079,7 +1054,7 @@ msgstr ""
 
 #: core/functions.php:1085
 msgid "Create and view entries"
-msgstr ""
+msgstr "إنشاء وعرض الإدخالات"
 
 #: core/functions.php:1085
 msgid "Allow your users to create and view entries for any day"
@@ -1103,7 +1078,7 @@ msgstr ""
 
 #: core/functions.php:1088
 msgid "Calorie sources"
-msgstr ""
+msgstr "مصادر السعرات الحرارية"
 
 #: core/functions.php:1088
 msgid ""
@@ -1156,7 +1131,7 @@ msgstr ""
 
 #: core/functions.php:1094
 msgid "Calorie Allowance sources"
-msgstr ""
+msgstr "مصادر السعرات الحرارية"
 
 #: core/functions.php:1094
 msgid "Specify one or more sources for calorie allowance"
@@ -1209,15 +1184,15 @@ msgstr ""
 
 #: core/functions.php:1207
 msgid "fats"
-msgstr ""
+msgstr "الدهون"
 
 #: core/functions.php:1208
 msgid "protein"
-msgstr ""
+msgstr "بروتين"
 
 #: core/functions.php:1209
 msgid "carbs"
-msgstr ""
+msgstr "الكربوهيدرات"
 
 #: core/hooks.php:48
 msgid "User Data"
@@ -1233,7 +1208,7 @@ msgstr ""
 
 #: core/hooks.php:59 core/shortcode-meal-tracker.php:66
 msgid "Settings"
-msgstr ""
+msgstr "الإعدادات"
 
 #: core/hooks.php:60
 msgid "Help"
@@ -1249,15 +1224,15 @@ msgstr ""
 
 #: core/meta.php:67
 msgid "Proteins"
-msgstr ""
+msgstr "البروتينات"
 
 #: core/meta.php:77
 msgid "Fats"
-msgstr ""
+msgstr "الدهون"
 
 #: core/meta.php:87
 msgid "Carbs"
-msgstr ""
+msgstr "الكربوهيدرات"
 
 #: core/setup.wizard.php:16
 msgid "Welcome to"
@@ -1287,10 +1262,8 @@ msgid "Select a date"
 msgstr "اختر التاريخ"
 
 #: core/shortcode-meal-tracker.php:135
-#, fuzzy
-#| msgid "Today's entry"
 msgid "Today's summary"
-msgstr "إدخال اليوم"
+msgstr "ملخص اليوم"
 
 #: core/shortcode-meal-tracker.php:168
 msgid "Getting started"
@@ -1362,24 +1335,21 @@ msgid "Edit meal"
 msgstr "تعديل وجبة"
 
 #: core/shortcode-meal-tracker.php:352 core/shortcode-meal-tracker.php:570
-#, fuzzy
-#| msgid "Search for an existing meal"
 msgid "Search for a meal"
-msgstr "البحث عن وجبة موجودة"
+msgstr "البحث عن وجبة"
 
 #: core/shortcode-meal-tracker.php:359
-#, fuzzy
-#| msgid "Search for an existing meal"
 msgid "Search your existing meal collection"
-msgstr "البحث عن وجبة موجودة"
+msgstr ""
+"البحث عن وجبة موجودة\n"
 
 #: core/shortcode-meal-tracker.php:360
 msgid "Search and select a meal from your existing collection"
-msgstr ""
+msgstr "ابحث واختر وجبة من مجموعتك الحالية"
 
 #: core/shortcode-meal-tracker.php:369
 msgid "How many have you had?"
-msgstr ""
+msgstr "كم كان لديك؟"
 
 #: core/shortcode-meal-tracker.php:388
 msgid "Close screen after adding meal(s)"
@@ -1393,17 +1363,15 @@ msgstr " لقد وصلت إلى 40 وجبة كحد أقصى ولا يمكنك ا
 
 #: core/shortcode-meal-tracker.php:416
 msgid "Add a new meal to your collection"
-msgstr ""
+msgstr "أضف وجبة جديدة إلى مجموعتك"
 
 #: core/shortcode-meal-tracker.php:428
-#, fuzzy
-#| msgid "User Search"
 msgid "Search"
-msgstr "بحث المستخدم"
+msgstr "بحث"
 
 #: core/shortcode-meal-tracker.php:437
 msgid "Manually"
-msgstr ""
+msgstr "إدخال يدوي"
 
 #: core/shortcode-meal-tracker.php:506
 msgid ""
@@ -1457,18 +1425,3 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.YeKen.uk"
 msgstr ""
-
-#~ msgid "Quick Search"
-#~ msgstr "بحث سريع"
-
-#~ msgid "Add new meal"
-#~ msgstr "أضف وجبة جديدة"
-
-#~ msgid "Are you sure you wish to remove all issued awards?"
-#~ msgstr "هل أنت متأكد من رغبتك في إزالة جميع الجوائز الصادرة؟"
-
-#~ msgid "Are you sure you wish to clear all log entries?"
-#~ msgstr "هل أنت متأكد أنك ترغب في مسح كافة الإدخالات المسجلة؟"
-
-#~ msgid "This week's entries"
-#~ msgstr "إدخالات هذا الأسبوع"

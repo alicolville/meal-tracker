@@ -348,7 +348,7 @@ function yk_mt_db_entry_get( $id = NULL ) {
 			$meta_sql = ' , m.' . implode( ' , m.', wp_list_pluck( $meta_per_line, 'db_col' ) );
 		}
 
-        $sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity, m.unit, m.description, m.added_by_admin, m.added_by' . $meta_sql . ', 
+        $sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity, m.unit, m.description, m.added_by_admin, m.added_by' . $meta_sql . ',
 								em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
                                 Inner Join ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em
                                 on em.meal_id = m.id
@@ -396,6 +396,9 @@ function yk_mt_db_entry_get( $id = NULL ) {
                     $meal_count = count( $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'entry_meal_ids' ] );
 
                     $meta_detail = '';
+
+	                $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ] =
+		                                                yk_mt_meal_prep_for_display( $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ] );
 
                     // Do we have any meta fields to add to this line item?
 					if ( false === empty( $meta_per_line ) ) {

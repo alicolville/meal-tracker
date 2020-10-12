@@ -31,7 +31,14 @@ function yk_mt_admin_page_meals_add_edit() {
 
 									// Editing an entry?
 									$meal_id 		= yk_mt_querystring_value( 'edit' );
-									$existing_meal 	= ( false === empty( $meal_id ) ) ? yk_mt_db_meal_get( $meal_id ) : NULL;
+									$existing_meal 	= NULL;
+
+
+									if ( false === empty( $meal_id ) ) {
+
+										$existing_meal	= yk_mt_db_meal_get( $meal_id );
+										$existing_meal 	= yk_mt_meal_prep_for_display( $existing_meal );
+									}
 
 									echo yk_mt_shortcode_meal_tracker_manual_meal_entry_form( $existing_meal );
 								}

@@ -3,6 +3,24 @@
 defined('ABSPATH') or die('Naw ya dinnie!');
 
 /**
+ * Prep a meal for display
+ * @param $meal
+ *
+ * @return mixed
+ */
+function yk_mt_meal_prep_for_display( $meal ) {
+
+	if ( true === empty( $meal ) ) {
+		return $meal;
+	}
+
+	$meal[ 'name' ] 		= stripslashes( $meal[ 'name' ] );
+	$meal[ 'description' ] 	= stripslashes( $meal[ 'description' ] );
+
+	return $meal;
+}
+
+/**
  * Meal fractions enabled?
  * @return bool
  */
