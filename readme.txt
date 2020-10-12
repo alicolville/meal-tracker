@@ -78,6 +78,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 2.4.1 =
 
+* Bug fix: Back slashes are now removed from meal titles and descriptions (when used to escape quotes).
 * Improvement:  Updated Arabic translations (thanks @Saeed)
 
 = 2.4 =
