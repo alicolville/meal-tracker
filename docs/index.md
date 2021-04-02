@@ -2,11 +2,11 @@
 
 Meal Tracker is an easy to use [WordPress Plugin](https://wordpress.org/plugins/meal-tracker/) that allows registered users of your website to track daily meals, calories and macronutrients.    
     
-The plugin is available in a [Free](https://wordpress.org/plugins/meal-tracker/) and [Premium]https://shop.yeken.uk/product/meal-tracker-premium/) versions. This documentation will help you to set up Meal Tracker to suit your business.  
+The plugin is available in a [Free](https://wordpress.org/plugins/meal-tracker/) and [Premium](https://shop.yeken.uk/product/meal-tracker-premium/) versions. This documentation will help you to set up Meal Tracker to suit your business.  
   
 ## Features  
   
-For a detailed list of all Weight Tracker features, please read the [read our features guide]({{ site.baseurl}}/features.html).  We also offer a free trial of the Premium version, [get your free trial now](https://shop.yeken.uk/get-a-trial-license/).
+For a detailed list of all Meal Tracker features, please read the [read our features guide]({{ site.baseurl}}/features.html).  We also offer a free trial of the Premium version, [get your free trial now](https://shop.yeken.uk/get-a-trial-license/).
 
 ## Getting Started  
   
@@ -25,7 +25,7 @@ A demo site with Weight Tracker installed can be found at [https://demo.yeken.uk
 
 ## Free Trial 
 
-If you would like to trial the Pro Plus version of the plugin, then we are happy to provide a free trial. [Get your free trial now](https://shop.yeken.uk/get-a-trial-license/). 
+If you would like to trial the [Premium](https://shop.yeken.uk/product/meal-tracker-premium/) version of the plugin, then we are happy to provide a free trial. [Get your free trial now](https://shop.yeken.uk/get-a-trial-license/). 
 
 ## Translate Weight Tracker  
 All [YeKen](https://www.yeken.uk) plugins are fully translatable and can be translated with [Loco Translate](https://en-gb.wordpress.org/plugins/loco-translate/). For further information, please read our [guide on translating YeKen plugins]({{ site.baseurl}}/translate.html).
