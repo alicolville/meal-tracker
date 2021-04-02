@@ -1,6 +1,6 @@
 # Gamification
 
-> The following feature is only available in the [Pro]({{ site.baseurl }}/upgrade.html) version of the plugin.
+> The following feature is only available in the [Premium]({{ site.baseurl }}/upgrade.html) version of the plugin.
 
 Weight Tracker supports the common WordPress gamification plugin [myCred](https://mycred.me/). This allows you to reward yours users for setting their target weight and adding new weight entries. 
 

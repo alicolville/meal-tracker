@@ -27,5 +27,5 @@ A demo site with Weight Tracker installed can be found at [https://demo.yeken.uk
 
 If you would like to trial the [Premium](https://shop.yeken.uk/product/meal-tracker-premium/) version of the plugin, then we are happy to provide a free trial. [Get your free trial now](https://shop.yeken.uk/get-a-trial-license/). 
 
-## Translate Weight Tracker  
+## Translate Meal Tracker  
 All [YeKen](https://www.yeken.uk) plugins are fully translatable and can be translated with [Loco Translate](https://en-gb.wordpress.org/plugins/loco-translate/). For further information, please read our [guide on translating YeKen plugins]({{ site.baseurl}}/translate.html).
