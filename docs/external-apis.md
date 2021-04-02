@@ -28,9 +28,11 @@ Success: Results have been found for "apples"Array
 
 ### What the user sees
 
-Once enabled, when searching their own meal collection, under the heading "Add a new meal to your collection" is a new button labelled "Search". Clicking this button allows your user to search FatSecrets.
+Once enabled, when a user searches their own meal collection, they will see a new button under the heading "Add a new meal to your collection" labelled "Search". Clicking this button opens the dialog for searching Fatsecrets.
 
 [![]({{ site.baseurl }}/assets/images/search-with-api.png)]({{ site.baseurl }}/assets/images/search-with-api.png) 
+
+Search results are displayed in the dropdown box. Clicking on a meall will copy it to the user's meal collection.
 
 [![]({{ site.baseurl }}/assets/images/external-api.png)]({{ site.baseurl }}/assets/images/external-api.png) 
 
