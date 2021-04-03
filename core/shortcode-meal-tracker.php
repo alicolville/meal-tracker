@@ -7,7 +7,7 @@ defined('ABSPATH') or die("Jog on!");
  *
  * @return string
  */
-function yk_mt_shortcode_meal_tracker() {
+function yk_mt_shortcode_meal_tracker( $user_defined_arguments ) {
 
 	// TODO: Check here to ensure the shortcode has only been placed once!
 
@@ -17,9 +17,11 @@ function yk_mt_shortcode_meal_tracker() {
 
 	$html = '<!-- Meal Tracker Start -->';
 
+	$shortcode_arguments = shortcode_atts( [ 'url-login' => '' ], $user_defined_arguments );
+
 	// Is the user logged in?
 	if ( false === is_user_logged_in() ) {
-		return yk_mt_shortcode_log_in_prompt();
+		return yk_mt_shortcode_log_in_prompt( $shortcode_arguments[ 'url-login' ] );
 	}
 
 	$is_pro         = YK_MT_IS_PREMIUM;

@@ -10,6 +10,14 @@ This is the most popular shortcode for the Meal Tracker plugin and renders the m
 * Add meals to current entry for different meal times e.g. Morning, Lunch, etc.
 * If enabled, search for meals from [external APIs]({{ site.baseurl }}/external-apis.html) and add them automatically to their meal collection. ([Premium]({{ site.baseurl }}/upgrade.html))
 
+**Shortcode arguments**
+    
+The shortcode supports the following arguments:    
+    
+| Argument | Description | Options | Example |    
+|--|--|--|--|   
+| url-login | If the user is logged out then the tracker presents a login link. By default, it will direct the user to the standard WP login page. This argument allows you to specify another login page.   | Text  | [meal-tracker url-login="https://mysite.com/mypage"] |  
+
 # Images
 
 ### Main view
