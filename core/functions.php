@@ -1114,10 +1114,10 @@ function yk_mt_date_format( $iso_date ) {
         return '-';
     }
 
-    $time = strtotime( $iso_date );
+    $time 			= strtotime( $iso_date );
+    $date_format 	= get_option( 'date_format' );
 
-    // TODO: Look up user option to render date
-    return date('d/m/Y', $time );
+    return date( $date_format, $time );
 }
 
 /**
