@@ -25,6 +25,16 @@ function yk_mt_help_page() {
 	                        <?php yk_mt_custom_notification_html(); ?>
                         </div>
                     </div>
+					<div class="postbox">
+						<h3 class="hndle"><span><?php echo __( 'Documentation and Release notes', WE_LS_SLUG); ?> </span></h3>
+						<div style="padding: 0px 15px 0px 15px">
+							<p><?php echo __( 'You can find detailed documentation for this plugin at our site:', WE_LS_SLUG ); ?></p>
+							<p>
+								<a href="https://mealtracker.yeken.uk" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', WE_LS_SLUG ); ?></a>
+								<a href="https://github.com/alicolville/meal-tracker/releases"  class="button"  rel="noopener noreferrer" target="_blank"><?php echo __( 'Release Notes', WE_LS_SLUG ); ?></a>
+							</p>
+						</div>
+					</div>
                     <div class="postbox">
                         <h3 class="hndle"><span><?php echo __( 'Admin Tools', YK_MT_SLUG ); ?> </span></h3>
                         <div class="ws-ls-help-admin" style="padding: 0px 15px 0px 15px">
