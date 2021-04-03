@@ -8,7 +8,7 @@
 * **Calorie breakdown**. View total calorie intake for the entire day or a breakdown.
 * **User Meal collections**. Each user has their own meal collections where they have the ability to create and edit their own meals.
 
-## Premium license (£60 a year))
+## Premium license (£60 a year)
 ### *Includes core features and the following:*
 
 Besides the features listed under core, the Premium version benefits from the following:  

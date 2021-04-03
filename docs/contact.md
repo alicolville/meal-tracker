@@ -17,7 +17,7 @@ If you have a feature request for an upcoming release, or a bug that needs addre
   
 ## Custom work > Email  
   
-If you require a customisation to Weight Tracker then please drop me an email. I always provide a fixed priced quote based upon user requirements. *Please add as much detail as possible around the work you require.*  
+If you require a customisation to Meal Tracker then please drop me an email. I always provide a fixed priced quote based upon user requirements. *Please add as much detail as possible around the work you require.*  
   
 [email@yeken.uk](mailto:email@yeken.uk)  
   

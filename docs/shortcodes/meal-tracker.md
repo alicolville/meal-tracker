@@ -8,7 +8,7 @@ This is the most popular shortcode for the Meal Tracker plugin and renders the m
 * Add meals to their meal collection.
 * Specify quantities of meals. If [Premium]({{ site.baseurl }}/upgrade.html), add fractions e.g. 1/2 a meal.
 * Add meals to current entry for different meal times e.g. Morning, Lunch, etc.
-* If enabled, search for meals from [external APIs]({{ site.baseurl }}/external-apis.html) and add them automatically to their meal collection. [Premium]({{ site.baseurl }}/upgrade.html)
+* If enabled, search for meals from [external APIs]({{ site.baseurl }}/external-apis.html) and add them automatically to their meal collection. ([Premium]({{ site.baseurl }}/upgrade.html))
 
 # Images
 
