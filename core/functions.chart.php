@@ -36,6 +36,42 @@ function yk_mt_chart_placeholder( $args = [] ) {
     printf( '<canvas id="%1$s" class="yk-mt-line-chart" height="%2$d" style="height: %2$dpx"></canvas>', esc_attr( $args[ 'id' ] ), $args[ 'height' ] );
 }
 
+
+/**
+ * Render <canvas> for Chart
+ * @param array $arguments
+ *
+ * @return string
+ */
+function yk_mt_chart_progress_canvas( $arguments = [] ) {
+
+	$arguments = wp_parse_args( $arguments, [	'css-class' => 'yk-mt-chart',
+	                                             'id'		=> 'yk-mt-chart',
+	                                             'height'	=> ''
+
+	]);
+
+	$responsive = false;
+
+	if ( false === empty( $arguments[ 'height' ] ) ) {
+		$arguments[ 'height' ] = sprintf( 'style="height:%s"', esc_attr( $arguments[ 'height' ] ) );
+		$responsive = true;
+	}
+
+	return sprintf( '<div class="yk-mt-chart-container" %3$s>
+						<canvas id="%1$s" class="%2$s" data-responsive="%4$s"></canvas>
+					</div>',
+		esc_attr( $arguments[ 'id'] ),
+		esc_attr( $arguments[ 'css-class' ] ),
+		$arguments[ 'height' ],
+		$responsive ? '1' : 0
+	);
+}
+
+function yk_mt_chart_progress_enqueue_scriptS() {
+
+}
+
 /**
  * Display a line chart of allowed versus used
  * @param $args

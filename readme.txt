@@ -78,6 +78,8 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 2.6 =
 
+* Improvement: Set the height of the progress chart in [meal-tracker] shortcode to 200px. This can be overridden using the shortcode argument below.
+* Improvement: Added the argument "chart-height" to the shortcode [meal-tracker] Read more: https://mealtracker.yeken.uk/shortcodes/meal-tracker.html
 * Improvement: Added the argument "url-login" to the shortcode [meal-tracker] Read more: https://mealtracker.yeken.uk/shortcodes/meal-tracker.html
 * Bug fix: Date format is now taken from WordPress admin settings.
 * Added links to the new Meal Tracker documentation site https://mealtracker.yeken.uk

@@ -16,6 +16,7 @@ The shortcode supports the following arguments:
     
 | Argument | Description | Options | Example |    
 |--|--|--|--|   
+| chart-height | Specifies the height of the progress chart used within the shortcode | Number/px  | [meal-tracker chart-height="150px"] |  
 | url-login | If the user is logged out then the tracker presents a login link. By default, it will direct the user to the standard WP login page. This argument allows you to specify another login page.   | Text  | [meal-tracker url-login="https://mysite.com/mypage"] |  
 
 # Images

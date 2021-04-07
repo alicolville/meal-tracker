@@ -100,17 +100,19 @@ function yk_mt_chart_render() {
     if ( yk_mt_ctx && yk_mt_chart ) {
 
         yk_mt_chart.data    = yk_mt_chart_data();
-        yk_mt_chart.options = yk_mt_chart_options();
+        yk_mt_chart.options = yk_mt_chart_options({});
         yk_mt_chart.update();
 
     } else {
 
         yk_mt_ctx   = jQuery('#yk-mt-chart');
 
+        let responsive = ( '1' === yk_mt_ctx.attr('data-responsive' ) ) ? true : false;
+
         yk_mt_chart = new Chart( yk_mt_ctx, {
             type:       'doughnut',
             data:       yk_mt_chart_data(),
-            options:    yk_mt_chart_options()
+            options:    yk_mt_chart_options( responsive )
         });
     }
 }
@@ -133,7 +135,7 @@ function yk_mt_chart_data() {
  * Return options for Chart.js doughnut
  * @returns object
  */
-function yk_mt_chart_options() {
+function yk_mt_chart_options( responsive ) {
 
     let options = {
         cutoutPercentage: 88,
@@ -169,7 +171,12 @@ function yk_mt_chart_options() {
         }
     }
 
-    return options;
+    if ( true === responsive ) {
+      options[ 'elements' ]             = true;
+      options[ 'maintainAspectRatio' ]  = false;
+    }
+
+  return options;
 }
 
 jQuery( document ).ready( function ( $ ) {

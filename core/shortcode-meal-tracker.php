@@ -17,7 +17,10 @@ function yk_mt_shortcode_meal_tracker( $user_defined_arguments ) {
 
 	$html = '<!-- Meal Tracker Start -->';
 
-	$shortcode_arguments = shortcode_atts( [ 'url-login' => '' ], $user_defined_arguments );
+	$shortcode_arguments = shortcode_atts( [    'url-login'     => '',      // URL for login page (displayed in login prompt)
+												'chart-height'	=> '200px'  // Set height of progress chart
+
+	], $user_defined_arguments );
 
 	// Is the user logged in?
 	if ( false === is_user_logged_in() ) {
@@ -49,7 +52,7 @@ function yk_mt_shortcode_meal_tracker( $user_defined_arguments ) {
 
 	} else {
 
-		$html .= yk_mt_shortcode_meal_tracker_summary();
+		$html .= yk_mt_shortcode_meal_tracker_summary( $shortcode_arguments[ 'chart-height' ]  );
 
 		if ( true === $is_pro ) {
 			$html .= yk_mt_shortcode_meal_tracker_navigation( $entry_id );
@@ -129,8 +132,12 @@ function yk_mt_shortcode_meal_tracker_navigation( $todays_entry_id = NULL ) {
 
 /**
  * Display chart JS and summary data
+ *
+ * @param string $height
+ *
+ * @return string
  */
-function yk_mt_shortcode_meal_tracker_summary() {
+function yk_mt_shortcode_meal_tracker_summary( $height = '' ) {
 
 	return '
 		<div class="yk-mt__summary">
@@ -138,7 +145,7 @@ function yk_mt_shortcode_meal_tracker_summary() {
 			<div class="yk-mt__table yk-mt__table--summary">
 				<div class="yk-mt__table-row" >
 					<div class="yk-mt__table-cell yk-mt__table--summary-chart-slot">
-						<canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
+						 ' . yk_mt_chart_progress_canvas( [ 'height' => $height ] ) . '
 					</div>
 				</div>
 			</div>
@@ -806,6 +813,8 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 	$yk_mt_shortcode_meal_tracker_modal_enqueued = true;
 }
 add_action( 'wp_enqueue_scripts', 'yk_mt_shortcode_meal_tracker_enqueue_scripts', 99 );
+
+
 
 /**
  * Add relevant data into JS object
