@@ -757,10 +757,6 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 	wp_enqueue_style( 'mt-core', plugins_url( 'assets/css/yk-mt-core.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 	wp_enqueue_style( 'mt-font-icons', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
 
-	// Styles > Core > Vars
-	$chart_font  = '\'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif';
-	$chart_color = '#000000';
-
 	$is_themed = yk_mt_site_options_as_bool('css-theme-enabled' );
 
 	if ( true === $is_themed ) {
@@ -776,25 +772,9 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 	wp_enqueue_script( 'mt-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery', 'jquery-ui-core', 'jquery-effects-core' ], YK_MT_PLUGIN_VERSION, true );
 	wp_enqueue_script( 'mt-selectize', plugins_url( 'assets/js/selectize.min.js', __DIR__ ), [], YK_MT_PLUGIN_VERSION, true );
 	wp_enqueue_script( 'mt-loading-overlay', plugins_url( 'assets/js/loadingoverlay.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
-	wp_enqueue_script( 'mt-chart-js', plugins_url( 'assets/js/Chart.bundle.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
 	wp_enqueue_script( 'mt-notify', plugins_url( 'assets/js/notify.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
-	wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart' . $minified . '.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
 
-	// Scripts > ChartJS > Localized scripts
-	if ( true === $is_themed ) {
-
-		// Styles > Theme > Fonts
-		wp_enqueue_style( 'mt-font-nunito', 'https://fonts.googleapis.com/css?family=Nunito:700,800&display=swap', [], YK_MT_PLUGIN_VERSION );
-
-		// Styles > Theme > Vars
-		$chart_font  = apply_filters( 'yk-mt-filter-chart-font', '\'Nunito\', \'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif' );
-		$chart_color = apply_filters( 'yk-mt-filter-chart-color', '#fb8e2e' );
-	}
-
-	wp_localize_script( 'mt-chart', 'yk_mt_chart', [
-		'chartFont'  => $chart_font,
-		'chartColor' => $chart_color,
-	] );
+	yk_mt_chart_enqueue();
 
 	wp_enqueue_script( 'meal-tracker', plugins_url( 'assets/js/core' . $minified . '.js', __DIR__ ),
 					[ 'mt-modal', 'mt-selectize', 'mt-loading-overlay', 'mt-notify', 'mt-chart' ], YK_MT_PLUGIN_VERSION, true );

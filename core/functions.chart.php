@@ -3,6 +3,60 @@
 defined('ABSPATH') or die("Jog on!");
 
 /**
+ * Enqueue relevant CSS / JS for charting
+ */
+function yk_mt_chart_enqueue() {
+
+	// Styles > Core > Vars
+	$chart_font  = '\'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif';
+	$chart_color = '#000000';
+
+	$minified = yk_mt_use_minified();
+
+	wp_enqueue_script( 'mt-chart-js', plugins_url( 'assets/js/Chart.bundle.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+	wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart' . $minified . '.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
+
+	// Scripts > ChartJS > Localized scripts
+	if ( true === yk_mt_site_options_as_bool('css-theme-enabled' ) ) {
+
+		// Styles > Theme > Fonts
+		wp_enqueue_style( 'mt-font-nunito', 'https://fonts.googleapis.com/css?family=Nunito:700,800&display=swap', [], YK_MT_PLUGIN_VERSION );
+
+		// Styles > Theme > Vars
+		$chart_font  = apply_filters( 'yk-mt-filter-chart-font', '\'Nunito\', \'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif' );
+		$chart_color = apply_filters( 'yk-mt-filter-chart-color', '#fb8e2e' );
+	}
+
+	wp_localize_script( 'mt-chart', 'yk_mt_chart', [
+		'chartFont'  => $chart_font,
+		'chartColor' => $chart_color,
+	] );
+}
+
+/**
+ * Return an array of localised strings for charting
+ * @return array
+ */
+function yk_mt_chart_localise_strings() {
+
+	return [
+		'chart-label-used'              => __( 'used', YK_MT_SLUG ),
+		'chart-label-remaining'         => __( 'remaining', YK_MT_SLUG ),
+		'chart-label-target'            => __( 'Target', YK_MT_SLUG )
+	];
+}
+
+/**
+ * Filter locale strings and add charting labels
+ * @param $strings
+ *
+ * @return array
+ */
+function yk_mt_chart_localise_apply( $strings ) {
+	return array_merge( $strings, yk_mt_chart_localise_strings() );
+}
+add_filter( 'yk_mt_config_locale', 'yk_mt_chart_localise_apply' );
+/**
  * Place a chart placeholder
  */
 function yk_mt_chart_placeholder( $args = [] ) {

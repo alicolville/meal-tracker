@@ -1171,7 +1171,7 @@ function yk_mt_post_api_external_add_to_collection_callback( data, response ) {
    * Take an entry in JSON format and render into UI
    * @param entry
    */
-  function yk_mt_render_entry(entry) {
+  function yk_mt_render_entry(entry, just_chart = false) {
 
     if (typeof entry !== 'object') {
       return;
@@ -1180,9 +1180,11 @@ function yk_mt_post_api_external_add_to_collection_callback( data, response ) {
     yk_mt_loading_start();
 
     // Render meal rows under each meal type
-    $.each(entry.meals, function (meal_type_id, meals) {
-      yk_mt_render_meal_rows(meal_type_id, meals, entry.counts[meal_type_id], entry.meta_counts[meal_type_id][ 'summary' ] );
-    });
+    if ( false === just_chart ) {
+      $.each(entry.meals, function (meal_type_id, meals) {
+        yk_mt_render_meal_rows(meal_type_id, meals, entry.counts[meal_type_id], entry.meta_counts[meal_type_id][ 'summary' ] );
+      });
+    }
 
     yk_mt_chart_data_set(entry['calories_allowed'],
       entry['calories_remaining'],

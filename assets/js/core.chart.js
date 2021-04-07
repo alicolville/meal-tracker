@@ -99,8 +99,10 @@ function yk_mt_chart_render() {
     // If the chart is already rendered, then just trigger a refresh. If not, we need to render chart.
     if ( yk_mt_ctx && yk_mt_chart ) {
 
+        let responsive = ( '1' === yk_mt_ctx.attr('data-responsive' ) ) ? true : false;
+
         yk_mt_chart.data    = yk_mt_chart_data();
-        yk_mt_chart.options = yk_mt_chart_options({});
+        yk_mt_chart.options = yk_mt_chart_options( responsive );
         yk_mt_chart.update();
 
     } else {
