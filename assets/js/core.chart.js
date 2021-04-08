@@ -10,7 +10,7 @@ var yk_mt_chart             = false;
 var yk_mt_chart_is_admin    = ( 'undefined' !== typeof( yk_mt_sc_meal_tracker ) && '1' === yk_mt_sc_meal_tracker[ 'is-admin' ] );
 
 /**
- * ------ ---------------------------------------------------------------------------------
+ * ---------------------------------------------------------------------------------------
  * Charting
  * ---------------------------------------------------------------------------------------
  */
@@ -83,10 +83,8 @@ function yk_mt_chart_data() {
  */
 function yk_mt_chart_options() {
 
-
-
   let options = {
-        cutout: ( 'doughnut' === yk_mt_ctx.attr( 'data-hide-title' ) ) ? '80%' : '0%',
+        cutout: ( 'doughnut' === yk_mt_ctx.attr( 'data-chart-type' ) ) ? '80%' : '0%',
         plugins : {
           title: {
             display: ( ! yk_mt_chart_is_admin && '1' !== yk_mt_ctx.attr( 'data-hide-title' ) ),

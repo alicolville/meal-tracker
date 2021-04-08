@@ -81,12 +81,6 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 TODO:
 Add documentation for: [mt-chart-today]
 retest and add hide title/legend to mt-chart-today
-document new arguments for meal-tarcker
-'chart-height'	        => '200px', // Set height of progress chart
-												'chart-type'            => 'pie',   // pie / doughnut
-												'chart-hide-legend'     => false,   // Hide chart legend
-												'chart-hide-title'      => true     // Hide chart title
-
 
 * New feature: New shortcode [mt-chart-today] which is used to display the user's progress for today. Read more: https://mealtracker.yeken.uk/shortcodes/mt-chart-today.html
 * Improvement: Set the height of the progress chart in [meal-tracker] shortcode to 200px. This can be overridden using the shortcode argument below.

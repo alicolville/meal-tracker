@@ -17,8 +17,11 @@ function yk_mt_shortcode_meal_tracker( $user_defined_arguments ) {
 
 	$html = '<!-- Meal Tracker Start -->';
 
-	$shortcode_arguments = shortcode_atts( [    'url-login'     => '',      // URL for login page (displayed in login prompt)
-												'chart-height'	=> '200px'  // Set height of progress chart
+	$shortcode_arguments = shortcode_atts( [    'url-login'             => '',      // URL for login page (displayed in login prompt)
+												'chart-height'	        => '200px', // Set height of progress chart
+												'chart-type'            => 'pie',   // pie / doughnut
+												'chart-hide-legend'     => false,   // Hide chart legend
+												'chart-hide-title'      => true     // Hide chart title
 
 	], $user_defined_arguments );
 
@@ -52,7 +55,7 @@ function yk_mt_shortcode_meal_tracker( $user_defined_arguments ) {
 
 	} else {
 
-		$html .= yk_mt_shortcode_meal_tracker_summary( $shortcode_arguments[ 'chart-height' ]  );
+		$html .= yk_mt_shortcode_meal_tracker_summary( $shortcode_arguments );
 
 		if ( true === $is_pro ) {
 			$html .= yk_mt_shortcode_meal_tracker_navigation( $entry_id );
@@ -133,11 +136,11 @@ function yk_mt_shortcode_meal_tracker_navigation( $todays_entry_id = NULL ) {
 /**
  * Display chart JS and summary data
  *
- * @param string $height
+ * @param $arguments
  *
  * @return string
  */
-function yk_mt_shortcode_meal_tracker_summary( $height = '' ) {
+function yk_mt_shortcode_meal_tracker_summary( $arguments ) {
 
 	return '
 		<div class="yk-mt__summary">
@@ -145,7 +148,7 @@ function yk_mt_shortcode_meal_tracker_summary( $height = '' ) {
 			<div class="yk-mt__table yk-mt__table--summary">
 				<div class="yk-mt__table-row" >
 					<div class="yk-mt__table-cell yk-mt__table--summary-chart-slot">
-						 ' . yk_mt_chart_progress_canvas( [ 'height' => $height ] ) . '
+						 ' . yk_mt_chart_progress_canvas( $arguments ) . '
 					</div>
 				</div>
 			</div>
@@ -155,6 +158,8 @@ function yk_mt_shortcode_meal_tracker_summary( $height = '' ) {
 
 /**
  * Render Settings tab
+ *
+ * @param null $target
  *
  * @return string
  */
