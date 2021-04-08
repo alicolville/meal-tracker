@@ -10,8 +10,10 @@ defined('ABSPATH') or die('Naw ya dinnie!');
  */
 function yk_mt_shortcode_chart( $user_defined_arguments ) {
 
-	$shortcode_arguments = shortcode_atts( [    'chart-height'	=> '200px',  // Set height of progress chart
-												'show-labels'	=> false, // Show labels?
+	$shortcode_arguments = shortcode_atts( [    'chart-height'	        => '200px',     // Set height of progress chart
+	                                            'chart-type'            => 'doughnut',  // pie / doughnut
+	                                            'chart-hide-legend'     => false,       // Hide chart legend
+	                                            'chart-hide-title'      => true         // Hide chart title
 	], $user_defined_arguments );
 
 	$entry = yk_mt_entry();
@@ -28,19 +30,17 @@ function yk_mt_shortcode_chart( $user_defined_arguments ) {
 					        chart_title:        "%5$s"
 					    };
 
-						yk_mt_chart_is_admin = %6$s;
 
 						yk_mt_chart_render();',
 						$entry[ 'calories_allowed' ],
 						$entry[ 'calories_remaining' ],
 						$entry[ 'calories_used' ],
 						$entry[ 'percentage_used' ],
-						$entry[ 'chart_title' ],
-						! filter_var( $shortcode_arguments[ 'show-labels' ], FILTER_VALIDATE_BOOLEAN ) ? 'true' : 'false'
+						$entry[ 'chart_title' ]
 	);
 
 	wp_add_inline_script( 'mt-chart', $js, 'after' );
 
-	return yk_mt_chart_progress_canvas();
+	return yk_mt_chart_progress_canvas( $shortcode_arguments );
 }
 add_shortcode( 'mt-chart-today', 'yk_mt_shortcode_chart' );
