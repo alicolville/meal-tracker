@@ -19,7 +19,7 @@ The shortcode supports the following arguments:
 | chart-height | Specifies the height of the progress chart used within the shortcode | Number/px  | [meal-tracker chart-height="150px"] |  
 | chart-hide-legend | Specifies whether the legend for the progress chart should be hidden | "true" (default) or "false"  | [meal-tracker chart-hide-legend="true"] | 
 | chart-hide-title | Specifies whether the title for the progress chart should be hidden | "true" or "false" (default) | [meal-tracker chart-hide-legend="title"] | 
-| chart-type | Specifies whether the progress chart should be a "pie" or "doughnut" | "pie" (default) or "doughnut"  | [meal-tracker chart-type="doughnut"] | 
+| chart-type | Specifies whether the progress chart should be a "pie" or "doughnut" | "pie" or "doughnut" (default) | [meal-tracker chart-type="pie"] | 
 | url-login | If the user is logged out then the tracker presents a login link. By default, it will direct the user to the standard WP login page. This argument allows you to specify another login page.   | Text  | [meal-tracker url-login="https://mysite.com/mypage"] |  
 
 # Images
