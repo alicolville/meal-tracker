@@ -54,7 +54,65 @@ function yk_mt_chart_render() {
         yk_mt_chart = new Chart( yk_mt_ctx, {
             type:       'doughnut',
             data:       yk_mt_chart_data(),
-            options:    yk_mt_chart_options()
+            options:    yk_mt_chart_options(),
+            plugins:    [
+                          {
+                            beforeDraw: function (chart, options) {
+
+                              if (chart.config.options.elements.center) {
+
+                                //Get options from the center object in options
+                                let centerConfig = chart.config.options.elements.center;
+
+                                if ( false === chart.config.options.elements.center.display ) {
+                                  return;
+                                }
+
+                                let ctx = chart.ctx;
+
+                                let fontStyle = centerConfig.fontStyle || 'Arial';
+                                let txt = centerConfig.text;
+                                let color = centerConfig.color || '#000';
+                                let sidePadding = centerConfig.sidePadding || 20;
+                                let sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+
+                                let window_width = jQuery(window).width();
+
+                                let font_size = 30;
+
+                                if (window_width < 460) {
+                                  font_size = 15;
+                                } else if (window_width < 540) {
+                                  font_size = 20;
+                                }
+
+                                ctx.font = font_size + "px " + fontStyle;
+
+                                //Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+                                var stringWidth = ctx.measureText(txt).width;
+                                var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+                                // Find out how much the font can grow in width.
+                                var widthRatio = elementWidth / stringWidth;
+                                var newFontSize = Math.floor(30 * widthRatio);
+                                var elementHeight = (chart.innerRadius * 2);
+
+                                // Pick a new font size so it will not be larger than the height of label.
+                                var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+                                //Set font settings to draw it correctly.
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+                                var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+                                ctx.font = fontSizeToUse + "px " + fontStyle;
+                                ctx.fillStyle = color;
+
+                                //Draw text in center
+                                ctx.fillText(txt, centerX, centerY);
+                              }
+                            }
+                          } ]
         });
     }
 }
@@ -85,6 +143,15 @@ function yk_mt_chart_options() {
 
   let options = {
         cutout: ( 'doughnut' === yk_mt_ctx.attr( 'data-chart-type' ) ) ? '80%' : '0%',
+        elements: {
+          center: {
+            display: ( 'doughnut' === yk_mt_ctx.attr( 'data-chart-type' ) ),
+            text: yk_mt_chart_config[ 'percentage_used' ] + '%',
+            color: yk_mt_chart_color,
+            fontStyle: yk_mt_chart_font,
+            sidePadding: 125,
+          }
+        },
         plugins : {
           title: {
             display: ( ! yk_mt_chart_is_admin && '1' !== yk_mt_ctx.attr( 'data-hide-title' ) ),
@@ -110,12 +177,12 @@ function yk_mt_chart_options() {
             }
           }
         }
-    };
+  };
 
-    if ( '1' === yk_mt_ctx.attr('data-responsive' ) ) {
-      options[ 'responsive' ]           = true;
-      options[ 'maintainAspectRatio' ]  = false;
-    }
+  if ( '1' === yk_mt_ctx.attr('data-responsive' ) ) {
+    options[ 'responsive' ]           = true;
+    options[ 'maintainAspectRatio' ]  = false;
+  }
 
   return options;
 }

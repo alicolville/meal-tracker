@@ -104,7 +104,7 @@ function yk_mt_chart_progress_canvas( $arguments = [] ) {
 	$arguments = wp_parse_args( $arguments, [   'chart-hide-legend' => false,
 	                                            'chart-hide-title'  => true,
 	                                            'chart-height'	    => '',
-	                                            'chart-type'        => 'pie',
+	                                            'chart-type'        => 'doughnut',
 												'css-class'         => 'yk-mt-chart',
 	                                            'id'		        => 'yk-mt-chart'
 	]);

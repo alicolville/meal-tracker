@@ -17,11 +17,11 @@ function yk_mt_shortcode_meal_tracker( $user_defined_arguments ) {
 
 	$html = '<!-- Meal Tracker Start -->';
 
-	$shortcode_arguments = shortcode_atts( [    'url-login'             => '',      // URL for login page (displayed in login prompt)
-												'chart-height'	        => '200px', // Set height of progress chart
-												'chart-type'            => 'pie',   // pie / doughnut
-												'chart-hide-legend'     => false,   // Hide chart legend
-												'chart-hide-title'      => true     // Hide chart title
+	$shortcode_arguments = shortcode_atts( [    'url-login'             => '',          // URL for login page (displayed in login prompt)
+												'chart-height'	        => '200px',     // Set height of progress chart
+												'chart-type'            => 'doughnut',  // pie / doughnut
+												'chart-hide-legend'     => false,       // Hide chart legend
+												'chart-hide-title'      => true         // Hide chart title
 
 	], $user_defined_arguments );
 
