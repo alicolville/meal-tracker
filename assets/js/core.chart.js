@@ -113,7 +113,7 @@ function yk_mt_chart_options() {
     };
 
     if ( '1' === yk_mt_ctx.attr('data-responsive' ) ) {
-      options[ 'elements' ]             = true;
+      options[ 'responsive' ]           = true;
       options[ 'maintainAspectRatio' ]  = false;
     }
 
