@@ -124,10 +124,6 @@ function yk_mt_chart_progress_canvas( $arguments = [] ) {
 	);
 }
 
-function yk_mt_chart_progress_enqueue_scriptS() {
-
-}
-
 /**
  * Display a line chart of allowed versus used
  * @param $args
