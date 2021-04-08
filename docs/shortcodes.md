@@ -5,3 +5,4 @@ The majority of the public facing functionality are implemented using [WordPress
 |Shortcode|Description|    
 |--|--|
 |[[meal-tracker]]({{ site.baseurl }}/shortcodes/meal-tracker.html) |A shortcode that encompasses all Meal Tracker front end functionality.|   
+|[[mt-chart-today]]({{ site.baseurl }}/shortcodes/mt-chart-today.html) |Display today's progress chart.|   

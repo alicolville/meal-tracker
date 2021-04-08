@@ -10,6 +10,10 @@ defined('ABSPATH') or die('Naw ya dinnie!');
  */
 function yk_mt_shortcode_chart( $user_defined_arguments ) {
 
+	if ( false === YK_MT_IS_PREMIUM ) {
+		return yk_mt_display_premium_upgrade_notice_for_shortcode();
+	}
+
 	$shortcode_arguments = shortcode_atts( [    'chart-height'	        => '200px',     // Set height of progress chart
 	                                            'chart-type'            => 'doughnut',  // pie / doughnut
 	                                            'chart-hide-legend'     => false,       // Hide chart legend

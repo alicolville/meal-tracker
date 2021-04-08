@@ -1118,6 +1118,20 @@ function yk_mt_date_format( $iso_date ) {
 }
 
 /**
+ * Upgrade notice for shortcode
+ * @return string
+ */
+function yk_mt_display_premium_upgrade_notice_for_shortcode () {
+
+	return sprintf( '<blockquote class="error">%s <a href="%s">%s</a></blockquote>',
+		__( 'To use this shortcode, you need to upgrade to the Premium version.', YK_MT_SLUG ),
+		esc_url( admin_url('admin.php?page=yk-mt-license') ),
+		__( 'Upgrade now', YK_MT_SLUG )
+	);
+}
+
+
+/**
  * Display an upgrade button
  */
 function yk_mt_upgrade_button( $css_class = '', $link = NULL ) {
