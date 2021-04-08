@@ -85,7 +85,12 @@ Add documentation for: [mt-chart-today]
 * Improvement: Set the height of the progress chart in [meal-tracker] shortcode to 200px. This can be overridden using the shortcode argument below.
 * Improvement: Added the argument "chart-height" to the shortcode [meal-tracker] Read more: https://mealtracker.yeken.uk/shortcodes/meal-tracker.html
 * Improvement: Added the argument "url-login" to the shortcode [meal-tracker] Read more: https://mealtracker.yeken.uk/shortcodes/meal-tracker.html
+* Improvement: Upgraded underlying charting library (from Chart.js 2 > 3) and updated related MT code.
+* Improvement: Re-factored underlying charting code so cleaner and optimised.
+* Improvement: Added 'kcal' to chart labels.
+* Improvement: Added Bezier curve to lne graphs.
 * Bug fix: Date format is now taken from WordPress admin settings.
+* Bug fix: Removed duplicate HTML element with the ID "yk-mt-button-meal-add".
 * Added links to the new Meal Tracker documentation site https://mealtracker.yeken.uk
 
 = 2.5.1 =

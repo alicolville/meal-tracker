@@ -13,7 +13,7 @@ function yk_mt_chart_enqueue() {
 
 	$minified = yk_mt_use_minified();
 
-	wp_enqueue_script( 'mt-chart-js', plugins_url( 'assets/js/Chart.bundle.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+	wp_enqueue_script( 'mt-chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION );
 	wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart' . $minified . '.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
 
 	// Scripts > ChartJS > Localized scripts
@@ -62,11 +62,13 @@ add_filter( 'yk_mt_config_locale', 'yk_mt_chart_localise_apply' );
 function yk_mt_chart_placeholder( $args = [] ) {
 
     $default_options =  [
-                    'responsive' => true,
-                    'title' => [
-                        'display' => true,
-                        'text' => __( 'In a chart', YK_MT_SLUG )
-                    ]
+                    'responsive'    => true,
+	                'tension'       => 0.4,
+	                'plugins'       => [ 'title' => [
+                                                        'display'   => false,
+                                                        'text'      => __( 'In a chart', YK_MT_SLUG )
+                                                    ]
+	                ]
     ];
 
     $args = wp_parse_args( $args, [
@@ -83,7 +85,7 @@ function yk_mt_chart_placeholder( $args = [] ) {
         $args[ 'options' ][ 'title' ][ 'text' ] = $args[ 'title' ];
     }
 
-    yk_mt_enqueue_scripts_chart();
+	yk_mt_chart_enqueue();
 
     wp_localize_script( 'mt-chart', $args[ 'id' ] . '_data', $args );
 

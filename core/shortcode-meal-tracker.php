@@ -551,7 +551,7 @@ function yk_mt_shortcode_meal_tracker_manual_meal_entry_form( $previous_values =
 
 	$html .= sprintf( '
 		 <div class="yk-mt__modal-footer">
-			<button id="yk-mt-button-meal-add" class="%2$s">
+			<button class="%2$s">
 				<span class="yk-mt__btn-icon fa fa-arrow-left"></span>
 			</button>
 			<button id="yk-mt-button-meal-add" class="%3$s">
