@@ -115,12 +115,13 @@ function yk_mt_chart_progress_canvas( $arguments = [] ) {
 	}
 
 	return sprintf( '<div class="yk-mt-chart-container" %3$s>
-						<canvas id="%1$s" class="%2$s" data-responsive="%4$s"></canvas>
+						<canvas id="%1$s" class="%2$s" data-responsive="%4$s" aria-label="%5$s" role="img"></canvas>
 					</div>',
 		esc_attr( $arguments[ 'id'] ),
 		esc_attr( $arguments[ 'css-class' ] ),
 		$arguments[ 'height' ],
-		$responsive ? '1' : 0
+		$responsive ? '1' : 0,
+		__( 'Chart showing user\'s progress', YK_MT_SLUG )
 	);
 }
 
