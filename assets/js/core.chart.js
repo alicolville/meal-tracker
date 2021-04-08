@@ -43,22 +43,18 @@ function yk_mt_chart_render() {
     // If the chart is already rendered, then just trigger a refresh. If not, we need to render chart.
     if ( yk_mt_ctx && yk_mt_chart ) {
 
-        let responsive = ( '1' === yk_mt_ctx.attr('data-responsive' ) ) ? true : false;
-
         yk_mt_chart.data    = yk_mt_chart_data();
-        yk_mt_chart.options = yk_mt_chart_options( responsive );
+        yk_mt_chart.options = yk_mt_chart_options();
         yk_mt_chart.update();
 
     } else {
 
         yk_mt_ctx   = jQuery('#yk-mt-chart');
 
-        let responsive = ( '1' === yk_mt_ctx.attr('data-responsive' ) ) ? true : false;
-
         yk_mt_chart = new Chart( yk_mt_ctx, {
             type:       'doughnut',
             data:       yk_mt_chart_data(),
-            options:    yk_mt_chart_options( responsive )
+            options:    yk_mt_chart_options()
         });
     }
 }
@@ -85,9 +81,11 @@ function yk_mt_chart_data() {
  * Return options for Chart.js doughnut
  * @returns object
  */
-function yk_mt_chart_options( responsive ) {
+function yk_mt_chart_options() {
 
-    let options = {
+  let responsive = ( '1' === yk_mt_ctx.attr('data-responsive' ) ) ? true : false;
+
+  let options = {
         cutout: '80%',
         plugins : {
           title: {
@@ -115,17 +113,6 @@ function yk_mt_chart_options( responsive ) {
           }
         }
     };
-
-    if ( false === yk_mt_chart_is_admin ) {
-        options[ 'elements' ] = {
-            center: {
-                text: yk_mt_chart_config[ 'percentage_used' ] + '%',
-                color: yk_mt_chart_color,
-                fontStyle: yk_mt_chart_font,
-                sidePadding: 125,
-            }
-        }
-    }
 
     if ( true === responsive ) {
       options[ 'elements' ]             = true;
