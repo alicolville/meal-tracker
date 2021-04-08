@@ -83,13 +83,13 @@ function yk_mt_chart_data() {
  */
 function yk_mt_chart_options() {
 
-  let responsive = ( '1' === yk_mt_ctx.attr('data-responsive' ) ) ? true : false;
+
 
   let options = {
-        cutout: '80%',
+        cutout: ( 'doughnut' === yk_mt_ctx.attr( 'data-hide-title' ) ) ? '80%' : '0%',
         plugins : {
           title: {
-            display: ! yk_mt_chart_is_admin,
+            display: ( ! yk_mt_chart_is_admin && '1' !== yk_mt_ctx.attr( 'data-hide-title' ) ),
             font : {
               color: '#000000',
               family: yk_mt_chart_font,
@@ -100,7 +100,7 @@ function yk_mt_chart_options() {
             text: yk_mt_chart_config[ 'chart_title' ],
           },
           legend: {
-            display: ! yk_mt_chart_is_admin,
+            display: ( ! yk_mt_chart_is_admin && '1' !== yk_mt_ctx.attr( 'data-hide-legend' ) ),
             position: 'right',
             labels: {
               font : {
@@ -114,7 +114,7 @@ function yk_mt_chart_options() {
         }
     };
 
-    if ( true === responsive ) {
+    if ( '1' === yk_mt_ctx.attr('data-responsive' ) ) {
       options[ 'elements' ]             = true;
       options[ 'maintainAspectRatio' ]  = false;
     }

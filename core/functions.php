@@ -1404,3 +1404,12 @@ function yk_mt_log_error( $text ) {
 function yk_mt_server_ip() {
 	return $_SERVER['SERVER_ADDR'];
 }
+
+/**
+ * Convert string to bool
+ * @param $string
+ * @return mixed
+ */
+function yk_mt_to_bool( $string ) {
+	return filter_var( $string, FILTER_VALIDATE_BOOLEAN );
+}

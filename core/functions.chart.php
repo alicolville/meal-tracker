@@ -101,27 +101,33 @@ function yk_mt_chart_placeholder( $args = [] ) {
  */
 function yk_mt_chart_progress_canvas( $arguments = [] ) {
 
-	$arguments = wp_parse_args( $arguments, [	'css-class' => 'yk-mt-chart',
-	                                             'id'		=> 'yk-mt-chart',
-	                                             'height'	=> ''
-
+	$arguments = wp_parse_args( $arguments, [   'chart-hide-legend' => false,
+	                                            'chart-hide-title'  => true,
+	                                            'chart-height'	    => '',
+	                                            'chart-type'        => 'pie',
+												'css-class'         => 'yk-mt-chart',
+	                                            'id'		        => 'yk-mt-chart'
 	]);
 
 	$responsive = false;
 
-	if ( false === empty( $arguments[ 'height' ] ) ) {
-		$arguments[ 'height' ] = sprintf( 'style="height:%s"', esc_attr( $arguments[ 'height' ] ) );
+	if ( false === empty( $arguments[ 'chart-height' ] ) ) {
+		$arguments[ 'chart-height' ] = sprintf( 'style="height:%s"', esc_attr( $arguments[ 'chart-height' ] ) );
 		$responsive = true;
 	}
 
 	return sprintf( '<div class="yk-mt-chart-container" %3$s>
-						<canvas id="%1$s" class="%2$s" data-responsive="%4$s" aria-label="%5$s" role="img"></canvas>
+						<canvas id="%1$s" class="%2$s" data-responsive="%4$s" data-hide-legend="%6$s" data-hide-title="%7$s" data-chart-type="%8$s"
+							aria-label="%5$s" role="img"></canvas>
 					</div>',
 		esc_attr( $arguments[ 'id'] ),
 		esc_attr( $arguments[ 'css-class' ] ),
-		$arguments[ 'height' ],
-		$responsive ? '1' : 0,
-		__( 'Chart showing user\'s progress', YK_MT_SLUG )
+		$arguments[ 'chart-height' ],
+		yk_mt_to_bool( $responsive ),
+		__( 'Chart showing user\'s progress', YK_MT_SLUG ),
+		yk_mt_to_bool( $arguments[ 'chart-hide-legend' ] ),
+		yk_mt_to_bool( $arguments[ 'chart-hide-title' ] ),
+		esc_attr( $arguments[ 'chart-type' ] )
 	);
 }
 

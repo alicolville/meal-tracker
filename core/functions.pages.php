@@ -25,7 +25,7 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
             <h2 class="hndle"><?php echo ( false === empty( $_GET[ 'mode' ] ) && 'entry' === $_GET[ 'mode' ] ) ? __( 'Entry summary', YK_MT_SLUG ) : __( 'Today\'s entry', YK_MT_SLUG ) ; ?></h2>
             <div class="inside">
                 <div class="yk-mt__table--summary-chart-slot">
-                    <?php echo yk_mt_chart_progress_canvas( [ 'height' => '150px' ] ); ?>
+                    <?php echo yk_mt_chart_progress_canvas( [ 'chart-height' => '150px' ] ); ?>
                 </div>
                 <table class="yk-mt-sidebar-stats">
                     <tr>

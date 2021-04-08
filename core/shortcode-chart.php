@@ -41,6 +41,6 @@ function yk_mt_shortcode_chart( $user_defined_arguments ) {
 
 	wp_add_inline_script( 'mt-chart', $js, 'after' );
 
-	return yk_mt_chart_progress_canvas( [ 'height' => $shortcode_arguments[ 'chart-height' ] ] );
+	return yk_mt_chart_progress_canvas();
 }
 add_shortcode( 'mt-chart-today', 'yk_mt_shortcode_chart' );
