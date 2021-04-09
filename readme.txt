@@ -91,6 +91,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 * Improvement: Added Bezier curve to lne graphs.
 * Bug fix: Date format is now taken from WordPress admin settings.
 * Bug fix: Removed duplicate HTML element with the ID "yk-mt-button-meal-add".
+* Bug fix: Replaced incorrect reference to plugin slug used with in gamification.
 * Added links to the new Meal Tracker documentation site https://mealtracker.yeken.uk
 
 = 2.5.1 =

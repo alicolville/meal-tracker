@@ -51,7 +51,7 @@ function yk_mt_mycred_load_hooks() {
 			parent::__construct( [
 									'id'       => 'yk_mt_entry_new',
 									'defaults' => [ 'yk_mt_entry_new'    => [	'creds'  => 10,
-									                                              'log'    => __( 'Entry added', WE_LS_SLUG ),
+									                                              'log'    => __( 'Entry added', YK_MT_SLUG ),
 									                                              'limit'  => '0/x' ]
 									]
 			], $hook_prefs, $type );
