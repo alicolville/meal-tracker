@@ -252,6 +252,8 @@ function yk_mt_entry_delete_all_for_user( $user_id = NULL ) {
 
         array_map( 'yk_mt_db_entry_delete', $entries);
     }
+
+	yk_mt_cache_user_delete( $user_id );
 }
 
 /**
@@ -268,8 +270,9 @@ function yk_mt_meal_soft_delete_all_for_user( $user_id = NULL ) {
 
         $meals = wp_list_pluck( $meals, 'id' );
         array_map( 'yk_mt_meal_update_delete', $meals );
-
     }
+
+	yk_mt_cache_user_delete( $user_id );
 }
 
 /**
@@ -355,6 +358,8 @@ function yk_mt_meal_count( $user_id = NULL ) {
  * Get the allowed calories for the given user
  *
  * @param null $user_id
+ *
+ * @param bool $include_source
  *
  * @return int
  */
@@ -828,10 +833,15 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
  * @param $title
  * @param $name
  * @param string $value
+ * @param string $css_class
  * @param int $step
  * @param int $min
  * @param int $max
  * @param bool $show_label
+ *
+ * @param bool $required
+ * @param bool $disabled
+ * @param null $trailing_html
  *
  * @return string
  */

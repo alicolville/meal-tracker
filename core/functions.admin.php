@@ -293,6 +293,8 @@ function yk_mt_admin_process_post_updates($user_id = NULL ) {
         yk_mt_settings_set( 'calorie-source', 'admin',  $user_id );
     }
 
+	yk_mt_cache_user_delete( $user_id );
+
     do_action( 'yk_mt_settings_admin_sidebar_saved' );
 }
 
