@@ -188,29 +188,3 @@ function yk_mt_cache_generate_key( $key ){
 // Listen for various hooks to maintain cache
 // -------------------------------------------------------------
 
-
-
-
-/**
- * Temp Cache - a temp caching mechanism for storing data for 5 minutes
- *
- * @param $key
- * @param $value
- * @param $duration
- */
-function yk_mt_cache_temp_hook_set( $key, $value, $duration ) {
-    yk_mt_cache_set( 'temp-' . $key, $value, $duration );
-}
-add_action( 'yk_mt_cache_temp_set', 'yk_mt_cache_temp_hook_set', 10, 3 );
-
-/**
- * Get cache for temp storage
- *
- * @param $default_value
- * @param $key
- */
-function yk_mt_cache_temp_hook_get( $default_value, $key ) {
-    $cache = yk_mt_cache_get( 'temp-' . $key );
-    return ( false === empty( $cache ) ) ? $cache : NULL;
-}
-add_filter( 'yk_mt_cache_temp_get', 'yk_mt_cache_temp_hook_get', 10, 2 );

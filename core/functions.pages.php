@@ -538,7 +538,7 @@ function yk_mt_user_stats( $user_id ) {
  */
 function yk_mt_stats() {
 
-    if ( $cache = yk_mt_cache_temp_get( 'dashboard-stats' ) ) {
+    if ( $cache = yk_mt_cache_get( 'dashboard-stats' ) ) {
        return $cache;
     }
 
@@ -556,7 +556,7 @@ function yk_mt_stats() {
         'last-updated-iso'      => date("Y-m-d H:i:s")
     ];
 
-    yk_mt_cache_temp_set( 'dashboard-stats', $stats );
+	yk_mt_cache_set( 'dashboard-stats', $stats );
 
     return $stats;
 }

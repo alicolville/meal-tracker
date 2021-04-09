@@ -1345,40 +1345,6 @@ function yk_mt_format_nutrition_sting( $meal, $include_meta = true ) {
 }
 
 /**
- * Handy function for temp caching (if caching.php included)
- * @param $key
- * @return mixed
- */
-function yk_mt_cache_temp_get( $key ) {
-
-	if ( true === function_exists( 'yk_mt_cache_is_enabled' ) &&
-			true === yk_mt_cache_is_enabled() ) {
-		return yk_mt_cache_get( 'temp-' . $key );
-	}
-
-	return NULL;
-}
-
-/**
- * Handy function for temp caching (if caching.php included) - default 15 mins
- * @param $key
- * @param $value
- * @param int $duration
- */
-function yk_mt_cache_temp_set( $key, $value, $duration = 1500 ) {
-
-	if ( true === function_exists( 'yk_mt_cache_is_enabled' ) &&
-		 true === yk_mt_cache_is_enabled() ) {
-
-		yk_mt_cache_set( 'temp-' . $key, $value, $duration );
-
-		return true;
-	}
-
-	return false;
-}
-
-/**
  * Translate known meal types from English into locale.
  * @param $meal_type
  * @return mixed|string

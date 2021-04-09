@@ -1011,13 +1011,13 @@ function yk_mt_db_mysql_count_table( $table = YK_WT_DB_ENTRY, $use_cache = true 
     }
 
     if ( true === $use_cache &&
-            $cache = yk_mt_cache_temp_get( 'db-count-' . $table ) ) {
+            $cache = yk_mt_cache_get( 'db-count-' . $table ) ) {
         return $cache;
     }
 
     $result = $wpdb->get_var( 'Select count( id ) from ' . $wpdb->prefix . $table );
 
-    yk_mt_cache_temp_set( 'db-count-' . $table, $result );
+    yk_mt_cache_set( 'db-count-' . $table, $result );
 
     return (int) $result;
 }
@@ -1044,13 +1044,13 @@ function yk_mt_db_mysql_count( $mode = 'unique-users', $use_cache = true ) {
     }
 
     if ( true === $use_cache &&
-        $cache = yk_mt_cache_temp_get( 'sql-count-' . $mode ) ) {
+        $cache = yk_mt_cache_get( 'sql-count-' . $mode ) ) {
         return $cache;
     }
 
     $result = $wpdb->get_var( $sql_statements[ $mode ] );
 
-    yk_mt_cache_temp_set( 'unique-users', $result );
+	yk_mt_cache_set( 'unique-users', $result );
 
     return (int) $result;
 }

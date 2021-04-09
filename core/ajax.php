@@ -280,7 +280,7 @@ function yk_mt_ajax_external_search() {
 
 	$cache_key = 'ext-search-' . md5( $_POST[ 'search' ] );
 
-	if ( $cache = yk_mt_cache_temp_get( $cache_key ) )  {
+	if ( $cache = yk_mt_cache_get( $cache_key ) )  {
 		wp_send_json( $cache );
 	}
 
@@ -299,7 +299,7 @@ function yk_mt_ajax_external_search() {
 
 	// Cache data for this search term ( for 5 mins )
 	if ( false === empty( $meals ) ) {
-		yk_mt_cache_temp_set( $cache_key, $meals );
+		yk_mt_cache_set( $cache_key, $meals, YK_MT_CACHE_SHORT_TIME  );
 	}
 
 	wp_send_json( $meals );
@@ -323,7 +323,7 @@ function yk_mt_ajax_external_servings() {
 
 	$cache_key = 'ext-servings-' . md5( $_POST[ 'search' ] );
 
-	if ( $cache = yk_mt_cache_temp_get( $cache_key ) )  {
+	if ( $cache = yk_mt_cache_get( $cache_key ) )  {
 		wp_send_json( $cache );
 	}
 
@@ -336,7 +336,7 @@ function yk_mt_ajax_external_servings() {
 
 	// Cache data for this search term ( for 5 mins )
 	if ( false === empty( $meals ) ) {
-		yk_mt_cache_temp_set( $cache_key, $servings );
+		yk_mt_cache_set( $cache_key, $servings );
 	}
 
 	wp_send_json( $servings );
@@ -384,7 +384,7 @@ function yk_mt_ajax_external_prep_meal( $meal ) {
 		 * Since we have the full meal object here (i.e. we're about to display it in search results), let's cache it for 5 minutes. That way,
 		 * if a user selects it, we have the relevant data for the meal cached (if not, we will need to call out to external API again).
 		 */
-		yk_mt_cache_temp_set( 'ext-meal-' . $meal[ 'ext_id' ], $meal );
+		yk_mt_cache_set( 'ext-meal-' . $meal[ 'ext_id' ], $meal );
 
 		$meal[ 'id' ] 		= $meal[ 'ext_id' ];
 
