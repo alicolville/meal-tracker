@@ -562,7 +562,7 @@ function yk_mt_db_entry_meal_add( $entry_meal ) {
 
     $user_id = yk_mt_db_entry_user_id( $entry_meal[ 'entry_id' ] );
 
-	yk_mt_delete_cache( 'entry-' . $entry_meal[ 'entry_id' ] );
+	yk_mt_cache_delete( 'entry-' . $entry_meal[ 'entry_id' ] );
 
     return $id;
 }
@@ -964,7 +964,7 @@ function yk_mt_db_meal_types_add( $meal_type ) {
 
     $id = $wpdb->insert_id;
 
-	yk_mt_delete_cache( 'meal-types' );
+	yk_mt_cache_delete( 'meal-types' );
 
     return $id;
 }

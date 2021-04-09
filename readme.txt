@@ -80,7 +80,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 // TODO: Update features page with urls
 JS: console error on settings page: Uncaught ReferenceError: yk_mt_sc_meal_tracker is not defined
-Rename yk_mt_delete_cache to yk_mt_cache_delete
+
 Update the following to state premium: Admin Collection not searchable. As an administrator, you can add, edit and delete meals. However, the setting "Admin's meal collection" under "Searching meals" has been disabled which means your users can not search this collection. Enable now.
 
 * New feature: New shortcode [mt-chart-today] which is used to display the user's progress for today. Read more: https://mealtracker.yeken.uk/shortcodes/mt-chart-today.html

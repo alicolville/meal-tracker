@@ -159,11 +159,11 @@ function yk_mt_cache_user_delete( $user_id = NULL ) {
 
 	if ( true === is_array( $all_keys ) ) {
 		$all_keys = array_values( $all_keys );
-		array_map( 'yk_mt_delete_cache', $all_keys );
+		array_map( 'yk_mt_cache_delete', $all_keys );
 	}
 
 	// Delete cache lookup table
-	yk_mt_delete_cache( $user_id );
+	yk_mt_cache_delete( $user_id );
 }
 
 /**
@@ -203,7 +203,7 @@ function yk_mt_cache_set( $key, $data, $time_to_expire = YK_MT_CACHE_TIME ) {
  * @param $key
  * @return bool
  */
-function yk_mt_delete_cache( $key ){
+function yk_mt_cache_delete( $key ){
 
 	$key = yk_mt_cache_generate_key($key);
 	return delete_transient($key);
