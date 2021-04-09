@@ -86,6 +86,7 @@ Rename yk_mt_delete_cache to yk_mt_cache_delete
 * Improvement: Set the height of the progress chart in [meal-tracker] shortcode to 200px. This can be overridden using the shortcode argument below.
 * Improvement: Added the argument "chart-height", "chart-type", "chart-hide-legend" and "chart-hide-title" to the shortcode [meal-tracker] Read more: https://mealtracker.yeken.uk/shortcodes/meal-tracker.html
 * Improvement: Added the argument "url-login" to the shortcode [meal-tracker] Read more: https://mealtracker.yeken.uk/shortcodes/meal-tracker.html
+* Improvement: Removed caching layer and integrated the new optimised caching layer that was written from scratch for Weight Tracker.
 * Improvement: Upgraded underlying charting library (from Chart.js 2 > 3) and updated related MT code.
 * Improvement: Re-factored underlying charting code so cleaner and optimised.
 * Improvement: Added 'kcal' to chart labels.
