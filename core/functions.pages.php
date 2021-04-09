@@ -15,9 +15,6 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
     if( true === empty( $user_id ) )  {
         return;
     }
-
-    $stats = yk_mt_user_stats( $user_id );
-
     $current_url = yk_mt_link_current_url();
 
     if ( NULL !== $entry ): ?>
@@ -74,7 +71,9 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
             </div>
         </div>
     <?php endif; ?>
-
+	<?php
+		  $stats = yk_mt_user_stats( $user_id );
+	 ?>
     <div class="postbox yk-mt-user-data">
         <h2 class="hndle"><span><?php echo __( 'User Information', YK_MT_SLUG ); ?></span></h2>
         <div class="inside">
@@ -518,19 +517,28 @@ function yk_mt_link_previous_url( $default = '#' ) {
  */
 function yk_mt_user_stats( $user_id ) {
 
-    $user_id            = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+	$user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
+
+    if ( $cache = yk_mt_cache_user_get( $user_id, 'stats' ) ) {
+        return $cache;
+    }
+
     $entries            = yk_mt_db_entry_get_ids_and_dates( $user_id );
     $number_of_entries  = count( $entries );
     $entry_dates        = array_values( $entries );
     $meal_count         = yk_mt_db_meal_for_user( $user_id, [ 'count-only' => true ] );
 
-    return [
+    $stats = [
                 'user-id'       => $user_id,
                 'count-meals'   => ( false === empty( $meal_count ) ) ? $meal_count : 0,
                 'count-entries' => $number_of_entries,
                 'date-first'    => ( false === empty( $entry_dates[ 0 ] ) ) ? $entry_dates[ 0 ] : NULL,
                 'date-last'     => ( false === empty( $entry_dates[ $number_of_entries - 1 ] ) ) ? $entry_dates[ $number_of_entries - 1 ] : NULL
     ];
+
+    yk_mt_cache_user_set( $user_id, 'stats', $stats );
+
+    return $stats;
 }
 
 /**
@@ -539,7 +547,7 @@ function yk_mt_user_stats( $user_id ) {
 function yk_mt_stats() {
 
     if ( $cache = yk_mt_cache_get( 'dashboard-stats' ) ) {
-       return $cache;
+    	return $cache;
     }
 
     $stats = [
