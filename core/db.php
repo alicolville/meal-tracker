@@ -264,8 +264,6 @@ function yk_mt_db_entries_summary( $args ) {
         'use-cache'     => true
     ]);
 
-    $cache_key = md5( json_encode( $args ) );
-
     if ( true === $args[ 'use-cache' ] &&
             $cache = yk_mt_cache_user_get( $args[ 'user-id' ], 'entry-summary' ) ) {
         return $cache;
