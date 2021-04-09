@@ -14,7 +14,7 @@ function yk_mt_shortcode_meal_tracker( $user_defined_arguments ) {
 	if ( true === is_admin() ) {
 		return '';
 	}
-
+print_r(yk_mt_cache_user_get_all(1));
 	$html = '<!-- Meal Tracker Start -->';
 
 	$shortcode_arguments = shortcode_atts( [    'url-login'             => '',          // URL for login page (displayed in login prompt)

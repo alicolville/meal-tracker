@@ -298,7 +298,7 @@ function yk_mt_entry_calories_calculate_update_used( $entry_id ) {
 
     do_action( 'yk_mt_entry_calculate_refresh', $entry_id );
 
-	do_action( 'yk_mt_entry_cache_clear', $entry_id, $user_id );
+	yk_mt_delete_cache( 'entry-' . $entry_id );
 
 	return $result;
 }

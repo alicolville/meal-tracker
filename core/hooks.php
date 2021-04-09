@@ -198,3 +198,58 @@ function yk_mt_admin_hooks_update_cache_version() {
 
 }
 add_action( 'yk_mt_settings_saved', 'yk_mt_admin_hooks_update_cache_version');
+
+/**
+ * Clear cache for a given meals / certain user ID
+ *
+ * @param $user_id
+ */
+function yk_mt_cache_clear_for_user( $user_id ) {
+	yk_mt_cache_user_delete( $user_id );
+}
+add_action( 'yk_mt_meals_deleted', 'yk_mt_cache_clear_for_user' );
+
+/**
+ * Clear cache for a given entry ids / date for a user
+ *
+ * @param $entry_id
+ * @param $user_id
+ */
+function yk_mt_cache_entry_ids_and_date_delete( $entry_id, $user_id ) {
+	yk_mt_cache_user_delete( $user_id );
+}
+add_action( 'yk_mt_entry_deleted', 'yk_mt_cache_entry_ids_and_date_delete', 10, 2 );
+
+/**
+ * Clear cache for a given entry ids / date for a user
+ *
+ * @param $entry_id
+ * @param $entry
+ * @param $user_id
+ */
+function yk_mt_cache_entry_ids_and_date_delete_three( $entry_id, $entry, $user_id ) {
+	yk_mt_cache_user_delete( $user_id );
+}
+add_action( 'yk_mt_entry_added', 'yk_mt_cache_entry_ids_and_date_delete_three', 10, 3);
+
+/**
+ * Clear cache for a given entry
+ *
+ * @param $id
+ */
+function yk_mt_cache_hook_entry_delete( $id ) {
+	yk_mt_delete_cache( 'entry-' . $id );
+}
+add_action( 'yk_mt_entry_deleted', 'yk_mt_cache_hook_entry_delete' );
+
+/**
+ * Clear cache for a given meal
+ *
+ * @param $id
+ */
+function yk_mt_cache_hook_meal_delete( $id ) {
+
+	yk_mt_delete_cache( 'meal-' . $id );
+}
+add_action( 'yk_mt_meal_deleted', 'yk_mt_cache_hook_meal_delete' );
+add_action( 'yk_mt_meals_updated', 'yk_mt_cache_hook_meal_delete' );

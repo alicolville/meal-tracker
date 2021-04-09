@@ -3,7 +3,7 @@
 defined('ABSPATH') or die('Jog on!');
 
 function yk_mt_settings_page_generic() {
-
+var_dump(get_option( 'yk-mt-cache-number', YK_MT_INITIAL_CACHE_NUMBER ));
     if ( !current_user_can( 'manage_options' ) )  {
         wp_die( __( 'You do not have sufficient permissions to access this page.' , YK_MT_SLUG ) );
     }

@@ -15,7 +15,7 @@ define( 'YK_WT_DB_SETTINGS', 'yk_mt_settings');             // Store all setting
  */
 function yk_mt_db_settings_get( $user_id ) {
 
-    $cache = apply_filters( 'yk_mt_db_settings_get', NULL, $user_id );
+    $cache = yk_mt_cache_user_get( $user_id, 'settings' );
 
     if ( true === is_array( $cache ) ) {
         return $cache;
@@ -27,7 +27,7 @@ function yk_mt_db_settings_get( $user_id ) {
     $settings   = $wpdb->get_var( $sql );
     $settings   = ( false === empty( $settings ) ) ? json_decode( $settings, true ) : [];
 
-    do_action( 'yk_mt_db_settings_lookup', $user_id, $settings );
+    yk_mt_cache_user_set( $user_id, 'settings', $settings );
 
     return $settings;
 }
@@ -54,7 +54,7 @@ function yk_mt_db_settings_update( $user_id, $settings = [] ) {
         return false;
     }
 
-    do_action( 'yk_mt_db_settings_deleted', $user_id );
+	yk_mt_cache_user_delete( $user_id );
 
     return true;
 }
@@ -94,6 +94,8 @@ function yk_mt_db_entry_add( $entry ) {
 
     $entry = yk_mt_db_entry_calculate_stats( $entry );
 
+	yk_mt_cache_set( 'entry-' . $id, $entry );
+
     do_action( 'yk_mt_entry_added', $id, $entry, $entry[ 'user_id' ] );
 
     return $id;
@@ -126,6 +128,8 @@ function yk_mt_db_entry_update( $entry ) {
     if ( false === $result ) {
         return false;
     }
+
+	yk_mt_cache_set( 'entry-' . $id, $entry );
 
     do_action( 'yk_mt_entry_updated', $id, $entry );
 
@@ -222,7 +226,7 @@ function yk_mt_db_entry_get_ids_and_dates( $user_id = NULL ) {
 
     $user_id = ( NULL === $user_id ) ? get_current_user_id() : $user_id;
 
-    if ( $cache = apply_filters( 'yk_mt_db_entry_ids_and_dates_get', NULL, $user_id ) ) {
+    if ( $cache = yk_mt_cache_user_get( $user_id, 'entry-ids-dates' ) ) {
         return $cache;
     }
 
@@ -238,7 +242,7 @@ function yk_mt_db_entry_get_ids_and_dates( $user_id = NULL ) {
         $results = [];
     }
 
-    do_action( 'yk_mt_db_entry_ids_and_dates', $user_id, $results );
+	yk_mt_cache_user_set( $user_id, 'entry-ids-dates', $results );
 
     return $results;
 }
@@ -263,7 +267,7 @@ function yk_mt_db_entries_summary( $args ) {
     $cache_key = md5( json_encode( $args ) );
 
     if ( true === $args[ 'use-cache' ] &&
-            $cache = apply_filters( 'yk_mt_db_entries_summary_get', NULL, $cache_key ) ) {
+            $cache = yk_mt_cache_user_get( $args[ 'user-id' ], 'entry-summary' ) ) {
         return $cache;
     }
 
@@ -296,7 +300,7 @@ function yk_mt_db_entries_summary( $args ) {
         $results = array_map( 'yk_mt_db_entry_calculate_stats', $results );
     }
 
-    do_action( 'yk_mt_db_entries_summary', $cache_key, $results );
+	yk_mt_cache_user_set( $args[ 'user-id' ], 'entry-summary', $results );
 
     return $results;
 }
@@ -322,7 +326,7 @@ function yk_mt_db_entry_get( $id = NULL ) {
 
     $entry_id = $id;
 
-    if ( $cache = apply_filters( 'yk_mt_db_entry_get', NULL, $id ) ) {
+    if ( $cache = yk_mt_cache_get( 'entry-' . $id ) ) {
         $cache[ 'cache' ] = true;
         return $cache;
     }
@@ -470,7 +474,7 @@ function yk_mt_db_entry_get( $id = NULL ) {
 		}
     }
 
-    do_action( 'yk_mt_entry_lookup', $entry_id, $entry );
+	yk_mt_cache_get( 'entry-' . $id, $entry );
 
     return $entry;
 }
@@ -560,7 +564,7 @@ function yk_mt_db_entry_meal_add( $entry_meal ) {
 
     $user_id = yk_mt_db_entry_user_id( $entry_meal[ 'entry_id' ] );
 
-    do_action( 'yk_mt_entry_cache_clear', $entry_meal[ 'entry_id' ], $user_id );
+	yk_mt_delete_cache( 'entry-' . $entry_meal[ 'entry_id' ] );
 
     return $id;
 }
@@ -668,8 +672,9 @@ function yk_mt_db_meal_add( $meal ) {
 
     $id = $wpdb->insert_id;
 
-    do_action( 'yk_mt_meal_added', $id, $meal );
-    do_action( 'yk_mt_meals_deleted', $meal[ 'added_by' ] );
+	yk_mt_cache_set( 'meal-' . $id, $meal );
+
+    do_action( 'yk_mt_meals_updated', $meal[ 'added_by' ] );
 
     return $id;
 }
@@ -704,8 +709,9 @@ function yk_mt_db_meal_update( $meal ) {
         return false;
     }
 
-    do_action( 'yk_mt_meal_updated', $id, $meal );
-    do_action( 'yk_mt_meals_deleted', $meal_before[ 'added_by' ] );
+	yk_mt_cache_set( 'meal-' . $id, $meal );
+
+    do_action( 'yk_mt_meals_updated', $meal_before[ 'added_by' ] );
 
     return true;
 }
@@ -746,7 +752,7 @@ function yk_mt_db_meal_delete( $id ) {
  */
 function yk_mt_db_meal_get( $id, $added_by = false ) {
 
-    if ( $cache = apply_filters( 'yk_mt_db_meal_get', NULL, $id ) ) {
+    if ( $cache = yk_mt_cache_get( 'meal-' . $id ) ) {
 
         // Ensure, if user ID specified, that we are only letting cache through for that user
         if ( false !== $added_by && (int) $cache[ 'added_by' ] !== (int) $added_by ) {
@@ -769,7 +775,7 @@ function yk_mt_db_meal_get( $id, $added_by = false ) {
 
     $meal = ( false === empty( $meal ) ) ? $meal : false;
 
-    do_action( 'yk_mt_meal_lookup', $id, $meal );
+	yk_mt_cache_set( 'meal-' . $id, $meal );
 
     return $meal;
 }
@@ -846,11 +852,11 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
 
     $cache_key = md5( json_encode( $options ) );
 
-    $cache = apply_filters( 'yk_mt_db_meals', [], $user_id, $cache_key );
+    $cache = yk_mt_cache_user_get( $user_id, $cache_key );
 
     if ( false === empty( $cache ) &&
             true === $options[ 'use-cache' ] ) {
-        return $cache;
+    	return $cache;
     }
 
     global $wpdb;
@@ -910,7 +916,7 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
 
     $meals = ( false === empty( $meals ) ) ? $meals : false;
 
-    do_action( 'yk_mt_meals_lookup', $user_id, $cache_key, $meals );
+	yk_mt_cache_user_set( $user_id, $cache_key, $meals );
 
     return $meals;
 }
@@ -960,7 +966,7 @@ function yk_mt_db_meal_types_add( $meal_type ) {
 
     $id = $wpdb->insert_id;
 
-    do_action( 'yk_mt_meal_types_added', $id, $meal_type );
+	yk_mt_delete_cache( 'meal-types' );
 
     return $id;
 }
@@ -973,7 +979,7 @@ function yk_mt_db_meal_types_add( $meal_type ) {
  */
 function yk_mt_db_meal_types_all( $use_cache = true) {
 
-	$cache = ( true === $use_cache ) ? apply_filters( 'yk_mt_db_meal_types_all', NULL ) : NULL;
+	$cache = ( true === $use_cache ) ? yk_mt_cache_get( 'meal-types' ) : NULL;
 
     if ( false === empty( $cache ) ) {
         return $cache;
@@ -985,7 +991,7 @@ function yk_mt_db_meal_types_all( $use_cache = true) {
 
     $meal_types = ( false === empty( $meal_types ) ) ? $meal_types : false;
 
-    do_action( 'yk_mt_meal_types_all', $meal_types );
+	yk_mt_cache_set( 'meal-types', $meal_types );
 
     return $meal_types;
 }
