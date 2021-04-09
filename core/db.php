@@ -94,7 +94,7 @@ function yk_mt_db_entry_add( $entry ) {
 
     $entry = yk_mt_db_entry_calculate_stats( $entry );
 
-	yk_mt_cache_set( 'entry-' . $id, $entry );
+	yk_mt_cache_delete( 'entry-' . $id, $entry );
 
     do_action( 'yk_mt_entry_added', $id, $entry, $entry[ 'user_id' ] );
 
@@ -129,7 +129,7 @@ function yk_mt_db_entry_update( $entry ) {
         return false;
     }
 
-	yk_mt_cache_set( 'entry-' . $id, $entry );
+	yk_mt_cache_delete( 'entry-' . $id, $entry );
 
     do_action( 'yk_mt_entry_updated', $id, $entry );
 
@@ -324,7 +324,7 @@ function yk_mt_db_entry_get( $id = NULL ) {
 
     $entry_id = $id;
 
-    if ( $cache = yk_mt_cache_get( 'entry-' . $id ) ) {
+    if ( $cache = yk_mt_cache_get( 'entry-' . $entry_id ) ) {
         $cache[ 'cache' ] = true;
         return $cache;
     }
@@ -472,7 +472,7 @@ function yk_mt_db_entry_get( $id = NULL ) {
 		}
     }
 
-	yk_mt_cache_get( 'entry-' . $id, $entry );
+	yk_mt_cache_set( 'entry-' . $entry_id, $entry );
 
     return $entry;
 }
