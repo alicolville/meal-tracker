@@ -78,6 +78,11 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 2.6 =
 
+* New feature: New shortcode: [mt-table-entries] which displays a table of the user's entries. Read more: https://mealtracker.yeken.uk/shortcodes/mt-table-entries.html
+* New feature: New shortcode: [mt-date-oldest-entry] which displays the date of the user's oldest entry. Read more: https://mealtracker.yeken.uk/shortcodes/mt-date-oldest-entry.html
+* New feature: New shortcode: [mt-date-latest-entry] which displays the date of the user's latest entry. Read more: https://mealtracker.yeken.uk/shortcodes/mt-date-latest-entry.html
+* New feature: New shortcode: [mt-count-entries] which displays a count of the user's entries. Read more: https://mealtracker.yeken.uk/shortcodes/mt-count-entries.html
+* New feature: New shortcode: [mt-count-meals] which displays the number of meals the user has added to their collection. Read more: https://mealtracker.yeken.uk/shortcodes/mt-count-meals.html
 * New feature: New shortcode [mt-chart-today] which is used to display the user's progress for today. Read more: https://mealtracker.yeken.uk/shortcodes/mt-chart-today.html
 * Improvement: Set the height of the progress chart in [meal-tracker] shortcode to 200px. This can be overridden using the shortcode argument below.
 * Improvement: Added the argument "chart-height", "chart-type", "chart-hide-legend" and "chart-hide-title" to the shortcode [meal-tracker] Read more: https://mealtracker.yeken.uk/shortcodes/meal-tracker.html
