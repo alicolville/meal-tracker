@@ -78,6 +78,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 2.6 =
 
+* New feature: New shortcode: [mt-chart-entries] which displays a chart of the user's entries. Read more: https://mealtracker.yeken.uk/shortcodes/mt-chart-entries.html
 * New feature: New shortcode: [mt-table-entries] which displays a table of the user's entries. Read more: https://mealtracker.yeken.uk/shortcodes/mt-table-entries.html
 * New feature: New shortcode: [mt-date-oldest-entry] which displays the date of the user's oldest entry. Read more: https://mealtracker.yeken.uk/shortcodes/mt-date-oldest-entry.html
 * New feature: New shortcode: [mt-date-latest-entry] which displays the date of the user's latest entry. Read more: https://mealtracker.yeken.uk/shortcodes/mt-date-latest-entry.html

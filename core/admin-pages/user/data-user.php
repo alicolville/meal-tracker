@@ -48,7 +48,7 @@ function yk_mt_admin_page_user_summary() {
                             <?php
 
                                 if ( false === empty( $entries ) ) {
-                                    yk_mt_chart_line_allowed_versus_used( [
+                                    echo yk_mt_chart_line_allowed_versus_used( [
                                         'entries'   => $entries,
                                         'max'       => 15,
                                         'title'     => __( 'Latest 15 entries', YK_MT_SLUG )

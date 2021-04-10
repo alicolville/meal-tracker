@@ -44,6 +44,7 @@ include_once YK_MT_ABSPATH . 'core/db.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-functions.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-meal-tracker.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-chart.php';
+include_once YK_MT_ABSPATH . 'core/shortcode-chart-entries.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-table-entries.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-various.php';
 include_once YK_MT_ABSPATH . 'core/ajax.php';
