@@ -48,7 +48,7 @@ function yk_mt_ajax_add_meal_to_entry() {
         }
     }
 
-	do_action( 'yk_mt_meal_added_to_entry', $post_data[ 'user-id' ], $post_data[ 'entry-id' ], $post_data[ 'entry-id' ], $quantity, $post_data[ 'meal-type' ] );
+	do_action( 'yk_mt_meal_added_to_entry', $post_data[ 'user-id' ], $post_data[ 'entry-id' ], $quantity, $post_data[ 'meal-type' ] );
 
 	wp_send_json( [ 'error' => false, 'entry' => yk_mt_entry( $post_data[ 'entry-id' ] ) ] );
 }
@@ -63,14 +63,18 @@ function yk_mt_ajax_delete_meal_from_entry() {
 
     $post_data = yk_mt_ajax_extract_and_validate_post_data( [ 'entry-id', 'meal-entry-id' ] );
 
+    $user_id = get_current_user_id();
+
 	// Ensure the user is the owner of the entry.
-	if ( false === yk_mt_security_entry_owned_by_user( $post_data[ 'entry-id' ], get_current_user_id() ) ) {
+	if ( false === yk_mt_security_entry_owned_by_user( $post_data[ 'entry-id' ], $user_id ) ) {
 		return wp_send_json( [ 'error' => 'security' ] );
 	}
 
     if ( true !== yk_mt_entry_meal_delete( (int) $post_data[ 'meal-entry-id' ] ) ) {
         return wp_send_json( [ 'error' => 'updating-db' ] );
     }
+
+	do_action( 'yk_mt_meal_deleted_from_entry', $user_id, $post_data[ 'meal-entry-id' ], $post_data[ 'entry-id' ] );
 
     wp_send_json( [ 'error' => false, 'entry' => yk_mt_entry( $post_data[ 'entry-id' ] ) ] );
 }

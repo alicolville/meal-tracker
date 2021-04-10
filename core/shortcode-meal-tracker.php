@@ -22,7 +22,6 @@ function yk_mt_shortcode_meal_tracker( $user_defined_arguments ) {
 												'chart-type'            => 'doughnut',  // pie / doughnut
 												'chart-hide-legend'     => false,       // Hide chart legend
 												'chart-hide-title'      => true         // Hide chart title
-
 	], $user_defined_arguments );
 
 	// Is the user logged in?
