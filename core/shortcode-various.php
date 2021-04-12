@@ -147,5 +147,3 @@ function yk_mt_entry_get_value( $key ) {
 
 	return '';
 }
-
-// [mt-calories-allowance], [mt-calories-remaining], [mt-calories-used], [mt-calories-used-percentage], [mt-calories-difference]

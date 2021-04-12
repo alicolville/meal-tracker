@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food, fatsecrets, collection, macronutrients, fractions, search, edit, create
 Requires at least: 5.2
 Tested up to: 5.7
-Stable tag: 2.6
+Stable tag: 3.0
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -72,11 +72,11 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 == Upgrade Notice ==
 
-2.5 - Support for myCred. Reward your users for creating new entries and adding meals to their entries.
+3.0 - Shortcodes, shortcodes, shortcodes and much more.
 
 == Changelog ==
 
-= 2.6 =
+= 3.0 =
 
 * New feature: New shortcode: [mt-chart-entries] which displays a chart of the user's entries. Read more: https://mealtracker.yeken.uk/shortcodes/mt-chart-entries.html
 * New feature: New shortcode: [mt-table-entries] which displays a table of the user's entries. Read more: https://mealtracker.yeken.uk/shortcodes/mt-table-entries.html
