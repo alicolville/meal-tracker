@@ -185,7 +185,12 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
             <?php yk_mt_user_search_form(); ?>
         </div>
     </div>
-
+  	<div class="postbox">
+        <h2 class="hndle"><?php echo __( 'Delete cache for this user', YK_MT_SLUG ); ?></h2>
+        <div class="inside">
+            <a href="<?php echo esc_url( yk_mt_link_admin_page_user($user_id, 'user', [ 'delete-cache' => 'y' ] ) );?>" class="button-secondary"><?php echo __( 'Delete Cache', YK_MT_SLUG ); ?></span></a>
+        </div>
+    </div>
     <div class="postbox">
         <h2 class="hndle"><?php echo __( 'Delete Data', YK_MT_SLUG ); ?></h2>
         <div class="inside">
@@ -195,6 +200,7 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
                 class="button-secondary yk-mt-button-confirm"><?php echo __( 'All Meals', YK_MT_SLUG ); ?></span></a>
         </div>
     </div>
+
     <?php
 }
 

@@ -327,7 +327,7 @@ function yk_mt_db_entry_get( $id = NULL ) {
     $entry_id = $id;
 
     if ( $cache = yk_mt_cache_get( 'entry-' . $entry_id ) ) {
-        $cache[ 'cache' ] = true;
+    	$cache[ 'cache' ] = true;
         return $cache;
     }
 

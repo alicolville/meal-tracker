@@ -85,6 +85,11 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 * New feature: New shortcode: [mt-count-entries] which displays a count of the user's entries. Read more: https://mealtracker.yeken.uk/shortcodes/mt-count-entries.html
 * New feature: New shortcode: [mt-count-meals] which displays the number of meals the user has added to their collection. Read more: https://mealtracker.yeken.uk/shortcodes/mt-count-meals.html
 * New feature: New shortcode [mt-chart-today] which is used to display the user's progress for today. Read more: https://mealtracker.yeken.uk/shortcodes/mt-chart-today.html
+* New feature: New shortcode: [mt-calories-allowance] displays the calorie allowance for today's entry. Read more: https://mealtracker.yeken.uk/shortcodes.html
+* New feature: New shortcode: [mt-calories-remaining]] displays the remaining calorie allowance for today's entry. Read more: https://mealtracker.yeken.uk/shortcodes.html
+* New feature: New shortcode: [mt-calories-used] displays the calories used for today's entry. Read more: https://mealtracker.yeken.uk/shortcodes.html
+* New feature: New shortcode: [mt-calories-used-percentage] displays the percentage of calories used for today . Read more: https://mealtracker.yeken.uk/shortcodes.html
+* New feature: Added a "Delete all cache" button a user's profile within the admin area.
 * Improvement: Set the height of the progress chart in [meal-tracker] shortcode to 200px. This can be overridden using the shortcode argument below.
 * Improvement: Added the argument "chart-height", "chart-type", "chart-hide-legend" and "chart-hide-title" to the shortcode [meal-tracker] Read more: https://mealtracker.yeken.uk/shortcodes/meal-tracker.html
 * Improvement: Added the argument "url-login" to the shortcode [meal-tracker] Read more: https://mealtracker.yeken.uk/shortcodes/meal-tracker.html

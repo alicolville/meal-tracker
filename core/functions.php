@@ -135,6 +135,9 @@ function yk_mt_entry_url( $entry_id, $esc_url = true ) {
 /**
  * Fetch the entry ID for today if it already exists, otherwise create it!
  *
+ * @param null $user_id
+ * @param null $date
+ *
  * @return null|int
  */
 function yk_mt_entry_get_id_or_create( $user_id = NULL, $date = NULL ) {

@@ -85,3 +85,67 @@ function yk_mt_shortcode_count_meals( $user_defined_arguments ) {
 			esc_html( $shortcode_arguments[ 'text-no-entries' ] );
 }
 add_shortcode( 'mt-count-meals', 'yk_mt_shortcode_count_meals' );
+
+/**
+ * Return calorie allowance for today
+ * @return string
+ */
+function yk_mt_shortcode_entry_calories_allowance(){
+	return yk_mt_entry_get_value( 'calories_allowed');
+}
+add_shortcode( 'mt-calories-allowance', 'yk_mt_shortcode_entry_calories_allowance' );
+
+/**
+ * Return calories remaining for today
+ * @return string
+ */
+function yk_mt_shortcode_entry_calories_remaining(){
+	return yk_mt_entry_get_value( 'calories_remaining');
+}
+add_shortcode( 'mt-calories-remaining', 'yk_mt_shortcode_entry_calories_remaining' );
+
+/**
+ * Return calories used for today
+ * @return string
+ */
+function yk_mt_shortcode_entry_calories_used(){
+	return yk_mt_entry_get_value( 'calories_used');
+}
+add_shortcode( 'mt-calories-used', 'yk_mt_shortcode_entry_calories_used' );
+
+/**
+ * Return calories % used for today
+ * @return string
+ */
+function yk_mt_shortcode_entry_calories_used_percentage(){
+	return yk_mt_entry_get_value( 'percentage_used');
+}
+add_shortcode( 'mt-calories-used-percentage', 'yk_mt_shortcode_entry_calories_used_percentage' );
+
+/**
+ * Fetch data about an entry for shortcode usuage
+ * @param $key
+ *
+ * @return string
+ */
+function yk_mt_entry_get_value( $key ) {
+
+	$entry = yk_mt_entry();
+
+	if ( false === isset( $entry[ $key ] ) ) {
+		return '';
+	}
+
+	// Display a calorie value?
+	if ( true === in_array( $key, [ 'calories_remaining', 'calories_used', 'calories_allowed' ] ) ) {
+		return yk_mt_format_calories( $entry[ $key ] );
+	}
+
+	if ( 'percentage_used' === $key ) {
+		return $entry[ 'percentage_used' ] . '%';
+	}
+
+	return '';
+}
+
+// [mt-calories-allowance], [mt-calories-remaining], [mt-calories-used], [mt-calories-used-percentage], [mt-calories-difference]
