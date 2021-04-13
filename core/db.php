@@ -1141,6 +1141,7 @@ function yk_wt_db_tables_create() {
                 ext_serving_id int NULL,
                 ext_image varchar( 300 ) NULL,
                 ext_url varchar( 300 ) NULL,
+                imported_csv bit DEFAULT 0,
                 added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
              UNIQUE KEY id (id)
             ) $charset_collate;";

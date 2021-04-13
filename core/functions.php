@@ -1406,3 +1406,133 @@ function yk_mt_server_ip() {
 function yk_mt_to_bool( $string ) {
 	return filter_var( $string, FILTER_VALIDATE_BOOLEAN );
 }
+
+/**
+ * Process a CSV attachment and import into database
+ *
+ * @param $attachment_id
+ *
+ * @param bool $dry_run
+ *
+ * @return string
+ */
+function yk_mt_import_csv_meal_collection( $attachment_id, $dry_run = true ) {
+
+	if ( false === yk_mt_admin_permission_check() ) {
+		return 'You do not have the correct admin permissions';
+	}
+
+	if ( false === YK_MT_IS_PREMIUM ) {
+		return 'This is a premium feature';
+	}
+
+	$csv_path = get_attached_file( $attachment_id );
+	$admin_id = get_current_user_id();
+
+	if ( true === empty( $csv_path ) || false === file_exists( $csv_path )) {
+		return 'Error: Error loading CSV from disk.';
+	}
+
+	$csv = array_map('str_getcsv', file( $csv_path ) );
+
+	if ( true === empty( $csv ) ) {
+		return 'Error: The CSV appears to be empty.';
+	}
+
+	array_walk($csv, function(&$a) use ($csv) {
+		$a = array_combine($csv[0], $a);
+	});
+
+	array_shift($csv );
+
+	if ( true === empty( $csv ) ) {
+		return 'Error: The CSV appears to be empty (when header hs been removed).';
+	}
+
+	$errors = 0;
+
+	$output = sprintf( '%d rows to process...' . PHP_EOL, count( $csv ) );
+
+	if ( true === $dry_run ) {
+		$output .= 'DRY RUN MODE! No data will be imported.' . PHP_EOL;
+	}
+
+	$db_formats = [ '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d', '%s' ];
+
+	foreach ( $csv as $row ) {
+
+		if ( $errors >= 50 ) {
+			$output .= 'Aborted! More than 50 errors have been detected in this file.' . PHP_EOL;
+			break;
+		}
+
+		$validation_result = yk_mt_import_csv_meal_collection_validate_row( $row );
+
+		// Validate a row before proceeding
+		if ( true !== $validation_result ) {
+			$output .= $validation_result . PHP_EOL;
+			$errors++;
+			continue;
+		}
+
+		if ( false === $dry_run ) {
+
+			// Import into database
+			$meal = [ 	'added_by' 			=> $admin_id,
+						 'added_by_admin' 	=> 1,
+						 'name'				=> $row[ 'name' ],
+						 'description'		=> $row[ 'description' ],
+						 'calories'			=> $row[ 'calories' ],
+						 'quantity'			=> $row[ 'quantity' ],
+						 'unit'				=> $row[ 'unit' ],
+						 'imported_csv'		=> 1,
+						 'source'			=> 'csv'
+			];
+
+			global $wpdb;
+
+			$result = $wpdb->insert( $wpdb->prefix . YK_WT_DB_MEALS , $meal, $db_formats );
+
+			if ( false === $result ) {
+				$output .= 'Skipped: Error inserting into database (most likely a field contains too many characters or in the wrong format): ' . $wpdb->last_error . ' . ' .  implode( ',', $row ) . PHP_EOL;
+			}
+		}
+
+	}
+
+	if ( $errors > 0 ) {
+		$output .= sprintf( '%d errors were detected and the rows skipped.' . PHP_EOL, $errors );
+	}
+
+	$output .= 'Completed.';
+
+	return $output;
+
+}
+
+/**
+ * Validate CSV row
+ * @param $csv_row
+ *
+ * @return bool|string
+ */
+function yk_mt_import_csv_meal_collection_validate_row( $csv_row ) {
+
+	if ( true === empty( $csv_row[ 'name' ] ) ) {
+		return 'Skipped: Missing name: ' . implode( ',', $csv_row );
+	}
+
+	if ( false === empty( $isset[ 'calories' ] ) ) {
+		return 'Skipped: Calories: ' . implode( ',', $csv_row );
+	}
+
+	$allowed_units = yk_mt_units_raw();
+
+	if ( false === empty( $csv_row[ 'unit' ] ) &&
+			true === empty( $allowed_units[ $csv_row[ 'unit' ] ] ) ) {
+			return 'Skipped: Invalid unit: ' . implode( ',', $csv_row );
+	}
+
+	return true;
+}
+

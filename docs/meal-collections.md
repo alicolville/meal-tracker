@@ -10,6 +10,10 @@ Besides users having their own meal collections, the [Premium]({{ site.baseurl }
 - Add one or more meals by clicking the "Add a new meal" button and completing the subsequent form.
 - My default, the admin meal collection isn't searchable. To allow your users to search it, you must enabled it via the settings page. Under "Secraching for meals", ensure the option "Admin's meal collection" is set to "Yes".
 
+## Bulk Import
+
+Rather than manually add every meal, Meal Tracker has a [CSV import tool]({{ site.baseurl }}/csv-import.html) that allows you bulk import meals. [Read more about CSV imports]({{ site.baseurl }}/csv-import.html).
+
 ### Admin view
 
 Summary view of meal collection

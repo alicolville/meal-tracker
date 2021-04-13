@@ -340,6 +340,9 @@ function yk_mt_ext_source_as_string( $slug ) {
 
 	switch ( $slug ) {
 
+		case 'csv':
+			return __( 'CSV Import', YK_MT_SLUG );
+			break;
 		case 'fat-secrets-foods':
 			return __( 'FatSecrets Food', YK_MT_SLUG );
 			break;

@@ -37,7 +37,9 @@ include_once YK_MT_ABSPATH . 'core/setup.wizard.php';
 
 $is_premium = yk_mt_license_is_premium();
 
-define( 'YK_MT_IS_PREMIUM', $is_premium );
+//define( 'YK_MT_IS_PREMIUM', $is_premium );
+define( 'YK_MT_IS_PREMIUM', true );
+
 
 include_once YK_MT_ABSPATH . 'core/caching.php';
 include_once YK_MT_ABSPATH . 'core/db.php';
@@ -76,6 +78,7 @@ include_once YK_MT_ABSPATH . 'core/admin-pages/page.setup.wizard.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-home.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-dashboard.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-add-edit.php';
+include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-import.php';
 
 // -----------------------------------------------------------------------------------------
 // AC: Load relevant language files

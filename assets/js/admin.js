@@ -285,4 +285,50 @@ jQuery( document ).ready(function ($) {
 
   });
 
+  // CSV import for
+  let file_frame;
+
+  $( '#select_csv').on('click', function( event ){
+
+    event.preventDefault();
+
+
+    // If the media frame already exists, reopen it.
+    if ( file_frame ) {
+
+      // Open frame
+      file_frame.open();
+      return;
+    }
+
+    // Create the media frame.
+    file_frame = wp.media.frames.file_frame = wp.media({
+      title: 'Select a CSV to upload',
+      button: {
+        text: 'Use this file',
+      },
+      library : {
+        type : ['application/csv', 'text/csv'],
+      },
+      multiple: false
+    });
+
+    // When an image is selected, run a callback.
+    file_frame.on( 'select', function() {
+      // We set multiple to false so only get one image from the uploader
+      attachment = file_frame.state().get('selection').first().toJSON();
+
+      // // Do something with attachment.id and/or attachment.url here
+      // $( '#image-preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
+      $( '#attachment-id' ).val( attachment.id );
+      $( '#attachment-path' ).val( attachment.url );
+      $( '#selected-form' ).removeClass( 'yk-mt-hide' );
+
+
+    });
+
+
+    file_frame.open();
+  });
+
 });

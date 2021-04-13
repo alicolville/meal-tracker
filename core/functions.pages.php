@@ -219,6 +219,7 @@ function yk_mt_dashboard_side_bar() {
         <div class="inside">
         	<center>
         		<a href="<?php echo esc_url( admin_url( 'admin.php?page=yk-mt-meals&mode=meal' ) ); ?>" class="button-primary"><?php echo __( 'Add a new meal', YK_MT_SLUG ); ?></span></a>
+        		<a href="<?php echo esc_url( admin_url( 'admin.php?page=yk-mt-meals&mode=import' ) ); ?>" class="button-secondary"><?php echo __( 'Import from CSV', YK_MT_SLUG ); ?></span></a>
 			</center>
         </div>
      </div>
