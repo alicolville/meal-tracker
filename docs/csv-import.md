@@ -45,7 +45,7 @@ Coke,Bottle,30,500,ml
 [![]({{ site.baseurl }}/assets/images/admin/import-select.png)]({{ site.baseurl }}/assets/admin/images/import-select.png) 
 - Either upload a CSV to the media library or select an existing one. Click the button "Import CSV".
 [![]({{ site.baseurl }}/assets/images/admin/import-selected.png)]({{ site.baseurl }}/assets/admin/images/import-selected.png)
-- Examine the output report and action an error rows.
+- Examine the output report and action any errors.
 [![]({{ site.baseurl }}/assets/images/admin/import-output.png)]({{ site.baseurl }}/assets/admin/images/import-output.png)
 
 #### Dry run mode
