@@ -251,7 +251,7 @@ add_action( 'yk_mt_entry_deleted', 'yk_mt_cache_hook_entry_delete' );
  */
 function yk_mt_cache_hook_meal_delete( $id ) {
 
-	yk_mt_delete_cache( 'meal-' . $id );
+	yk_mt_cache_delete( 'meal-' . $id );
 }
 add_action( 'yk_mt_meal_deleted', 'yk_mt_cache_hook_meal_delete' );
 add_action( 'yk_mt_meals_updated', 'yk_mt_cache_hook_meal_delete' );
