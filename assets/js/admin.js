@@ -327,8 +327,116 @@ jQuery( document ).ready(function ($) {
 
     });
 
-
     file_frame.open();
   });
+
+  /*
+    Postbox sorting / hiding
+   */
+  $( '.yk-mt-postbox .handlediv' ).on('click', function ( event ) {
+
+    event.preventDefault();
+
+    let postbox_id = $( this ).data( 'postbox-id' );
+    let postbox    = $( '#' + postbox_id );
+
+    postbox.toggleClass( 'closed' );
+
+    let value = ( postbox.hasClass( 'closed' ) ) ? 0 : 1;
+
+    yk_mt_postboxes_event( postbox_id, 'display', value )
+
+  });
+
+  /**
+   * Fire an Ajax event back to back end to update postbox display / order preferences
+   * @param id
+   * @param key
+   * @param value
+   */
+  function yk_mt_postboxes_event( id, key, value ) {
+
+    let data = {  'action'    : 'yk_postboxes_event',
+      'security'  : yk_mt_sc_meal_tracker['ajax-admin-security-nonce'],
+      'id'        : id,
+      'key'       : key,
+      'value'     : value
+    };
+
+    jQuery.post( ajaxurl, data, function( response ) {
+      // Fire and forget.
+    });
+  }
+
+  /**
+   * Handle Up and down click on postbox headers
+   */
+  $( '.yk-mt-postbox-higher, .yk-mt-postbox-lower' ).click( function( e ) {
+
+    e.preventDefault();
+
+    let column_name     = $( this ).data( 'postbox-col' );
+    let ids             = yk_mt_postboxes_ids( column_name );
+    let selected_id     = $( this ).data( 'postbox-id' );
+    let selected_index  = ids.indexOf( selected_id );
+    let move_up         = $( this ).hasClass( 'yk-mt-postbox-higher' );
+
+    if ( true === move_up && selected_index > 0 || false === move_up && selected_index < ids.length ) {
+
+      let postboxes   = $( '#' + column_name + ' .yk-mt-postbox' );
+      let swap_index  = ( true === move_up ) ? selected_index - 1 : selected_index + 1;
+
+      yk_mt_swap_elements( $( postboxes[ selected_index ] ).attr( 'id' ), $( postboxes[ swap_index ] ).attr( 'id' ) );
+
+      yk_mt_postboxes_event( 'order', column_name, yk_mt_postboxes_ids( column_name ) );
+    }
+  });
+
+  /**
+   * Get all IDs for postboxes within column
+   * @param name
+   * @returns {[]}
+   */
+  function yk_mt_postboxes_ids( column_name ) {
+    let  ids = [];
+    $( '#' + column_name + ' .yk-mt-postbox' ).each( function () {
+      ids.push( this.id );
+    });
+
+    return ids;
+  }
+
+  /**
+   * Swap around two HTML elements
+   * Source: https://stackoverflow.com/questions/10716986/swap-two-html-elements-and-preserve-event-listeners-on-them
+   * @param first_element_id
+   * @param second_element_id
+   */
+  function yk_mt_swap_elements( first_element_id, second_element_id ) {
+
+    let obj1 = document.getElementById( first_element_id );
+    let obj2 = document.getElementById( second_element_id );
+
+    // save the location of obj2
+    let parent2 = obj2.parentNode;
+    let next2 = obj2.nextSibling;
+    // special case for obj1 is the next sibling of obj2
+    if (next2 === obj1) {
+      // just put obj1 before obj2
+      parent2.insertBefore(obj1, obj2);
+    } else {
+      // insert obj2 right before obj1
+      obj1.parentNode.insertBefore(obj2, obj1);
+
+      // now insert obj1 where obj2 was
+      if (next2) {
+        // if there was an element after obj2, then insert obj1 right before that
+        parent2.insertBefore(obj1, next2);
+      } else {
+        // otherwise, just append as last child
+        parent2.appendChild(obj1);
+      }
+    }
+  }
 
 });

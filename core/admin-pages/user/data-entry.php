@@ -93,11 +93,7 @@ function yk_mt_admin_page_entry_view() {
                     </div>
                 </div>
             </div>
-            <div id="postbox-container-1" class="postbox-container">
-                <div class="meta-box-sortables">
-                    <?php yk_mt_user_side_bar(  $entry[ 'user_id' ], $entry ); ?>
-                </div>
-            </div>
+			<?php yk_mt_user_side_bar(  $entry[ 'user_id' ], $entry ); ?>
         </div>
         <br class="clear">
     </div>

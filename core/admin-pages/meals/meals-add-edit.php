@@ -48,11 +48,7 @@ function yk_mt_admin_page_meals_add_edit() {
 					</div>
 				</div>
 			</div>
-			<div id="postbox-container-1" class="postbox-container">
-				<div class="meta-box-sortables">
-					<?php yk_mt_dashboard_side_bar(); ?>
-				</div>
-			</div>
+			<?php yk_mt_dashboard_side_bar(); ?>
 		</div>
 		<br class="clear">
 	</div>

@@ -541,3 +541,19 @@ function yk_mt_ajax_get_post_value( $key, $default = NULL, $force_to_int = false
 
     return $default ?: NULL;
 }
+
+/**
+ * AJAX handler for clearing Target Weight
+ */
+function yk_mt_ajax_postbox_value() {
+
+	check_ajax_referer( 'yk-mt-admin-nonce', 'security' );
+
+	$postbox_id = yk_mt_post_value('id' );
+	$key        = yk_mt_post_value('key' );
+	$value      = yk_mt_post_value('value' );
+	$result     = update_option( 'yk-mt-postbox-' . $postbox_id . '-' . $key, $value );
+
+	wp_send_json( $result );
+}
+add_action( 'wp_ajax_yk_postboxes_event', 'yk_mt_ajax_postbox_value' );

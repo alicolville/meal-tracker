@@ -17,199 +17,273 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
     }
     $current_url = yk_mt_link_current_url();
 
-    if ( NULL !== $entry ): ?>
-        <div class="postbox">
-            <h2 class="hndle"><?php echo ( false === empty( $_GET[ 'mode' ] ) && 'entry' === $_GET[ 'mode' ] ) ? __( 'Entry summary', YK_MT_SLUG ) : __( 'Today\'s entry', YK_MT_SLUG ) ; ?></h2>
-            <div class="inside">
-                <div class="yk-mt__table--summary-chart-slot">
-                    <?php echo yk_mt_chart_progress_canvas( [ 'chart-height' => '150px' ] ); ?>
-                </div>
-                <table class="yk-mt-sidebar-stats">
-                    <tr>
-                        <th><?php echo __( 'Date', YK_MT_SLUG ); ?></th>
-                        <td><?php echo yk_mt_date_format( $entry[ 'date' ] ); ?></td>
-                    </tr>
-                    <tr>
-                        <th><?php echo __( 'Calories Allowed', YK_MT_SLUG ); ?></th>
-                        <td>
-                            <form class="yk-mt-admin-form" id="yk-mt-admin-calories-allowed" method="post" action="<?php echo esc_url( $current_url ); ?>">
-                                <input type="hidden" name="yk-mt-update-allowance" value="<?php echo (int) $entry[ 'id' ]; ?>" />
-                               <?php
+    ?>
+	<div id="postbox-container-1" class="postbox-container">
+	  <div class="meta-box-sortables" id="yk-mt-user-data-one-sidebar">
+			<?php
+				$order = get_option( 'yk-mt-postbox-order-yk-mt-user-data-one-sidebar', [ 'entry-summary', 'table' ] );
 
-                                    echo yk_mt_form_number( __( 'Calories allowed: ', YK_MT_SLUG ),
-                                        'calories_allowed',
-                                        (int) $entry[ 'calories_allowed' ],
-                                        '',
-                                        1,
-                                        1,
-                                        20000
-                                    );
+				foreach ( $order as $postbox ) {
 
-                                ?>
-                             <input type="submit" class="button" value="<?php echo __( 'Save', YK_MT_SLUG ); ?>" />
-                            </form>
+					if ( 'entry-summary' === $postbox ) {
+						yk_mt_user_side_bar_postbox_entry( $entry );
+					} elseif ( 'user-stats' === $postbox ) {
+						yk_mt_user_side_bar_postbox_user_stats( $user_id );
+					} elseif ( 'allowed-calories' === $postbox ) {
+						yk_mt_user_side_bar_postbox_allowed_sources( $user_id );
+					} elseif ( 'user-search' === $postbox ) {
+						yk_mt_postbox_user_search( 'yk-mt-user-data-one-sidebar' );
+					} elseif ( 'delete-cache' === $postbox ) {
+						yk_mt_user_side_bar_postbox_delete_cache( $user_id );
+					} elseif ( 'delete-data' === $postbox ) {
+						yk_mt_user_side_bar_postbox_delete_data( $user_id );
+					}
+				}
+			?>
+	  </div>
+	</div>
+    <?php
+}
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo __( 'Calories Used', YK_MT_SLUG ); ?></th>
-                        <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'calories_used' ] ); ?></td>
-                    </tr>
-                    <tr>
-                        <th><?php echo __( 'Calories Remaining', YK_MT_SLUG ); ?></th>
-                        <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'calories_remaining' ] ); ?></td>
-                    </tr>
-                    <tr>
-                        <th><?php echo __( 'Percentage used', YK_MT_SLUG ); ?></th>
-                        <td class="yk-mt-blur"><?php echo yk_mt_format_number( $entry[ 'percentage_used' ], 1 ); ?>%</td>
-                    </tr>
-                    <tr>
-                        <th><?php echo __( 'Meals', YK_MT_SLUG ); ?></th>
-                        <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'counts' ][ 'total-meals' ] ); ?></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    <?php endif; ?>
+/**
+ * Postbox for delete cache
+ * @param $user_id
+ */
+function yk_mt_user_side_bar_postbox_delete_cache( $user_id ) {
+	?>
+
+	<div class="postbox <?php yk_mt_postbox_classes( 'delete-cache' ); ?>" id="delete-cache">
+		<?php yk_mt_postbox_header( [ 'title' => __( 'Delete cache for user', YK_MT_SLUG ), 'postbox-id' => 'delete-cache', 'postbox-col' => 'yk-mt-user-data-one-sidebar' ] ); ?>
+		<div class="inside">
+			<a href="<?php echo esc_url( yk_mt_link_admin_page_user($user_id, 'user', [ 'delete-cache' => 'y' ] ) );?>" class="button-secondary"><?php echo __( 'Delete Cache', YK_MT_SLUG ); ?></span></a>
+		</div>
+	</div>
+
 	<?php
-		  $stats = yk_mt_user_stats( $user_id );
-	 ?>
-    <div class="postbox yk-mt-user-data">
-        <h2 class="hndle"><span><?php echo __( 'User Information', YK_MT_SLUG ); ?></span></h2>
-        <div class="inside">
-            <table class="yk-mt-sidebar-stats">
-               <tr>
-                    <th><?php echo __( 'Latest Entry', YK_MT_SLUG ); ?></th>
-                    <td><?php echo yk_mt_date_format( $stats[ 'date-last' ] ); ?></td>
-                </tr>
-                <tr>
-                    <th><?php echo __( 'Oldest Entry', YK_MT_SLUG ); ?></th>
-                    <td class="yk-mt-blur"><?php echo yk_mt_date_format( $stats[ 'date-first' ] ); ?></td>
-                </tr>
-                <tr>
-                    <th><?php echo __( 'Number of Entries', YK_MT_SLUG ); ?></th>
-                    <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-entries' ] ); ?></td>
-                </tr>
-                <tr>
-                    <th><?php echo __( 'Number of Meals', YK_MT_SLUG ); ?></th>
-                    <td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-meals' ] ); ?>
-                    <?php
+}
+
+/**
+ * Postbox for delete data
+ * @param $user_id
+ */
+function yk_mt_user_side_bar_postbox_delete_data( $user_id ) {
+	?>
+
+	<div class="postbox <?php yk_mt_postbox_classes( 'delete-data' ); ?>" id="delete-data">
+		<?php yk_mt_postbox_header( [ 'title' => __( 'Delete user data', YK_MT_SLUG ), 'postbox-id' => 'delete-data', 'postbox-col' => 'yk-mt-user-data-one-sidebar' ] ); ?>
+		<div class="inside">
+			<a href="<?php echo esc_url( yk_mt_link_admin_page_user($user_id, 'user', [ 'delete-entries' => 'y' ] ) );?>" class="button-secondary yk-mt-button-confirm"><?php echo __( 'All Entries', YK_MT_SLUG ); ?></span></a>
+			<a href="<?php echo esc_url( yk_mt_link_admin_page_user($user_id, 'user', [ 'delete-meals' => 'y' ] ) );?>"
+			   data-content="<?php echo __( 'All of the user\'s meals will be marked as deleted. They will still reside in the system, yet can only be viewed against old entries. They can no longer be added to entries', YK_MT_SLUG ); ?>"
+			   class="button-secondary yk-mt-button-confirm"><?php echo __( 'All Meals', YK_MT_SLUG ); ?></span></a>
+		</div>
+	</div>
+
+	<?php
+}
+
+/**
+ * Postbox for allowed calories
+ * @param $user_id
+ */
+function yk_mt_user_side_bar_postbox_allowed_sources( $user_id ) {
+	?>
+
+	<div class="postbox <?php yk_mt_postbox_classes( 'allowed-calories' ); ?>" id="allowed-calories">
+		<?php yk_mt_postbox_header( [ 'title' => __( 'Allowed calories', YK_MT_SLUG ), 'postbox-id' => 'allowed-calories', 'postbox-col' => 'yk-mt-user-data-one-sidebar' ] ); ?>
+		<div class="inside">
+			<p><?php echo __( 'When a new entry is created for this user, their allowed calories will be set in the following way', YK_MT_SLUG ); ?>:</p>
+			<?php
+			$selected_source = yk_mt_user_calories_target( $user_id, true );
+
+			?>
+			<table class="yk-mt-sidebar-stats">
+				<tr>
+					<th colspan="2"><?php echo __( 'Source', YK_MT_SLUG ); ?></th>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<?php
+						$sources = yk_mt_user_calories_sources();
+
+						if ( false === empty( $sources ) ) {
+
+							printf( ' <form class="yk-mt-admin-form" method="post" action="%1$s">
+                                                            <select name="%2$s" id="%2$s">', yk_mt_link_current_url(), 'yk-mt-calorie-source' );
+
+							foreach ( yk_mt_user_calories_sources() as $key => $source ) {
+
+								printf( '<option value="%1$s" %3$s >%2$s</option>',
+									esc_attr( $key ),
+									esc_html( $source[ 'admin-message' ] ),
+									selected( $key, $selected_source[ 'key' ] )
+								);
+
+							}
+
+							printf( '</select>
+                                               <input type="submit" class="button" value="%1$s" />
+                                               </form>',
+								__( 'Save', YK_MT_SLUG )
+							);
+
+						} else {
+							printf( '<p class="yk-mt-error">%s</p>', __( 'You must specify one or more calorie sources in settings.', YK_MT_SLUG ) );
+						}
+						?>
+					</td>
+				</tr>
+				<tr>
+					<th><?php echo __( 'Current allowance', YK_MT_SLUG ); ?></th>
+					<td><?php echo yk_mt_format_calories( $selected_source[ 'value' ] ); ?></td>
+				</tr>
+			</table>
+			<?php
+			?>
+			<?php if ( true === YK_MT_IS_PREMIUM &&
+					   true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ): ?>
+				<form class="yk-mt-admin-form yk-mt-side-bar-admin-allowance<?php echo ( 'admin' !== $selected_source[ 'key' ] ) ? ' yk-mt-hide' : ''; ?>" id="yk-mt-admin-allowance" method="post" action="<?php echo esc_url( $current_url ); ?>">
+					<p><strong><?php echo __( 'Specify admin allowance for the user', YK_MT_SLUG ); ?></strong></p>
+					<p class="small"><?php echo __( 'Please be aware that the user can override this value if other calories sources have been enabled within the plugin\'s settings.', YK_MT_SLUG ); ?></p>
+					<?php
+
+					echo yk_mt_form_number( __( 'Set Target: ', YK_MT_SLUG ),
+						'allowed-calories-admin',
+						yk_mt_user_calories_target_admin_specified( $user_id ),
+						'',
+						1,
+						1,
+						20000
+					);
+
+					?>
+					<input type="submit" class="button" value="<?php echo __( 'Save', YK_MT_SLUG ); ?>" />
+				</form>
+			<?php endif; ?>
+		</div>
+	</div>
+
+	<?php
+}
+
+/**
+ * Postbox for user stats
+ * @param $user_id
+ */
+function yk_mt_user_side_bar_postbox_user_stats( $user_id ) {
+
+	$stats = yk_mt_user_stats( $user_id );
+	?>
+	<div class="postbox <?php yk_mt_postbox_classes( 'user-stats' ); ?>" id="user-stats">
+		<?php yk_mt_postbox_header( [ 'title' => __( 'User Information', YK_MT_SLUG ), 'postbox-id' => 'user-stats', 'postbox-col' => 'yk-mt-user-data-one-sidebar' ] ); ?>
+		<div class="inside">
+			<table class="yk-mt-sidebar-stats">
+				<tr>
+					<th><?php echo __( 'Latest Entry', YK_MT_SLUG ); ?></th>
+					<td><?php echo yk_mt_date_format( $stats[ 'date-last' ] ); ?></td>
+				</tr>
+				<tr>
+					<th><?php echo __( 'Oldest Entry', YK_MT_SLUG ); ?></th>
+					<td class="yk-mt-blur"><?php echo yk_mt_date_format( $stats[ 'date-first' ] ); ?></td>
+				</tr>
+				<tr>
+					<th><?php echo __( 'Number of Entries', YK_MT_SLUG ); ?></th>
+					<td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-entries' ] ); ?></td>
+				</tr>
+				<tr>
+					<th><?php echo __( 'Number of Meals', YK_MT_SLUG ); ?></th>
+					<td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-meals' ] ); ?>
+						<?php
 						printf( ' ( <a href="%s">%s</a> ) ',
 							esc_url( admin_url( 'admin.php?page=yk-mt-meals&user-id=' . (int) $user_id ) ),
 							__( 'view', YK_MT_SLUG )
 						);
-					?>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
+						?>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<?php
+}
 
-     <div class="postbox yk-mt-user-data">
-        <h2 class="hndle"><span><?php echo __( 'Allowed calories source', YK_MT_SLUG ); ?></span></h2>
-        <div class="inside">
-            <p><?php echo __( 'When a new entry is created for this user, their allowed calories will be set in the following way', YK_MT_SLUG ); ?>:</p>
-            <?php
-                $selected_source = yk_mt_user_calories_target( $user_id, true );
+/**
+ * Render summary data for entry in sidebar
+ * @param null $entry
+ */
+function yk_mt_user_side_bar_postbox_entry( $entry = NULL ) {
 
-                ?>
-                    <table class="yk-mt-sidebar-stats">
-                        <tr>
-                            <th colspan="2"><?php echo __( 'Source', YK_MT_SLUG ); ?></th>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <?php
-                                    $sources = yk_mt_user_calories_sources();
+	$current_url 	= yk_mt_link_current_url();
+	$title 			= ( false === empty( $_GET[ 'mode' ] ) && 'entry' === $_GET[ 'mode' ] ) ? __( 'Entry summary', YK_MT_SLUG ) : __( 'Today\'s entry', YK_MT_SLUG );
+?>
+	<div class="postbox <?php yk_mt_postbox_classes( 'entry-summary' ); ?>" id="entry-summary">
+		<?php yk_mt_postbox_header( [ 'title' => $title, 'postbox-id' => 'entry-summary', 'postbox-col' => 'yk-mt-user-data-one-sidebar' ] ); ?>
+		<div class="inside">
+			<?php if ( NULL !== $entry ): ?>
+				<div class="yk-mt__table--summary-chart-slot">
+					<?php echo yk_mt_chart_progress_canvas( [ 'chart-height' => '150px' ] ); ?>
+				</div>
+				<table class="yk-mt-sidebar-stats">
+					<tr>
+						<th><?php echo __( 'Date', YK_MT_SLUG ); ?></th>
+						<td><?php echo yk_mt_date_format( $entry[ 'date' ] ); ?></td>
+					</tr>
+					<tr>
+						<th><?php echo __( 'Calories Allowed', YK_MT_SLUG ); ?></th>
+						<td>
+							<form class="yk-mt-admin-form" id="yk-mt-admin-calories-allowed" method="post" action="<?php echo esc_url( $current_url ); ?>">
+								<input type="hidden" name="yk-mt-update-allowance" value="<?php echo (int) $entry[ 'id' ]; ?>" />
+								<?php
 
-                                    if ( false === empty( $sources ) ) {
+								echo yk_mt_form_number( __( 'Calories allowed: ', YK_MT_SLUG ),
+									'calories_allowed',
+									(int) $entry[ 'calories_allowed' ],
+									'',
+									1,
+									1,
+									20000
+								);
 
-                                        printf( ' <form class="yk-mt-admin-form" method="post" action="%1$s">
-                                                            <select name="%2$s" id="%2$s">', yk_mt_link_current_url(), 'yk-mt-calorie-source' );
+								?>
+								<input type="submit" class="button" value="<?php echo __( 'Save', YK_MT_SLUG ); ?>" />
+							</form>
 
-                                        foreach ( yk_mt_user_calories_sources() as $key => $source ) {
+						</td>
+					</tr>
+					<tr>
+						<th><?php echo __( 'Calories Used', YK_MT_SLUG ); ?></th>
+						<td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'calories_used' ] ); ?></td>
+					</tr>
+					<tr>
+						<th><?php echo __( 'Calories Remaining', YK_MT_SLUG ); ?></th>
+						<td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'calories_remaining' ] ); ?></td>
+					</tr>
+					<tr>
+						<th><?php echo __( 'Percentage used', YK_MT_SLUG ); ?></th>
+						<td class="yk-mt-blur"><?php echo yk_mt_format_number( $entry[ 'percentage_used' ], 1 ); ?>%</td>
+					</tr>
+					<tr>
+						<th><?php echo __( 'Meals', YK_MT_SLUG ); ?></th>
+						<td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'counts' ][ 'total-meals' ] ); ?></td>
+					</tr>
+				</table>
+			<?php else: ?>
+				<p><?php echo __( 'No entry was found for the given date', YK_MT_SLUG ); ?>.</p>
+			<?php endif; ?>
+		</div>
+	</div>
 
-                                            printf( '<option value="%1$s" %3$s >%2$s</option>',
-                                                            esc_attr( $key ),
-                                                            esc_html( $source[ 'admin-message' ] ),
-                                                            selected( $key, $selected_source[ 'key' ] )
-                                            );
-
-                                        }
-
-                                        printf( '</select>
-                                               <input type="submit" class="button" value="%1$s" />
-                                               </form>',
-                                               __( 'Save', YK_MT_SLUG )
-                                        );
-
-                                    } else {
-                                        printf( '<p class="yk-mt-error">%s</p>', __( 'You must specify one or more calorie sources in settings.', YK_MT_SLUG ) );
-                                    }
-                                ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><?php echo __( 'Current allowance', YK_MT_SLUG ); ?></th>
-                            <td><?php echo yk_mt_format_calories( $selected_source[ 'value' ] ); ?></td>
-                        </tr>
-                    </table>
-                <?php
-                ?>
-                <?php if ( true === YK_MT_IS_PREMIUM &&
-                        true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ): ?>
-                    <form class="yk-mt-admin-form yk-mt-side-bar-admin-allowance<?php echo ( 'admin' !== $selected_source[ 'key' ] ) ? ' yk-mt-hide' : ''; ?>" id="yk-mt-admin-allowance" method="post" action="<?php echo esc_url( $current_url ); ?>">
-                        <p><strong><?php echo __( 'Specify admin allowance for the user', YK_MT_SLUG ); ?></strong></p>
-                        <p class="small"><?php echo __( 'Please be aware that the user can override this value if other calories sources have been enabled within the plugin\'s settings.', YK_MT_SLUG ); ?></p>
-                        <?php
-
-                            echo yk_mt_form_number( __( 'Set Target: ', YK_MT_SLUG ),
-                                'allowed-calories-admin',
-                                yk_mt_user_calories_target_admin_specified( $user_id ),
-                                '',
-                                1,
-                                1,
-                                20000
-                            );
-
-                        ?>
-                        <input type="submit" class="button" value="<?php echo __( 'Save', YK_MT_SLUG ); ?>" />
-                    </form>
-                <?php endif; ?>
-        </div>
-    </div>
-
-    <div class="postbox">
-        <h2 class="hndle"><?php echo __( 'User Search', YK_MT_SLUG ); ?></h2>
-        <div class="inside">
-            <?php yk_mt_user_search_form(); ?>
-        </div>
-    </div>
-  	<div class="postbox">
-        <h2 class="hndle"><?php echo __( 'Delete cache for this user', YK_MT_SLUG ); ?></h2>
-        <div class="inside">
-            <a href="<?php echo esc_url( yk_mt_link_admin_page_user($user_id, 'user', [ 'delete-cache' => 'y' ] ) );?>" class="button-secondary"><?php echo __( 'Delete Cache', YK_MT_SLUG ); ?></span></a>
-        </div>
-    </div>
-    <div class="postbox">
-        <h2 class="hndle"><?php echo __( 'Delete Data', YK_MT_SLUG ); ?></h2>
-        <div class="inside">
-            <a href="<?php echo esc_url( yk_mt_link_admin_page_user($user_id, 'user', [ 'delete-entries' => 'y' ] ) );?>" class="button-secondary yk-mt-button-confirm"><?php echo __( 'All Entries', YK_MT_SLUG ); ?></span></a>
-            <a href="<?php echo esc_url( yk_mt_link_admin_page_user($user_id, 'user', [ 'delete-meals' => 'y' ] ) );?>"
-                data-content="<?php echo __( 'All of the user\'s meals will be marked as deleted. They will still reside in the system, yet can only be viewed against old entries. They can no longer be added to entries', YK_MT_SLUG ); ?>"
-                class="button-secondary yk-mt-button-confirm"><?php echo __( 'All Meals', YK_MT_SLUG ); ?></span></a>
-        </div>
-    </div>
-
-    <?php
+<?php
 }
 
 /**
  * Display sidebar for dashboard
  */
 function yk_mt_dashboard_side_bar() {
-
-     $stats = yk_mt_stats();
+?>
+     <div id="postbox-container-1" class="postbox-container">
+                <div class="meta-box-sortables ui-sortable" id="yk-mt-user-sidebar">
+     <?php
 
      if ( 'yk-mt-meals' === yk_mt_querystring_value( 'page' )
      			&& 'meal' !== yk_mt_querystring_value( 'mode' ) ) :
@@ -223,16 +297,35 @@ function yk_mt_dashboard_side_bar() {
 			</center>
         </div>
      </div>
-     <?php else: ?>
-     <div class="postbox">
-        <h2 class="hndle"><?php echo __( 'User Search', YK_MT_SLUG ); ?></h2>
-        <div class="inside">
-            <?php yk_mt_user_search_form(); ?>
-        </div>
-    </div>
-     <?php endif; ?>
-    <div class="postbox">
-        <h2 class="hndle"><?php echo __( 'Summary Counts', YK_MT_SLUG ); ?></h2>
+     <?php endif;
+
+     	$order = get_option( 'yk-mt-postbox-order-yk-mt-user-sidebar', [ 'user-search', 'summary-counts' ] );
+
+		foreach ( $order as $postbox ) {
+
+			if ( 'summary-counts' === $postbox ) {
+				yk_mt_postbox_summary_counts();
+			} elseif ( 'user-search' === $postbox ) {
+				yk_mt_postbox_user_search();
+			}
+
+		}
+
+     ?>
+	</div>
+	</div>
+    <?php
+}
+
+/**
+* Postbox for summary counts
+ */
+function yk_mt_postbox_summary_counts() {
+
+	 $stats = yk_mt_stats();
+?>
+	<div class="postbox <?php yk_mt_postbox_classes( 'summary-counts' ); ?>" id="summary-counts">
+		<?php yk_mt_postbox_header( [ 'title' => __( 'Summary counts', YK_MT_SLUG ), 'postbox-id' => 'summary-counts', 'postbox-col' => 'yk-mt-user-sidebar' ] ); ?>
         <div class="inside">
              <table class="yk-mt-sidebar-stats">
                  <tr>
@@ -271,9 +364,25 @@ function yk_mt_dashboard_side_bar() {
                      <td colspan="2" class="small"><?php printf( '%s %s', __( 'last updated at ', YK_MT_SLUG ), $stats[ 'last-updated' ] ); ?></td>
                  </tr>
              </table>
-    </div>
+    	</div>
+	</div>
+<?php
+}
 
-    <?php
+/**
+* Postbox for user search
+*
+* @param string $column
+*/
+function yk_mt_postbox_user_search( $column = 'yk-mt-user-sidebar' ) {
+?>
+ 	<div class="postbox <?php yk_mt_postbox_classes( 'user-search' ); ?>" id="user-search">
+		<?php yk_mt_postbox_header( [ 'title' => __( 'User Search', YK_MT_SLUG ), 'postbox-id' => 'user-search', 'postbox-col' => $column ] ); ?>
+        <div class="inside">
+            <?php yk_mt_user_search_form(); ?>
+        </div>
+    </div>
+<?php
 }
 
 /**
@@ -593,4 +702,74 @@ function yk_mt_user_search_form() {
         <input type="submit" class="button" value="Search" id="yk-mt-search-button" />
     </form>
     <?php
+}
+
+// ------------------------------------------------------------------------------
+// Postbox ordering
+// ------------------------------------------------------------------------------
+
+/**
+ * Render Postbox header
+ * @param array $args
+ */
+function yk_mt_postbox_header( $args = [] ) {
+
+		$args = wp_parse_args( $args, [		'title'			=> __( 'Title', YK_MT_SLUG ),
+											'show-controls' => true,
+											'postbox-id'	=> NULL,
+											'postbox-col'	=> 'yk-mt-user-summary-one'
+		]);
+
+		echo '<div class="postbox-header">';
+
+		printf( '<h2 class="hndle"><span>%1$s</span></h2>', esc_html( $args[ 'title' ] ) );
+
+		if ( true === $args[ 'show-controls' ] &&
+			 	false === empty( $args[ 'postbox-id' ] ) ) {
+
+			printf( '<div class="handle-actions hide-if-no-js">
+						<button type="button" class="handle-order-higher yk-mt-postbox-higher" data-postbox-id="%1$s" data-postbox-col="%2$s"><span class="order-higher-indicator"></span></button>
+						<button type="button" class="handle-order-lower yk-mt-postbox-lower" data-postbox-id="%1$s" data-postbox-col="%2$s"><span class="order-lower-indicator"></span></button>
+						<button type="button" class="handlediv" data-postbox-id="%1$s" data-postbox-col="%2$s"><span class="toggle-indicator"></span></button>
+					</div>',
+					esc_attr( $args[ 'postbox-id' ] ),
+					esc_attr( $args[ 'postbox-col' ] )
+			);
+		}
+
+		echo '</div>';
+}
+
+/**
+ * Show / Hide postbox?
+ * @param $id
+ *
+ * @return bool
+ */
+function yk_mt_postbox_show( $id ) {
+
+	$key = sprintf( 'yk-mt-postbox-%s-display', $id );
+
+	return (bool) get_option( $key, true );
+}
+
+/**
+ * Render class to hide postbox if needed
+ *
+ * @param $id
+ * @param string $column
+ *
+ * @return string|void
+ */
+function yk_mt_postbox_classes( $id, $column = 'yk-mt-user-summary-one' ) {
+
+	$classes = [ 'yk-mt-postbox', $column ];
+
+	if ( false === yk_mt_postbox_show( $id ) ) {
+		$classes[] = 'closed';
+	}
+
+	$classes = implode( ' ', $classes );
+
+	echo esc_attr( $classes );
 }

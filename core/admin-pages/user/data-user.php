@@ -43,46 +43,74 @@ function yk_mt_admin_page_user_summary() {
         <?php yk_mt_user_header( $user_id ); ?>
         <div id="post-body" class="metabox-holder columns-2">
             <div id="post-body-content">
-                <div class="meta-box-sortables ui-sortable">
+                <div class="meta-box-sortables ui-sortable" id="yk-mt-user-data-one">
                     <?php
                         if ( false === YK_MT_IS_PREMIUM ) {
                             yk_mt_display_pro_upgrade_notice();
                         }
-                    ?>
-                    <div class="postbox">
-                        <h2 class="hndle"><span><?php echo __( 'Chart', YK_MT_SLUG ); ?></span></h2>
-                        <div class="inside">
-                            <?php
 
-                                if ( false === empty( $entries ) ) {
-                                    echo yk_mt_chart_line_allowed_versus_used( [
-                                        'entries'   => $entries,
-                                        'max'       => 15,
-                                        'title'     => __( 'Latest 15 entries', YK_MT_SLUG )
-                                    ]);
-                                } else {
-                                    printf ( '<p><em>%s</em></p>', __( 'No results', YK_MT_SLUG ) );
-                                }
-                            ?>
-                        </div>
-                    </div>
-                    <div class="postbox">
-                        <h2 class="hndle"><span><?php echo __('Entries for this user', YK_MT_SLUG ); ?></span></h2>
-                        <div class="inside">
-                            <?php
-                                yk_mt_table_user_entries( [ 'entries'   => $entries ] );
-                            ?>
-                        </div>
-                    </div>
+                        $order = get_option( 'yk-mt-postbox-order-yk-mt-user-data-one', [ 'chart', 'table' ] );
+
+						foreach ( $order as $postbox ) {
+
+							if ( 'chart' === $postbox ) {
+								yk_mt_postbox_user_chart( $entries );
+							} elseif ( 'table' === $postbox ) {
+								yk_mt_postbox_user_table( $entries );
+							}
+						}
+                    ?>
                 </div>
             </div>
-            <div id="postbox-container-1" class="postbox-container">
-                <div class="meta-box-sortables">
-                    <?php yk_mt_user_side_bar( $user_id, $todays_entry ); ?>
-                </div>
-            </div>
+            <?php yk_mt_user_side_bar( $user_id, $todays_entry ); ?>
         </div>
         <br class="clear">
     </div>
     <?php
 }
+
+/**
+* Postbox for user chart
+*
+* @param $entries
+*/
+function yk_mt_postbox_user_chart( $entries ) {
+?>
+	<div class="postbox <?php yk_mt_postbox_classes( 'chart' ); ?>" id="chart">
+		<?php yk_mt_postbox_header( [ 'title' => __( 'Chart', YK_MT_SLUG ), 'postbox-id' => 'chart', 'postbox-col' => 'yk-mt-user-data-one' ] ); ?>
+		<div class="inside">
+			<?php
+
+				if ( false === empty( $entries ) ) {
+					echo yk_mt_chart_line_allowed_versus_used( [
+						'entries'   => $entries,
+						'max'       => 15,
+						'title'     => __( 'Latest 15 entries', YK_MT_SLUG )
+					]);
+				} else {
+					printf ( '<p><em>%s</em></p>', __( 'No results', YK_MT_SLUG ) );
+				}
+			?>
+		</div>
+	</div>
+<?php
+}
+
+/**
+* Postbox for user table
+*
+* @param $entries
+*/
+function yk_mt_postbox_user_table( $entries ) {
+?>
+	<div class="postbox <?php yk_mt_postbox_classes( 'table' ); ?>" id="table">
+		<?php yk_mt_postbox_header( [ 'title' => __( 'Entries for this user', YK_MT_SLUG ), 'postbox-id' => 'table', 'postbox-col' => 'yk-mt-user-data-one' ] ); ?>
+		<div class="inside">
+			<?php
+				yk_mt_table_user_entries( [ 'entries'   => $entries ] );
+			?>
+		</div>
+	</div>
+<?php
+}
+
