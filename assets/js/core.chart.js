@@ -129,8 +129,8 @@ function yk_mt_chart_data() {
             borderWidth: 0
         }],
         labels: [
-            yk_mt_chart_config[ 'calories_used' ] + 'kcal ' + yk_mt_sc_meal_tracker[ 'localise' ][ 'chart-label-used' ],
-            yk_mt_chart_config[ 'calories_remaining' ] + 'kcal ' + yk_mt_sc_meal_tracker[ 'localise' ][ 'chart-label-remaining' ]
+            yk_mt_chart_config[ 'calories_used' ] + ' ' + yk_mt_sc_meal_tracker[ 'localise' ][ 'chart-label-used' ],
+            yk_mt_chart_config[ 'calories_remaining' ] + ' ' + yk_mt_sc_meal_tracker[ 'localise' ][ 'chart-label-remaining' ]
         ]
     };
 }
