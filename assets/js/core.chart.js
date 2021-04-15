@@ -142,7 +142,7 @@ function yk_mt_chart_data() {
 function yk_mt_chart_options() {
 
   let options = {
-        cutout: ( 'doughnut' === yk_mt_ctx.attr( 'data-chart-type' ) ) ? '80%' : '0%',
+        cutout: ( 'doughnut' === yk_mt_ctx.attr( 'data-chart-type' ) ) ? '85%' : '0%',
         elements: {
           center: {
             display: ( 'doughnut' === yk_mt_ctx.attr( 'data-chart-type' ) ),
