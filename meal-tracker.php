@@ -37,9 +37,7 @@ include_once YK_MT_ABSPATH . 'core/setup.wizard.php';
 
 $is_premium = yk_mt_license_is_premium();
 
-//define( 'YK_MT_IS_PREMIUM', $is_premium );
-define( 'YK_MT_IS_PREMIUM', true );
-
+define( 'YK_MT_IS_PREMIUM', $is_premium );
 
 include_once YK_MT_ABSPATH . 'core/caching.php';
 include_once YK_MT_ABSPATH . 'core/db.php';
