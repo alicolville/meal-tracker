@@ -12,7 +12,7 @@ A CSV file must adhere to the following rules:
 
 - Have a header row with the following headers
 ```
-name,description,calories,quantity,unit:
+name,description,calories,quantity,unit
 ```
 - Have one or more data rows.
 - For each row, ensure the following is met:
