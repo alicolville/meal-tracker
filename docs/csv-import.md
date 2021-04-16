@@ -10,12 +10,14 @@ Rather than manually add meals to your [meal collection]({{ site.baseurl }}/meal
 
 A CSV file must adhere to the following rules:
 
-- Have a header row with the following headers
+- Have a header row with the following headers:
 
-*Note: The headers "description", "proteins", "carbs", and "fats" are required however, the data for each row can be left blank if not required.*
 ```
 name,description,calories,quantity,unit,proteins,carbs,fats
 ```
+
+*Note: The headers "description", "proteins", "carbs", and "fats" are required however, the data for each row can be left blank if not required.*
+
 - Have one or more data rows.
 - For each row, ensure the following are met:
     - Has a name that is 100 characters or less.
