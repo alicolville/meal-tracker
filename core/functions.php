@@ -1443,6 +1443,12 @@ function yk_mt_import_csv_meal_collection( $attachment_id, $dry_run = true ) {
 		$a = array_combine($csv[0], $a);
 	});
 
+	$validate_header_result = yk_mt_import_csv_meal_collection_validate_header( $csv[0] );
+
+	if ( true !== $validate_header_result ) {
+		return $validate_header_result;
+	}
+
 	array_shift($csv );
 
 	if ( true === empty( $csv ) ) {
@@ -1457,7 +1463,7 @@ function yk_mt_import_csv_meal_collection( $attachment_id, $dry_run = true ) {
 		$output .= 'DRY RUN MODE! No data will be imported.' . PHP_EOL;
 	}
 
-	$db_formats = [ '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d', '%s' ];
+	$db_formats = [ '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%s' ];
 
 	foreach ( $csv as $row ) {
 
@@ -1465,6 +1471,8 @@ function yk_mt_import_csv_meal_collection( $attachment_id, $dry_run = true ) {
 			$output .= 'Aborted! More than 50 errors have been detected in this file.' . PHP_EOL;
 			break;
 		}
+
+		$row = array_change_key_case( $row ); // Force CSV headers to lowercase
 
 		$validation_result = yk_mt_import_csv_meal_collection_validate_row( $row );
 
@@ -1485,6 +1493,9 @@ function yk_mt_import_csv_meal_collection( $attachment_id, $dry_run = true ) {
 						 'calories'			=> $row[ 'calories' ],
 						 'quantity'			=> $row[ 'quantity' ],
 						 'unit'				=> $row[ 'unit' ],
+						 'meta_proteins'	=> $row[ 'proteins' ],
+						 'meta_carbs'		=> $row[ 'carbs' ],
+						 'meta_fats'		=> $row[ 'fats' ],
 						 'imported_csv'		=> 1,
 						 'source'			=> 'csv'
 			];
@@ -1511,13 +1522,33 @@ function yk_mt_import_csv_meal_collection( $attachment_id, $dry_run = true ) {
 }
 
 /**
+ * Verify header row
+ * @param $header_row
+ *
+ * @return bool|string
+ */
+function yk_mt_import_csv_meal_collection_validate_header( $header_row ) {
+
+	$expected_headers = [ 'name', 'description', 'calories', 'quantity', 'unit', 'proteins', 'carbs', 'fats' ];
+
+	foreach ( $expected_headers as $column ) {
+
+		if ( false === isset( $header_row[ $column ] ) ) {
+			return 'Missing column: ' . $column . '. Expecting: ' . implode( ',', $expected_headers ) . PHP_EOL;
+		}
+	}
+
+	return true;
+}
+
+/**
  * Validate CSV row
  * @param $csv_row
  *
  * @return bool|string
  */
 function yk_mt_import_csv_meal_collection_validate_row( $csv_row ) {
-
+var_dump($csv_row[ 'name' ]);
 	if ( true === empty( $csv_row[ 'name' ] ) ) {
 		return 'Skipped: Missing name: ' . implode( ',', $csv_row );
 	}
