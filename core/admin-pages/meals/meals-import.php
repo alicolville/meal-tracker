@@ -38,7 +38,7 @@ function yk_mt_admin_page_meals_import() {
 								<div class="yk-mt-form-row">
 									<p>
 										<?php echo __( 'Please select a CSV file to import one or meals into your collection.', YK_MT_SLUG ); ?>
-										<a href="https://mealtracker.yeken.uk/csv-import.html" rel="noopener noreferrer" target="_blank"><?php echo __( 'Read more about CSV imports and the required format', WE_LS_SLUG ); ?>.</a>
+										<a href="https://mealtracker.yeken.uk/csv-import.html" rel="noopener noreferrer" target="_blank"><?php echo __( 'Read more about CSV imports and the required format', YK_MT_SLUG ); ?>.</a>
 									</p>
 									<input id="select_csv" type="button" class="button" value="<?php echo __( 'Select CSV file', YK_MT_SLUG ); ?>" />
 									<br />
