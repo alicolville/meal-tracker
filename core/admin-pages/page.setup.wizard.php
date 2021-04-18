@@ -37,7 +37,7 @@ function yk_mt_setup_wizard_page() {
 												The aim of the plugin is to allow you to extend your site with out-the-box functionality with minimal technical ability. The setup wizard should give you an overview of the plugin and how to set Meal Tracker up on your website.</p>
 
 											<p>For further information, please visit the documentation site:</p>
-											<a href="https://mealtracker.yeken.uk" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', WE_LS_SLUG ); ?></a>
+											<a href="https://mealtracker.yeken.uk" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', YK_MT_SLUG ); ?></a>
 											<h3>Features of Meal Tracker</h3>
 											<p>For a full list of Meal Tracker features, please visit our documentation site:</p>
 											<a href="https://mealtracker.yeken.uk/features.html" target="_blank" rel="noopener" class="button"><i class="fa fa-link"></i> Meal Tracker Features</a>
@@ -64,7 +64,7 @@ function yk_mt_setup_wizard_page() {
 
 											<h4>More information</h4>
 											<p>For further information on Meal Tracker shortcodes, please refer to the Meal Tracker documentation:</p>
-											<a href="https://mealtracker.yeken.uk/shortcodes.html" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', WE_LS_SLUG ); ?></a>
+											<a href="https://mealtracker.yeken.uk/shortcodes.html" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', YK_MT_SLUG ); ?></a>
                                         </div>
                                         <div>
                                             <p>
@@ -80,7 +80,7 @@ function yk_mt_setup_wizard_page() {
 											<br clear="all" />
 											<h4>More information</h4>
 											<p>For further information on the Meal Tracker admin, please refer to the Meal Tracker documentation:</p>
-											<a href="https://mealtracker.yeken.uk/admin.html" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', WE_LS_SLUG ); ?></a>
+											<a href="https://mealtracker.yeken.uk/admin.html" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', YK_MT_SLUG ); ?></a>
                                         </div>
                                         <div>
 											<?php  yk_mt_setup_wizard_custom_notification_html(); ?>
