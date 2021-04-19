@@ -11,7 +11,8 @@ function yk_mt_shortcode_table_entries( $user_defined_arguments ) {
 		return yk_mt_display_premium_upgrade_notice_for_shortcode();
 	}
 
-	$shortcode_arguments = shortcode_atts( [    'url-mealtracker'   => '',
+	$shortcode_arguments = shortcode_atts( [    'link-new-window'   => 'true',
+												'url-mealtracker'   => '',
 												'user-id'           => get_current_user_id(),
 												'sort-direction'    => 'desc',
 												'text-no-entries'   => __( 'You currently have no entries.', YK_MT_SLUG ),
@@ -69,7 +70,7 @@ function yk_mt_shortcode_table_entries( $user_defined_arguments ) {
 		                        <td>%4$s</td>
 		                        <td>%5$s</td>
 		                        <td>%6$s</td>
-		                        <td %8$s><a href="%7$s" class="btn btn-default footable-edit"><i class="fa fa-eye">%9$s</i></a></td>
+		                        <td %8$s><a href="%7$s" class="btn btn-default footable-edit" %10$s><i class="fa fa-eye">%9$s</i></a></td>
 		                    </tr>',
 							$class,
 							yk_mt_date_format( $entry['date' ] ),
@@ -79,7 +80,8 @@ function yk_mt_shortcode_table_entries( $user_defined_arguments ) {
 							$entry[ 'percentage_used' ] . '%',
 							esc_url( $url ),
 							$mt_link_class,
-							! $advanced_mode ? __( 'View', YK_MT_SLUG ) : ''
+							! $advanced_mode ? __( 'View', YK_MT_SLUG ) : '',
+							yk_mt_to_bool( $shortcode_arguments[ 'link-new-window' ] ) ? ' target="_blank" rel="noopener"' : ''
 		);
 	}
 

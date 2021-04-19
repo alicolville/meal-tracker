@@ -31,6 +31,7 @@ The shortcode supports the following arguments:
  
 | Argument | Description | Options | Example |
 |--|--|--|--|
+|link-new-window|If set to true (default), view entry buttons will open in a new window|True (default) or false|[mt-table-entries url-mealtracker="https://yeken.uk/mealtracker/" link-new-window="false"]
 | url-mealtracker | Specify a URL to a page that has the [[meal-tracker]]({{ site.baseurl }}/shortcodes/meal-tracker.html) shortcode placed | URL  | [mt-table-entries url-mealtracker="https://yeken.uk/mealtracker/"] |  
 |sort-direction|By default, the entries are displayed in reverse chronological order - old to new (desc). This can be reversed by changing this argument to "asc"| "asc" or "desc" | [mt-table-entries sort-direction="asc"]
 |text-no-entries|The message to display if the user has no entries. |text| [mt-table-entries text-no-entries="There are no entries"]
