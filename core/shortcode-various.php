@@ -123,12 +123,15 @@ function yk_mt_shortcode_entry_calories_used_percentage(){
 add_shortcode( 'mt-calories-used-percentage', 'yk_mt_shortcode_entry_calories_used_percentage' );
 
 /**
- * Fetch data about an entry for shortcode usuage
+ * Fetch data about an entry for shortcode usage
  * @param $key
  *
  * @return string
  */
 function yk_mt_entry_get_value( $key ) {
+
+	// This is used to create an empty entry if one doesn't already exist for this user / day
+	yk_mt_entry_get_id_or_create();
 
 	$entry = yk_mt_entry();
 
