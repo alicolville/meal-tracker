@@ -163,3 +163,7 @@ Core.css overrides
 .yk-mt-data-entry em {
   font-weight: bold;
 }
+
+.yk-mt-form-row {
+  margin-bottom: 10px;
+}

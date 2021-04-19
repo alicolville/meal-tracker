@@ -34,10 +34,13 @@ function yk_mt_setup_wizard_page() {
                                         <div>
                                             <h3>Thank you</h3>
                                             <p>First of all, <strong>thank you</strong> for installing Meal Tracker on your website! Meal Tracker extends your website by giving your users the ability to track their calorie intake and meals for a given day.
-                                                The aim of the plugin is to allow you to extend your site with out-the-box functionality with minimal technical ability.</p>
+												The aim of the plugin is to allow you to extend your site with out-the-box functionality with minimal technical ability. The setup wizard should give you an overview of the plugin and how to set Meal Tracker up on your website.</p>
 
-                                            <p>The setup wizard should give you an overview of the plugin and how to set Meal Tracker up on your website.</p>
-
+											<p>For further information, please visit the documentation site:</p>
+											<a href="https://mealtracker.yeken.uk" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', YK_MT_SLUG ); ?></a>
+											<h3>Features of Meal Tracker</h3>
+											<p>For a full list of Meal Tracker features, please visit our documentation site:</p>
+											<a href="https://mealtracker.yeken.uk/features.html" target="_blank" rel="noopener" class="button"><i class="fa fa-link"></i> Meal Tracker Features</a>
                                         </div>
                                         <div>
                                             <p>Out of the box, Meal Tracker does not extend the public facing side of your site with features that allow the users of your site to interact with.
@@ -55,10 +58,13 @@ function yk_mt_setup_wizard_page() {
                                                 <a rel="nopener" href="<?php echo plugins_url( 'assets/images/setup-wizard-meal-tracker-shortcode.png', __FILE__ ); ?>" target="_blank">
                                                     <img src="<?php echo plugins_url( 'assets/images/setup-wizard-meal-tracker-shortcode-small.png', __FILE__ ); ?>" align="left" class="setup-wizard-image"/>
                                                 </a>
-                                                The user interface (as seen) is rendered by placing the shortcode <strong>[meal-tracker]</strong> on a page or post.
+												The user interface (as seen) is rendered by placing the shortcode <strong><a href="https://mealtracker.yeken.uk/shortcodes/meal-tracker.html" target="_blank" rel="noopener">[meal-tracker]</a></strong> on a page or post.
                                             </p>
+											<br clear="all" />
 
-                                            <br clear="all" />
+											<h4>More information</h4>
+											<p>For further information on Meal Tracker shortcodes, please refer to the Meal Tracker documentation:</p>
+											<a href="https://mealtracker.yeken.uk/shortcodes.html" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', YK_MT_SLUG ); ?></a>
                                         </div>
                                         <div>
                                             <p>
@@ -71,7 +77,10 @@ function yk_mt_setup_wizard_page() {
                                             <p>
                                                 <a href="<?php echo $user_data_link; ?>" class="button"><i class="fa fa-link"></i> View User Data</a>
                                             </p>
-
+											<br clear="all" />
+											<h4>More information</h4>
+											<p>For further information on the Meal Tracker admin, please refer to the Meal Tracker documentation:</p>
+											<a href="https://mealtracker.yeken.uk/admin.html" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', YK_MT_SLUG ); ?></a>
                                         </div>
                                         <div>
 											<?php  yk_mt_setup_wizard_custom_notification_html(); ?>

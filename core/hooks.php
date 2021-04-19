@@ -98,7 +98,7 @@ function yk_mt_enqueue_admin_files() {
         wp_enqueue_script( 'mt-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION );
         wp_enqueue_style( 'mt-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css', [], YK_MT_PLUGIN_VERSION );
 
-        yk_mt_enqueue_scripts_chart();
+	    yk_mt_chart_enqueue();
 
         yk_mt_enqueue_scripts_footable();
 
@@ -111,35 +111,10 @@ add_action( 'admin_enqueue_scripts', 'yk_mt_enqueue_admin_files');
  * Enqueue Footable scripts
  */
 function yk_mt_enqueue_scripts_footable() {
-
-    wp_enqueue_script( 'mt-moment', plugins_url( '/assets/js/moment.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
+	wp_enqueue_style( 'mt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
+	wp_enqueue_script( 'mt-moment', plugins_url( '/assets/js/moment.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
     wp_enqueue_style( 'mt-footable', plugins_url( '/assets/css/footable.standalone.min.css', __DIR__  ), [], YK_MT_PLUGIN_VERSION );
     wp_enqueue_script( 'mt-footable', plugins_url( '/assets/js/footable.min.js', __DIR__ ), [ 'jquery', 'mt-moment' ], YK_MT_PLUGIN_VERSION, true );
-}
-
-/**
- * Enqueue Chart scripts
- */
-function yk_mt_enqueue_scripts_chart() {
-
-    wp_enqueue_script( 'mt-chart-js', plugins_url( 'assets/js/Chart.bundle.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
-    wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
-
-	yk_me_enqueue_scripts_localise_chart();
-}
-
-/**
- * Localise Chart js
- */
-function yk_me_enqueue_scripts_localise_chart() {
-
-	$chart_font  = apply_filters( 'yk-mt-filter-chart-font', '\'Nunito\', \'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif' );
-	$chart_color = apply_filters( 'yk-mt-filter-chart-color', '#fb8e2e' );
-
-	wp_localize_script( 'mt-chart', 'yk_mt_chart', [
-		'chartFont'  => $chart_font,
-		'chartColor' => $chart_color,
-	] );
 }
 
 /**
@@ -223,3 +198,60 @@ function yk_mt_admin_hooks_update_cache_version() {
 
 }
 add_action( 'yk_mt_settings_saved', 'yk_mt_admin_hooks_update_cache_version');
+
+/**
+ * Clear cache for a given meals / certain user ID
+ *
+ * @param $user_id
+ */
+function yk_mt_cache_clear_for_user( $user_id ) {
+	yk_mt_cache_user_delete( $user_id );
+}
+add_action( 'yk_mt_meals_deleted', 'yk_mt_cache_clear_for_user' );
+add_action( 'yk_mt_meal_added_to_entry', 'yk_mt_cache_clear_for_user' );
+add_action( 'yk_mt_meal_deleted_from_entry', 'yk_mt_cache_clear_for_user' );
+
+/**
+ * Clear cache for a given entry ids / date for a user
+ *
+ * @param $entry_id
+ * @param $user_id
+ */
+function yk_mt_cache_entry_ids_and_date_delete( $entry_id, $user_id ) {
+	yk_mt_cache_user_delete( $user_id );
+}
+add_action( 'yk_mt_entry_deleted', 'yk_mt_cache_entry_ids_and_date_delete', 10, 2 );
+
+/**
+ * Clear cache for a given entry ids / date for a user
+ *
+ * @param $entry_id
+ * @param $entry
+ * @param $user_id
+ */
+function yk_mt_cache_entry_ids_and_date_delete_three( $entry_id, $entry, $user_id ) {
+	yk_mt_cache_user_delete( $user_id );
+}
+add_action( 'yk_mt_entry_added', 'yk_mt_cache_entry_ids_and_date_delete_three', 10, 3);
+
+/**
+ * Clear cache for a given entry
+ *
+ * @param $id
+ */
+function yk_mt_cache_hook_entry_delete( $id ) {
+	yk_mt_cache_delete( 'entry-' . $id );
+}
+add_action( 'yk_mt_entry_deleted', 'yk_mt_cache_hook_entry_delete' );
+
+/**
+ * Clear cache for a given meal
+ *
+ * @param $id
+ */
+function yk_mt_cache_hook_meal_delete( $id ) {
+
+	yk_mt_cache_delete( 'meal-' . $id );
+}
+add_action( 'yk_mt_meal_deleted', 'yk_mt_cache_hook_meal_delete' );
+add_action( 'yk_mt_meals_updated', 'yk_mt_cache_hook_meal_delete' );

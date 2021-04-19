@@ -7,7 +7,7 @@ defined('ABSPATH') or die("Jog on!");
  *
  * @return string
  */
-function yk_mt_shortcode_meal_tracker() {
+function yk_mt_shortcode_meal_tracker( $user_defined_arguments ) {
 
 	// TODO: Check here to ensure the shortcode has only been placed once!
 
@@ -17,9 +17,16 @@ function yk_mt_shortcode_meal_tracker() {
 
 	$html = '<!-- Meal Tracker Start -->';
 
+	$shortcode_arguments = shortcode_atts( [    'url-login'             => '',          // URL for login page (displayed in login prompt)
+												'chart-height'	        => '200px',     // Set height of progress chart
+												'chart-type'            => 'doughnut',  // pie / doughnut
+												'chart-hide-legend'     => false,       // Hide chart legend
+												'chart-hide-title'      => true         // Hide chart title
+	], $user_defined_arguments );
+
 	// Is the user logged in?
 	if ( false === is_user_logged_in() ) {
-		return yk_mt_shortcode_log_in_prompt();
+		return yk_mt_shortcode_log_in_prompt( $shortcode_arguments[ 'url-login' ] );
 	}
 
 	$is_pro         = YK_MT_IS_PREMIUM;
@@ -47,7 +54,7 @@ function yk_mt_shortcode_meal_tracker() {
 
 	} else {
 
-		$html .= yk_mt_shortcode_meal_tracker_summary();
+		$html .= yk_mt_shortcode_meal_tracker_summary( $shortcode_arguments );
 
 		if ( true === $is_pro ) {
 			$html .= yk_mt_shortcode_meal_tracker_navigation( $entry_id );
@@ -127,8 +134,12 @@ function yk_mt_shortcode_meal_tracker_navigation( $todays_entry_id = NULL ) {
 
 /**
  * Display chart JS and summary data
+ *
+ * @param $arguments
+ *
+ * @return string
  */
-function yk_mt_shortcode_meal_tracker_summary() {
+function yk_mt_shortcode_meal_tracker_summary( $arguments ) {
 
 	return '
 		<div class="yk-mt__summary">
@@ -136,7 +147,7 @@ function yk_mt_shortcode_meal_tracker_summary() {
 			<div class="yk-mt__table yk-mt__table--summary">
 				<div class="yk-mt__table-row" >
 					<div class="yk-mt__table-cell yk-mt__table--summary-chart-slot">
-						<canvas id="yk-mt-chart" class="yk-mt-chart"></canvas>
+						 ' . yk_mt_chart_progress_canvas( $arguments ) . '
 					</div>
 				</div>
 			</div>
@@ -146,6 +157,8 @@ function yk_mt_shortcode_meal_tracker_summary() {
 
 /**
  * Render Settings tab
+ *
+ * @param null $target
  *
  * @return string
  */
@@ -542,7 +555,7 @@ function yk_mt_shortcode_meal_tracker_manual_meal_entry_form( $previous_values =
 
 	$html .= sprintf( '
 		 <div class="yk-mt__modal-footer">
-			<button id="yk-mt-button-meal-add" class="%2$s">
+			<button class="%2$s">
 				<span class="yk-mt__btn-icon fa fa-arrow-left"></span>
 			</button>
 			<button id="yk-mt-button-meal-add" class="%3$s">
@@ -748,10 +761,6 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 	wp_enqueue_style( 'mt-core', plugins_url( 'assets/css/yk-mt-core.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 	wp_enqueue_style( 'mt-font-icons', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
 
-	// Styles > Core > Vars
-	$chart_font  = '\'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif';
-	$chart_color = '#000000';
-
 	$is_themed = yk_mt_site_options_as_bool('css-theme-enabled' );
 
 	if ( true === $is_themed ) {
@@ -767,25 +776,9 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 	wp_enqueue_script( 'mt-modal', plugins_url( 'assets/js/animatedModal.min.js', __DIR__ ), [ 'jquery', 'jquery-ui-core', 'jquery-effects-core' ], YK_MT_PLUGIN_VERSION, true );
 	wp_enqueue_script( 'mt-selectize', plugins_url( 'assets/js/selectize.min.js', __DIR__ ), [], YK_MT_PLUGIN_VERSION, true );
 	wp_enqueue_script( 'mt-loading-overlay', plugins_url( 'assets/js/loadingoverlay.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
-	wp_enqueue_script( 'mt-chart-js', plugins_url( 'assets/js/Chart.bundle.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
 	wp_enqueue_script( 'mt-notify', plugins_url( 'assets/js/notify.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION );
-	wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart' . $minified . '.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
 
-	// Scripts > ChartJS > Localized scripts
-	if ( true === $is_themed ) {
-
-		// Styles > Theme > Fonts
-		wp_enqueue_style( 'mt-font-nunito', 'https://fonts.googleapis.com/css?family=Nunito:700,800&display=swap', [], YK_MT_PLUGIN_VERSION );
-
-		// Styles > Theme > Vars
-		$chart_font  = apply_filters( 'yk-mt-filter-chart-font', '\'Nunito\', \'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif' );
-		$chart_color = apply_filters( 'yk-mt-filter-chart-color', '#fb8e2e' );
-	}
-
-	wp_localize_script( 'mt-chart', 'yk_mt_chart', [
-		'chartFont'  => $chart_font,
-		'chartColor' => $chart_color,
-	] );
+	yk_mt_chart_enqueue();
 
 	wp_enqueue_script( 'meal-tracker', plugins_url( 'assets/js/core' . $minified . '.js', __DIR__ ),
 					[ 'mt-modal', 'mt-selectize', 'mt-loading-overlay', 'mt-notify', 'mt-chart' ], YK_MT_PLUGIN_VERSION, true );
@@ -804,6 +797,8 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 	$yk_mt_shortcode_meal_tracker_modal_enqueued = true;
 }
 add_action( 'wp_enqueue_scripts', 'yk_mt_shortcode_meal_tracker_enqueue_scripts', 99 );
+
+
 
 /**
  * Add relevant data into JS object

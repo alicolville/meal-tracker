@@ -14,6 +14,9 @@ function yk_mt_admin_page_meals_home() {
         case 'meal':
             yk_mt_admin_page_meals_add_edit();
             break;
+		case 'import':
+			yk_mt_admin_page_meals_import();
+			break;
 		default:
             yk_mt_admin_page_meals_dashboard();
 			break;

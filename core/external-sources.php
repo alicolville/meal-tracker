@@ -133,7 +133,7 @@ function yk_mt_ext_source_get( $id, $use_cache = true ) {
 
 	// Has the meal been cached? If so, don't bother calling out to the external API
 	if ( true === $use_cache &&
-	        $cache = yk_mt_cache_temp_get( 'ext-meal-' . $id ) ) {
+	        $cache = yk_mt_cache_get( 'ext-meal-' . $id ) ) {
 		return $cache;
 	}
 
@@ -146,7 +146,7 @@ function yk_mt_ext_source_get( $id, $use_cache = true ) {
 
 	$meal = $external_source->get( $id );
 
-	yk_mt_cache_temp_set( 'ext-meal-' . $id, $meal );
+	yk_mt_cache_set( 'ext-meal-' . $id, $meal );
 
 	return $meal;
 }
@@ -340,6 +340,9 @@ function yk_mt_ext_source_as_string( $slug ) {
 
 	switch ( $slug ) {
 
+		case 'csv':
+			return __( 'CSV Import', YK_MT_SLUG );
+			break;
 		case 'fat-secrets-foods':
 			return __( 'FatSecrets Food', YK_MT_SLUG );
 			break;

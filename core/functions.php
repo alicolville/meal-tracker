@@ -135,6 +135,9 @@ function yk_mt_entry_url( $entry_id, $esc_url = true ) {
 /**
  * Fetch the entry ID for today if it already exists, otherwise create it!
  *
+ * @param null $user_id
+ * @param null $date
+ *
  * @return null|int
  */
 function yk_mt_entry_get_id_or_create( $user_id = NULL, $date = NULL ) {
@@ -252,6 +255,8 @@ function yk_mt_entry_delete_all_for_user( $user_id = NULL ) {
 
         array_map( 'yk_mt_db_entry_delete', $entries);
     }
+
+	yk_mt_cache_user_delete( $user_id );
 }
 
 /**
@@ -268,8 +273,9 @@ function yk_mt_meal_soft_delete_all_for_user( $user_id = NULL ) {
 
         $meals = wp_list_pluck( $meals, 'id' );
         array_map( 'yk_mt_meal_update_delete', $meals );
-
     }
+
+	yk_mt_cache_user_delete( $user_id );
 }
 
 /**
@@ -298,7 +304,7 @@ function yk_mt_entry_calories_calculate_update_used( $entry_id ) {
 
     do_action( 'yk_mt_entry_calculate_refresh', $entry_id );
 
-	do_action( 'yk_mt_entry_cache_clear', $entry_id, $user_id );
+	yk_mt_cache_delete( 'entry-' . $entry_id );
 
 	return $result;
 }
@@ -355,6 +361,8 @@ function yk_mt_meal_count( $user_id = NULL ) {
  * Get the allowed calories for the given user
  *
  * @param null $user_id
+ *
+ * @param bool $include_source
  *
  * @return int
  */
@@ -631,9 +639,6 @@ function yk_mt_localised_strings( ) {
         'remove-text'                   => __( 'Remove', YK_MT_SLUG ),
 		'total'                   		=> __( 'Total', YK_MT_SLUG ),
         'edit-text'                     => __( 'Edit', YK_MT_SLUG ),
-        'chart-label-used'              => __( 'used', YK_MT_SLUG ),
-        'chart-label-remaining'         => __( 'remaining', YK_MT_SLUG ),
-        'chart-label-target'            => __( 'Target', YK_MT_SLUG ),
         'no-data'                       => __( 'No data has been entered', YK_MT_SLUG ),
         'meal-added-success'            => __( 'The meal has been added', YK_MT_SLUG ),
         'meal-added-success-short'      => __( 'Added', YK_MT_SLUG ),
@@ -831,10 +836,15 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
  * @param $title
  * @param $name
  * @param string $value
+ * @param string $css_class
  * @param int $step
  * @param int $min
  * @param int $max
  * @param bool $show_label
+ *
+ * @param bool $required
+ * @param bool $disabled
+ * @param null $trailing_html
  *
  * @return string
  */
@@ -1114,11 +1124,25 @@ function yk_mt_date_format( $iso_date ) {
         return '-';
     }
 
-    $time = strtotime( $iso_date );
+    $time 			= strtotime( $iso_date );
+    $date_format 	= get_option( 'date_format' );
 
-    // TODO: Look up user option to render date
-    return date('d/m/Y', $time );
+    return date( $date_format, $time );
 }
+
+/**
+ * Upgrade notice for shortcode
+ * @return string
+ */
+function yk_mt_display_premium_upgrade_notice_for_shortcode () {
+
+	return sprintf( '<blockquote class="error">%s <a href="%s">%s</a></blockquote>',
+		__( 'To use this shortcode, you need to upgrade to the Premium version.', YK_MT_SLUG ),
+		esc_url( admin_url('admin.php?page=yk-mt-license') ),
+		__( 'Upgrade now', YK_MT_SLUG )
+	);
+}
+
 
 /**
  * Display an upgrade button
@@ -1334,40 +1358,6 @@ function yk_mt_format_nutrition_sting( $meal, $include_meta = true ) {
 }
 
 /**
- * Handy function for temp caching (if caching.php included)
- * @param $key
- * @return mixed
- */
-function yk_mt_cache_temp_get( $key ) {
-
-	if ( true === function_exists( 'yk_mt_cache_is_enabled' ) &&
-			true === yk_mt_cache_is_enabled() ) {
-		return yk_mt_cache_get( 'temp-' . $key );
-	}
-
-	return NULL;
-}
-
-/**
- * Handy function for temp caching (if caching.php included) - default 15 mins
- * @param $key
- * @param $value
- * @param int $duration
- */
-function yk_mt_cache_temp_set( $key, $value, $duration = 1500 ) {
-
-	if ( true === function_exists( 'yk_mt_cache_is_enabled' ) &&
-		 true === yk_mt_cache_is_enabled() ) {
-
-		yk_mt_cache_set( 'temp-' . $key, $value, $duration );
-
-		return true;
-	}
-
-	return false;
-}
-
-/**
  * Translate known meal types from English into locale.
  * @param $meal_type
  * @return mixed|string
@@ -1407,3 +1397,173 @@ function yk_mt_log_error( $text ) {
 function yk_mt_server_ip() {
 	return $_SERVER['SERVER_ADDR'];
 }
+
+/**
+ * Convert string to bool
+ * @param $string
+ * @return mixed
+ */
+function yk_mt_to_bool( $string ) {
+	return filter_var( $string, FILTER_VALIDATE_BOOLEAN );
+}
+
+/**
+ * Process a CSV attachment and import into database
+ *
+ * @param $attachment_id
+ *
+ * @param bool $dry_run
+ *
+ * @return string
+ */
+function yk_mt_import_csv_meal_collection( $attachment_id, $dry_run = true ) {
+
+	if ( false === yk_mt_admin_permission_check() ) {
+		return 'You do not have the correct admin permissions';
+	}
+
+	if ( false === YK_MT_IS_PREMIUM ) {
+		return 'This is a premium feature';
+	}
+
+	$csv_path = get_attached_file( $attachment_id );
+	$admin_id = get_current_user_id();
+
+	if ( true === empty( $csv_path ) || false === file_exists( $csv_path )) {
+		return 'Error: Error loading CSV from disk.';
+	}
+
+	$csv = array_map('str_getcsv', file( $csv_path ) );
+
+	if ( true === empty( $csv ) ) {
+		return 'Error: The CSV appears to be empty.';
+	}
+
+	array_walk($csv, function(&$a) use ($csv) {
+		$a = array_combine($csv[0], $a);
+	});
+
+	$validate_header_result = yk_mt_import_csv_meal_collection_validate_header( $csv[0] );
+
+	if ( true !== $validate_header_result ) {
+		return $validate_header_result;
+	}
+
+	array_shift($csv );
+
+	if ( true === empty( $csv ) ) {
+		return 'Error: The CSV appears to be empty (when header hs been removed).';
+	}
+
+	$errors = 0;
+
+	$output = sprintf( '%d rows to process...' . PHP_EOL, count( $csv ) );
+
+	if ( true === $dry_run ) {
+		$output .= 'DRY RUN MODE! No data will be imported.' . PHP_EOL;
+	}
+
+	$db_formats = [ '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%s' ];
+
+	foreach ( $csv as $row ) {
+
+		if ( $errors >= 50 ) {
+			$output .= 'Aborted! More than 50 errors have been detected in this file.' . PHP_EOL;
+			break;
+		}
+
+		$row = array_change_key_case( $row ); // Force CSV headers to lowercase
+
+		$validation_result = yk_mt_import_csv_meal_collection_validate_row( $row );
+
+		// Validate a row before proceeding
+		if ( true !== $validation_result ) {
+			$output .= $validation_result . PHP_EOL;
+			$errors++;
+			continue;
+		}
+
+		if ( false === $dry_run ) {
+
+			// Import into database
+			$meal = [ 	'added_by' 			=> $admin_id,
+						 'added_by_admin' 	=> 1,
+						 'name'				=> $row[ 'name' ],
+						 'description'		=> $row[ 'description' ],
+						 'calories'			=> $row[ 'calories' ],
+						 'quantity'			=> $row[ 'quantity' ],
+						 'unit'				=> $row[ 'unit' ],
+						 'meta_proteins'	=> $row[ 'proteins' ],
+						 'meta_carbs'		=> $row[ 'carbs' ],
+						 'meta_fats'		=> $row[ 'fats' ],
+						 'imported_csv'		=> 1,
+						 'source'			=> 'csv'
+			];
+
+			global $wpdb;
+
+			$result = $wpdb->insert( $wpdb->prefix . YK_WT_DB_MEALS , $meal, $db_formats );
+
+			if ( false === $result ) {
+				$output .= 'Skipped: Error inserting into database (most likely a field contains too many characters or in the wrong format): ' . $wpdb->last_error . ' . ' .  implode( ',', $row ) . PHP_EOL;
+			}
+		}
+
+	}
+
+	if ( $errors > 0 ) {
+		$output .= sprintf( '%d errors were detected and the rows skipped.' . PHP_EOL, $errors );
+	}
+
+	$output .= 'Completed.';
+
+	return $output;
+
+}
+
+/**
+ * Verify header row
+ * @param $header_row
+ *
+ * @return bool|string
+ */
+function yk_mt_import_csv_meal_collection_validate_header( $header_row ) {
+
+	$expected_headers = [ 'name', 'description', 'calories', 'quantity', 'unit', 'proteins', 'carbs', 'fats' ];
+
+	foreach ( $expected_headers as $column ) {
+
+		if ( false === isset( $header_row[ $column ] ) ) {
+			return 'Missing column: ' . $column . '. Expecting: ' . implode( ',', $expected_headers ) . PHP_EOL;
+		}
+	}
+
+	return true;
+}
+
+/**
+ * Validate CSV row
+ * @param $csv_row
+ *
+ * @return bool|string
+ */
+function yk_mt_import_csv_meal_collection_validate_row( $csv_row ) {
+var_dump($csv_row[ 'name' ]);
+	if ( true === empty( $csv_row[ 'name' ] ) ) {
+		return 'Skipped: Missing name: ' . implode( ',', $csv_row );
+	}
+
+	if ( false === empty( $isset[ 'calories' ] ) ) {
+		return 'Skipped: Calories: ' . implode( ',', $csv_row );
+	}
+
+	$allowed_units = yk_mt_units_raw();
+
+	if ( false === empty( $csv_row[ 'unit' ] ) &&
+			true === empty( $allowed_units[ $csv_row[ 'unit' ] ] ) ) {
+			return 'Skipped: Invalid unit: ' . implode( ',', $csv_row );
+	}
+
+	return true;
+}
+

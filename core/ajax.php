@@ -48,7 +48,7 @@ function yk_mt_ajax_add_meal_to_entry() {
         }
     }
 
-	do_action( 'yk_mt_meal_added_to_entry', $post_data[ 'user-id' ], $post_data[ 'entry-id' ], $post_data[ 'entry-id' ], $quantity, $post_data[ 'meal-type' ] );
+	do_action( 'yk_mt_meal_added_to_entry', $post_data[ 'user-id' ], $post_data[ 'entry-id' ], $quantity, $post_data[ 'meal-type' ] );
 
 	wp_send_json( [ 'error' => false, 'entry' => yk_mt_entry( $post_data[ 'entry-id' ] ) ] );
 }
@@ -63,14 +63,18 @@ function yk_mt_ajax_delete_meal_from_entry() {
 
     $post_data = yk_mt_ajax_extract_and_validate_post_data( [ 'entry-id', 'meal-entry-id' ] );
 
+    $user_id = get_current_user_id();
+
 	// Ensure the user is the owner of the entry.
-	if ( false === yk_mt_security_entry_owned_by_user( $post_data[ 'entry-id' ], get_current_user_id() ) ) {
+	if ( false === yk_mt_security_entry_owned_by_user( $post_data[ 'entry-id' ], $user_id ) ) {
 		return wp_send_json( [ 'error' => 'security' ] );
 	}
 
     if ( true !== yk_mt_entry_meal_delete( (int) $post_data[ 'meal-entry-id' ] ) ) {
         return wp_send_json( [ 'error' => 'updating-db' ] );
     }
+
+	do_action( 'yk_mt_meal_deleted_from_entry', $user_id, $post_data[ 'meal-entry-id' ], $post_data[ 'entry-id' ] );
 
     wp_send_json( [ 'error' => false, 'entry' => yk_mt_entry( $post_data[ 'entry-id' ] ) ] );
 }
@@ -280,7 +284,7 @@ function yk_mt_ajax_external_search() {
 
 	$cache_key = 'ext-search-' . md5( $_POST[ 'search' ] );
 
-	if ( $cache = yk_mt_cache_temp_get( $cache_key ) )  {
+	if ( $cache = yk_mt_cache_get( $cache_key ) )  {
 		wp_send_json( $cache );
 	}
 
@@ -299,7 +303,7 @@ function yk_mt_ajax_external_search() {
 
 	// Cache data for this search term ( for 5 mins )
 	if ( false === empty( $meals ) ) {
-		yk_mt_cache_temp_set( $cache_key, $meals );
+		yk_mt_cache_set( $cache_key, $meals, YK_MT_CACHE_SHORT_TIME  );
 	}
 
 	wp_send_json( $meals );
@@ -323,7 +327,7 @@ function yk_mt_ajax_external_servings() {
 
 	$cache_key = 'ext-servings-' . md5( $_POST[ 'search' ] );
 
-	if ( $cache = yk_mt_cache_temp_get( $cache_key ) )  {
+	if ( $cache = yk_mt_cache_get( $cache_key ) )  {
 		wp_send_json( $cache );
 	}
 
@@ -336,7 +340,7 @@ function yk_mt_ajax_external_servings() {
 
 	// Cache data for this search term ( for 5 mins )
 	if ( false === empty( $meals ) ) {
-		yk_mt_cache_temp_set( $cache_key, $servings );
+		yk_mt_cache_set( $cache_key, $servings );
 	}
 
 	wp_send_json( $servings );
@@ -384,7 +388,7 @@ function yk_mt_ajax_external_prep_meal( $meal ) {
 		 * Since we have the full meal object here (i.e. we're about to display it in search results), let's cache it for 5 minutes. That way,
 		 * if a user selects it, we have the relevant data for the meal cached (if not, we will need to call out to external API again).
 		 */
-		yk_mt_cache_temp_set( 'ext-meal-' . $meal[ 'ext_id' ], $meal );
+		yk_mt_cache_set( 'ext-meal-' . $meal[ 'ext_id' ], $meal );
 
 		$meal[ 'id' ] 		= $meal[ 'ext_id' ];
 
@@ -537,3 +541,19 @@ function yk_mt_ajax_get_post_value( $key, $default = NULL, $force_to_int = false
 
     return $default ?: NULL;
 }
+
+/**
+ * AJAX handler for clearing Target Weight
+ */
+function yk_mt_ajax_postbox_value() {
+
+	check_ajax_referer( 'yk-mt-admin-nonce', 'security' );
+
+	$postbox_id = yk_mt_post_value('id' );
+	$key        = yk_mt_post_value('key' );
+	$value      = yk_mt_post_value('value' );
+	$result     = update_option( 'yk-mt-postbox-' . $postbox_id . '-' . $key, $value );
+
+	wp_send_json( $result );
+}
+add_action( 'wp_ajax_yk_postboxes_event', 'yk_mt_ajax_postbox_value' );

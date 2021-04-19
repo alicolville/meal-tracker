@@ -5,7 +5,7 @@ defined('ABSPATH') or die("Jog on!");
 /**
  * Plugin Name:         Meal Tracker
  * Description:         Allow your users to track their meals and calorie intake for a given day.
- * Version:             2.5.1
+ * Version:             3.0
  * Requires at least:   5.2
  * Tested up to:		5.7
  * Requires PHP:        7.2
@@ -18,7 +18,7 @@ defined('ABSPATH') or die("Jog on!");
  */
 
 define( 'YK_MT_ABSPATH', plugin_dir_path( __FILE__ ) );
-define( 'YK_MT_PLUGIN_VERSION', '2.5.1' );
+define( 'YK_MT_PLUGIN_VERSION', '3.0' );
 define( 'YK_MT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'YK_MT_SLUG', 'meal-tracker' );
 
@@ -39,14 +39,14 @@ $is_premium = yk_mt_license_is_premium();
 
 define( 'YK_MT_IS_PREMIUM', $is_premium );
 
-// Caching enabled?
-if ( true === yk_mt_site_options_as_bool('caching-enabled' ) ) {
-    include_once YK_MT_ABSPATH . 'core/caching.php';
-}
-
+include_once YK_MT_ABSPATH . 'core/caching.php';
 include_once YK_MT_ABSPATH . 'core/db.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-functions.php';
 include_once YK_MT_ABSPATH . 'core/shortcode-meal-tracker.php';
+include_once YK_MT_ABSPATH . 'core/shortcode-chart.php';
+include_once YK_MT_ABSPATH . 'core/shortcode-chart-entries.php';
+include_once YK_MT_ABSPATH . 'core/shortcode-table-entries.php';
+include_once YK_MT_ABSPATH . 'core/shortcode-various.php';
 include_once YK_MT_ABSPATH . 'core/ajax.php';
 include_once YK_MT_ABSPATH . 'core/activate.php';
 include_once YK_MT_ABSPATH . 'core/hooks.php';
@@ -76,6 +76,7 @@ include_once YK_MT_ABSPATH . 'core/admin-pages/page.setup.wizard.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-home.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-dashboard.php';
 include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-add-edit.php';
+include_once YK_MT_ABSPATH . 'core/admin-pages/meals/meals-import.php';
 
 // -----------------------------------------------------------------------------------------
 // AC: Load relevant language files

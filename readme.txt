@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food, fatsecrets, collection, macronutrients, fractions, search, edit, create
 Requires at least: 5.2
 Tested up to: 5.7
-Stable tag: 2.5.1
+Stable tag: 3.0
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -72,9 +72,38 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 == Upgrade Notice ==
 
-2.5 - Support for myCred. Reward your users for creating new entries and adding meals to their entries.
+3.0 - Shortcodes, CSV Import and much more.
 
 == Changelog ==
+
+= 3.0 =
+
+* New feature: CSV Import. Bulk import meals into your meal collection. https://mealtracker.yeken.uk/csv-import.html
+* New feature: New shortcode: [mt-chart-entries] which displays a chart of the user's entries. Read more: https://mealtracker.yeken.uk/shortcodes/mt-chart-entries.html
+* New feature: New shortcode: [mt-table-entries] which displays a table of the user's entries. Read more: https://mealtracker.yeken.uk/shortcodes/mt-table-entries.html
+* New feature: New shortcode: [mt-date-oldest-entry] which displays the date of the user's oldest entry. Read more: https://mealtracker.yeken.uk/shortcodes/mt-date-oldest-entry.html
+* New feature: New shortcode: [mt-date-latest-entry] which displays the date of the user's latest entry. Read more: https://mealtracker.yeken.uk/shortcodes/mt-date-latest-entry.html
+* New feature: New shortcode: [mt-count-entries] which displays a count of the user's entries. Read more: https://mealtracker.yeken.uk/shortcodes/mt-count-entries.html
+* New feature: New shortcode: [mt-count-meals] which displays the number of meals the user has added to their collection. Read more: https://mealtracker.yeken.uk/shortcodes/mt-count-meals.html
+* New feature: New shortcode [mt-chart-today] which is used to display the user's progress for today. Read more: https://mealtracker.yeken.uk/shortcodes/mt-chart-today.html
+* New feature: New shortcode: [mt-calories-allowance] displays the calorie allowance for today's entry. Read more: https://mealtracker.yeken.uk/shortcodes.html
+* New feature: New shortcode: [mt-calories-remaining]] displays the remaining calorie allowance for today's entry. Read more: https://mealtracker.yeken.uk/shortcodes.html
+* New feature: New shortcode: [mt-calories-used] displays the calories used for today's entry. Read more: https://mealtracker.yeken.uk/shortcodes.html
+* New feature: New shortcode: [mt-calories-used-percentage] displays the percentage of calories used for today . Read more: https://mealtracker.yeken.uk/shortcodes.html
+* New feature: Added a "Delete all cache" button a user's profile within the admin area.
+* Improvement: Display and change the order of boxes on user summary and profile page (admin).
+* Improvement: Set the height of the progress chart in [meal-tracker] shortcode to 200px. This can be overridden using the shortcode argument below.
+* Improvement: Added the argument "chart-height", "chart-type", "chart-hide-legend" and "chart-hide-title" to the shortcode [meal-tracker] Read more: https://mealtracker.yeken.uk/shortcodes/meal-tracker.html
+* Improvement: Added the argument "url-login" to the shortcode [meal-tracker] Read more: https://mealtracker.yeken.uk/shortcodes/meal-tracker.html
+* Improvement: Removed caching layer and integrated the new optimised caching layer that was written from scratch for Weight Tracker.
+* Improvement: Upgraded underlying charting library (from Chart.js 2 > 3) and updated related MT code.
+* Improvement: Re-factored underlying charting code so cleaner and optimised.
+* Improvement: Added 'kcal' to chart labels.
+* Improvement: Added Bezier curve to lne graphs.
+* Bug fix: Date format is now taken from WordPress admin settings.
+* Bug fix: Removed duplicate HTML element with the ID "yk-mt-button-meal-add".
+* Bug fix: Replaced incorrect reference to plugin slug used with in gamification.
+* Added links to the new Meal Tracker documentation site https://mealtracker.yeken.uk
 
 = 2.5.1 =
 

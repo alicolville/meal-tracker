@@ -132,7 +132,7 @@ abstract class YK_MT_EXT_SOURCE {
 	 * @param int $duration
 	 */
 	protected function cache_set( $key, $value, $duration = 3600 ) {
-		yk_mt_cache_temp_set( $key, $value, $duration );
+		yk_mt_cache_set( $key, $value, $duration );
 	}
 
 	/**
@@ -143,7 +143,7 @@ abstract class YK_MT_EXT_SOURCE {
 	 */
 	protected function cache_get( $key, $default = NULL ) {
 
-		$value = yk_mt_cache_temp_get( $key );
+		$value = yk_mt_cache_get( $key );
 
 		return ( false === empty( $value ) ) ? $value : $default;
 	}
