@@ -19,7 +19,7 @@ function yk_mt_shortcode_table_entries( $user_defined_arguments ) {
 	], $user_defined_arguments );
 
 	$advanced_mode                              = ( 'advanced' === $shortcode_arguments[ 'type'] );
-	$shortcode_arguments[ 'url-mealtracker']    = 'http://one.wordpress.test/?page_id=82';
+
 	$entries                                    = yk_mt_db_entries_summary( [ 'user-id' => $shortcode_arguments[ 'user-id' ], 'sort-order' => $shortcode_arguments[ 'sort-direction' ] ] );
 
 	if ( true === empty( $entries ) ){
