@@ -58,29 +58,35 @@ function yk_mt_chart_localise_apply( $strings ) {
 	return array_merge( $strings, yk_mt_chart_localise_strings() );
 }
 add_filter( 'yk_mt_config_locale', 'yk_mt_chart_localise_apply' );
+
 /**
  * Place a chart placeholder
+ *
+ * @param array $args
+ *
+ * @return string
  */
 function yk_mt_chart_placeholder( $args = [] ) {
 
     $default_options =  [
-                    'responsive'    => true,
-	                'tension'       => 0.4,
-	                'plugins'       => [ 'title' => [
-                                                        'display'   => false,
-                                                        'text'      => __( 'In a chart', YK_MT_SLUG )
-                                                    ]
+                    'responsive'            => true,
+	                'maintainAspectRatio'   => false,
+	                'tension'               => 0.4,
+	                'plugins'               => [ 'title' => [
+			                                                        'display'   => false,
+			                                                        'text'      => __( 'In a chart', YK_MT_SLUG )
+			                                                    ]
 	                ]
     ];
 
     $args = wp_parse_args( $args, [
-        'id'        => sprintf( 'yk_mt_chart_%s', uniqid() ),
-        'type'      => 'line',
-        'height'    => 50,
-        'labels'    => [],
-        'options'   => $default_options,
-        'datasets'  => [],
-        'title'     => NULL
+        'id'            => sprintf( 'yk_mt_chart_%s', uniqid() ),
+        'type'          => 'line',
+        'chart-height'  => '300px',
+        'labels'        => [],
+        'options'       => $default_options,
+        'datasets'      => [],
+        'title'         => NULL
     ]);
 
     if ( NULL !== $args[ 'title' ] ) {
@@ -91,7 +97,11 @@ function yk_mt_chart_placeholder( $args = [] ) {
 
     wp_localize_script( 'mt-chart', $args[ 'id' ] . '_data', $args );
 
-    return sprintf( '<canvas id="%1$s" class="yk-mt-line-chart" height="%2$d" style="height: %2$dpx"></canvas>', esc_attr( $args[ 'id' ] ), $args[ 'height' ] );
+	$args[ 'chart-height' ] = sprintf( 'style="height:%s"', esc_attr( $args[ 'chart-height' ] ) );
+
+    return sprintf( '<div class="yk-mt-chart-container" %2$s>
+						<canvas id="%1$s" class="yk-mt-line-chart"></canvas>
+					</div>', esc_attr( $args[ 'id' ] ), $args[ 'chart-height' ] );
 }
 
 
@@ -140,10 +150,11 @@ function yk_mt_chart_progress_canvas( $arguments = [] ) {
 function yk_mt_chart_line_allowed_versus_used( $args ) {
 
     $args = wp_parse_args( $args, [
-                                        'user-id'   => get_current_user_id(),
-                                        'entries'   => NULL,
-                                        'max'       => NULL,
-                                        'title'     => ''
+                                        'user-id'       => get_current_user_id(),
+                                        'entries'       => NULL,
+                                        'max'           => NULL,
+                                        'title'         => '',
+                                        'chart-height'  => '250px'
     ]);
 
     // Fetch entries if non specified

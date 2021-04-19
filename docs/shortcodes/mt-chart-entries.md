@@ -12,5 +12,6 @@ The shortcode supports the following arguments:
  
 | Argument | Description | Options | Example |
 |--|--|--|--|
+| chart-height | Specifies the height of the chart used within the shortcode. Default is 150px. | Number/px  | [mt-chart-entries chart-height="150px"] | 
 | max-entries | The maximum number of data points to display (default 15)| number  | [mt-chart-entries max-entries=30] |  
 |text-no-entries|The message to display if the user has no entries. |text| [mt-chart-entries text-no-entries="There are no entries"]
