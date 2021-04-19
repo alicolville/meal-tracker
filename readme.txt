@@ -19,6 +19,10 @@ The initial build of Meal Tracker!
 
 Extend your site by allowing your users to track their meals and calorie intake. Calorie targets for the day can be set by admins, the users or automatically pulled from [Yeken's Weight Tracker](https://wordpress.org/plugins/weight-loss-tracker/ "Yeken's Weight Tracker").
 
+For further information read our documentation:
+
+[Meal Tracker - Documentation](https://mealtracker.yeken.uk)
+
 Features:
 
 * Your user's can log their meals and calorie intake.
