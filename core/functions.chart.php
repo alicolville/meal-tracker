@@ -13,7 +13,9 @@ function yk_mt_chart_enqueue() {
 
 	$minified = yk_mt_use_minified();
 
-	wp_enqueue_script( 'mt-chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+	// Polyfill required for older browsers for chart.js 3+
+	wp_enqueue_script( 'mt-chart-js-polyfill', 'https://polyfill.io/v3/polyfill.min.js?features=ResizeObserver', [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+	wp_enqueue_script( 'mt-chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js', [ 'jquery', 'mt-chart-js-polyfill' ], YK_MT_PLUGIN_VERSION );
 	wp_enqueue_script( 'mt-chart', plugins_url( 'assets/js/core.chart' . $minified . '.js', __DIR__ ), [ 'jquery', 'mt-chart-js' ], YK_MT_PLUGIN_VERSION, true );
 
 	// Scripts > ChartJS > Localized scripts
