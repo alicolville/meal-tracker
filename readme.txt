@@ -1,10 +1,11 @@
+
 === Meal Tracker ===
 Contributors: aliakro
 Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food, fatsecrets, collection, macronutrients, fractions, search, edit, create
 Requires at least: 5.2
 Tested up to: 5.7
-Stable tag: 3.0
+Stable tag: 3.0.1
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,12 +20,14 @@ The initial build of Meal Tracker!
 
 Extend your site by allowing your users to track their meals and calorie intake. Calorie targets for the day can be set by admins, the users or automatically pulled from [Yeken's Weight Tracker](https://wordpress.org/plugins/weight-loss-tracker/ "Yeken's Weight Tracker").
 
-For further information read our documentation:
+ == Documentation ==
 
+For further information read our documentation:
 [Meal Tracker - Documentation](https://mealtracker.yeken.uk)
 
-Features:
+= Core Features =
 
+* [\[meal-tracker\]](https://mealtracker.yeken.uk/shortcodes/meal-tracker.html) shortcode.
 * Your user's can log their meals and calorie intake.
 * Visual graph to show your user the percentage of their daily allowance used.
 * Add meals for Breakfast, Mid-morning, Lunch, Afternoon, Dinner and Evening.
@@ -32,16 +35,18 @@ Features:
 * Each user has their own meal collection.
 * Users can create and edit their meals.
 
-Premium Features:
+= Premium Features =
 
+* [Additional shortcodes](https://mealtracker.yeken.uk/shortcodes.html).
 * As an administrator, you can view your user's progress and entries.
 * Your user's can have Unlimited meals.
 * If enabled, allow your users to record meals for any date, future or past.
 * Allow your users to search other user's meals.
+* [myCred integration](https://mealtracker.yeken.uk/gamification.html). Gamify your user's entries.
 * Support for Macronutrients.
-* Search external APIs (like Fatsecrets) for meals.
-* FatSecrets Food and Recipe API are supported.
-* Meal Collection - create a library of meals for your users to search.
+* Search [external APIs](https://mealtracker.yeken.uk/external-apis.html) (like [Fatsecret](https://www.fatsecret.com/)) for meals.
+* [FatSecrets Food](https://platform.fatsecret.com/api/Default.aspx?screen=rapiref&method=foods.search) and [Recipe API](https://platform.fatsecret.com/api/Default.aspx?screen=rapiref&method=recipe.get) are supported.
+* [Meal Collection](https://mealtracker.yeken.uk/meal-collections.html) - create a library of meals for your users to search.
 * Fractional meal quantities - If enabled (via settings) additional quantity settings of 1/4, 1/2 and 3/4 are available when adding meals to an entry.
 * View, edit and delete meals in your user's meal collection.
 
@@ -51,6 +56,8 @@ Premium Features:
 2. Navigate to Plugins > Add New
 3. Search for "Meal Tracker"
 4. Click Install now and activate plugin
+
+Read more at [Meal Tracker - Documentation](https://mealtracker.yeken.uk) .
 
 == Frequently Asked Questions ==
 
@@ -79,6 +86,10 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 3.0 - Shortcodes, CSV Import and much more.
 
 == Changelog ==
+
+= 3.0.1 =
+
+* Improvement: Small improvements to documentation.
 
 = 3.0 =
 

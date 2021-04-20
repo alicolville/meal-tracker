@@ -57,14 +57,18 @@
 
                                                 yk_mt_upgrade_button();
                                         ?>
-                                                <br />  <br />
+                                                <br />
+												<br />
                                                 <hr />
                                                 <h3>Premium Features</h3>
                                                 <p>Upgrade to the Premium version of Meal Tracker and get the additional features:</p>
 
                                                 <br />
                                         	<?php
-                                                 echo yk_mt_features_display();
+
+												yk_mt_features_button();
+
+												echo yk_mt_features_display();
 
                                             endif;
                                         ?>

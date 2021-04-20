@@ -1,7 +1,6 @@
   
 ## Core (free) features
 
-* **[Shortcodes]({{ site.baseurl }}/shortcodes.html)**. Enrich your site by placing Meal Tracker shortcodes to render user data and UI components.  
 * **Log meals and calorie intake**. Your user's can log their meals and calorie intake.
 * **Visualise**. Show your user the percentage of their daily allowance used in graphs.
 * **Meal times**. Add meals for Breakfast, Mid-morning, Lunch, Afternoon, Dinner and Evening.
@@ -12,7 +11,8 @@
 ### *Includes core features and the following:*
 
 Besides the features listed under core, the Premium version benefits from the following:  
-  
+ 
+* **[Shortcodes]({{ site.baseurl }}/shortcodes.html)**. Enrich your site by placing Meal Tracker shortcodes to render user data and UI components.   
 * **Admin screens**. As an administrator, you can view your user's progress and entries.
 * **[Admin Meal Collection]({{ site.baseurl }}/meal-collections.html)**. Create a library of meals for your users to search.
 * **Unlimited meals**. Allow your users to save as many meals to their collection as they wish.

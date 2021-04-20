@@ -1146,6 +1146,9 @@ function yk_mt_display_premium_upgrade_notice_for_shortcode () {
 
 /**
  * Display an upgrade button
+ *
+ * @param string $css_class
+ * @param null $link
  */
 function yk_mt_upgrade_button( $css_class = '', $link = NULL ) {
 
@@ -1158,6 +1161,23 @@ function yk_mt_upgrade_button( $css_class = '', $link = NULL ) {
         esc_html( yk_mt_license_price() ),
         __( 'a year ', YK_MT_SLUG )
     );
+}
+
+/**
+ * Display an features button
+ *
+ * @param string $css_class
+ * @param null $link
+ */
+function yk_mt_features_button( $css_class = '', $link = NULL ) {
+
+	$link = ( false === empty( $link ) ) ? $link : 'https://mealtracker.yeken.uk/features.html';
+
+	echo sprintf('<a href="%s" class="button-secondary sh-cd-upgrade-button%s" target="_blank" rel="noopener">%s</a>',
+		esc_url( $link ),
+		esc_attr( ' ' . $css_class ),
+		__( 'Read more about features', YK_MT_SLUG )
+	);
 }
 /**
  * Display message in admin UI
@@ -1222,7 +1242,8 @@ function yk_mt_features_display() {
 function yk_mt_features_list() {
 
     return [
-				__( 'External APIs', YK_MT_SLUG )    			=> __( 'Search FatSecrets Recipe and Food APIs', YK_MT_SLUG ),
+				__( 'Additional shortcodes', YK_MT_SLUG )    	=> __( 'Enrich your site with additional shortcodes', YK_MT_SLUG ),
+    			__( 'External APIs', YK_MT_SLUG )    			=> __( 'Search FatSecrets Recipe and Food APIs', YK_MT_SLUG ),
 				__( 'Own Meal collection', YK_MT_SLUG )     	=> __( 'Create your own meal collection for your users to search', YK_MT_SLUG ),
 				__( 'Edit user\'s meals', YK_MT_SLUG )     		=> __( 'View, edit and delete meals in your user\'s meal collections', YK_MT_SLUG ),
                 __( 'Create and view entries', YK_MT_SLUG )     => __( 'Allow your users to create and view entries for any day', YK_MT_SLUG ),
