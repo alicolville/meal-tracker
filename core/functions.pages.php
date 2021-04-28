@@ -21,9 +21,9 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
 	<div id="postbox-container-1" class="postbox-container">
 	  <div class="meta-box-sortables" id="yk-mt-user-data-one-sidebar">
 			<?php
-				$order = get_option( 'yk-mt-postbox-order-yk-mt-user-data-one-sidebar', [ 'entry-summary', 'table' ] );
+			$order = get_option( 'yk-mt-postbox-order-yk-mt-user-data-one-sidebar', [ 'entry-summary', 'user-stats', 'allowed-calories', 'user-search', 'delete-cache', 'delete-data' ] );
 
-				foreach ( $order as $postbox ) {
+			foreach ( $order as $postbox ) {
 
 					if ( 'entry-summary' === $postbox ) {
 						yk_mt_user_side_bar_postbox_entry( $entry );
