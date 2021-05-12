@@ -3,3 +3,5 @@ title: Meal Tracker Documentation
 description: Documentation and tips for setting up Meal Tracker on your WordPress site.
 baseurl: /
 logo: assets/images/product-logo.png
+kramdown:
+  smart_quotes: ["apos", "apos", "quot", "quot"]
