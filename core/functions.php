@@ -1569,7 +1569,7 @@ function yk_mt_import_csv_meal_collection_validate_header( $header_row ) {
  * @return bool|string
  */
 function yk_mt_import_csv_meal_collection_validate_row( $csv_row ) {
-var_dump($csv_row[ 'name' ]);
+
 	if ( true === empty( $csv_row[ 'name' ] ) ) {
 		return 'Skipped: Missing name: ' . implode( ',', $csv_row );
 	}
