@@ -388,6 +388,16 @@ function yk_mt_settings_page_generic() {
 													</td>
 												</tr>
 											</table>
+											<h3><?php echo __( 'Chart' , YK_MT_SLUG); ?></h3>
+											<table class="form-table">
+												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+													<th scope="row"><?php echo __( 'Calories Allowed colour', YK_MT_SLUG ); ?></th>
+													<td>
+														<input id="ws-ls-calories-allowed-colour" name="ws-ls-calories-allowed-colour" type="color" value="<?php echo esc_attr( get_option( 'ws-ls-calories-allowed-colour', '#fb8e2e' ) ); ?>">
+														<p><?php echo __('Specify a HEX colour code to use for the Calories Allowed section of the pie chart.', YK_MT_SLUG); ?></p>
+													</td>
+												</tr>
+											</table>
                                             <h3><?php echo __( 'Meal Tracker Shortcode' , YK_MT_SLUG); ?></h3>
                                             <table class="form-table">
                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
@@ -450,6 +460,8 @@ function yk_mt_register_settings(){
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-id' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-secret' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-food-api' );
+
+		register_setting( 'yk-mt-options-group', 'ws-ls-calories-allowed-colour' );
     }
 }
 add_action( 'admin_init', 'yk_mt_register_settings' );
