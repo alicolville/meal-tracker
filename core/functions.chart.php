@@ -26,7 +26,8 @@ function yk_mt_chart_enqueue() {
 
 		// Styles > Theme > Vars
 		$chart_font  = apply_filters( 'yk-mt-filter-chart-font', '\'Nunito\', \'HelveticaNeue-Light\', \'Helvetica Neue Light\', \'Helvetica Neue\', Helvetica, Arial, sans-serif' );
-		$chart_color = apply_filters( 'yk-mt-filter-chart-color', '#fb8e2e' );
+		$chart_color = get_option( 'ws-ls-calories-allowed-colour', '#fb8e2e' );
+		$chart_color = apply_filters( 'yk-mt-filter-chart-color', $chart_color );
 	}
 
 	wp_localize_script( 'mt-chart', 'yk_mt_chart', [
