@@ -5,6 +5,7 @@ defined('ABSPATH') or die("Jog on!");
 include_once YK_MT_ABSPATH . 'core/external-sources/base.php';
 include_once YK_MT_ABSPATH . 'core/external-sources/fat-secret-recipes.php';
 include_once YK_MT_ABSPATH . 'core/external-sources/fat-secret-foods.php';
+include_once YK_MT_ABSPATH . 'core/external-sources/wp-recipe-maker.php';
 
 /**
  * Do we have any external sources enabled?
@@ -33,6 +34,12 @@ function yk_mt_ext_enabled() {
  */
 function yk_mt_ext_source_credentials() {
 
+	// WP Recipe maker enabled?
+	if ( true === yk_mt_site_options_as_bool('external-wprm-enabled', false ) &&
+			true === yk_mt_ext_source_wprm_enabled() ) {
+		return [ 'source' => 'wp-recipe-maker' ];
+	}
+
 	// FatSecret
 	$client_id 		= yk_mt_site_options( 'external-fatsecret-id', '' );
 	$client_secret 	= yk_mt_site_options( 'external-fatsecret-secret', '' );
@@ -57,7 +64,9 @@ function yk_mt_ext_source_create_instance() {
 		return false;
 	}
 
-	if ( 'fat-secret' === $external_credentials[ 'source' ] ) {
+	if ( 'wp-recipe-maker' === $external_credentials[ 'source' ] ) {
+		return new YK_MT_EXT_WP_RECIPE_MAKER( [] );
+	} elseif ( 'fat-secret' === $external_credentials[ 'source' ] ) {
 
 		if ( 'recipes' === yk_mt_site_options('external-fatsecret-food-api', 'recipes' ) ) {
 			return new YK_MT_EXT_FAT_SECRET_RECIPES( $external_credentials[ 'credentials' ] );
@@ -88,9 +97,12 @@ function yk_mt_ext_source_show_servings() {
 
 /**
  * Test the specified end point is working and display an error if not.
+ *
+ * @param string $terms
+ *
  * @return bool|string
  */
-function yk_mt_ext_source_test() {
+function yk_mt_ext_source_test( $terms = 'apples' ) {
 
 	$external_source = yk_mt_ext_source_create_instance();
 
@@ -100,7 +112,7 @@ function yk_mt_ext_source_test() {
 	}
 
 	// Perform a test search for something obvious. We should get results!
-	$external_source->search( 'apples' );
+	$external_source->search( $terms );
 
 	$details = '';
 
@@ -349,7 +361,18 @@ function yk_mt_ext_source_as_string( $slug ) {
 		case 'fat-secret':
 			return __( 'FatSecrets Recipe', YK_MT_SLUG );
 			break;
+		case 'wp-recipe-maker':
+			return __( 'WP Recipe Maker', YK_MT_SLUG );
+			break;
 	}
 
 	return $slug;
+}
+
+/**
+ * Is WP Recipe Maker enabled?
+ * @return bool
+ */
+function yk_mt_ext_source_wprm_enabled() {
+	return post_type_exists( 'wprm_recipe' );
 }
