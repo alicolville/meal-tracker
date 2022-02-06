@@ -306,7 +306,8 @@ function yk_mt_settings_page_generic() {
 											</table>
 											<?php
 
-												$current_source = yk_mt_ext_source_credentials();
+												$current_source 		= yk_mt_ext_source_credentials();
+												$current_source_text 	= ( false === empty( $current_source[ 'source' ] ) ) ? $current_source[ 'source' ] : '';
 
 											?>
 											<h3><?php echo __( 'Active Source' , YK_MT_SLUG ); ?></h3>
@@ -330,15 +331,21 @@ function yk_mt_settings_page_generic() {
 												$wprm_enabled = yk_mt_ext_source_wprm_enabled();
 											?>
 											<h3><?php echo __( 'WP Recipe Maker' , YK_MT_SLUG ); ?></h3>
-											<p><?php echo __( 'If enabled, allow your users to search your meals stored in the WP plugin' , YK_MT_SLUG); ?> <a href="https://en-gb.wordpress.org/plugins/wp-recipe-maker/" target="_blank">WP Recipe Maker</a>.</p>
+											<p><?php echo __( 'If enabled, allow your users to search recipes stored within the WP plugin' , YK_MT_SLUG); ?> <a href="https://en-gb.wordpress.org/plugins/wp-recipe-maker/" target="_blank">WP Recipe Maker</a>.</p>
 											<?php if ( false === $wprm_enabled ) {
 												printf( '<p class="yk-mt-error-red">%s</p>',__( 'WP Recipe Maker is not installed and/or activated.' , YK_MT_SLUG ) );
 											} ?>
+											<?php
+												if ( 'wp-recipe-maker' === $current_source_text ) {
+													printf( '<p class="yk-mt-active-ext-source">%s</p>', __( 'Active external source.' , YK_MT_SLUG ) );
+												}
+											?>
 											<table class="form-table">
 												<tr>
 													<th scope="row"><?php echo __( 'Enabled' , YK_MT_SLUG); ?></th>
 													<td>
 														<?php
+
 															$external_source_wprm_enabled = yk_mt_site_options_as_bool('external-wprm-enabled', false );
 														?>
 														<select id="external-wprm-enabled" name="external-wprm-enabled" <?php if ( false === $wprm_enabled ) { echo ' disabled="disabled"'; } ?>>
@@ -355,6 +362,11 @@ function yk_mt_settings_page_generic() {
 												<?php echo __( 'Please ensure you have whitelisted your server\'s IP address with FatSecret. This can be done by selecting your application (using the above link) and completing the "Allowed IP Addresses" section. It looks like your server IP may be:' , YK_MT_SLUG); ?>
 												<strong><?php echo yk_mt_server_ip(); ?></strong>
 											</p>
+											<?php
+											if ( true === in_array( $current_source_text, [ 'fat-secret' ] ) ) {
+												printf( '<p class="yk-mt-active-ext-source">%s</p>', __( 'Active external source.' , YK_MT_SLUG ) );
+											}
+											?>
 											<table class="form-table">
 												<tr>
 													<th scope="row"><?php echo __( 'Client ID' , YK_MT_SLUG); ?></th>
