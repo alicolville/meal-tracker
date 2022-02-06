@@ -57,6 +57,19 @@ function yk_mt_settings_page_generic() {
                             </span>
                         </h3>
                         <div class="inside">
+							<?php if ( false === empty( $_GET[ 'test-search' ] ) ): ?>
+								<a name="test-performed" />
+								<h3><?php echo __( 'API Test Results' , YK_MT_SLUG); ?></h3>
+								<table class="form-table">
+									<tr>
+										<th scope="row"><?php echo __( 'Test Results' , YK_MT_SLUG); ?></th>
+										<td>
+											<textarea class="large-text" rows="20"><?php echo esc_html( yk_mt_ext_source_test() ); ?></textarea>
+										</td>
+									</tr>
+								</table>
+								<br />
+							<?php endif; ?>
                             <form method="post" action="options.php">
                                 <?php
 
@@ -271,18 +284,6 @@ function yk_mt_settings_page_generic() {
 													yk_mt_display_pro_upgrade_notice();
 												}
 											?>
-											<?php if ( false === empty( $_GET[ 'test-search' ] ) ): ?>
-												<h3><?php echo __( 'API Test Results' , YK_MT_SLUG); ?></h3>
-												<table class="form-table">
-													<tr>
-														<th scope="row"><?php echo __( 'Test Results' , YK_MT_SLUG); ?></th>
-														<td>
-															<textarea class="large-text" rows="20"><?php echo esc_html( yk_mt_ext_source_test() ); ?></textarea>
-														</td>
-													</tr>
-												</table>
-												<br />
-											<?php endif; ?>
 											<p>
 												<?php echo __( 'Specify settings for your preferred external service. Meal Tracker will then allow your user\'s to search the external collection, select meals and copy the data to the user\'s meal collection' , YK_MT_SLUG); ?>.
 												<strong><?php echo __( 'Only one service can be used' , YK_MT_SLUG); ?>. <?php echo __( 'Meal Tracker will choose just one of the services if more than one has been enabled' , YK_MT_SLUG); ?>.</strong>
@@ -320,7 +321,7 @@ function yk_mt_settings_page_generic() {
 													<tr>
 														<th scope="row"><?php echo __( 'Test API' , YK_MT_SLUG); ?></th>
 														<td>
-															<a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-settings&test-search=true#external-sources') ); ?>" class="button"><?php echo __( 'Perform a test search for "Apples"' , YK_MT_SLUG); ?></a>
+															<a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-settings&test-search=true#test-performed') ); ?>" class="button"><?php echo __( 'Perform a test search for "Apples"' , YK_MT_SLUG); ?></a>
 														</td>
 													</tr>
 												<?php endif; ?>
