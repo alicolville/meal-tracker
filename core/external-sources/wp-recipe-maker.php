@@ -50,7 +50,7 @@ class YK_MT_EXT_WP_RECIPE_MAKER extends YK_MT_EXT_SOURCE {
 	}
 
 	function format_result( $result ) {
-	
+
 		return [
 			'name'			    => $result->name(),
 			'description'	    => '', // $result->summary(),
