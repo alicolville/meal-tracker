@@ -106,6 +106,10 @@ function yk_mt_ext_source_test( $terms = 'apples' ) {
 
 	$external_source = yk_mt_ext_source_create_instance();
 
+	if ( true === empty( $external_source ) ) {
+		return sprintf( '%s', __( 'There are no valid external sources.', YK_MT_SLUG ) );
+	}
+
 	// An errors?
 	if ( $external_source->has_error() ) {
 		return sprintf( "%s: %s\n\n", __( 'Error', YK_MT_SLUG ), $external_source->get_error() );
@@ -121,9 +125,9 @@ function yk_mt_ext_source_test( $terms = 'apples' ) {
 	}
 
 	if ( false === $external_source->has_results() ) {
-		$details .= __( 'Error: No search results could be found for the term "apples"' );
+		$details .= __( 'Error: No search results could be found for the term "apples"', YK_MT_SLUG ). PHP_EOL;
 	} else {
-		$details .= __( 'Success: Results have been found for "apples"' );
+		$details .= __( 'Success: Results have been found for "apples"', YK_MT_SLUG ) . PHP_EOL;
 
 		$details .= print_r( $external_source->results(), true );
 	}
