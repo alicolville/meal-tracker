@@ -284,8 +284,8 @@ function yk_mt_settings_page_generic() {
 												}
 											?>
 											<p>
-												<?php echo __( 'Specify API credentials for your preferred external service. Meal Tracker will then allow your user\'s to search their database, select meals and copy the data to the user\'s meal collection' , YK_MT_SLUG); ?>.
-												<strong><?php echo __( 'Only one API can be used' , YK_MT_SLUG); ?>. <?php echo __( 'The plugin will choose just one API if settings for more than one API have been entered' , YK_MT_SLUG); ?>.</strong>
+												<?php echo __( 'Specify settings for your preferred external service. Meal Tracker will then allow your user\'s to search the external collection, select meals and copy the data to the user\'s meal collection' , YK_MT_SLUG); ?>.
+												<strong><?php echo __( 'Only one service can be used' , YK_MT_SLUG); ?>. <?php echo __( 'Meal Tracker will choose just one of the services if more than one has been enabled' , YK_MT_SLUG); ?>.</strong>
 											</p>
 											<h3><?php echo __( 'Enabled' , YK_MT_SLUG ); ?></h3>
 											<table class="form-table">
@@ -324,6 +324,28 @@ function yk_mt_settings_page_generic() {
 														</td>
 													</tr>
 												<?php endif; ?>
+											</table>
+											<?php
+												$wprm_enabled = yk_mt_ext_source_wprm_enabled();
+											?>
+											<h3><?php echo __( 'WP Recipe Maker' , YK_MT_SLUG ); ?></h3>
+											<p><?php echo __( 'If enabled, allow your users to search your meals stored in the WP plugin' , YK_MT_SLUG); ?> <a href="https://en-gb.wordpress.org/plugins/wp-recipe-maker/" target="_blank">WP Recipe Maker</a>.</p>
+											<?php if ( false === $wprm_enabled ) {
+												printf( '<p class="yk-mt-error-red">%s</p>',__( 'WP Recipe Maker is not installed and/or activated.' , YK_MT_SLUG ) );
+											} ?>
+											<table class="form-table">
+												<tr>
+													<th scope="row"><?php echo __( 'Enabled' , YK_MT_SLUG); ?></th>
+													<td>
+														<?php
+															$external_source_wprm_enabled = yk_mt_site_options_as_bool('external-wprm-enabled', false );
+														?>
+														<select id="external-wprm-enabled" name="external-wprm-enabled" <?php if ( false === $wprm_enabled ) { echo ' disabled="disabled"'; } ?>>
+															<option value="false" <?php selected( $external_source_wprm_enabled, false ); ?>><?php echo __('No', YK_MT_SLUG )?></option>
+															<option value="true" <?php selected( $external_source_wprm_enabled, true ); ?>><?php echo __('Yes', YK_MT_SLUG )?></option>
+														</select>
+													</td>
+												</tr>
 											</table>
 											<h3><?php echo __( 'FatSecret API' , YK_MT_SLUG ); ?></h3>
 											<p><?php echo __( 'You are able to create the required REST API OAuth 2.0 Credentials a the following page:' , YK_MT_SLUG); ?> <a href="https://platform.fatsecret.com/api/Default.aspx?screen=myk" target="_blank">https://platform.fatsecret.com/api/Default.aspx?screen=myk</a></p>
@@ -457,6 +479,7 @@ function yk_mt_register_settings(){
 		register_setting( 'yk-mt-options-group', 'macronutrients-required' );
 
 		register_setting( 'yk-mt-options-group', 'external-enabled' );
+		register_setting( 'yk-mt-options-group', 'external-wprm-enabled' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-id' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-secret' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-food-api' );
