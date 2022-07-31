@@ -20,6 +20,7 @@ function yk_mt_shortcode_meal_tracker( $user_defined_arguments ) {
 	$shortcode_arguments = shortcode_atts( [    'url-login'             => '',          // URL for login page (displayed in login prompt)
 												'chart-height'	        => '200px',     // Set height of progress chart
 												'chart-type'            => 'doughnut',  // pie / doughnut
+												'chart-hide'            => false,       // Hide the chart and today's summary
 												'chart-hide-legend'     => false,       // Hide chart legend
 												'chart-hide-title'      => true         // Hide chart title
 	], $user_defined_arguments );
@@ -54,7 +55,9 @@ function yk_mt_shortcode_meal_tracker( $user_defined_arguments ) {
 
 	} else {
 
-		$html .= yk_mt_shortcode_meal_tracker_summary( $shortcode_arguments );
+		if ( false === yk_mt_to_bool( $shortcode_arguments[ 'chart-hide' ] ) ) {
+			$html .= yk_mt_shortcode_meal_tracker_summary( $shortcode_arguments );
+		}
 
 		if ( true === $is_pro ) {
 			$html .= yk_mt_shortcode_meal_tracker_navigation( $entry_id );
@@ -790,6 +793,8 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 		wp_enqueue_style( 'mt-datepicker-theme', plugins_url( 'assets/css/yk-mt-zebra.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
 		wp_enqueue_script( 'mt-pro', plugins_url( 'assets/js/pro.js', __DIR__ ), [ 'meal-tracker', 'mt-datepicker' ], YK_MT_PLUGIN_VERSION, true );
+
+		wp_localize_script( 'mt-pro', 'yk_mt_calendar', yk_mt_ajax_config_calendar() );
 	}
 
 	wp_localize_script( 'meal-tracker', 'yk_mt', yk_mt_ajax_config() );

@@ -628,6 +628,39 @@ function yk_mt_ajax_config() {
 }
 
 /**
+ * Localise values for calendar
+ * @return mixed|void
+ */
+function yk_mt_ajax_config_calendar() {
+
+	$config = [
+					'months'	=> [ 	__( 'January', YK_MT_SLUG ),
+										__( 'February', YK_MT_SLUG ),
+										__( 'March', YK_MT_SLUG ),
+										__( 'April', YK_MT_SLUG ),
+										__( 'May', YK_MT_SLUG ),
+										__( 'June', YK_MT_SLUG ),
+										__( 'July', YK_MT_SLUG ),
+										__( 'August', YK_MT_SLUG ),
+										__( 'September', YK_MT_SLUG ),
+										__( 'October', YK_MT_SLUG ),
+										__( 'November', YK_MT_SLUG ),
+										__( 'December', YK_MT_SLUG )
+					],
+					'days'		=> [	__( 'Sunday', YK_MT_SLUG ),
+										__( 'Monday', YK_MT_SLUG ),
+										__( 'Tuesday', YK_MT_SLUG ),
+										__( 'Wednesday', YK_MT_SLUG ),
+										__( 'Thursday', YK_MT_SLUG ),
+										__( 'Friday', YK_MT_SLUG ),
+										__( 'Saturday', YK_MT_SLUG ) ],
+				'today-button' =>		__( 'Today', YK_MT_SLUG )
+    ];
+
+	return apply_filters( 'yk_mt_config_calendar', $config );
+}
+
+/**
  * Return an array of localised strings
  * @return array
  */

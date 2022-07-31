@@ -167,3 +167,10 @@ Core.css overrides
 .yk-mt-form-row {
   margin-bottom: 10px;
 }
+.yk-mt-active-ext-source {
+  font-weight: bold;
+  color: white;
+  background-color: green;
+  padding: 5px;
+  text-transform: uppercase;
+}

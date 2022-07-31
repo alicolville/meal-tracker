@@ -17,6 +17,7 @@ The shortcode supports the following arguments:
 | Argument | Description | Options | Example |    
 |--|--|--|--|   
 | chart-height | Specifies the height of the progress chart used within the shortcode | Number/px  | [meal-tracker chart-height="150px"] |  
+| chart-hide | Hide the chat and today's summary | "false" (default) or "true"  | [meal-tracker chart-hide="true"] | 
 | chart-hide-legend | Specifies whether the legend for the progress chart should be hidden | "true" (default) or "false"  | [meal-tracker chart-hide-legend="true"] | 
 | chart-hide-title | Specifies whether the title for the progress chart should be hidden | "true" or "false" (default) | [meal-tracker chart-hide-legend="title"] | 
 | chart-type | Specifies whether the progress chart should be a "pie" or "doughnut" | "pie" or "doughnut" (default) | [meal-tracker chart-type="pie"] | 
