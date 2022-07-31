@@ -790,6 +790,8 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 		wp_enqueue_style( 'mt-datepicker-theme', plugins_url( 'assets/css/yk-mt-zebra.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
 		wp_enqueue_script( 'mt-pro', plugins_url( 'assets/js/pro.js', __DIR__ ), [ 'meal-tracker', 'mt-datepicker' ], YK_MT_PLUGIN_VERSION, true );
+
+		wp_localize_script( 'mt-pro', 'yk_mt_calendar', yk_mt_ajax_config_calendar() );
 	}
 
 	wp_localize_script( 'meal-tracker', 'yk_mt', yk_mt_ajax_config() );
