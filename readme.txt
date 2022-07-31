@@ -48,6 +48,7 @@ For further information read our documentation:
 * [Meal Collection](https://mealtracker.yeken.uk/meal-collections.html) - create a library of meals for your users to search.
 * Fractional meal quantities - If enabled (via settings) additional quantity settings of 1/4, 1/2 and 3/4 are available when adding meals to an entry.
 * View, edit and delete meals in your user's meal collection.
+* Import your meal collection via CSV.
 
 == Installation ==
 
@@ -90,6 +91,14 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 * Improvement: Added the ability to translate calendar months, days and today's button.
 * Improvement: Added a new argument "chart-hide" to [meal-tracker] to hide the chart.
+
+= 3.0.10 =
+
+* Tested up to version 6.0.
+
+= 3.0.9 =
+
+* Updated "Tested upto" WP version.
 
 = 3.0.8 =
 
