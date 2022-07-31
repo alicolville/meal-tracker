@@ -51,6 +51,11 @@ function yk_mt_chart_render() {
 
         yk_mt_ctx   = jQuery('#yk-mt-chart');
 
+        // Has the chart been hidden in a shortcode?
+        if ( 0 === yk_mt_ctx.length ) {
+          return;
+        }
+
         yk_mt_chart = new Chart( yk_mt_ctx, {
             type:       'doughnut',
             data:       yk_mt_chart_data(),
