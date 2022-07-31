@@ -89,6 +89,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 = 3.0.11 =
 
 * Improvement: Added the ability to translate calendar months, days and today's button.
+* Improvement: Added a new argument "chart-hide" to [meal-tracker] to hide the chart.
 
 = 3.0.8 =
 
