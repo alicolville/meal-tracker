@@ -3,7 +3,7 @@ Contributors: aliakro
 Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food, fatsecrets, collection, macronutrients, fractions, search, edit, create
 Requires at least: 5.7
-Tested up to: 6.0
+Tested up to: 6.1.1
 Stable tag: 3.0.11
 Requires PHP: 7.2
 License: GPLv2 or later
@@ -86,6 +86,10 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 3.0 - Shortcodes, CSV Import and much more.
 
 == Changelog ==
+
+= 3.0.12 =
+
+* Updated "Tested upto" statement.
 
 = 3.0.11 =
 
