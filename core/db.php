@@ -847,7 +847,8 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
 	    'admin-meals-only'      	=> false,
 		'include-admin-meals'  		=> false,
 	    'use-cache'             	=> true,
-	    'last-x-days'          	 	=> NULL
+	    'last-x-days'          	 	=> NULL,
+        'empty-results-value'       => false
     ]);
 
     $cache_key = md5( json_encode( $options ) );
@@ -914,7 +915,7 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
         $meals = $wpdb->get_results( $sql, ARRAY_A );
     }
 
-    $meals = ( false === empty( $meals ) ) ? $meals : false;
+    $meals = ( false === empty( $meals ) ) ? $meals : $options[ 'empty-results-value' ];
 
 	yk_mt_cache_user_set( $user_id, $cache_key, $meals );
 
