@@ -6,6 +6,7 @@ include_once YK_MT_ABSPATH . 'core/external-sources/base.php';
 include_once YK_MT_ABSPATH . 'core/external-sources/fat-secret-recipes.php';
 include_once YK_MT_ABSPATH . 'core/external-sources/fat-secret-foods.php';
 include_once YK_MT_ABSPATH . 'core/external-sources/wp-recipe-maker.php';
+include_once YK_MT_ABSPATH . 'core/external-sources/meal-tracker.php';
 
 /**
  * Do we have any external sources enabled?
@@ -364,6 +365,9 @@ function yk_mt_ext_source_as_string( $slug ) {
 			break;
 		case 'fat-secret':
 			return __( 'FatSecrets Recipe', YK_MT_SLUG );
+			break;
+		case 'meal-tracker':
+			return __( 'Meal Tracker API', YK_MT_SLUG );
 			break;
 		case 'wp-recipe-maker':
 			return __( 'WP Recipe Maker', YK_MT_SLUG );
