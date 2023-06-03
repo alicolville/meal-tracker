@@ -363,7 +363,7 @@ function yk_mt_settings_page_generic() {
 												<strong><?php echo yk_mt_server_ip(); ?></strong>
 											</p>
 											<?php
-											if ( true === in_array( $current_source_text, [ 'fat-secret' ] ) ) {
+											if ( $current_source_text === 'fat-secret' ) {
 												printf( '<p class="yk-mt-active-ext-source">%s</p>', __( 'Active external source.' , YK_MT_SLUG ) );
 											}
 											?>
@@ -403,7 +403,8 @@ function yk_mt_settings_page_generic() {
                                             <h3><?php echo __( 'Another Meal Tracker instance' , YK_MT_SLUG ); ?></h3>
                                             <p><?php echo __( 'Connect to another site that has Meal Tracker installed and search the meal collection (added by admin) there. For this to work, you must have an additional plugin installed on the other site called "Meal Tracker API". Please email us for further information: ' , YK_MT_SLUG); ?> <a href="mailto:email@yeken.uk" target="_blank">email@yeken.uk</a></p>
 											<?php
-											if ( true === in_array( $current_source_text, [ 'meal-tracker' ] ) ) {
+
+											if ( $current_source_text === 'meal-tracker'  ) {
 												printf( '<p class="yk-mt-active-ext-source">%s</p>', __( 'Active external source.' , YK_MT_SLUG ) );
 											}
 											?>
@@ -519,7 +520,7 @@ function yk_mt_register_settings(){
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-id' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-secret' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-food-api' );
-		register_setting( 'yk-mt-options-group', 'external-meal-tracker-api' );
+		register_setting( 'yk-mt-options-group', 'external-meal-tracker-endpoint' );
 		register_setting( 'yk-mt-options-group', 'external-meal-tracker-bearer-token' );
 		register_setting( 'yk-mt-options-group', 'ws-ls-calories-allowed-colour' );
     }

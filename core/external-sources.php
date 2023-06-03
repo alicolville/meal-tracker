@@ -35,6 +35,14 @@ function yk_mt_ext_enabled() {
  */
 function yk_mt_ext_source_credentials() {
 
+	// Another Meal Tracker instance
+	$endpoint 		= yk_mt_site_options( 'external-meal-tracker-endpoint', '' );
+	$bearer_token 	= yk_mt_site_options( 'external-meal-tracker-bearer-token', '' );
+
+	if ( false === empty( $endpoint ) && false === empty( $bearer_token ) ) {
+		return [ 'source' => 'meal-tracker', 'credentials' => [ 'endpoint' => $endpoint, 'bearer-token' => $bearer_token ] ];
+	}
+
 	// WP Recipe maker enabled?
 	if ( true === yk_mt_site_options_as_bool('external-wprm-enabled', false ) &&
 			true === yk_mt_ext_source_wprm_enabled() ) {
@@ -67,6 +75,8 @@ function yk_mt_ext_source_create_instance() {
 
 	if ( 'wp-recipe-maker' === $external_credentials[ 'source' ] ) {
 		return new YK_MT_EXT_WP_RECIPE_MAKER( [] );
+	} elseif ( 'meal-tracker' === $external_credentials[ 'source' ] ) {
+		return new YK_MT_EXT_MEAL_TRACKER( $external_credentials[ 'credentials' ] );
 	} elseif ( 'fat-secret' === $external_credentials[ 'source' ] ) {
 
 		if ( 'recipes' === yk_mt_site_options('external-fatsecret-food-api', 'recipes' ) ) {
