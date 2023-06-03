@@ -17,11 +17,11 @@ class YK_MT_EXT_MEAL_TRACKER extends YK_MT_EXT_SOURCE {
 			return $this->get_error();
 		}
 
-		$no_results = count( $results );
-
 		if ( true === empty( $results ) ) {
 			return false;
 		}
+
+		$no_results = count( $results );
 
 		$this->results     = $results;
 		$this->no_results  = $no_results;
@@ -125,7 +125,9 @@ class YK_MT_EXT_MEAL_TRACKER extends YK_MT_EXT_SOURCE {
 
 		$response_code = wp_remote_retrieve_response_code( $response );
 
-		if ( 200 !== $response_code ) {
+		if ( 204 === $response_code ) {
+			return false;   // No matching content found at endpoint
+		} else if ( 200 !== $response_code ) {
 
 			$error = sprintf( 'There was an issue communicating with another instance of Meal Tracker. HTTP Code %d.', $response_code );
 
