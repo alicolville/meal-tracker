@@ -363,7 +363,7 @@ function yk_mt_settings_page_generic() {
 												<strong><?php echo yk_mt_server_ip(); ?></strong>
 											</p>
 											<?php
-											if ( true === in_array( $current_source_text, [ 'fat-secret' ] ) ) {
+											if ( $current_source_text === 'fat-secret' ) {
 												printf( '<p class="yk-mt-active-ext-source">%s</p>', __( 'Active external source.' , YK_MT_SLUG ) );
 											}
 											?>
@@ -400,6 +400,30 @@ function yk_mt_settings_page_generic() {
 													</td>
 												</tr>
 											</table>
+                                            <h3><?php echo __( 'Another Meal Tracker instance' , YK_MT_SLUG ); ?></h3>
+                                            <p><?php echo __( 'Connect to another site that has Meal Tracker installed and search the meal collection (added by admin) there. For this to work, you must have an additional plugin installed on the other site called "Meal Tracker API". Please email us for further information: ' , YK_MT_SLUG); ?> <a href="mailto:email@yeken.uk" target="_blank">email@yeken.uk</a></p>
+											<?php
+
+											if ( $current_source_text === 'meal-tracker'  ) {
+												printf( '<p class="yk-mt-active-ext-source">%s</p>', __( 'Active external source.' , YK_MT_SLUG ) );
+											}
+											?>
+                                            <table class="form-table">
+                                                <tr>
+                                                    <th scope="row"><?php echo __( 'API Endpoint' , YK_MT_SLUG); ?></th>
+                                                    <td>
+                                                        <input type="text" name="external-meal-tracker-endpoint" id="external-meal-tracker-endpoint" placeholder="http://somewhere.com/wp-json/" value="<?php echo esc_attr( yk_mt_site_options( 'external-meal-tracker-endpoint', '' ) ); ?>" class="large-text" maxlength="40" />
+                                                        <p><?php echo __( 'Specify the path for the other site\'s WP JSON end point e.g. change "somewhere.com" to the relevant URL: http://somewhere.com/wp-json/ ' , YK_MT_SLUG); ?></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row"><?php echo __( 'Bearer Token' , YK_MT_SLUG); ?></th>
+                                                    <td>
+                                                        <input type="password" name="external-meal-tracker-bearer-token" id="external-meal-tracker-bearer-token" value="<?php echo esc_attr( yk_mt_site_options( 'external-meal-tracker-bearer-token', '' ) ); ?>" class="large-text" maxlength="40" />
+                                                        <p><?php echo __( 'To communicate with the API endpoint, you must specify a Bearer Token that is created in the "Meal Tracker API" installed on the other website.', YK_MT_SLUG); ?></p>
+                                                    </td>
+                                                </tr>
+                                            </table>
 										</div>
                                         <div>
                                             <?php
@@ -496,7 +520,8 @@ function yk_mt_register_settings(){
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-id' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-secret' );
 		register_setting( 'yk-mt-options-group', 'external-fatsecret-food-api' );
-
+		register_setting( 'yk-mt-options-group', 'external-meal-tracker-endpoint' );
+		register_setting( 'yk-mt-options-group', 'external-meal-tracker-bearer-token' );
 		register_setting( 'yk-mt-options-group', 'ws-ls-calories-allowed-colour' );
     }
 }

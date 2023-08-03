@@ -270,7 +270,7 @@ function yk_mt_cache_generate_key( $key ){
  *
  * @return string
  */
-function yk_mt_cache_generate_key_from_array( $prefix = 'mt', $array ) {
+function yk_mt_cache_generate_key_from_array( $prefix = 'mt', $array = [] ) {
 
 	if ( false === is_array( $array ) ) {
 		return '';
