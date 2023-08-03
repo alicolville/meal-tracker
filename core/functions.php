@@ -1517,7 +1517,7 @@ function yk_mt_import_csv_meal_collection( $attachment_id, $dry_run = true ) {
 		$output .= 'DRY RUN MODE! No data will be imported.' . PHP_EOL;
 	}
 
-	$db_formats = [ '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%s' ];
+	$db_formats = [ '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%f', '%f', '%f', '%d', '%s' ];
 
 	foreach ( $csv as $row ) {
 
