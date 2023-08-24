@@ -348,6 +348,7 @@ function yk_mt_ext_add_meal_to_user_collection( $ext_id, $serving_id = NULL, $us
 
 	$ext_meal[ 'ext_serving_id' ]   = $serving_id;
 	$ext_meal[ 'added_by' ]         = $user_id;
+	$ext_meal[ 'added_by_admin' ]   = 0;
 
 	return yk_mt_db_meal_add( $ext_meal );
 }
