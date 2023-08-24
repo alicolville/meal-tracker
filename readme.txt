@@ -87,6 +87,10 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 == Changelog ==
 
+= 3.1.2 =
+
+* Improvement: DB change, "added_by_admin" column now defaults to 0 when a row is added into the meal collection table.
+
 = 3.1.1 =
 
 * Version bump for SVN issue.

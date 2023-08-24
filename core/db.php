@@ -1127,7 +1127,7 @@ function yk_wt_db_tables_create() {
     $sql = "CREATE TABLE $table_name (
                 id mediumint(9) NOT NULL AUTO_INCREMENT,
                 added_by int NOT NULL,
-                added_by_admin int NULL,
+                added_by_admin DEFAULT 0 int NULL,
                 name varchar(100) NOT NULL,
                 calories float DEFAULT 0 NOT NULL,
                 quantity float DEFAULT 0 NOT NULL,
