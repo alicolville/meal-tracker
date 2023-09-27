@@ -133,10 +133,12 @@ function yk_mt_user_side_bar_postbox_allowed_sources( $user_id ) {
 						?>
 					</td>
 				</tr>
-				<tr>
-					<th><?php echo __( 'Current allowance', YK_MT_SLUG ); ?></th>
-					<td><?php echo yk_mt_format_calories( $selected_source[ 'value' ] ); ?></td>
-				</tr>
+                <?php if ( ! empty( $selected_source[ 'value' ] ) ) : ?>
+                    <tr>
+                        <th><?php echo __( 'Current allowance', YK_MT_SLUG ); ?></th>
+                        <td><?php echo yk_mt_format_calories( $selected_source[ 'value' ] ); ?></td>
+                    </tr>
+                <?php endif; ?>
 			</table>
 			<?php
 			?>
