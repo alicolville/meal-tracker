@@ -870,7 +870,7 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
     if ( false === empty( $user_id ) ) {
 
     	if ( false === $options[ 'include-admin-meals' ] ) {
-		    $sql .= sprintf( ' and ( added_by = %d and added_by_admin is null )', $user_id );
+		    $sql .= sprintf( ' and ( added_by = %d and IFNULL( added_by_admin, 0 ) = 0 )', $user_id );
 	    } else {
 		    $sql .= sprintf( ' and ( added_by = %d or added_by_admin = 1 )', $user_id );
 	    }
