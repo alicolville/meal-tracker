@@ -830,12 +830,15 @@ function yk_mt_form_text( $title, $name, $value ='', $max_length = 60, $required
 /**
  * @param $title
  * @param $name
- * @param string $value
+ * @param string $previous_value
  * @param array $options
+ * @param string $placeholder
+ * @param bool $previous_value_is_key
+ * @param array $keys_to_disable
  *
  * @return string
  */
-function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $placeholder = '', $previous_value_is_key = false ) {
+function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $placeholder = '', $previous_value_is_key = false, $keys_to_disable = [] ) {
 
     $name = 'yk-mt-' . $name;
 
@@ -857,7 +860,9 @@ function yk_mt_form_select( $title, $name, $previous_value ='', $options = [], $
 
         $selected = selected( $previous_value, $compare_against, false );
 
-		$html .= sprintf( '<option value="%1$s" %3$s>%2$s</option>', esc_attr( $key ), esc_attr( $value ), $selected );
+        $disabled = ( true === in_array( $key, $keys_to_disable ) ) ? ' disabled' : '';
+
+		$html .= sprintf( '<option value="%1$s" %4$s %3$s>%2$s</option>', esc_attr( $key ), esc_attr( $value ), $selected, $disabled );
 	}
 
 	$html .= '</select></div>';
