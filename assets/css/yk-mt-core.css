@@ -84,6 +84,14 @@ Utility classes
 	display: none !important;
 }
 
+.yk-mt-warning {
+	color: #ff8c00;
+}
+
+.yk-mt-error {
+	color: #f00;
+}
+
 /*********
 Components
 *********/

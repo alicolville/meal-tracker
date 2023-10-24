@@ -196,7 +196,7 @@ function yk_mt_shortcode_meal_tracker_settings( $target = NULL ) {
 	$calories_html = '';
 
 	/**
-	 * Do we have an sources to fetch calorie allowances from?
+	 * Do we have any sources to fetch calorie allowances from?
 	 * */
 	$calorie_sources = yk_mt_user_calories_sources();
 
@@ -210,12 +210,21 @@ function yk_mt_shortcode_meal_tracker_settings( $target = NULL ) {
 
 	} else {
 
+		$keys_to_disable = [];
+
+		if ( yk_mt_wlt_enabled_for_mt() &&
+		        true === empty( ws_ls_harris_benedict_calculate_calories( get_current_user_id() ) ) ) {
+			$calories_html .= '<p class="yk-mt-warning">' . __( '<strong>Please note</strong>: If you wish to specify Weight Tracker as your target source, then you must complete your Weight Tracker profile (e.g. height, DoB, etc) so your suggested calorie intake can be calculated.', YK_MT_SLUG ) . '</p>';
+			$keys_to_disable = [ 'wlt' ];
+		}
+
 		$calories_html .= yk_mt_form_select( __( 'Calorie target source', YK_MT_SLUG ),
 											'calorie-source',
 													yk_mt_settings_get( 'calorie-source' ),
 													$calorie_sources,
 													'',
-													true
+													true,
+													$keys_to_disable
 		);
 
 		$calories_html .= yk_mt_form_number( __( 'Specify your own target: ', YK_MT_SLUG ),
