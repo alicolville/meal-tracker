@@ -47,19 +47,19 @@ function yk_mt_build_admin_menu() {
     // Hide duplicated sub menu (wee hack!)
     add_submenu_page( 'yk-mt-main-menu', '', '', $permission_level, 'yk-mt-main-menu', 'yk_mt_admin_page_data_home');
 
-    add_submenu_page( 'yk-mt-main-menu', __( 'User Data', YK_MT_SLUG ),  __( 'User Data', YK_MT_SLUG ), $permission_level, 'yk-mt-user', 'yk_mt_admin_page_data_home' );
+    add_submenu_page( 'yk-mt-main-menu', esc_html__( 'User Data', 'meal-tracker' ),  esc_html__( 'User Data', 'meal-tracker' ), $permission_level, 'yk-mt-user', 'yk_mt_admin_page_data_home' );
 
-	add_submenu_page( 'yk-mt-main-menu', __( 'Meals', YK_MT_SLUG ),  __( 'Meal Collection', YK_MT_SLUG ), $permission_level, 'yk-mt-meals', 'yk_mt_admin_page_meals_home' );
+	add_submenu_page( 'yk-mt-main-menu', esc_html__( 'Meals', 'meal-tracker' ),  esc_html__( 'Meal Collection', 'meal-tracker' ), $permission_level, 'yk-mt-meals', 'yk_mt_admin_page_meals_home' );
 
 	if ( true === yk_mt_setup_wizard_show_notice() ) {
-        add_submenu_page( 'yk-mt-main-menu', __('Setup Wizard', YK_MT_SLUG ),  __('Setup Wizard', YK_MT_SLUG ), 'manage_options', 'yk-mt-setup-wizard', 'yk_mt_setup_wizard_page' );
+        add_submenu_page( 'yk-mt-main-menu', esc_html__('Setup Wizard', 'meal-tracker' ),  esc_html__('Setup Wizard', 'meal-tracker' ), 'manage_options', 'yk-mt-setup-wizard', 'yk_mt_setup_wizard_page' );
     }
 
-    $menu_text = ( true === yk_mt_license_is_premium() ) ? __( 'Your License', YK_MT_SLUG ) : __( 'Upgrade to Pro', YK_MT_SLUG );
+    $menu_text = ( true === yk_mt_license_is_premium() ) ? esc_html__( 'Your License', 'meal-tracker' ) : esc_html__( 'Upgrade to Pro', 'meal-tracker' );
     add_submenu_page( 'yk-mt-main-menu', $menu_text,  $menu_text, 'manage_options', 'yk-mt-license', 'yk_mt_advertise_pro');
 
-    add_submenu_page( 'yk-mt-main-menu', __( 'Settings', YK_MT_SLUG ),  __( 'Settings', YK_MT_SLUG ), 'manage_options', 'yk-mt-settings', 'yk_mt_settings_page_generic' );
-    add_submenu_page( 'yk-mt-main-menu', __( 'Help', YK_MT_SLUG ),  __( 'Help', YK_MT_SLUG ), $permission_level, 'yk-mt-help', 'yk_mt_help_page' );
+    add_submenu_page( 'yk-mt-main-menu', esc_html__( 'Settings', 'meal-tracker' ),  esc_html__( 'Settings', 'meal-tracker' ), 'manage_options', 'yk-mt-settings', 'yk_mt_settings_page_generic' );
+    add_submenu_page( 'yk-mt-main-menu', esc_html__( 'Help', 'meal-tracker' ),  esc_html__( 'Help', 'meal-tracker' ), $permission_level, 'yk-mt-help', 'yk_mt_help_page' );
 }
 add_action( 'admin_menu', 'yk_mt_build_admin_menu' );
 
@@ -92,11 +92,11 @@ function yk_mt_enqueue_admin_files() {
 
 	    wp_enqueue_style( 'mt-core', plugins_url( 'assets/css/yk-mt-core.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
-        wp_enqueue_style( 'mt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'mt-font-icons', YK_MT_CDN_FONT_AWESOME_CSS, [], YK_MT_PLUGIN_VERSION );
 
         // Confirmation dialogs
-        wp_enqueue_script( 'mt-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_style( 'mt-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css', [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_script( 'mt-confirm', YK_MT_BASE_URL . 'assets/js/jquery-confirm.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'mt-confirm', YK_MT_BASE_URL . 'assets/css/jquery-confirm.min.css', [], YK_MT_PLUGIN_VERSION );
 
 	    yk_mt_chart_enqueue();
 
@@ -111,10 +111,10 @@ add_action( 'admin_enqueue_scripts', 'yk_mt_enqueue_admin_files');
  * Enqueue Footable scripts
  */
 function yk_mt_enqueue_scripts_footable() {
-	wp_enqueue_style( 'mt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
-	wp_enqueue_script( 'mt-moment', plugins_url( '/assets/js/moment.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
-    wp_enqueue_style( 'mt-footable', plugins_url( '/assets/css/footable.standalone.min.css', __DIR__  ), [], YK_MT_PLUGIN_VERSION );
-    wp_enqueue_script( 'mt-footable', plugins_url( '/assets/js/footable.min.js', __DIR__ ), [ 'jquery', 'mt-moment' ], YK_MT_PLUGIN_VERSION, true );
+    wp_enqueue_script( 'moment' );
+	wp_enqueue_style( 'mt-font-icons', YK_MT_CDN_FONT_AWESOME_CSS, [], YK_MT_PLUGIN_VERSION );
+	wp_enqueue_style( 'mt-footable', plugins_url( '/assets/css/footable.standalone.min.css', __DIR__  ), [], YK_MT_PLUGIN_VERSION );
+    wp_enqueue_script( 'mt-footable', plugins_url( '/assets/js/footable.min.js', __DIR__ ), [ 'jquery', 'moment' ], YK_MT_PLUGIN_VERSION, true );
 }
 
 /**
@@ -130,7 +130,7 @@ function yk_mt_user_action_links( $actions, $user_object ) {
 
     $actions[ 'meal-tracker' ] = sprintf(  '<a href="%s">%s</a>',
         $profile_url,
-        __( 'Meal entries', YK_MT_SLUG )
+        esc_html__( 'Meal entries', 'meal-tracker' )
     );
 
     return $actions;
@@ -146,7 +146,7 @@ function yk_mt_wlt_user_profile_add_header_link( $links, $user_id ) {
 
     $links .= sprintf( '<a href="%1$s" class="button-secondary"><i class="fa fa-pie-chart"></i> <span>%2$s</span></a>',
         yk_mt_link_admin_page_user( $user_id ),
-        __('Meal Tracker Record', YK_MT_SLUG )
+        esc_html__('Meal Tracker Record', 'meal-tracker' )
     );
 
     return $links;

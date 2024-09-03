@@ -70,10 +70,10 @@
 			return;
 		}
 
-		yk_mt_db_meal_types_add( [ 'name' => __( 'Breakfast', YK_MT_SLUG ), 'sort' => 100 ] );
-		yk_mt_db_meal_types_add( [ 'name' => __( 'Mid-morning', YK_MT_SLUG ), 'sort' => 200 ] );
-		yk_mt_db_meal_types_add( [ 'name' => __( 'Lunch', YK_MT_SLUG ), 'sort' => 300 ] );
-		yk_mt_db_meal_types_add( [ 'name' => __( 'Afternoon', YK_MT_SLUG ), 'sort' => 400 ] );
-		yk_mt_db_meal_types_add( [ 'name' => __( 'Dinner', YK_MT_SLUG ), 'sort' => 500 ] );
-		yk_mt_db_meal_types_add( [ 'name' => __( 'Evening', YK_MT_SLUG ), 'sort' => 600 ] );
+		yk_mt_db_meal_types_add( [ 'name' => esc_html__( 'Breakfast', 'meal-tracker' ), 'sort' => 100 ] );
+		yk_mt_db_meal_types_add( [ 'name' => esc_html__( 'Mid-morning', 'meal-tracker' ), 'sort' => 200 ] );
+		yk_mt_db_meal_types_add( [ 'name' => esc_html__( 'Lunch', 'meal-tracker' ), 'sort' => 300 ] );
+		yk_mt_db_meal_types_add( [ 'name' => esc_html__( 'Afternoon', 'meal-tracker' ), 'sort' => 400 ] );
+		yk_mt_db_meal_types_add( [ 'name' => esc_html__( 'Dinner', 'meal-tracker' ), 'sort' => 500 ] );
+		yk_mt_db_meal_types_add( [ 'name' => esc_html__( 'Evening', 'meal-tracker' ), 'sort' => 600 ] );
 	}

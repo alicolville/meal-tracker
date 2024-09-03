@@ -73,7 +73,7 @@ function yk_mt_shortcode_meal_tracker( $user_defined_arguments ) {
 				</button>
 			</div>',
 			yk_mt_shortcode_get_current_url( 'settings' ),
-			__( 'Settings', YK_MT_SLUG )
+			esc_html__( 'Settings', 'meal-tracker' )
 		);
 
 		// Embed hidden form / dialog required for adding a meal
@@ -129,7 +129,7 @@ function yk_mt_shortcode_meal_tracker_navigation( $todays_entry_id = NULL ) {
 			</div>
 		</div>',
 		yk_mt_date_format( $entry[ 'date' ]),
-		__( 'Select a date', YK_MT_SLUG )
+		esc_html__( 'Select a date', 'meal-tracker' )
 	);
 
 	return $html;
@@ -146,7 +146,7 @@ function yk_mt_shortcode_meal_tracker_summary( $arguments ) {
 
 	return '
 		<div class="yk-mt__summary">
-			<div class="yk-mt__summary-title"><span class="fa fa-check-circle"></span>' . __( 'Today\'s summary', YK_MT_SLUG ) . '</div>
+			<div class="yk-mt__summary-title"><span class="fa fa-check-circle"></span>' . esc_html__( 'Today\'s summary', 'meal-tracker' ) . '</div>
 			<div class="yk-mt__table yk-mt__table--summary">
 				<div class="yk-mt__table-row" >
 					<div class="yk-mt__table-cell yk-mt__table--summary-chart-slot">
@@ -181,8 +181,8 @@ function yk_mt_shortcode_meal_tracker_settings( $target = NULL ) {
 		$html .= yk_mt_html_accordion_open( 'yk-mt-information' );
 
 		$html .= yk_mt_html_accordion_section( [ 'id' => 0,
-			'title' => __( 'Getting started', YK_MT_SLUG ),
-			'content' => '<p>' . __( 'Before you can start recording your calorie intake, you must set your calorie allowance for the day. You can achieve this by completing the following form.', YK_MT_SLUG ) . '</p>',
+			'title' => esc_html__( 'Getting started', 'meal-tracker' ),
+			'content' => '<p>' . esc_html__( 'Before you can start recording your calorie intake, you must set your calorie allowance for the day. You can achieve this by completing the following form.', 'meal-tracker' ) . '</p>',
 			'is-active' => true
 		]);
 
@@ -201,12 +201,12 @@ function yk_mt_shortcode_meal_tracker_settings( $target = NULL ) {
 	$calorie_sources = yk_mt_user_calories_sources();
 
 	if ( false === $target_missing ) {
-		$calories_html .= '<p>' . sprintf(  __( 'Your current daily allowance is: %1$dkcal.', YK_MT_SLUG ), $target ) . '</p>';
+		$calories_html .= '<p>' . sprintf(  esc_html__( 'Your current daily allowance is: %1$dkcal.', 'meal-tracker' ), $target ) . '</p>';
 	}
 
 	if ( true === empty( $calorie_sources ) ) {
 
-		$calories_html .= '<p>' . __( 'Your calorie allowance has been set by an administrator and can not be changed.', YK_MT_SLUG ) . '</p>';
+		$calories_html .= '<p>' . esc_html__( 'Your calorie allowance has been set by an administrator and can not be changed.', 'meal-tracker' ) . '</p>';
 
 	} else {
 
@@ -214,11 +214,11 @@ function yk_mt_shortcode_meal_tracker_settings( $target = NULL ) {
 
 		if ( yk_mt_wlt_enabled_for_mt() &&
 		        true === empty( ws_ls_harris_benedict_calculate_calories( get_current_user_id() ) ) ) {
-			$calories_html .= '<p class="yk-mt-warning">' . __( '<strong>Please note</strong>: If you wish to specify Weight Tracker as your target source, then you must complete your Weight Tracker profile (e.g. height, DoB, etc) so your suggested calorie intake can be calculated.', YK_MT_SLUG ) . '</p>';
+			$calories_html .= '<p class="yk-mt-warning">' . esc_html__( '<strong>Please note</strong>: If you wish to specify Weight Tracker as your target source, then you must complete your Weight Tracker profile (e.g. height, DoB, etc) so your suggested calorie intake can be calculated.', 'meal-tracker' ) . '</p>';
 			$keys_to_disable = [ 'wlt' ];
 		}
 
-		$calories_html .= yk_mt_form_select( __( 'Calorie target source', YK_MT_SLUG ),
+		$calories_html .= yk_mt_form_select( esc_html__( 'Calorie target source', 'meal-tracker' ),
 											'calorie-source',
 													yk_mt_settings_get( 'calorie-source' ),
 													$calorie_sources,
@@ -227,7 +227,7 @@ function yk_mt_shortcode_meal_tracker_settings( $target = NULL ) {
 													$keys_to_disable
 		);
 
-		$calories_html .= yk_mt_form_number( __( 'Specify your own target: ', YK_MT_SLUG ),
+		$calories_html .= yk_mt_form_number( esc_html__( 'Specify your own target: ', 'meal-tracker' ),
 			'allowed-calories',
 			yk_mt_settings_get( 'allowed-calories' ),
 			'',
@@ -237,12 +237,12 @@ function yk_mt_shortcode_meal_tracker_settings( $target = NULL ) {
 		);
 
 		$calories_html .= sprintf( ' <p class="yk-mt-info yk-mt-hide-if-adding">%1$s</p>',
-			__( 'Changes to these settings will adjust today\'s entry and future entries. Historic entries shall not be changed.', YK_MT_SLUG )
+			esc_html__( 'Changes to these settings will adjust today\'s entry and future entries. Historic entries shall not be changed.', 'meal-tracker' )
 		);
 	}
 
 	$html .= yk_mt_html_accordion_section( [    'id' => 1,
-												'title' => __( 'Calorie Intake', YK_MT_SLUG ),
+												'title' => esc_html__( 'Calorie Intake', 'meal-tracker' ),
 												'content' => $calories_html,
 												'is-active' => true
 	]);
@@ -252,9 +252,9 @@ function yk_mt_shortcode_meal_tracker_settings( $target = NULL ) {
 	$html .= sprintf( '<br /><button id="yk-mt-button-save-settings" class="yk-mt__btn yk-mt__btn--medium">%1$s</button>
 								&nbsp;<button href="%2$s" class="yk-mt__btn yk-mt__btn--medium yk-mt-clickable">%3$s</button>
 								</form></div>',
-		__( 'Save Settings', YK_MT_SLUG ),
+		esc_html__( 'Save Settings', 'meal-tracker' ),
 		yk_mt_shortcode_get_current_url(),
-		__( 'Cancel', YK_MT_SLUG )
+		esc_html__( 'Cancel', 'meal-tracker' )
 	);
 
 	return $html;
@@ -282,7 +282,7 @@ function yk_mt_shortcode_meal_tracker_meal_types() {
 		foreach ( $meal_types as $meal_type ) {
 
 			// Add the "Add Meal" prompt now
-			$meal_type_html = sprintf( '<div class="yk-mt__btn-wrap">%s</div>', yk_mt_shortcode_meal_tracker_add_meal_button( __( 'Add Meal', YK_MT_SLUG ), $meal_type['id'] ) );
+			$meal_type_html = sprintf( '<div class="yk-mt__btn-wrap">%s</div>', yk_mt_shortcode_meal_tracker_add_meal_button( esc_html__( 'Add Meal', 'meal-tracker' ), $meal_type['id'] ) );
 
 			$meal_list_class = apply_filters( 'yk_mt_shortcode_meal_tracker_meal_list', 'yk-mt__table yk-mt-list-of-meals' );
 
@@ -368,21 +368,21 @@ function yk_mt_shortcode_meal_tracker_add_meal_dialog() {
 						<form id="yk-mt-form-add-meal-to-entry">
 		',
 		$top,
-		__( 'Close', YK_MT_SLUG ),
-		__( 'Log a meal', YK_MT_SLUG ),
-		__( 'Edit meal', YK_MT_SLUG )
+		esc_html__( 'Close', 'meal-tracker' ),
+		esc_html__( 'Log a meal', 'meal-tracker' ),
+		esc_html__( 'Edit meal', 'meal-tracker' )
 	);
 
 	// Build HTML for "Add Meal" tab
-	$add_form = yk_mt_shortcode_meal_tracker_select( 'yk-mt-meal-id', __( 'Search for a meal', YK_MT_SLUG ) );
+	$add_form = yk_mt_shortcode_meal_tracker_select( 'yk-mt-meal-id', esc_html__( 'Search for a meal', 'meal-tracker' ) );
 
 	// Do we have any existing meals for this user?
 	if ( false === empty( $add_form ) ) {
 
 		$html .= sprintf('  	<h4 class="yk-mt__modal-subtitle">%1$s</h4>
 									<p>%2$s:</p>',
-									__( 'Search your existing meal collection', YK_MT_SLUG ),
-									__( 'Search and select a meal from your existing collection', YK_MT_SLUG )
+									esc_html__( 'Search your existing meal collection', 'meal-tracker' ),
+									esc_html__( 'Search and select a meal from your existing collection', 'meal-tracker' )
 		);
 
 		$html .= $add_form;
@@ -391,7 +391,7 @@ function yk_mt_shortcode_meal_tracker_add_meal_dialog() {
 			'<div class="yk-mt-quantity-row yk-mt-hide-if-no-meals-results" style="display: none;">
 						<label class="yk-mt__label">%1$s</label>
 						<div class="yk-mt__modal-quantity">',
-			__( 'How many have you had?', YK_MT_SLUG )
+			esc_html__( 'How many have you had?', 'meal-tracker' )
 		);
 
 		if ( true === yk_mt_fractions_enabled() ) {
@@ -420,14 +420,14 @@ function yk_mt_shortcode_meal_tracker_add_meal_dialog() {
 			</div>
 		</div>',
 		'yk-mt-button-add-meal-close',
-		__( 'Close screen after adding meal(s)', YK_MT_SLUG )
+		esc_html__( 'Close screen after adding meal(s)', 'meal-tracker' )
 	);
 
 	// Form to add a new meal
 	if ( true === yk_mt_license_is_premium() || yk_mt_meal_count() < 40 ) {
 		$html .= yk_mt_shortcode_meal_tracker_add_new_meal_form();
 	} else {
-		$html .= sprintf( '<br /><p>%1$s</p>', __( 'Unfortunately you have reached the maximum of 40 meals and are unable to add anymore.', YK_MT_SLUG ) );
+		$html .= sprintf( '<br /><p>%1$s</p>', esc_html__( 'Unfortunately you have reached the maximum of 40 meals and are unable to add anymore.', 'meal-tracker' ) );
 	}
 
 	$html .= '</div></div>
@@ -448,7 +448,7 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form_navigation() {
 
 	$html = sprintf( '  	<h4 id="yk-mt-header-meal-add" class="yk-mt__modal-subtitle yk-mt-hide-if-editing">%1$s</h4>
 								<div id="yk-mt-form-add-new-meal-nav">',
-							__( 'Add a new meal to your collection', YK_MT_SLUG )
+							esc_html__( 'Add a new meal to your collection', 'meal-tracker' )
 	);
 
 	/**
@@ -460,7 +460,7 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form_navigation() {
 										<span class="yk-mt__btn-icon fa fa-search"></span>
 										<span class="yk-mt__btn-text">%1$s</span>
 									</button>',
-			__( 'Search', YK_MT_SLUG )
+			esc_html__( 'Search', 'meal-tracker' )
 		);
 
 	}
@@ -469,7 +469,7 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_form_navigation() {
 										<span class="yk-mt__btn-icon fa fa-keyboard-o"></span>
 										<span class="yk-mt__btn-text">%1$s</span>
 									</button>',
-		__( 'Manually', YK_MT_SLUG )
+		esc_html__( 'Manually', 'meal-tracker' )
 	);
 
 	$html .= '</div>';
@@ -526,11 +526,11 @@ function yk_mt_shortcode_meal_tracker_manual_meal_entry_form( $previous_values =
 	// Previous ID?
 	$html .= sprintf( '<input type="hidden" name="meal-id" id="yk-mt-add-meal-meal-id" value="%s" />', esc_attr( $previous_values[ 'id' ] ) );
 
-	$html .= yk_mt_form_text( __( 'Name', YK_MT_SLUG ),	'add-meal-name', $previous_values[ 'name' ] );
+	$html .= yk_mt_form_text( esc_html__( 'Name', 'meal-tracker' ),	'add-meal-name', $previous_values[ 'name' ] );
 
-	$html .= yk_mt_form_text( __( 'Description', YK_MT_SLUG ), 'add-meal-description', $previous_values[ 'description' ], 200, false );
+	$html .= yk_mt_form_text( esc_html__( 'Description', 'meal-tracker' ), 'add-meal-description', $previous_values[ 'description' ], 200, false );
 
-	$html .= yk_mt_form_number( __( 'Calories', YK_MT_SLUG ), 'add-meal-calories', $previous_values[ 'calories' ], '', 1,0 );
+	$html .= yk_mt_form_number( esc_html__( 'Calories', 'meal-tracker' ), 'add-meal-calories', $previous_values[ 'calories' ], '', 1,0 );
 
 	if ( false === is_admin() ) {
 
@@ -538,7 +538,7 @@ function yk_mt_shortcode_meal_tracker_manual_meal_entry_form( $previous_values =
 								<span class="fa fa-info-circle"></span>
 								<span class="yk-mt__info-box-text">%1$s</span>
 							</p>',
-							__( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', YK_MT_SLUG )
+							esc_html__( 'Today\'s calorie count shall be adjusted if a meal\'s calorific value is modified. Other entries will only be re-counted if done manually.', 'meal-tracker' )
 		);
 	}
 
@@ -561,9 +561,9 @@ function yk_mt_shortcode_meal_tracker_manual_meal_entry_form( $previous_values =
 		}
 	}
 
-	$html .= yk_mt_form_select( __( 'Unit', YK_MT_SLUG ), 'add-meal-unit', $previous_values[ 'unit' ], yk_mt_units() );
+	$html .= yk_mt_form_select( esc_html__( 'Unit', 'meal-tracker' ), 'add-meal-unit', $previous_values[ 'unit' ], yk_mt_units() );
 
-	$html .= yk_mt_form_number( __( 'Quantity', YK_MT_SLUG ), 'add-meal-quantity', $previous_values[ 'quantity' ], '', 1, 1, 99999, true, false, true );
+	$html .= yk_mt_form_number( esc_html__( 'Quantity', 'meal-tracker' ), 'add-meal-quantity', $previous_values[ 'quantity' ], '', 1, 1, 99999, true, false, true );
 
 	$html .= sprintf( '
 		 <div class="yk-mt__modal-footer">
@@ -574,7 +574,7 @@ function yk_mt_shortcode_meal_tracker_manual_meal_entry_form( $previous_values =
 				<span class="yk-mt__btn-icon fa fa-plus"></span>
 				<span class="yk-mt__btn-text">%1$s</span>
 			</button>',
-		__( 'Save', YK_MT_SLUG ),
+		esc_html__( 'Save', 'meal-tracker' ),
 		( false === is_admin() ? 'yk-mt__btn yk-mt__btn--medium yk-mt-button-reset-meal-nav yk-mt-hide-if-editing' : 'button-secondary yk-mt-button-reset-meal-nav' ),
 		( false === is_admin() ? 'yk-mt__btn yk-mt__btn--medium yk-mt-button-add-new-meal yk-mt-hide-if-editing' : 'button-secondary' )
 	);
@@ -585,7 +585,7 @@ function yk_mt_shortcode_meal_tracker_manual_meal_entry_form( $previous_values =
 				<span class="yk-mt__btn-icon fa fa-edit"></span>
 				<span class="yk-mt__btn-text">%1$s</span>
 			</button>',
-			__( 'Save', YK_MT_SLUG )
+			esc_html__( 'Save', 'meal-tracker' )
 		);
 	}
 
@@ -602,7 +602,7 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_external_form() {
 
 	$html = '<div class="yk-mt-add-new-meal-form-search-external" style="display: none">';
 
-	$html .= yk_mt_shortcode_meal_tracker_select( 'yk-mt-search-external', __( 'Search for a meal', YK_MT_SLUG ) );
+	$html .= yk_mt_shortcode_meal_tracker_select( 'yk-mt-search-external', esc_html__( 'Search for a meal', 'meal-tracker' ) );
 
 	$html .= yk_mt_shortcode_meal_tracker_add_new_meal_servings();
 
@@ -624,9 +624,9 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_external_form() {
 			</div>
 		</div>
 			',
-		__( 'Cancel', YK_MT_SLUG ),
-		__( 'Add', YK_MT_SLUG ),
-		__( 'Add and Return', YK_MT_SLUG )
+		esc_html__( 'Cancel', 'meal-tracker' ),
+		esc_html__( 'Add', 'meal-tracker' ),
+		esc_html__( 'Add and Return', 'meal-tracker' )
 	);
 
 	$html .= '</div>';
@@ -646,9 +646,9 @@ function yk_mt_shortcode_meal_tracker_add_new_meal_servings() {
 
 	$html = '<div class="yk-mt-add-new-meal-form-search-servings" style="display: none">';
 
-	$html .= sprintf( '<h3 class="yk-mt__modal-subtitle yk-mt-hide-if-editing">%1$s</h3>', __( 'Select a serving size', YK_MT_SLUG ) );
+	$html .= sprintf( '<h3 class="yk-mt__modal-subtitle yk-mt-hide-if-editing">%1$s</h3>', esc_html__( 'Select a serving size', 'meal-tracker' ) );
 
-	$html .= yk_mt_shortcode_meal_tracker_select( 'yk-mt-search-external-servings', __( 'Select a serving size', YK_MT_SLUG ) );
+	$html .= yk_mt_shortcode_meal_tracker_select( 'yk-mt-search-external-servings', esc_html__( 'Select a serving size', 'meal-tracker' ) );
 
 	$html .= '</div>';
 
@@ -771,7 +771,7 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 
 	// Styles > Core
 	wp_enqueue_style( 'mt-core', plugins_url( 'assets/css/yk-mt-core.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-	wp_enqueue_style( 'mt-font-icons', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
+	wp_enqueue_style( 'mt-font-icons', YK_MT_CDN_FONT_AWESOME_CSS, [], YK_MT_PLUGIN_VERSION );
 
 	$is_themed = yk_mt_site_options_as_bool('css-theme-enabled' );
 
@@ -860,7 +860,7 @@ function yk_mt_shortcode_get_current_url( $mode = '' ) {
  */
 function yk_mt_shortcode_get_mode() {
 	$mode = ( false === empty( $_GET[ 'yk-mt-mode' ] ) ) ?
-		$_GET[ 'yk-mt-mode' ] :
+		sanitize_text_field( $_GET[ 'yk-mt-mode' ] ) :
 		'default';
 
 	if ( 'default' !== $mode && true !== yk_mt_license_is_premium() ) {

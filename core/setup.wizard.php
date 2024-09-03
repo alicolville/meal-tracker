@@ -13,9 +13,9 @@ function yk_mt_setup_wizard_notice() {
                         <p>%1$s <strong>%2$s</strong>! %3$s.</p>
                         <p><a href="%4$s" class="button button-primary">Run wizard</a></p>
                     </div>',
-                    __( 'Welcome to' , YK_MT_SLUG ),
+                    esc_html__( 'Welcome to' , 'meal-tracker' ),
                 YK_MT_PLUGIN_NAME,
-                    __( 'You\'re almost there, but a wizard might help you setup the plugin' , YK_MT_SLUG ),
+                    esc_html__( 'You\'re almost there, but a wizard might help you setup the plugin' , 'meal-tracker' ),
                     esc_url( yk_mt_setup_wizard_get_link() )
     );
 }
@@ -83,8 +83,8 @@ add_action( 'wp_ajax_yk_mt_setup_wizard_dismiss', 'yk_mt_setup_wizard_dismiss_no
 function yk_mt_setup_wizard_custom_notification_html() {
 	?>
 
-		<p><img src="<?php echo plugins_url( 'admin-pages/assets/images/yeken-logo.png', __FILE__ ); ?>" width="100" height="100" style="margin-right:20px" align="left" /><?php echo __( 'If require plugin modifications to Weight Tracker, or need a new plugin built, or perhaps you need a developer to help you with your website then please don\'t hesitiate get in touch!', YK_MT_SLUG ); ?></p>
-		<p><strong><?php echo __( 'We provide fixed priced quotes.', YK_MT_SLUG); ?></strong></p>
+		<p><img src="<?php echo plugins_url( 'admin-pages/assets/images/yeken-logo.png', __FILE__ ); ?>" width="100" height="100" style="margin-right:20px" align="left" /><?php echo esc_html__( 'If require plugin modifications to Weight Tracker, or need a new plugin built, or perhaps you need a developer to help you with your website then please don\'t hesitiate get in touch!', 'meal-tracker' ); ?></p>
+		<p><strong><?php echo esc_html__( 'We provide fixed priced quotes.', 'meal-tracker' ); ?></strong></p>
 		<p><a href="https://www.yeken.uk" rel="noopener noreferrer" target="_blank">YeKen.uk</a> /
 			<a href="https://profiles.wordpress.org/aliakro" rel="noopener noreferrer" target="_blank">WordPress Profile</a> /
 			<a href="mailto:email@yeken.uk" >email@yeken.uk</a></p>

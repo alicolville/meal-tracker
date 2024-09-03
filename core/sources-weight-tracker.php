@@ -42,8 +42,8 @@ function yk_mt_wlt_sources_add( $sources ) {
 
     if ( true === yk_mt_site_options_as_bool('allow-calorie-external-wlt' ) ) {
         $sources['wlt']   = [
-            'value'         => __( 'Weight Tracker', YK_MT_SLUG ),
-            'admin-message' => __( 'from Weight Tracker', YK_MT_SLUG ),
+            'value'         => esc_html__( 'Weight Tracker', 'meal-tracker' ),
+            'admin-message' => esc_html__( 'from Weight Tracker', 'meal-tracker' ),
             'func'          => 'yk_mt_sources_wlt_target'
         ];
     }

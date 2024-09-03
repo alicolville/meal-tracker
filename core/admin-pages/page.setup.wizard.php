@@ -21,14 +21,14 @@ function yk_mt_setup_wizard_page() {
 					<div class="meta-box-sortables ui-sortable">
 
 						<div class="postbox">
-							<h3 class="hndle"><span><?php echo __( 'Setup Wizard', YK_MT_SLUG ); ?> </span></h3>
+							<h3 class="hndle"><span><?php echo esc_html__( 'Setup Wizard', 'meal-tracker' ); ?> </span></h3>
 							<div style="padding: 15px 15px 0px 15px">
                                 <div id="yk-mt-tabs">
                                     <ul>
-                                        <li><a>1. <?php echo __( 'Introduction', YK_MT_SLUG ); ?><span><?php echo __( 'Thank you for using Meal Tracker', YK_MT_SLUG ); ?></span></a></li>
-                                        <li><a>2. <?php echo __( 'Setup', YK_MT_SLUG ); ?><span><?php echo __( 'How to use Shortcodes and Widgets', YK_MT_SLUG ); ?></span></a></li>
-                                        <li><a>3. <?php echo __( 'Admin Interface', YK_MT_SLUG ); ?><span><?php echo __( 'Viewing and interacting with your user\'s data', YK_MT_SLUG ); ?></span></a></li>
-                                        <li><a>4. <?php echo __( 'Customisations', YK_MT_SLUG ); ?><span><?php echo __( 'Custom modifications to Meal Tracker', YK_MT_SLUG ); ?></span></a></li>
+                                        <li><a>1. <?php echo esc_html__( 'Introduction', 'meal-tracker' ); ?><span><?php echo esc_html__( 'Thank you for using Meal Tracker', 'meal-tracker' ); ?></span></a></li>
+                                        <li><a>2. <?php echo esc_html__( 'Setup', 'meal-tracker' ); ?><span><?php echo esc_html__( 'How to use Shortcodes and Widgets', 'meal-tracker' ); ?></span></a></li>
+                                        <li><a>3. <?php echo esc_html__( 'Admin Interface', 'meal-tracker' ); ?><span><?php echo esc_html__( 'Viewing and interacting with your user\'s data', 'meal-tracker' ); ?></span></a></li>
+                                        <li><a>4. <?php echo esc_html__( 'Customisations', 'meal-tracker' ); ?><span><?php echo esc_html__( 'Custom modifications to Meal Tracker', 'meal-tracker' ); ?></span></a></li>
                                     </ul>
                                     <div>
                                         <div>
@@ -37,7 +37,7 @@ function yk_mt_setup_wizard_page() {
 												The aim of the plugin is to allow you to extend your site with out-the-box functionality with minimal technical ability. The setup wizard should give you an overview of the plugin and how to set Meal Tracker up on your website.</p>
 
 											<p>For further information, please visit the documentation site:</p>
-											<a href="https://mealtracker.yeken.uk" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', YK_MT_SLUG ); ?></a>
+											<a href="https://mealtracker.yeken.uk" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo esc_html__( 'View Documentation', 'meal-tracker' ); ?></a>
 											<h3>Features of Meal Tracker</h3>
 											<p>For a full list of Meal Tracker features, please visit our documentation site:</p>
 											<a href="https://mealtracker.yeken.uk/features.html" target="_blank" rel="noopener" class="button"><i class="fa fa-link"></i> Meal Tracker Features</a>
@@ -64,7 +64,7 @@ function yk_mt_setup_wizard_page() {
 
 											<h4>More information</h4>
 											<p>For further information on Meal Tracker shortcodes, please refer to the Meal Tracker documentation:</p>
-											<a href="https://mealtracker.yeken.uk/shortcodes.html" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', YK_MT_SLUG ); ?></a>
+											<a href="https://mealtracker.yeken.uk/shortcodes.html" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo esc_html__( 'View Documentation', 'meal-tracker' ); ?></a>
                                         </div>
                                         <div>
                                             <p>
@@ -80,7 +80,7 @@ function yk_mt_setup_wizard_page() {
 											<br clear="all" />
 											<h4>More information</h4>
 											<p>For further information on the Meal Tracker admin, please refer to the Meal Tracker documentation:</p>
-											<a href="https://mealtracker.yeken.uk/admin.html" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo __( 'View Documentation', YK_MT_SLUG ); ?></a>
+											<a href="https://mealtracker.yeken.uk/admin.html" rel="noopener noreferrer"  class="button"  target="_blank"><?php echo esc_html__( 'View Documentation', 'meal-tracker' ); ?></a>
                                         </div>
                                         <div>
 											<?php  yk_mt_setup_wizard_custom_notification_html(); ?>

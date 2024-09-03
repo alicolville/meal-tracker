@@ -64,9 +64,9 @@ function yk_mt_meta_fields() {
 	// Protein
 	$fields[] = [
 		'db_col' 			=> 'meta_proteins',
-		'title' 			=> __( 'Proteins', YK_MT_SLUG ),
-		'prefix'			=> __( 'p', YK_MT_SLUG ),
-		'unit'				=> __( 'g', YK_MT_SLUG ),
+		'title' 			=> esc_html__( 'Proteins', 'meal-tracker' ),
+		'prefix'			=> esc_html__( 'p', 'meal-tracker' ),
+		'unit'				=> esc_html__( 'g', 'meal-tracker' ),
 		'visible_user' 		=> $meta_enabled,
 		'visible_admin' 	=> $meta_enabled,
 		'type'				=> 'float',
@@ -78,9 +78,9 @@ function yk_mt_meta_fields() {
 	// Fats
 	$fields[] = [
 		'db_col' 			=> 'meta_fats',
-		'title' 			=> __( 'Fats', YK_MT_SLUG ),
-		'prefix'			=> __( 'f', YK_MT_SLUG ),
-		'unit'				=> __( 'g', YK_MT_SLUG ),
+		'title' 			=> esc_html__( 'Fats', 'meal-tracker' ),
+		'prefix'			=> esc_html__( 'f', 'meal-tracker' ),
+		'unit'				=> esc_html__( 'g', 'meal-tracker' ),
 		'visible_user' 		=> $meta_enabled,
 		'visible_admin' 	=> $meta_enabled,
 		'type'				=> 'float',
@@ -92,9 +92,9 @@ function yk_mt_meta_fields() {
 	// Carbs
 	$fields[] = [
 		'db_col' 			=> 'meta_carbs',
-		'title' 			=> __( 'Carbs', YK_MT_SLUG ),
-		'prefix'			=> __( 'c', YK_MT_SLUG ),
-		'unit'				=> __( 'g', YK_MT_SLUG ),
+		'title' 			=> esc_html__( 'Carbs', 'meal-tracker' ),
+		'prefix'			=> esc_html__( 'c', 'meal-tracker' ),
+		'unit'				=> esc_html__( 'g', 'meal-tracker' ),
 		'visible_user' 		=> $meta_enabled,
 		'visible_admin' 	=> $meta_enabled,
 		'type'				=> 'float',
@@ -176,13 +176,15 @@ function yk_mt_meta_db_columns_create() {
 	$existing_fields 	= yk_mt_meta_db_columns_existing();
 	$sql_to_execute		= [];
 
+	global $wpdb;
+
 	foreach ( $required_fields as $field ) {
 
 		if ( false === in_array( $field[ 'db_col' ], $existing_fields ) ) {
 
 			switch ( $field[ 'type' ] ) {
 				case 'float':
-					$sql_to_execute[] = ' ADD ' . $field[ 'db_col' ]. ' float NULL DEFAULT 0';
+					$sql_to_execute[] = $wpdb->prepare( ' ADD COLUMN %i float NULL DEFAULT 0', $field[ 'db_col' ] );
 					break;
 				default:
 					$default = '';
@@ -193,8 +195,6 @@ function yk_mt_meta_db_columns_create() {
 	if ( true === empty( $sql_to_execute ) ) {
 		return;
 	}
-
-	global $wpdb;
 
 	// Add the column to the Meals and Entry tables.
 	foreach ( $sql_to_execute as $sql ) {

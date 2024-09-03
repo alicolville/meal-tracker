@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food
 Requires at least: 5.7
 Tested up to: 6.5
-Stable tag: 3.1.7
+Stable tag: 3.2
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -50,6 +50,23 @@ For further information read our documentation:
 * View, edit and delete meals in your user's meal collection.
 * Import your meal collection via CSV.
 
+== 3rd Party Libraries == 
+
+As with most modern software, this plugins utilises other 3rd party plugins. Depending on how you use the plugin (i.e. which shortcodes) determines which libraries maybe used. Below is a list of the 3rd party libraries used:
+
+* [animated.css](https://animate.style/)
+* [animatedModal.js](https://joaopereirawd.github.io/animatedModal.js/)
+* [Chart.js](https://www.chartjs.org/)
+* [FatSecret API](https://platform.fatsecret.com/) - [Terms of Service](https://platform.fatsecret.com/terms)
+* [Footable](https://fooplugins.github.io/FooTable/)
+* [Font Awesome](https://fontawesome.com/)
+* [jQuery Confirm](https://craftpip.github.io/jquery-confirm/)
+* [LoadingOverlay](https://gasparesganga.com/labs/jquery-loading-overlay/)
+* [notify.js](https://notifyjs.jpillora.com/)
+* [Selectize](https://github.com/selectize/selectize.js)
+* [ZOZO UI Tabs](http://www.zozoui.com)
+* [Zebra Datepicker](https://github.com/stefangabos/Zebra_Datepicker)
+
 == Installation ==
 
 1. Login into Wordpress Admin Panel
@@ -86,6 +103,18 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 3.1 - Communicate and search with meal collections from other WP installs with Meal Tracker installed.
 
 == Changelog ==
+
+= 3.2 =
+
+* Bug fix: Corrected date format on ['mt-table-entries] shortcode.
+
+Several fixes based upon WordPress's plugin feedback:
+
+* Removed moment.js from plugin and replaced with the version shipped with WP. 
+* The following are now bundled with the plugin, rather than included via a CDN: FontAwesome, Chart.js, jquery.Confirm
+* Included all non minified versions of 3rd party library code and added 3rd party dependencies to readme.
+* Added additional data sanitisation in places.
+* Several other code tweaks.
 
 = 3.1.7 =
 

@@ -29,7 +29,7 @@ function yk_mt_license_upgrade_link() {
 function yk_mt_license_validate( $license ) {
 
     if ( true === empty( $license ) ) {
-        return __( 'License missing', YK_MT_SLUG );
+        return esc_html__( 'License missing', 'meal-tracker' );
     }
 
     // Decode license

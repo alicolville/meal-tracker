@@ -97,7 +97,7 @@ class YK_MT_EXT_WP_RECIPE_MAKER extends YK_MT_EXT_SOURCE {
 
 	private function serving_format( $serving ) {
 
-		$serving[ 'display' ] = sprintf( '%s - %s %s', $serving[ 'serving_description' ], $serving[ 'calories' ], __( 'kcal', YK_MT_SLUG ) );
+		$serving[ 'display' ] = sprintf( '%s - %s %s', $serving[ 'serving_description' ], $serving[ 'calories' ], esc_html__( 'kcal', 'meal-tracker' ) );
 
 		return $serving;
 	}
