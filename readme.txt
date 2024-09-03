@@ -58,13 +58,12 @@ As with most modern software, this plugins utilises other 3rd party plugins. Dep
 * [Chart.js](https://www.chartjs.org/)
 * [Footable](https://fooplugins.github.io/FooTable/)
 * [Font Awesome](https://fontawesome.com/)
+* [jQuery Confirm](https://craftpip.github.io/jquery-confirm/)
 * [LoadingOverlay](https://gasparesganga.com/labs/jquery-loading-overlay/)
 * [notify.js](https://notifyjs.jpillora.com/)
 * [Selectize](https://github.com/selectize/selectize.js)
 * [ZOZO UI Tabs](http://www.zozoui.com)
 * [Zebra Datepicker](https://github.com/stefangabos/Zebra_Datepicker)
-
-
 
 
 
@@ -119,8 +118,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 Several fixes based upon WordPress's plugin feedback:
 
 * Removed moment.js from plugin and replaced with the version shipped with WP. 
-* FontAwesome is now bundled with the plugin, rather than included via a CDN.
-* Chart.js is now bundled with the plugin, rather than included via a CDN.
+* The following are now bundled with the plugin, rather than included via a CDN: FontAwesome, Chart.js, jquery.Confirm
 * Included all non minified versions of 3rd party library code and added 3rd party dependencies to readme.
 
 = 3.1.7 =

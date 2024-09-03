@@ -95,8 +95,8 @@ function yk_mt_enqueue_admin_files() {
         wp_enqueue_style( 'mt-font-icons', YK_MT_CDN_FONT_AWESOME_CSS, [], YK_MT_PLUGIN_VERSION );
 
         // Confirmation dialogs
-        wp_enqueue_script( 'mt-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION );
-        wp_enqueue_style( 'mt-confirm', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css', [], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_script( 'mt-confirm', YK_MT_BASE_URL . 'assets/js/jquery-confirm.min.js', [ 'jquery' ], YK_MT_PLUGIN_VERSION );
+        wp_enqueue_style( 'mt-confirm', YK_MT_BASE_URL . 'assets/css/jquery-confirm.min.css', [], YK_MT_PLUGIN_VERSION );
 
 	    yk_mt_chart_enqueue();
 
