@@ -56,6 +56,7 @@ As with most modern software, this plugins utilises other 3rd party plugins. Dep
 
 * [animatedModal.js](https://joaopereirawd.github.io/animatedModal.js/)
 * [Chart.js](https://www.chartjs.org/)
+* [FatSecret API](https://platform.fatsecret.com/)
 * [Footable](https://fooplugins.github.io/FooTable/)
 * [Font Awesome](https://fontawesome.com/)
 * [jQuery Confirm](https://craftpip.github.io/jquery-confirm/)
@@ -64,15 +65,6 @@ As with most modern software, this plugins utilises other 3rd party plugins. Dep
 * [Selectize](https://github.com/selectize/selectize.js)
 * [ZOZO UI Tabs](http://www.zozoui.com)
 * [Zebra Datepicker](https://github.com/stefangabos/Zebra_Datepicker)
-
-
-
-
-* [jQuery Validation Plugin](https://jqueryvalidation.org/)
-* [jQuery Slider Pips](https://github.com/simeydotme/jQuery-ui-Slider-Pips)
-* [ProgressBar.js](https://kimmobrunfeldt.github.io/progressbar.js)
-
-* [Unite Gallery](https://github.com/vvvmax/unitegallery)
 
 == Installation ==
 
