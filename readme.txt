@@ -113,6 +113,8 @@ Several fixes based upon WordPress's plugin feedback:
 * Removed moment.js from plugin and replaced with the version shipped with WP. 
 * The following are now bundled with the plugin, rather than included via a CDN: FontAwesome, Chart.js, jquery.Confirm
 * Included all non minified versions of 3rd party library code and added 3rd party dependencies to readme.
+* Added additional data sanitisation in places.
+* Several other code tweaks.
 
 = 3.1.7 =
 
