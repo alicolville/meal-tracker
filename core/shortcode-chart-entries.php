@@ -13,7 +13,7 @@ function yk_mt_shortcode_chart_entries( $user_defined_arguments ) {
 
 	$shortcode_arguments = shortcode_atts( [    'user-id'           => get_current_user_id(),
 	                                            'max-entries'       => 15,
-												'text-no-entries'   => __( 'You currently have no entries.', YK_MT_SLUG ),
+												'text-no-entries'   => esc_html__( 'You currently have no entries.', YK_MT_SLUG ),
 												'chart-height'	    => '150px',
 	], $user_defined_arguments );
 

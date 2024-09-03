@@ -16,9 +16,9 @@ function yk_mt_shortcode_log_in_prompt( $login_link = NULL ) {
 	}
 
 	return sprintf( '<p class="yk-mt-need-logged-in">%s. <a href="%s">%s</a>.</p>',
-		__( 'You must be logged in to view and log meal entries', YK_MT_SLUG ),
+		esc_html__( 'You must be logged in to view and log meal entries', YK_MT_SLUG ),
 		esc_url( $login_link ),
-		__( 'Log in to your account', YK_MT_SLUG )
+		esc_html__( 'Log in to your account', YK_MT_SLUG )
 	);
 }
 

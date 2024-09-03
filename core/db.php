@@ -417,11 +417,11 @@ function yk_mt_db_entry_get( $id = NULL ) {
 
                     $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'd' ] = sprintf( '%5$s%1$d%2$s%3$s <span><em>%6$s</em>: %4$s</span>',
                         $meal[ 'calories' ] * $meal_count,
-                        __( 'kcal', YK_MT_SLUG ),
+                        esc_html__( 'kcal', YK_MT_SLUG ),
 						$meta_detail,
                         yk_mt_get_unit_string( $meal ),
                         ( $meal_count > 1 ) ? $meal_count . ' x ' : '',
-						__( 's', YK_MT_SLUG )
+						esc_html__( 's', YK_MT_SLUG )
                     );
 
 	                $entry['meals'][ $meal['meal_type'] ][ $meal['id' ] ][ 'css_class' ] = '';
@@ -442,7 +442,7 @@ function yk_mt_db_entry_get( $id = NULL ) {
 
                     $meal[ 'd' ] = sprintf( '%d%s / %s',
                         $meal[ 'calories' ],
-                        __( 'kcal', YK_MT_SLUG ),
+                        esc_html__( 'kcal', YK_MT_SLUG ),
                         yk_mt_get_unit_string( $meal )
                     );
 

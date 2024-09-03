@@ -43,17 +43,17 @@ function yk_mt_admin_page_dashboard() {
 function yk_mt_postbox_summary() {
 ?>
 	<div class="postbox <?php yk_mt_postbox_classes( 'summary' ); ?>" id="summary">
-		<?php yk_mt_postbox_header( [ 'title' => __( 'Summary', YK_MT_SLUG ), 'postbox-id' => 'summary' ] ); ?>
+		<?php yk_mt_postbox_header( [ 'title' => esc_html__( 'Summary', YK_MT_SLUG ), 'postbox-id' => 'summary' ] ); ?>
 		<div class="inside">
 			<?php
 
 					yk_mt_admin_option_links_clicked( 'summary-fetch' );
 
 					$option_links = [
-							'today'      => __( 'Today \'s entries', YK_MT_SLUG ),
-							'week'       => __( 'Last 7 days', YK_MT_SLUG ),
-							'latest-100' => __( 'Latest 100', YK_MT_SLUG ),
-							'latest-500' => __( 'Latest 500', YK_MT_SLUG )
+							'today'      => esc_html__( 'Today \'s entries', YK_MT_SLUG ),
+							'week'       => esc_html__( 'Last 7 days', YK_MT_SLUG ),
+							'latest-100' => esc_html__( 'Latest 100', YK_MT_SLUG ),
+							'latest-500' => esc_html__( 'Latest 500', YK_MT_SLUG )
 
 					];
 

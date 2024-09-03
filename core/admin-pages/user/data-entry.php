@@ -32,14 +32,14 @@ function yk_mt_admin_page_entry_view() {
                     }
                     ?>
                     <div class="postbox">
-                        <h2 class="hndle"><span><?php echo __('Entry for', YK_MT_SLUG ); ?> <?php echo yk_mt_date_format( $entry[ 'date' ] ); ?></span></h2>
+                        <h2 class="hndle"><span><?php echo esc_html__('Entry for', YK_MT_SLUG ); ?> <?php echo yk_mt_date_format( $entry[ 'date' ] ); ?></span></h2>
                         <div class="inside">
                             <table class="yk-mt-footable yk-mt-footable-basic yk-mt-data-entry" data-state="true">
                                 <thead>
                                     <tr>
-                                        <th><?php echo __( 'Meal', YK_MT_SLUG ); ?></th>
-                                        <th data-breakpoints="xs"><?php echo __( 'Description', YK_MT_SLUG ); ?></th>
-                                        <th data-breakpoints="xs"><?php echo __( 'Detail', YK_MT_SLUG ); ?></th>
+                                        <th><?php echo esc_html__( 'Meal', YK_MT_SLUG ); ?></th>
+                                        <th data-breakpoints="xs"><?php echo esc_html__( 'Description', YK_MT_SLUG ); ?></th>
+                                        <th data-breakpoints="xs"><?php echo esc_html__( 'Detail', YK_MT_SLUG ); ?></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,7 +61,7 @@ function yk_mt_admin_page_entry_view() {
                                             );
 
                                             if ( true === empty( $entry[ 'meals' ][ $meal_type[ 'id' ] ] ) ) {
-                                                printf( '<tr class="yk-mt-entry-table-no-meals footable-disabled"><td colspan="3">%s</td></tr>',__('No meals', YK_MT_SLUG ) );
+                                                printf( '<tr class="yk-mt-entry-table-no-meals footable-disabled"><td colspan="3">%s</td></tr>',esc_html__('No meals', YK_MT_SLUG ) );
                                             } else {
 
                                                 $i = 0;

@@ -77,7 +77,7 @@ function yk_mt_admin_page_user_summary() {
 function yk_mt_postbox_user_chart( $entries ) {
 ?>
 	<div class="postbox <?php yk_mt_postbox_classes( 'chart' ); ?>" id="chart">
-		<?php yk_mt_postbox_header( [ 'title' => __( 'Chart', YK_MT_SLUG ), 'postbox-id' => 'chart', 'postbox-col' => 'yk-mt-user-data-one' ] ); ?>
+		<?php yk_mt_postbox_header( [ 'title' => esc_html__( 'Chart', YK_MT_SLUG ), 'postbox-id' => 'chart', 'postbox-col' => 'yk-mt-user-data-one' ] ); ?>
 		<div class="inside">
 			<?php
 
@@ -85,10 +85,10 @@ function yk_mt_postbox_user_chart( $entries ) {
 					echo yk_mt_chart_line_allowed_versus_used( [
 						'entries'   => $entries,
 						'max'       => 15,
-						'title'     => __( 'Latest 15 entries', YK_MT_SLUG )
+						'title'     => esc_html__( 'Latest 15 entries', YK_MT_SLUG )
 					]);
 				} else {
-					printf ( '<p><em>%s</em></p>', __( 'No results', YK_MT_SLUG ) );
+					printf ( '<p><em>%s</em></p>', esc_html__( 'No results', YK_MT_SLUG ) );
 				}
 			?>
 		</div>
@@ -104,7 +104,7 @@ function yk_mt_postbox_user_chart( $entries ) {
 function yk_mt_postbox_user_table( $entries ) {
 ?>
 	<div class="postbox <?php yk_mt_postbox_classes( 'table' ); ?>" id="table">
-		<?php yk_mt_postbox_header( [ 'title' => __( 'Entries for this user', YK_MT_SLUG ), 'postbox-id' => 'table', 'postbox-col' => 'yk-mt-user-data-one' ] ); ?>
+		<?php yk_mt_postbox_header( [ 'title' => esc_html__( 'Entries for this user', YK_MT_SLUG ), 'postbox-id' => 'table', 'postbox-col' => 'yk-mt-user-data-one' ] ); ?>
 		<div class="inside">
 			<?php
 				yk_mt_table_user_entries( [ 'entries'   => $entries ] );

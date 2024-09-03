@@ -467,7 +467,7 @@ function yk_mt_ajax_prep_meal( $meal ) {
                     $meal[ 'name' ],
 		            yk_mt_get_unit_string( $meal ),
                     $meal[ 'calories' ],
-                    __( 'kcal', YK_MT_SLUG )
+                    esc_html__( 'kcal', YK_MT_SLUG )
         );
 
         $meal = yk_mt_array_strip_keys( $meal, [ 'added_by', 'calories', 'unit', 'quantity', 'description', 'deleted', 'favourite' ] );

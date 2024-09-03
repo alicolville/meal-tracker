@@ -103,7 +103,7 @@ class YK_MT_EXT_FAT_SECRET_FOODS extends YK_MT_EXT_SOURCE {
 
 	private function serving_format( $serving ) {
 
-		$serving[ 'display' ] = sprintf( '%s - %s %s', $serving[ 'serving_description' ], $serving[ 'calories' ], __( 'kcal', YK_MT_SLUG ) );
+		$serving[ 'display' ] = sprintf( '%s - %s %s', $serving[ 'serving_description' ], $serving[ 'calories' ], esc_html__( 'kcal', YK_MT_SLUG ) );
 
 		//$quantity  = ( 'oz' === $serving[ 'metric_serving_unit' ] ) ? $serving[ 'metric_serving_amount' ] * 0.035274 : $serving[ 'metric_serving_amount' ];
 		//$serving[ 'quantity' ] = round( $quantity, 2 );

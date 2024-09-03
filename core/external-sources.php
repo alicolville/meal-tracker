@@ -118,12 +118,12 @@ function yk_mt_ext_source_test( $terms = 'apples' ) {
 	$external_source = yk_mt_ext_source_create_instance();
 
 	if ( true === empty( $external_source ) ) {
-		return sprintf( '%s', __( 'There are no valid external sources.', YK_MT_SLUG ) );
+		return sprintf( '%s', esc_html__( 'There are no valid external sources.', YK_MT_SLUG ) );
 	}
 
 	// An errors?
 	if ( $external_source->has_error() ) {
-		return sprintf( "%s: %s\n\n", __( 'Error', YK_MT_SLUG ), $external_source->get_error() );
+		return sprintf( "%s: %s\n\n", esc_html__( 'Error', YK_MT_SLUG ), $external_source->get_error() );
 	}
 
 	// Perform a test search for something obvious. We should get results!
@@ -132,13 +132,13 @@ function yk_mt_ext_source_test( $terms = 'apples' ) {
 	$details = '';
 
 	if ( $external_source->has_error() ) {
-		$details .= sprintf( '%s: %s', __( 'Error', YK_MT_SLUG ), $external_source->get_error() );
+		$details .= sprintf( '%s: %s', esc_html__( 'Error', YK_MT_SLUG ), $external_source->get_error() );
 	}
 
 	if ( false === $external_source->has_results() ) {
-		$details .= __( 'Error: No search results could be found for the term "apples"', YK_MT_SLUG ). PHP_EOL;
+		$details .= esc_html__( 'Error: No search results could be found for the term "apples"', YK_MT_SLUG ). PHP_EOL;
 	} else {
-		$details .= __( 'Success: Results have been found for "apples"', YK_MT_SLUG ) . PHP_EOL;
+		$details .= esc_html__( 'Success: Results have been found for "apples"', YK_MT_SLUG ) . PHP_EOL;
 
 		$details .= print_r( $external_source->results(), true );
 	}
@@ -276,10 +276,10 @@ function yk_mt_ext_filters_js_config_locale( $locale ) {
 		return $locale;
 	}
 
-	$locale[ 'search-no-results' ] 	= __( 'No meals could be found', YK_MT_SLUG );
-	$locale[ 'search-error' ] 		= __( 'There was an error searching our database. Please try again.', YK_MT_SLUG );
-	$locale[ 'search-added' ] 		= __( 'Your meal collection has been updated', YK_MT_SLUG );
-	$locale[ 'serving-missing' ]    = __( 'Please select a serving size', YK_MT_SLUG );
+	$locale[ 'search-no-results' ] 	= esc_html__( 'No meals could be found', YK_MT_SLUG );
+	$locale[ 'search-error' ] 		= esc_html__( 'There was an error searching our database. Please try again.', YK_MT_SLUG );
+	$locale[ 'search-added' ] 		= esc_html__( 'Your meal collection has been updated', YK_MT_SLUG );
+	$locale[ 'serving-missing' ]    = esc_html__( 'Please select a serving size', YK_MT_SLUG );
 
 	return $locale;
 }
@@ -363,25 +363,25 @@ function yk_mt_ext_source_as_string( $slug ) {
 
 	if ( true === empty( $slug ) ||
 			'user' === $slug ) {
-		return __( 'Manual', YK_MT_SLUG );
+		return esc_html__( 'Manual', YK_MT_SLUG );
 	}
 
 	switch ( $slug ) {
 
 		case 'csv':
-			return __( 'CSV Import', YK_MT_SLUG );
+			return esc_html__( 'CSV Import', YK_MT_SLUG );
 			break;
 		case 'fat-secrets-foods':
-			return __( 'FatSecrets Food', YK_MT_SLUG );
+			return esc_html__( 'FatSecrets Food', YK_MT_SLUG );
 			break;
 		case 'fat-secret':
-			return __( 'FatSecrets Recipe', YK_MT_SLUG );
+			return esc_html__( 'FatSecrets Recipe', YK_MT_SLUG );
 			break;
 		case 'meal-tracker':
-			return __( 'Meal Tracker API', YK_MT_SLUG );
+			return esc_html__( 'Meal Tracker API', YK_MT_SLUG );
 			break;
 		case 'wp-recipe-maker':
-			return __( 'WP Recipe Maker', YK_MT_SLUG );
+			return esc_html__( 'WP Recipe Maker', YK_MT_SLUG );
 			break;
 	}
 

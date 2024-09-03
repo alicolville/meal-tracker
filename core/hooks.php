@@ -47,19 +47,19 @@ function yk_mt_build_admin_menu() {
     // Hide duplicated sub menu (wee hack!)
     add_submenu_page( 'yk-mt-main-menu', '', '', $permission_level, 'yk-mt-main-menu', 'yk_mt_admin_page_data_home');
 
-    add_submenu_page( 'yk-mt-main-menu', __( 'User Data', YK_MT_SLUG ),  __( 'User Data', YK_MT_SLUG ), $permission_level, 'yk-mt-user', 'yk_mt_admin_page_data_home' );
+    add_submenu_page( 'yk-mt-main-menu', esc_html__( 'User Data', YK_MT_SLUG ),  esc_html__( 'User Data', YK_MT_SLUG ), $permission_level, 'yk-mt-user', 'yk_mt_admin_page_data_home' );
 
-	add_submenu_page( 'yk-mt-main-menu', __( 'Meals', YK_MT_SLUG ),  __( 'Meal Collection', YK_MT_SLUG ), $permission_level, 'yk-mt-meals', 'yk_mt_admin_page_meals_home' );
+	add_submenu_page( 'yk-mt-main-menu', esc_html__( 'Meals', YK_MT_SLUG ),  esc_html__( 'Meal Collection', YK_MT_SLUG ), $permission_level, 'yk-mt-meals', 'yk_mt_admin_page_meals_home' );
 
 	if ( true === yk_mt_setup_wizard_show_notice() ) {
-        add_submenu_page( 'yk-mt-main-menu', __('Setup Wizard', YK_MT_SLUG ),  __('Setup Wizard', YK_MT_SLUG ), 'manage_options', 'yk-mt-setup-wizard', 'yk_mt_setup_wizard_page' );
+        add_submenu_page( 'yk-mt-main-menu', esc_html__('Setup Wizard', YK_MT_SLUG ),  esc_html__('Setup Wizard', YK_MT_SLUG ), 'manage_options', 'yk-mt-setup-wizard', 'yk_mt_setup_wizard_page' );
     }
 
-    $menu_text = ( true === yk_mt_license_is_premium() ) ? __( 'Your License', YK_MT_SLUG ) : __( 'Upgrade to Pro', YK_MT_SLUG );
+    $menu_text = ( true === yk_mt_license_is_premium() ) ? esc_html__( 'Your License', YK_MT_SLUG ) : esc_html__( 'Upgrade to Pro', YK_MT_SLUG );
     add_submenu_page( 'yk-mt-main-menu', $menu_text,  $menu_text, 'manage_options', 'yk-mt-license', 'yk_mt_advertise_pro');
 
-    add_submenu_page( 'yk-mt-main-menu', __( 'Settings', YK_MT_SLUG ),  __( 'Settings', YK_MT_SLUG ), 'manage_options', 'yk-mt-settings', 'yk_mt_settings_page_generic' );
-    add_submenu_page( 'yk-mt-main-menu', __( 'Help', YK_MT_SLUG ),  __( 'Help', YK_MT_SLUG ), $permission_level, 'yk-mt-help', 'yk_mt_help_page' );
+    add_submenu_page( 'yk-mt-main-menu', esc_html__( 'Settings', YK_MT_SLUG ),  esc_html__( 'Settings', YK_MT_SLUG ), 'manage_options', 'yk-mt-settings', 'yk_mt_settings_page_generic' );
+    add_submenu_page( 'yk-mt-main-menu', esc_html__( 'Help', YK_MT_SLUG ),  esc_html__( 'Help', YK_MT_SLUG ), $permission_level, 'yk-mt-help', 'yk_mt_help_page' );
 }
 add_action( 'admin_menu', 'yk_mt_build_admin_menu' );
 
@@ -130,7 +130,7 @@ function yk_mt_user_action_links( $actions, $user_object ) {
 
     $actions[ 'meal-tracker' ] = sprintf(  '<a href="%s">%s</a>',
         $profile_url,
-        __( 'Meal entries', YK_MT_SLUG )
+        esc_html__( 'Meal entries', YK_MT_SLUG )
     );
 
     return $actions;
@@ -146,7 +146,7 @@ function yk_mt_wlt_user_profile_add_header_link( $links, $user_id ) {
 
     $links .= sprintf( '<a href="%1$s" class="button-secondary"><i class="fa fa-pie-chart"></i> <span>%2$s</span></a>',
         yk_mt_link_admin_page_user( $user_id ),
-        __('Meal Tracker Record', YK_MT_SLUG )
+        esc_html__('Meal Tracker Record', YK_MT_SLUG )
     );
 
     return $links;
