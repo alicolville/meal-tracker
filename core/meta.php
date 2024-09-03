@@ -176,13 +176,15 @@ function yk_mt_meta_db_columns_create() {
 	$existing_fields 	= yk_mt_meta_db_columns_existing();
 	$sql_to_execute		= [];
 
+	global $wpdb;
+
 	foreach ( $required_fields as $field ) {
 
 		if ( false === in_array( $field[ 'db_col' ], $existing_fields ) ) {
 
 			switch ( $field[ 'type' ] ) {
 				case 'float':
-					$sql_to_execute[] = ' ADD ' . $field[ 'db_col' ]. ' float NULL DEFAULT 0';
+					$sql_to_execute[] = $wpdb->prepare( ' ADD COLUMN %i float NULL DEFAULT 0', $field[ 'db_col' ] );
 					break;
 				default:
 					$default = '';
@@ -193,8 +195,6 @@ function yk_mt_meta_db_columns_create() {
 	if ( true === empty( $sql_to_execute ) ) {
 		return;
 	}
-
-	global $wpdb;
 
 	// Add the column to the Meals and Entry tables.
 	foreach ( $sql_to_execute as $sql ) {
