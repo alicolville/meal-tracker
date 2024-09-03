@@ -50,6 +50,30 @@ For further information read our documentation:
 * View, edit and delete meals in your user's meal collection.
 * Import your meal collection via CSV.
 
+== 3rd Party Libraries == 
+
+As with most modern software, this plugins utilises other 3rd party plugins. Depending on how you use the plugin (i.e. which shortcodes) determines which libraries maybe used. Below is a list of the 3rd party libraries used:
+
+* [Chart.js](https://www.chartjs.org/)
+* [animatedModal.js](https://joaopereirawd.github.io/animatedModal.js/)
+* [Footable](https://fooplugins.github.io/FooTable/)
+* [LoadingOverlay](https://gasparesganga.com/labs/jquery-loading-overlay/)
+* [notify.js](https://notifyjs.jpillora.com/)
+* [Selectize](https://github.com/selectize/selectize.js)
+* [ZOZO UI Tabs](http://www.zozoui.com)
+* [Zebra Datepicker](https://github.com/stefangabos/Zebra_Datepicker)
+
+
+
+* [Font Awesome](https://fontawesome.com/)
+
+
+* [jQuery Validation Plugin](https://jqueryvalidation.org/)
+* [jQuery Slider Pips](https://github.com/simeydotme/jQuery-ui-Slider-Pips)
+* [ProgressBar.js](https://kimmobrunfeldt.github.io/progressbar.js)
+
+* [Unite Gallery](https://github.com/vvvmax/unitegallery)
+
 == Installation ==
 
 1. Login into Wordpress Admin Panel
