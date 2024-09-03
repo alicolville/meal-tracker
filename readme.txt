@@ -54,6 +54,7 @@ For further information read our documentation:
 
 As with most modern software, this plugins utilises other 3rd party plugins. Depending on how you use the plugin (i.e. which shortcodes) determines which libraries maybe used. Below is a list of the 3rd party libraries used:
 
+* [animated.css](https://animate.style/)
 * [animatedModal.js](https://joaopereirawd.github.io/animatedModal.js/)
 * [Chart.js](https://www.chartjs.org/)
 * [FatSecret API](https://platform.fatsecret.com/) - [Terms of Service](https://platform.fatsecret.com/terms)
