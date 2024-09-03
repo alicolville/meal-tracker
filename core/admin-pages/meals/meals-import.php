@@ -16,7 +16,7 @@ function yk_mt_admin_page_meals_import() {
 
 		$importing 	= true;
 		$dry_run	= ( false === empty( $_POST[ 'dry-run' ] ) );
-		$output 	= yk_mt_import_csv_meal_collection( $_POST[ 'attachment-id' ], $dry_run );
+		$output 	= yk_mt_import_csv_meal_collection( (int) $_POST[ 'attachment-id' ], $dry_run );
 	}
 
     ?>
