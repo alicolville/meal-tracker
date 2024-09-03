@@ -56,7 +56,7 @@ As with most modern software, this plugins utilises other 3rd party plugins. Dep
 
 * [animatedModal.js](https://joaopereirawd.github.io/animatedModal.js/)
 * [Chart.js](https://www.chartjs.org/)
-* [FatSecret API](https://platform.fatsecret.com/)
+* [FatSecret API](https://platform.fatsecret.com/) - [Terms of Service](https://platform.fatsecret.com/terms)
 * [Footable](https://fooplugins.github.io/FooTable/)
 * [Font Awesome](https://fontawesome.com/)
 * [jQuery Confirm](https://craftpip.github.io/jquery-confirm/)
