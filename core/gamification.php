@@ -101,24 +101,24 @@ function yk_mt_mycred_load_hooks() {
 
 			?>
 
-			<label class="subheader"><?php _e( 'Log template', 'meal-tracker' ); ?></label>
+			<label class="subheader"><?php esc_html__( 'Log template', 'meal-tracker' ); ?></label>
 			<ol>
 				<li>
 					<div class="h2"><input type="text" name="<?php echo $this->field_name( [ 'yk_mt_entry_new' => 'log' ] ); ?>" id="<?php echo $this->field_id( [ 'yk_mt_entry_new' => 'log' ] ); ?>" value="<?php echo esc_attr( $prefs[ 'yk_mt_entry_new' ][ 'log' ] ); ?>" class="long" /></div>
 					<span class="description"></span>
 				</li>
 			</ol>
-			<label class="subheader"><?php _e( 'Points', 'meal-tracker' ); ?></label>
+			<label class="subheader"><?php esc_html__( 'Points', 'meal-tracker' ); ?></label>
 			<ol>
 				<li>
 					<div class="h2"><input type="number" name="<?php echo $this->field_name( [ 'yk_mt_entry_new' => 'creds' ] ); ?>" id="<?php echo $this->field_id( [ 'yk_mt_entry_new' => 'creds' ] ); ?>" value="<?php echo esc_attr( $prefs['yk_mt_entry_new']['creds'] ); ?>" class="long" /></div>
 				</li>
 			</ol>
-			<label class="subheader"><?php _e( 'Limit', 'meal-tracker' ); ?></label>
+			<label class="subheader"><?php esc_html__( 'Limit', 'meal-tracker' ); ?></label>
 			<ol>
 				<li>
 					<div class="h2"><?php echo $this->hook_limit_setting( $this->field_name( [ 'yk_mt_entry_new' => 'limit' ] ), $this->field_id( [ 'yk_mt_entry_new' => 'limit' ]  ), $prefs['yk_mt_entry_new']['limit'] ); ?></div>
-					<span class="description"><?php _e( 'Limit the number of times this award can be given within the specified time limit.', 'meal-tracker' ); ?></span>
+					<span class="description"><?php esc_html__( 'Limit the number of times this award can be given within the specified time limit.', 'meal-tracker' ); ?></span>
 				</li>
 			</ol>
 
@@ -207,24 +207,24 @@ function yk_mt_mycred_load_hooks() {
 
 			?>
 
-			<label class="subheader"><?php _e( 'Log template', 'meal-tracker' ); ?></label>
+			<label class="subheader"><?php esc_html__( 'Log template', 'meal-tracker' ); ?></label>
 			<ol>
 				<li>
 					<div class="h2"><input type="text" name="<?php echo $this->field_name( [ 'yk_mt_meal_added' => 'log' ] ); ?>" id="<?php echo $this->field_id( [ 'yk_mt_meal_added' => 'log' ] ); ?>" value="<?php echo esc_attr( $prefs[ 'yk_mt_meal_added' ][ 'log' ] ); ?>" class="long" /></div>
 					<span class="description"></span>
 				</li>
 			</ol>
-			<label class="subheader"><?php _e( 'Points', 'meal-tracker' ); ?></label>
+			<label class="subheader"><?php esc_html__( 'Points', 'meal-tracker' ); ?></label>
 			<ol>
 				<li>
 					<div class="h2"><input type="number" name="<?php echo $this->field_name( [ 'yk_mt_meal_added' => 'creds' ] ); ?>" id="<?php echo $this->field_id( [ 'yk_mt_meal_added' => 'creds' ] ); ?>" value="<?php echo esc_attr( $prefs['yk_mt_meal_added']['creds'] ); ?>" class="long" /></div>
 				</li>
 			</ol>
-			<label class="subheader"><?php _e( 'Limit', 'meal-tracker' ); ?></label>
+			<label class="subheader"><?php esc_html__( 'Limit', 'meal-tracker' ); ?></label>
 			<ol>
 				<li>
 					<div class="h2"><?php echo $this->hook_limit_setting( $this->field_name( [ 'yk_mt_meal_added' => 'limit' ] ), $this->field_id( [ 'yk_mt_meal_added' => 'limit' ]  ), $prefs['yk_mt_meal_added']['limit'] ); ?></div>
-					<span class="description"><?php _e( 'Limit the number of times this award can be given within the specified time limit.', 'meal-tracker' ); ?></span>
+					<span class="description"><?php esc_html__( 'Limit the number of times this award can be given within the specified time limit.', 'meal-tracker' ); ?></span>
 				</li>
 			</ol>
 
