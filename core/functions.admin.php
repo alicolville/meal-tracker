@@ -106,14 +106,14 @@ function yk_mt_table_user_entries( $args ) {
     <table class="yk-mt-footable yk-mt-footable-basic widefat" data-paging="true" data-sorting="true" data-state="true">
         <thead>
             <tr>
-                <th data-type="date" data-format-string="D/M/Y"><?php echo esc_html__( 'Date', YK_MT_SLUG ); ?></th>
+                <th data-type="date" data-format-string="D/M/Y"><?php echo esc_html__( 'Date', 'meal-tracker' ); ?></th>
                 <th data-type="text" data-breakpoints="sm"  data-visible="<?php echo ( true == $args[ 'show-username' ] ) ? 'true' : 'false'; ?>">
-                    <?php echo esc_html__( 'User', YK_MT_SLUG ); ?>
+                    <?php echo esc_html__( 'User', 'meal-tracker' ); ?>
                 </th>
-                <th data-breakpoints="xs" data-type="number"><?php echo esc_html__( 'Calories Allowed', YK_MT_SLUG ); ?></th>
-                <th data-breakpoints="sm" data-type="number"><?php echo esc_html__( 'Calories Used', YK_MT_SLUG ); ?></th>
-                <th data-breakpoints="xs" data-type="number"><?php echo esc_html__( 'Calories Remaining', YK_MT_SLUG ); ?></th>
-                <th data-breakpoints="xs" data-sortable="false" width="20"><?php echo esc_html__( 'Percentage Used', YK_MT_SLUG ); ?></th>
+                <th data-breakpoints="xs" data-type="number"><?php echo esc_html__( 'Calories Allowed', 'meal-tracker' ); ?></th>
+                <th data-breakpoints="sm" data-type="number"><?php echo esc_html__( 'Calories Used', 'meal-tracker' ); ?></th>
+                <th data-breakpoints="xs" data-type="number"><?php echo esc_html__( 'Calories Remaining', 'meal-tracker' ); ?></th>
+                <th data-breakpoints="xs" data-sortable="false" width="20"><?php echo esc_html__( 'Percentage Used', 'meal-tracker' ); ?></th>
                 <th></th>
             </tr>
         </thead>
@@ -173,10 +173,10 @@ function yk_mt_table_meals( $args ) {
 	<table class="yk-mt-footable yk-mt-footable-basic widefat" data-paging="true" data-sorting="true" data-state="true" data-filtering="true">
 		<thead>
 		<tr>
-			<th data-breakpoints="xs" data-type="text"><?php echo esc_html__( 'Name', YK_MT_SLUG ); ?></th>
-			<th data-breakpoints="sm" data-type="text"><?php echo esc_html__( 'Calories', YK_MT_SLUG ); ?></th>
-			<th data-breakpoints="sm" data-type="text"><?php echo esc_html__( 'Portion Size', YK_MT_SLUG ); ?></th>
-			<th data-breakpoints="xs" data-type="string"><?php echo esc_html__( 'Source', YK_MT_SLUG ); ?></th>
+			<th data-breakpoints="xs" data-type="text"><?php echo esc_html__( 'Name', 'meal-tracker' ); ?></th>
+			<th data-breakpoints="sm" data-type="text"><?php echo esc_html__( 'Calories', 'meal-tracker' ); ?></th>
+			<th data-breakpoints="sm" data-type="text"><?php echo esc_html__( 'Portion Size', 'meal-tracker' ); ?></th>
+			<th data-breakpoints="xs" data-type="string"><?php echo esc_html__( 'Source', 'meal-tracker' ); ?></th>
 			<?php
 
 			if ( false === empty( $meta_fields ) ) {
@@ -209,7 +209,7 @@ function yk_mt_table_meals( $args ) {
 													<td class="yk-mt-blur">%3$s</td>
 													<td class="yk-mt-blur">%4$s</td>',
 						esc_html( $meal[ 'name' ] ),
-						sprintf( '%s%s', number_format( $meal[ 'calories'] ), esc_html__( 'kcal', YK_MT_SLUG ) ),
+						sprintf( '%s%s', number_format( $meal[ 'calories'] ), esc_html__( 'kcal', 'meal-tracker' ) ),
 						yk_mt_get_unit_string( $meal ),
 						yk_mt_ext_source_as_string( $meal[ 'source' ] ),
 						esc_url( $edit_link )
@@ -245,7 +245,7 @@ function yk_mt_admin_permission_check() {
     $permission_level = yk_mt_admin_permission_check_setting();
 
     if ( ! current_user_can( $permission_level ) )  {
-        wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' , YK_MT_SLUG ) );
+        wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' , 'meal-tracker' ) );
     }
 }
 
@@ -368,7 +368,7 @@ function yk_mt_admin_option_links( $key, $default,  $options, $cache_notice = NU
     if ( false === empty ( $cache_notice ) &&
         true === yk_mt_site_options_as_bool('caching-enabled' ) ) {
 
-            printf( '<small>%1$s %2$d %3$s.</small>', esc_html__('The above table updates every', YK_MT_SLUG ), $cache_notice, esc_html__('minutes', YK_MT_SLUG ) );
+            printf( '<small>%1$s %2$d %3$s.</small>', esc_html__('The above table updates every', 'meal-tracker' ), $cache_notice, esc_html__('minutes', 'meal-tracker' ) );
     }
 
     echo '</div>';

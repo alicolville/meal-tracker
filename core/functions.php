@@ -409,16 +409,16 @@ function yk_mt_user_calories_sources() {
 	if ( true === YK_MT_IS_PREMIUM &&
             true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ) {
 		$sources[ 'admin' ] = [
-		                            'value'         => esc_html__( 'As specified by Admin', YK_MT_SLUG ),
-                                    'admin-message' => esc_html__( 'by Admin', YK_MT_SLUG ),
+		                            'value'         => esc_html__( 'As specified by Admin', 'meal-tracker' ),
+                                    'admin-message' => esc_html__( 'by Admin', 'meal-tracker' ),
                                     'func'          => 'yk_mt_user_calories_target_admin_specified'
         ];
 	}
 
     if ( true === yk_mt_site_options_as_bool( 'allow-calorie-override' ) ) {
         $sources[ 'own' ] = [
-                                'value'         => esc_html__( 'Your own target', YK_MT_SLUG ),
-                                'admin-message' => esc_html__( 'by User', YK_MT_SLUG ),
+                                'value'         => esc_html__( 'Your own target', 'meal-tracker' ),
+                                'admin-message' => esc_html__( 'by User', 'meal-tracker' ),
                                 'func'          => 'yk_mt_user_calories_target_user_specified'
         ];
     }
@@ -592,8 +592,8 @@ function yk_mt_entry( $entry_id = NULL ) {
 
     $entry[ 'chart_title' ] = sprintf( '%1$d%2$s (%3$s %4$d)',
         $entry[ 'calories_used'],
-        esc_html__( 'kcal used', YK_MT_SLUG ),
-        esc_html__( 'out of', YK_MT_SLUG ),
+        esc_html__( 'kcal used', 'meal-tracker' ),
+        esc_html__( 'out of', 'meal-tracker' ),
         $entry[ 'calories_allowed']
     );
 
@@ -634,27 +634,27 @@ function yk_mt_ajax_config() {
 function yk_mt_ajax_config_calendar() {
 
 	$config = [
-					'months'	=> [ 	esc_html__( 'January', YK_MT_SLUG ),
-										esc_html__( 'February', YK_MT_SLUG ),
-										esc_html__( 'March', YK_MT_SLUG ),
-										esc_html__( 'April', YK_MT_SLUG ),
-										esc_html__( 'May', YK_MT_SLUG ),
-										esc_html__( 'June', YK_MT_SLUG ),
-										esc_html__( 'July', YK_MT_SLUG ),
-										esc_html__( 'August', YK_MT_SLUG ),
-										esc_html__( 'September', YK_MT_SLUG ),
-										esc_html__( 'October', YK_MT_SLUG ),
-										esc_html__( 'November', YK_MT_SLUG ),
-										esc_html__( 'December', YK_MT_SLUG )
+					'months'	=> [ 	esc_html__( 'January', 'meal-tracker' ),
+										esc_html__( 'February', 'meal-tracker' ),
+										esc_html__( 'March', 'meal-tracker' ),
+										esc_html__( 'April', 'meal-tracker' ),
+										esc_html__( 'May', 'meal-tracker' ),
+										esc_html__( 'June', 'meal-tracker' ),
+										esc_html__( 'July', 'meal-tracker' ),
+										esc_html__( 'August', 'meal-tracker' ),
+										esc_html__( 'September', 'meal-tracker' ),
+										esc_html__( 'October', 'meal-tracker' ),
+										esc_html__( 'November', 'meal-tracker' ),
+										esc_html__( 'December', 'meal-tracker' )
 					],
-					'days'		=> [	esc_html__( 'Sunday', YK_MT_SLUG ),
-										esc_html__( 'Monday', YK_MT_SLUG ),
-										esc_html__( 'Tuesday', YK_MT_SLUG ),
-										esc_html__( 'Wednesday', YK_MT_SLUG ),
-										esc_html__( 'Thursday', YK_MT_SLUG ),
-										esc_html__( 'Friday', YK_MT_SLUG ),
-										esc_html__( 'Saturday', YK_MT_SLUG ) ],
-				'today-button' =>		esc_html__( 'Today', YK_MT_SLUG )
+					'days'		=> [	esc_html__( 'Sunday', 'meal-tracker' ),
+										esc_html__( 'Monday', 'meal-tracker' ),
+										esc_html__( 'Tuesday', 'meal-tracker' ),
+										esc_html__( 'Wednesday', 'meal-tracker' ),
+										esc_html__( 'Thursday', 'meal-tracker' ),
+										esc_html__( 'Friday', 'meal-tracker' ),
+										esc_html__( 'Saturday', 'meal-tracker' ) ],
+				'today-button' =>		esc_html__( 'Today', 'meal-tracker' )
     ];
 
 	return apply_filters( 'yk_mt_config_calendar', $config );
@@ -667,23 +667,23 @@ function yk_mt_ajax_config_calendar() {
 function yk_mt_localised_strings( ) {
 
     $config = [
-        'just-added'                    => esc_html__( 'Just Added:', YK_MT_SLUG ),
-        'calorie-unit'                  => esc_html__( 'kcal', YK_MT_SLUG ),
-        'remove-text'                   => esc_html__( 'Remove', YK_MT_SLUG ),
-		'total'                   		=> esc_html__( 'Total', YK_MT_SLUG ),
-        'edit-text'                     => esc_html__( 'Edit', YK_MT_SLUG ),
-        'no-data'                       => esc_html__( 'No data has been entered', YK_MT_SLUG ),
-        'meal-added-success'            => esc_html__( 'The meal has been added', YK_MT_SLUG ),
-        'meal-added-success-short'      => esc_html__( 'Added', YK_MT_SLUG ),
-        'meal-entry-added-success'      => esc_html__( 'The meal has been added', YK_MT_SLUG ),
-        'meal-entry-added-short'        => esc_html__( 'Added', YK_MT_SLUG ),
-        'meal-entry-missing-meal'       => esc_html__( 'Select a meal', YK_MT_SLUG ),
-        'meal-entry-deleted-success'    => esc_html__( 'The meal has been removed', YK_MT_SLUG ),
-        'db-error'                      => esc_html__( 'There was error saving your changes', YK_MT_SLUG ),
-        'db-error-loading'              => esc_html__( 'There was error loading your data', YK_MT_SLUG ),
-	    'settings-saved-success'        => esc_html__( 'Your settings have been saved', YK_MT_SLUG ),
-        'confirm-title'                 => esc_html__( 'Are you sure?', YK_MT_SLUG ),
-        'confirm-content'               => esc_html__( 'Proceeding will cause user data to be deleted. This data can not be recovered. Are you sure you wish to proceed?', YK_MT_SLUG )
+        'just-added'                    => esc_html__( 'Just Added:', 'meal-tracker' ),
+        'calorie-unit'                  => esc_html__( 'kcal', 'meal-tracker' ),
+        'remove-text'                   => esc_html__( 'Remove', 'meal-tracker' ),
+		'total'                   		=> esc_html__( 'Total', 'meal-tracker' ),
+        'edit-text'                     => esc_html__( 'Edit', 'meal-tracker' ),
+        'no-data'                       => esc_html__( 'No data has been entered', 'meal-tracker' ),
+        'meal-added-success'            => esc_html__( 'The meal has been added', 'meal-tracker' ),
+        'meal-added-success-short'      => esc_html__( 'Added', 'meal-tracker' ),
+        'meal-entry-added-success'      => esc_html__( 'The meal has been added', 'meal-tracker' ),
+        'meal-entry-added-short'        => esc_html__( 'Added', 'meal-tracker' ),
+        'meal-entry-missing-meal'       => esc_html__( 'Select a meal', 'meal-tracker' ),
+        'meal-entry-deleted-success'    => esc_html__( 'The meal has been removed', 'meal-tracker' ),
+        'db-error'                      => esc_html__( 'There was error saving your changes', 'meal-tracker' ),
+        'db-error-loading'              => esc_html__( 'There was error loading your data', 'meal-tracker' ),
+	    'settings-saved-success'        => esc_html__( 'Your settings have been saved', 'meal-tracker' ),
+        'confirm-title'                 => esc_html__( 'Are you sure?', 'meal-tracker' ),
+        'confirm-content'               => esc_html__( 'Proceeding will cause user data to be deleted. This data can not be recovered. Are you sure you wish to proceed?', 'meal-tracker' )
     ];
 
 	return apply_filters( 'yk_mt_config_locale', $config );
@@ -710,13 +710,13 @@ function yk_mt_units() {
  */
 function yk_mt_units_raw() {
 	$units = [
-        'na'        => [ 'label' => esc_html__( 'N/A', YK_MT_SLUG ), 'drop-quantity' => true ],
+        'na'        => [ 'label' => esc_html__( 'N/A', 'meal-tracker' ), 'drop-quantity' => true ],
 		'g'         => [ 'label' => 'g' ],
 		'ml'        => [ 'label' => 'ml' ],
 		'oz'		=> [ 'label' => 'oz' ],
-		'small'     => [ 'label' =>  esc_html__( 'Small', YK_MT_SLUG ), 'drop-quantity' => true ],
-		'medium'    => [ 'label' =>  esc_html__( 'Medium', YK_MT_SLUG ), 'drop-quantity' => true ],
-		'large'     => [ 'label' =>  esc_html__( 'Large', YK_MT_SLUG ), 'drop-quantity' => true ],
+		'small'     => [ 'label' =>  esc_html__( 'Small', 'meal-tracker' ), 'drop-quantity' => true ],
+		'medium'    => [ 'label' =>  esc_html__( 'Medium', 'meal-tracker' ), 'drop-quantity' => true ],
+		'large'     => [ 'label' =>  esc_html__( 'Large', 'meal-tracker' ), 'drop-quantity' => true ],
 	];
 
 	$units = apply_filters( 'yk_mt_units', $units );
@@ -1081,7 +1081,7 @@ function yk_mt_navigation_links() {
     $links[ 'all' ]     = yk_mt_db_entry_get_ids_and_dates();
     $links[ 'nav' ]     = [];
 
-    $links[ 'nav' ][ 'yesterday' ]  =  [ 'id' => date('Y-m-d', strtotime('-1 day' ) ), 'label' =>  esc_html__( 'Yesterday', YK_MT_SLUG  ) ];
+    $links[ 'nav' ][ 'yesterday' ]  =  [ 'id' => date('Y-m-d', strtotime('-1 day' ) ), 'label' =>  esc_html__( 'Yesterday', 'meal-tracker' ) ];
 
     // Do we already have an entry for yesterday? IF so, swap in entry ID
     if ( $existing_id =  yk_mt_entry_for_given_date( $links[ 'nav' ][ 'yesterday' ][ 'id' ] ) ) {
@@ -1091,9 +1091,9 @@ function yk_mt_navigation_links() {
         unset( $links[ 'nav' ][ 'yesterday' ] );
     }
 
-    $links[ 'nav' ][ 'today' ]      =  [ 'id' => $todays_entry_id, 'label' =>  esc_html__( 'Today', YK_MT_SLUG )  ];
+    $links[ 'nav' ][ 'today' ]      =  [ 'id' => $todays_entry_id, 'label' =>  esc_html__( 'Today', 'meal-tracker' )  ];
 
-    $links[ 'nav' ][ 'tomorrow' ]   =  [ 'id' => date('Y-m-d', strtotime('+1 day' ) ), 'label' =>  esc_html__( 'Tomorrow', YK_MT_SLUG ) ];
+    $links[ 'nav' ][ 'tomorrow' ]   =  [ 'id' => date('Y-m-d', strtotime('+1 day' ) ), 'label' =>  esc_html__( 'Tomorrow', 'meal-tracker' ) ];
 
     // Do we already have an entry for tomorrow? IF so, swap in entry ID
     if ( $existing_id =  yk_mt_entry_for_given_date( $links[ 'nav' ][ 'tomorrow' ][ 'id' ] ) ) {
@@ -1119,15 +1119,15 @@ function yk_mt_navigation_links_get_label( $date ) {
     }
 
     if ( $date === date('Y-m-d' ) ) {
-        return esc_html__( 'Today', YK_MT_SLUG );
+        return esc_html__( 'Today', 'meal-tracker' );
     }
 
     if( $date === date('Y-m-d', strtotime('-1 day' ) ) ) {
-        return esc_html__( 'Yesterday', YK_MT_SLUG );
+        return esc_html__( 'Yesterday', 'meal-tracker' );
     }
 
     if( $date === date('Y-m-d', strtotime('+1 day' ) ) ) {
-        return esc_html__( 'Tomorrow', YK_MT_SLUG );
+        return esc_html__( 'Tomorrow', 'meal-tracker' );
     }
 
     return yk_mt_date_format( $date );
@@ -1175,9 +1175,9 @@ function yk_mt_date_format( $iso_date, $format = NULL ) {
 function yk_mt_display_premium_upgrade_notice_for_shortcode () {
 
 	return sprintf( '<blockquote class="error">%s <a href="%s">%s</a></blockquote>',
-		esc_html__( 'To use this shortcode, you need to upgrade to the Premium version.', YK_MT_SLUG ),
+		esc_html__( 'To use this shortcode, you need to upgrade to the Premium version.', 'meal-tracker' ),
 		esc_url( admin_url('admin.php?page=yk-mt-license') ),
-		esc_html__( 'Upgrade now', YK_MT_SLUG )
+		esc_html__( 'Upgrade now', 'meal-tracker' )
 	);
 }
 
@@ -1195,9 +1195,9 @@ function yk_mt_upgrade_button( $css_class = '', $link = NULL ) {
     echo sprintf('<a href="%s" class="button-primary sh-cd-upgrade-button%s"><i class="far fa-credit-card"></i> %s £%d %s</a>',
         esc_url( $link ),
         esc_attr( ' ' . $css_class ),
-        esc_html__( 'Upgrade to Premium for ', YK_MT_SLUG ),
+        esc_html__( 'Upgrade to Premium for ', 'meal-tracker' ),
         esc_html( yk_mt_license_price() ),
-        esc_html__( 'a year ', YK_MT_SLUG )
+        esc_html__( 'a year ', 'meal-tracker' )
     );
 }
 
@@ -1214,7 +1214,7 @@ function yk_mt_features_button( $css_class = '', $link = NULL ) {
 	echo sprintf('<a href="%s" class="button-secondary sh-cd-upgrade-button%s" target="_blank" rel="noopener">%s</a>',
 		esc_url( $link ),
 		esc_attr( ' ' . $css_class ),
-		esc_html__( 'Read more about features', YK_MT_SLUG )
+		esc_html__( 'Read more about features', 'meal-tracker' )
 	);
 }
 /**
@@ -1280,23 +1280,23 @@ function yk_mt_features_display() {
 function yk_mt_features_list() {
 
     return [
-				esc_html__( 'Additional shortcodes', YK_MT_SLUG )    	=> esc_html__( 'Enrich your site with additional shortcodes', YK_MT_SLUG ),
-    			esc_html__( 'External APIs', YK_MT_SLUG )    			=> esc_html__( 'Search FatSecrets Recipe and Food APIs', YK_MT_SLUG ),
-				esc_html__( 'Own Meal collection', YK_MT_SLUG )     	=> esc_html__( 'Create your own meal collection for your users to search', YK_MT_SLUG ),
-				esc_html__( 'Edit user\'s meals', YK_MT_SLUG )     		=> esc_html__( 'View, edit and delete meals in your user\'s meal collections', YK_MT_SLUG ),
-                esc_html__( 'Create and view entries', YK_MT_SLUG )     => esc_html__( 'Allow your users to create and view entries for any day', YK_MT_SLUG ),
-                esc_html__( 'Edit entries', YK_MT_SLUG )                => esc_html__( 'Allow your users to edit their entries for any given day', YK_MT_SLUG ),
-                esc_html__( 'Edit meals', YK_MT_SLUG )                  => esc_html__( 'Allow your users to edit their stored meals', YK_MT_SLUG ),
-                esc_html__( 'Calorie sources', YK_MT_SLUG )             => esc_html__( 'Fetch daily calorie limits from other sources e.g. YeKen\'s Weight Tracker', YK_MT_SLUG ),
-                esc_html__( 'Compress meal items', YK_MT_SLUG )         => esc_html__( 'Compress multiple meal lines for an entry into one line', YK_MT_SLUG ),
-                esc_html__( 'Unlimited meals per user', YK_MT_SLUG )    => esc_html__( 'Your users are no longer limited to a maximum of 40 meals and may add as many as they wish', YK_MT_SLUG ),
-                esc_html__( 'View your user\'s data', YK_MT_SLUG )      => esc_html__( 'View all of your user entries, meals and calorie intake', YK_MT_SLUG ),
-                esc_html__( 'Set calorie allowances', YK_MT_SLUG )      => esc_html__( 'Set daily calorie allowances for your users', YK_MT_SLUG ),
-                esc_html__( 'Summary Statistics', YK_MT_SLUG )          => esc_html__( 'View summary statistics of your Meal Tracker data and it\'s usage by your users', YK_MT_SLUG ),
-                esc_html__( 'Calorie Allowance sources', YK_MT_SLUG )   => esc_html__( 'Specify one or more sources for calorie allowance', YK_MT_SLUG ),
-                esc_html__( 'Additional settings', YK_MT_SLUG )         => esc_html__( 'Additional settings for customising your Meal Tracker usage', YK_MT_SLUG ),
-                esc_html__( 'Admin Search', YK_MT_SLUG )                => esc_html__( 'Search for users by name and email address', YK_MT_SLUG ),
-				esc_html__( 'Fractional meal quantities', YK_MT_SLUG )  => esc_html__( 'If enabled (via settings) additional quantity settings of 1/4, 1/2 and 3/4 are available when adding meals to an entry', YK_MT_SLUG )
+				esc_html__( 'Additional shortcodes', 'meal-tracker' )    	=> esc_html__( 'Enrich your site with additional shortcodes', 'meal-tracker' ),
+    			esc_html__( 'External APIs', 'meal-tracker' )    			=> esc_html__( 'Search FatSecrets Recipe and Food APIs', 'meal-tracker' ),
+				esc_html__( 'Own Meal collection', 'meal-tracker' )     	=> esc_html__( 'Create your own meal collection for your users to search', 'meal-tracker' ),
+				esc_html__( 'Edit user\'s meals', 'meal-tracker' )     		=> esc_html__( 'View, edit and delete meals in your user\'s meal collections', 'meal-tracker' ),
+                esc_html__( 'Create and view entries', 'meal-tracker' )     => esc_html__( 'Allow your users to create and view entries for any day', 'meal-tracker' ),
+                esc_html__( 'Edit entries', 'meal-tracker' )                => esc_html__( 'Allow your users to edit their entries for any given day', 'meal-tracker' ),
+                esc_html__( 'Edit meals', 'meal-tracker' )                  => esc_html__( 'Allow your users to edit their stored meals', 'meal-tracker' ),
+                esc_html__( 'Calorie sources', 'meal-tracker' )             => esc_html__( 'Fetch daily calorie limits from other sources e.g. YeKen\'s Weight Tracker', 'meal-tracker' ),
+                esc_html__( 'Compress meal items', 'meal-tracker' )         => esc_html__( 'Compress multiple meal lines for an entry into one line', 'meal-tracker' ),
+                esc_html__( 'Unlimited meals per user', 'meal-tracker' )    => esc_html__( 'Your users are no longer limited to a maximum of 40 meals and may add as many as they wish', 'meal-tracker' ),
+                esc_html__( 'View your user\'s data', 'meal-tracker' )      => esc_html__( 'View all of your user entries, meals and calorie intake', 'meal-tracker' ),
+                esc_html__( 'Set calorie allowances', 'meal-tracker' )      => esc_html__( 'Set daily calorie allowances for your users', 'meal-tracker' ),
+                esc_html__( 'Summary Statistics', 'meal-tracker' )          => esc_html__( 'View summary statistics of your Meal Tracker data and it\'s usage by your users', 'meal-tracker' ),
+                esc_html__( 'Calorie Allowance sources', 'meal-tracker' )   => esc_html__( 'Specify one or more sources for calorie allowance', 'meal-tracker' ),
+                esc_html__( 'Additional settings', 'meal-tracker' )         => esc_html__( 'Additional settings for customising your Meal Tracker usage', 'meal-tracker' ),
+                esc_html__( 'Admin Search', 'meal-tracker' )                => esc_html__( 'Search for users by name and email address', 'meal-tracker' ),
+				esc_html__( 'Fractional meal quantities', 'meal-tracker' )  => esc_html__( 'If enabled (via settings) additional quantity settings of 1/4, 1/2 and 3/4 are available when adding meals to an entry', 'meal-tracker' )
      ];
 }
 
@@ -1306,8 +1306,8 @@ function yk_mt_features_list() {
 function yk_mt_custom_notification_html() {
     ?>
 
-    <p><img src="<?php echo plugins_url( 'admin-pages/assets/images/yeken-logo.png', __FILE__ ); ?>" width="100" height="100" style="margin-right:20px" align="left" /><?php echo esc_html__( 'If require plugin modifications to Meal Tracker, or need a new plugin built, or perhaps you need a developer to help you with your website then please don\'t hesitate get in touch!', YK_MT_SLUG ); ?></p>
-    <p><strong><?php echo esc_html__( 'We provide fixed priced quotes.', YK_MT_SLUG ); ?></strong></p>
+    <p><img src="<?php echo plugins_url( 'admin-pages/assets/images/yeken-logo.png', __FILE__ ); ?>" width="100" height="100" style="margin-right:20px" align="left" /><?php echo esc_html__( 'If require plugin modifications to Meal Tracker, or need a new plugin built, or perhaps you need a developer to help you with your website then please don\'t hesitate get in touch!', 'meal-tracker' ); ?></p>
+    <p><strong><?php echo esc_html__( 'We provide fixed priced quotes.', 'meal-tracker' ); ?></strong></p>
     <p><a href="https://www.yeken.uk" rel="noopener noreferrer" target="_blank">YeKen.uk</a> /
         <a href="https://profiles.wordpress.org/aliakro" rel="noopener noreferrer" target="_blank">WordPress Profile</a> /
         <a href="mailto:email@yeken.uk" >email@yeken.uk</a></p>
@@ -1324,10 +1324,10 @@ function yk_mt_display_pro_upgrade_notice( ) {
     ?>
 
     <div class="postbox yk-mt-advertise-premium">
-        <h3 class="hndle"><span><?php echo esc_html__( 'Upgrade Meal Tracker and get more features!', YK_MT_SLUG ); ?> </span></h3>
+        <h3 class="hndle"><span><?php echo esc_html__( 'Upgrade Meal Tracker and get more features!', 'meal-tracker' ); ?> </span></h3>
         <div style="padding: 0px 15px 0px 15px">
-            <p><?php echo esc_html__( 'Upgrade to the Premium version of this plugin to view your user\'s data, record entries for multiple days, external data sources and much more!', YK_MT_SLUG ); ?></p>
-            <p><a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-license') ); ?>" class="button-primary"><?php echo esc_html__( 'Read more and upgrade to Premium Version', YK_MT_SLUG ); ?></a></p>
+            <p><?php echo esc_html__( 'Upgrade to the Premium version of this plugin to view your user\'s data, record entries for multiple days, external data sources and much more!', 'meal-tracker' ); ?></p>
+            <p><a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-license') ); ?>" class="button-primary"><?php echo esc_html__( 'Read more and upgrade to Premium Version', 'meal-tracker' ); ?></a></p>
         </div>
     </div>
 
@@ -1367,7 +1367,7 @@ function yk_mt_user_exist( $user_id ) {
 function yk_mt_exist_check( $user_id ) {
 
     if(false === yk_mt_user_exist( $user_id ) ) {
-        wp_die( esc_html__( 'Error: The user does not appear to exist' , YK_MT_SLUG ) );
+        wp_die( esc_html__( 'Error: The user does not appear to exist' , 'meal-tracker' ) );
     }
 }
 
@@ -1387,7 +1387,7 @@ function yk_mt_format_number( $number, $decimals = 0 ) {
  * @return string
  */
 function yk_mt_format_calories( $number ) {
-    return sprintf( '%s%s', number_format( $number ), esc_html__( 'kcal', YK_MT_SLUG ) );
+    return sprintf( '%s%s', number_format( $number ), esc_html__( 'kcal', 'meal-tracker' ) );
 }
 
 /**
@@ -1401,15 +1401,15 @@ function yk_mt_format_nutrition_sting( $meal, $include_meta = true ) {
 		return '';
 	}
 
-	$text = sprintf( '%s%s', number_format( $meal[ 'calories'] ), esc_html__( 'kcal', YK_MT_SLUG ) );
+	$text = sprintf( '%s%s', number_format( $meal[ 'calories'] ), esc_html__( 'kcal', 'meal-tracker' ) );
 
 	if ( true === $include_meta ) {
 
 		$sep  	= ' / ';
 		$text .= $sep;
-		$text .= sprintf( '%s: %dg%s', esc_html__( 'fats', YK_MT_SLUG ), $meal[ 'meta_fats' ], $sep );
-		$text .= sprintf( '%s: %dg%s', esc_html__( 'protein', YK_MT_SLUG ), $meal[ 'meta_proteins' ], $sep );
-		$text .= sprintf( '%s: %dg', esc_html__( 'carbs', YK_MT_SLUG ), $meal[ 'meta_carbs' ], $sep );
+		$text .= sprintf( '%s: %dg%s', esc_html__( 'fats', 'meal-tracker' ), $meal[ 'meta_fats' ], $sep );
+		$text .= sprintf( '%s: %dg%s', esc_html__( 'protein', 'meal-tracker' ), $meal[ 'meta_proteins' ], $sep );
+		$text .= sprintf( '%s: %dg', esc_html__( 'carbs', 'meal-tracker' ), $meal[ 'meta_carbs' ], $sep );
 
 	}
 
@@ -1428,12 +1428,12 @@ function yk_mt_lang_translate_known_meal_type_from_english( $meal_type ) {
 	}
 
 	$lookup = [
-		'Breakfast'     => esc_html__( 'Breakfast', YK_MT_SLUG ),
-		'Mid-morning'   => esc_html__( 'Mid-morning', YK_MT_SLUG ),
-		'Lunch'         => esc_html__( 'Lunch', YK_MT_SLUG ),
-		'Afternoon'     => esc_html__( 'Afternoon', YK_MT_SLUG ),
-		'Dinner'        => esc_html__( 'Dinner', YK_MT_SLUG ),
-		'Evening'       => esc_html__( 'Evening', YK_MT_SLUG )
+		'Breakfast'     => esc_html__( 'Breakfast', 'meal-tracker' ),
+		'Mid-morning'   => esc_html__( 'Mid-morning', 'meal-tracker' ),
+		'Lunch'         => esc_html__( 'Lunch', 'meal-tracker' ),
+		'Afternoon'     => esc_html__( 'Afternoon', 'meal-tracker' ),
+		'Dinner'        => esc_html__( 'Dinner', 'meal-tracker' ),
+		'Evening'       => esc_html__( 'Evening', 'meal-tracker' )
 	];
 
 	return ( false === empty( $lookup[ $meal_type ] ) ) ? $lookup[ $meal_type ] : '';

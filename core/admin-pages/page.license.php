@@ -7,7 +7,7 @@
         $site_hash = yk_mt_generate_site_hash();
 
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', YK_MT_SLUG ) );
+            wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'meal-tracker' ) );
         }
 
         // Remove existing license?
@@ -25,9 +25,9 @@
                     $valid_license = yk_mt_license_apply( $_POST['license-key'] );
 
                     if ( $valid_license ) {
-                        yk_mt_message_display( esc_html__('Your license has been applied!', YK_MT_SLUG ) );
+                        yk_mt_message_display( esc_html__('Your license has been applied!', 'meal-tracker' ) );
                     } else {
-                        yk_mt_message_display(esc_html__('There was an error applying your license. ', YK_MT_SLUG ), true);
+                        yk_mt_message_display(esc_html__('There was an error applying your license. ', 'meal-tracker' ), true);
                     }
                 }
 
@@ -118,7 +118,7 @@
 
                                                         echo esc_html( $formatted );
                                                     } else {
-                                                        echo esc_html__('No active license', YK_MT_SLUG );
+                                                        echo esc_html__('No active license', 'meal-tracker' );
                                                     }
 
                                                 ?>
@@ -127,7 +127,7 @@
 
                                         <?php if ( false === empty( $existing_license ) ): ?>
                                             <tr class="last">
-                                                <th colspan="2"><?php echo esc_html__('Your Existing License', YK_MT_SLUG ); ?></th>
+                                                <th colspan="2"><?php echo esc_html__('Your Existing License', 'meal-tracker' ); ?></th>
                                             </tr>
                                             <tr class="last">
                                                 <td colspan="2"><textarea rows="5" style="width:100%"><?php echo esc_textarea( $existing_license ); ?></textarea></td>

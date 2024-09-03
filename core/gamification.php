@@ -18,14 +18,14 @@ defined('ABSPATH') or die( 'Jog on!' );
 function yk_mt_mycred_add_hooks( $installed, $point_type ) {
 
 	// Weight added
-	$installed[ 'yk_mt_entry_new' ] = [	'title'        => esc_html__( 'Meal Tracker: Entry Added', YK_MT_SLUG ),
-	                                        'description'  => esc_html__( 'Reward a user when they start a new meal entry.', YK_MT_SLUG ),
+	$installed[ 'yk_mt_entry_new' ] = [	'title'        => esc_html__( 'Meal Tracker: Entry Added', 'meal-tracker' ),
+	                                        'description'  => esc_html__( 'Reward a user when they start a new meal entry.', 'meal-tracker' ),
 	                                        'callback'     => [ 'yk_mt_mycred_entry_added_class' ]
 	];
 
 	// Meal added to entry
-	$installed[ 'yk_mt_meal_added' ] = 	[	'title'        => esc_html__( 'Meal Tracker: Meal added to an entry', YK_MT_SLUG ),
-	                                        'description'  => esc_html__( 'Reward a user when they add a meal to their entry', YK_MT_SLUG ),
+	$installed[ 'yk_mt_meal_added' ] = 	[	'title'        => esc_html__( 'Meal Tracker: Meal added to an entry', 'meal-tracker' ),
+	                                        'description'  => esc_html__( 'Reward a user when they add a meal to their entry', 'meal-tracker' ),
 	                                        'callback'     => [ 'yk_mt_mycred_meal_added_to_entry_class' ]
 	];
 
@@ -51,7 +51,7 @@ function yk_mt_mycred_load_hooks() {
 			parent::__construct( [
 									'id'       => 'yk_mt_entry_new',
 									'defaults' => [ 'yk_mt_entry_new'    => [	'creds'  => 10,
-									                                              'log'    => esc_html__( 'Entry added', YK_MT_SLUG ),
+									                                              'log'    => esc_html__( 'Entry added', 'meal-tracker' ),
 									                                              'limit'  => '0/x' ]
 									]
 			], $hook_prefs, $type );
@@ -101,24 +101,24 @@ function yk_mt_mycred_load_hooks() {
 
 			?>
 
-			<label class="subheader"><?php _e( 'Log template', YK_MT_SLUG ); ?></label>
+			<label class="subheader"><?php _e( 'Log template', 'meal-tracker' ); ?></label>
 			<ol>
 				<li>
 					<div class="h2"><input type="text" name="<?php echo $this->field_name( [ 'yk_mt_entry_new' => 'log' ] ); ?>" id="<?php echo $this->field_id( [ 'yk_mt_entry_new' => 'log' ] ); ?>" value="<?php echo esc_attr( $prefs[ 'yk_mt_entry_new' ][ 'log' ] ); ?>" class="long" /></div>
 					<span class="description"></span>
 				</li>
 			</ol>
-			<label class="subheader"><?php _e( 'Points', YK_MT_SLUG ); ?></label>
+			<label class="subheader"><?php _e( 'Points', 'meal-tracker' ); ?></label>
 			<ol>
 				<li>
 					<div class="h2"><input type="number" name="<?php echo $this->field_name( [ 'yk_mt_entry_new' => 'creds' ] ); ?>" id="<?php echo $this->field_id( [ 'yk_mt_entry_new' => 'creds' ] ); ?>" value="<?php echo esc_attr( $prefs['yk_mt_entry_new']['creds'] ); ?>" class="long" /></div>
 				</li>
 			</ol>
-			<label class="subheader"><?php _e( 'Limit', YK_MT_SLUG ); ?></label>
+			<label class="subheader"><?php _e( 'Limit', 'meal-tracker' ); ?></label>
 			<ol>
 				<li>
 					<div class="h2"><?php echo $this->hook_limit_setting( $this->field_name( [ 'yk_mt_entry_new' => 'limit' ] ), $this->field_id( [ 'yk_mt_entry_new' => 'limit' ]  ), $prefs['yk_mt_entry_new']['limit'] ); ?></div>
-					<span class="description"><?php _e( 'Limit the number of times this award can be given within the specified time limit.', YK_MT_SLUG ); ?></span>
+					<span class="description"><?php _e( 'Limit the number of times this award can be given within the specified time limit.', 'meal-tracker' ); ?></span>
 				</li>
 			</ol>
 
@@ -158,7 +158,7 @@ function yk_mt_mycred_load_hooks() {
 			parent::__construct( [
 				'id'       => 'yk_mt_meal_added',
 				'defaults' => [ 'yk_mt_meal_added'    => [	'creds'  => 10,
-				                                            'log'    => esc_html__( 'Meal added to entry', YK_MT_SLUG ),
+				                                            'log'    => esc_html__( 'Meal added to entry', 'meal-tracker' ),
 				                                            'limit'  => '0/x'
 															]
 				]
@@ -207,24 +207,24 @@ function yk_mt_mycred_load_hooks() {
 
 			?>
 
-			<label class="subheader"><?php _e( 'Log template', YK_MT_SLUG ); ?></label>
+			<label class="subheader"><?php _e( 'Log template', 'meal-tracker' ); ?></label>
 			<ol>
 				<li>
 					<div class="h2"><input type="text" name="<?php echo $this->field_name( [ 'yk_mt_meal_added' => 'log' ] ); ?>" id="<?php echo $this->field_id( [ 'yk_mt_meal_added' => 'log' ] ); ?>" value="<?php echo esc_attr( $prefs[ 'yk_mt_meal_added' ][ 'log' ] ); ?>" class="long" /></div>
 					<span class="description"></span>
 				</li>
 			</ol>
-			<label class="subheader"><?php _e( 'Points', YK_MT_SLUG ); ?></label>
+			<label class="subheader"><?php _e( 'Points', 'meal-tracker' ); ?></label>
 			<ol>
 				<li>
 					<div class="h2"><input type="number" name="<?php echo $this->field_name( [ 'yk_mt_meal_added' => 'creds' ] ); ?>" id="<?php echo $this->field_id( [ 'yk_mt_meal_added' => 'creds' ] ); ?>" value="<?php echo esc_attr( $prefs['yk_mt_meal_added']['creds'] ); ?>" class="long" /></div>
 				</li>
 			</ol>
-			<label class="subheader"><?php _e( 'Limit', YK_MT_SLUG ); ?></label>
+			<label class="subheader"><?php _e( 'Limit', 'meal-tracker' ); ?></label>
 			<ol>
 				<li>
 					<div class="h2"><?php echo $this->hook_limit_setting( $this->field_name( [ 'yk_mt_meal_added' => 'limit' ] ), $this->field_id( [ 'yk_mt_meal_added' => 'limit' ]  ), $prefs['yk_mt_meal_added']['limit'] ); ?></div>
-					<span class="description"><?php _e( 'Limit the number of times this award can be given within the specified time limit.', YK_MT_SLUG ); ?></span>
+					<span class="description"><?php _e( 'Limit the number of times this award can be given within the specified time limit.', 'meal-tracker' ); ?></span>
 				</li>
 			</ol>
 

@@ -42,9 +42,9 @@ function yk_mt_chart_enqueue() {
 function yk_mt_chart_localise_strings() {
 
 	return [
-		'chart-label-used'              => esc_html__( 'used', YK_MT_SLUG ),
-		'chart-label-remaining'         => esc_html__( 'remaining', YK_MT_SLUG ),
-		'chart-label-target'            => esc_html__( 'Target', YK_MT_SLUG )
+		'chart-label-used'              => esc_html__( 'used', 'meal-tracker' ),
+		'chart-label-remaining'         => esc_html__( 'remaining', 'meal-tracker' ),
+		'chart-label-target'            => esc_html__( 'Target', 'meal-tracker' )
 	];
 }
 
@@ -74,7 +74,7 @@ function yk_mt_chart_placeholder( $args = [] ) {
 	                'tension'               => 0.4,
 	                'plugins'               => [ 'title' => [
 			                                                        'display'   => false,
-			                                                        'text'      => esc_html__( 'In a chart', YK_MT_SLUG )
+			                                                        'text'      => esc_html__( 'In a chart', 'meal-tracker' )
 			                                                    ]
 	                ]
     ];
@@ -136,7 +136,7 @@ function yk_mt_chart_progress_canvas( $arguments = [] ) {
 		esc_attr( $arguments[ 'css-class' ] ),
 		$arguments[ 'chart-height' ],
 		yk_mt_to_bool( $responsive ),
-		esc_html__( 'Chart showing user\'s progress', YK_MT_SLUG ),
+		esc_html__( 'Chart showing user\'s progress', 'meal-tracker' ),
 		yk_mt_to_bool( $arguments[ 'chart-hide-legend' ] ),
 		yk_mt_to_bool( $arguments[ 'chart-hide-title' ] ),
 		esc_attr( $arguments[ 'chart-type' ] )
@@ -177,7 +177,7 @@ function yk_mt_chart_line_allowed_versus_used( $args ) {
 
     // Add Calories Allowed
     $datasets[] = [
-        'label'             => esc_html__( 'Calories Allowed', YK_MT_SLUG ),
+        'label'             => esc_html__( 'Calories Allowed', 'meal-tracker' ),
         'fill'              => false,
         'backgroundColor'   => '#62a16c',
         'borderColor'       => '#62a16c',
@@ -186,7 +186,7 @@ function yk_mt_chart_line_allowed_versus_used( $args ) {
 
     // Calories Used
     $datasets[] = [
-        'label'             => esc_html__( 'Calories Used', YK_MT_SLUG ),
+        'label'             => esc_html__( 'Calories Used', 'meal-tracker' ),
         'fill'              => false,
         'showline'          => false,
         'backgroundColor'   => '#ff6384',
@@ -197,7 +197,7 @@ function yk_mt_chart_line_allowed_versus_used( $args ) {
     // TODO
     // Add Calories Remaining
 //    $datasets[] = [
-//        'label'             => esc_html__( 'Calories Remaining', YK_MT_SLUG ),
+//        'label'             => esc_html__( 'Calories Remaining', 'meal-tracker' ),
 //        'fill'              => false,
 //        'backgroundColor'   => '#cccccc',
 //        'borderColor'       => '#cccccc',

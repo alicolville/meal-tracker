@@ -18,14 +18,14 @@ function yk_mt_admin_page_meals_add_edit() {
 					}
 					?>
 					<div class="postbox">
-						<h2 class="hndle"><span><?php echo esc_html__( 'Add / edit a meal', YK_MT_SLUG ); ?></span></h2>
+						<h2 class="hndle"><span><?php echo esc_html__( 'Add / edit a meal', 'meal-tracker' ); ?></span></h2>
 						<div class="inside">
 							<p>
 							<?php
 
 								if ( false === YK_MT_IS_PREMIUM ) {
 
-									printf( '<p>%s.</p>', esc_html__( 'To add or edit a meal, you must have a Premium license', YK_MT_SLUG ) );
+									printf( '<p>%s.</p>', esc_html__( 'To add or edit a meal, you must have a Premium license', 'meal-tracker' ) );
 
 								} else {
 

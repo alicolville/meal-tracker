@@ -64,9 +64,9 @@ function yk_mt_meta_fields() {
 	// Protein
 	$fields[] = [
 		'db_col' 			=> 'meta_proteins',
-		'title' 			=> esc_html__( 'Proteins', YK_MT_SLUG ),
-		'prefix'			=> esc_html__( 'p', YK_MT_SLUG ),
-		'unit'				=> esc_html__( 'g', YK_MT_SLUG ),
+		'title' 			=> esc_html__( 'Proteins', 'meal-tracker' ),
+		'prefix'			=> esc_html__( 'p', 'meal-tracker' ),
+		'unit'				=> esc_html__( 'g', 'meal-tracker' ),
 		'visible_user' 		=> $meta_enabled,
 		'visible_admin' 	=> $meta_enabled,
 		'type'				=> 'float',
@@ -78,9 +78,9 @@ function yk_mt_meta_fields() {
 	// Fats
 	$fields[] = [
 		'db_col' 			=> 'meta_fats',
-		'title' 			=> esc_html__( 'Fats', YK_MT_SLUG ),
-		'prefix'			=> esc_html__( 'f', YK_MT_SLUG ),
-		'unit'				=> esc_html__( 'g', YK_MT_SLUG ),
+		'title' 			=> esc_html__( 'Fats', 'meal-tracker' ),
+		'prefix'			=> esc_html__( 'f', 'meal-tracker' ),
+		'unit'				=> esc_html__( 'g', 'meal-tracker' ),
 		'visible_user' 		=> $meta_enabled,
 		'visible_admin' 	=> $meta_enabled,
 		'type'				=> 'float',
@@ -92,9 +92,9 @@ function yk_mt_meta_fields() {
 	// Carbs
 	$fields[] = [
 		'db_col' 			=> 'meta_carbs',
-		'title' 			=> esc_html__( 'Carbs', YK_MT_SLUG ),
-		'prefix'			=> esc_html__( 'c', YK_MT_SLUG ),
-		'unit'				=> esc_html__( 'g', YK_MT_SLUG ),
+		'title' 			=> esc_html__( 'Carbs', 'meal-tracker' ),
+		'prefix'			=> esc_html__( 'c', 'meal-tracker' ),
+		'unit'				=> esc_html__( 'g', 'meal-tracker' ),
 		'visible_user' 		=> $meta_enabled,
 		'visible_admin' 	=> $meta_enabled,
 		'type'				=> 'float',

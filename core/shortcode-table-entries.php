@@ -15,7 +15,7 @@ function yk_mt_shortcode_table_entries( $user_defined_arguments ) {
 												'url-mealtracker'   => '',
 												'user-id'           => get_current_user_id(),
 												'sort-direction'    => 'desc',
-												'text-no-entries'   => esc_html__( 'You currently have no entries.', YK_MT_SLUG ),
+												'text-no-entries'   => esc_html__( 'You currently have no entries.', 'meal-tracker' ),
 												'type'              => 'advanced'                                           // advanced / basic
 	], $user_defined_arguments );
 
@@ -51,10 +51,10 @@ function yk_mt_shortcode_table_entries( $user_defined_arguments ) {
 						</thead>
 						<tbody>',
 						'D/M/YYYY',
-						esc_html__( 'Date', YK_MT_SLUG ),
-						esc_html__( 'Allowed', YK_MT_SLUG ),
-						esc_html__( 'Used', YK_MT_SLUG ),
-						esc_html__( 'Remaining', YK_MT_SLUG ),
+						esc_html__( 'Date', 'meal-tracker' ),
+						esc_html__( 'Allowed', 'meal-tracker' ),
+						esc_html__( 'Used', 'meal-tracker' ),
+						esc_html__( 'Remaining', 'meal-tracker' ),
 						$mt_link_class
 	);
 
@@ -80,7 +80,7 @@ function yk_mt_shortcode_table_entries( $user_defined_arguments ) {
 							$entry[ 'percentage_used' ] . '%',
 							esc_url( $url ),
 							$mt_link_class,
-							! $advanced_mode ? esc_html__( 'View', YK_MT_SLUG ) : '',
+							! $advanced_mode ? esc_html__( 'View', 'meal-tracker' ) : '',
 							yk_mt_to_bool( $shortcode_arguments[ 'link-new-window' ] ) ? ' target="_blank" rel="noopener"' : ''
 		);
 	}

@@ -8,13 +8,13 @@ function yk_mt_admin_page_search_results() {
 
     ?>
     <div class="wrap">
-    <h1><?php echo esc_html__( 'Search Results', YK_MT_SLUG ); ?></h1>
+    <h1><?php echo esc_html__( 'Search Results', 'meal-tracker' ); ?></h1>
     <div id="poststuff">
         <div id="post-body" class="metabox-holder">
             <div id="post-body-content">
                 <div class="meta-box-sortables ui-sortable">
                     <div class="postbox">
-                        <h2 class="hndle"><span><?php echo esc_html__( 'Search Results', YK_MT_SLUG ); ?></span></h2>
+                        <h2 class="hndle"><span><?php echo esc_html__( 'Search Results', 'meal-tracker' ); ?></span></h2>
                         <div class="inside">
                         <?php
 
@@ -34,7 +34,7 @@ function yk_mt_admin_page_search_results() {
                                 if( 0 !== $count ) {
                                     printf('<p>%1$d %2$s: <em>"%3$s"</em></p>',
                                                     $count,
-                                                    esc_html__( 'results were found for', YK_MT_SLUG ),
+                                                    esc_html__( 'results were found for', 'meal-tracker' ),
                                                     esc_html( $search_term )
                                     );
 
@@ -42,11 +42,11 @@ function yk_mt_admin_page_search_results() {
                                     <table class="widefat yk-mt-footable yk-mt-footable-basic">
                                         <thead>
                                             <tr>
-                                                <th class="row-title"><?php echo esc_html__( 'Username', YK_MT_SLUG ) ?></th>
-                                                <th data-breakpoints="xs"><?php echo esc_html__( 'Email', YK_MT_SLUG ) ?></th>
-                                                <th data-breakpoints="xs"><?php echo esc_html__( 'Latest Entry', YK_MT_SLUG ) ?></th>
-                                                <th data-breakpoints="xs"><?php echo esc_html__( 'Number Entries', YK_MT_SLUG ) ?></th>
-                                                <th data-breakpoints="xs"><?php echo esc_html__( 'Number Meals', YK_MT_SLUG ) ?></th>
+                                                <th class="row-title"><?php echo esc_html__( 'Username', 'meal-tracker' ) ?></th>
+                                                <th data-breakpoints="xs"><?php echo esc_html__( 'Email', 'meal-tracker' ) ?></th>
+                                                <th data-breakpoints="xs"><?php echo esc_html__( 'Latest Entry', 'meal-tracker' ) ?></th>
+                                                <th data-breakpoints="xs"><?php echo esc_html__( 'Number Entries', 'meal-tracker' ) ?></th>
+                                                <th data-breakpoints="xs"><?php echo esc_html__( 'Number Meals', 'meal-tracker' ) ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -61,12 +61,12 @@ function yk_mt_admin_page_search_results() {
 
                                 } else {
                                     echo sprintf('<p>%1$s: <strong>"%2$s"</strong>.</p>',
-                                        esc_html__( 'No users were found for the given search criteria', YK_MT_SLUG ),
+                                        esc_html__( 'No users were found for the given search criteria', 'meal-tracker' ),
                                         esc_html( $search_term )
                                     );
                                 }
                             } else {
-                                echo esc_html__( 'No search terms were specified', YK_MT_SLUG );
+                                echo esc_html__( 'No search terms were specified', 'meal-tracker' );
                             }
                         ?>
                         </div>
