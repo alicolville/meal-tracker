@@ -606,6 +606,7 @@ function yk_mt_link_current_url() {
     ) ? 'https://' : 'http://';
 
     $base_url = $protocol . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+	
     return esc_url_raw( $base_url );
 }
 

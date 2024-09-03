@@ -244,7 +244,7 @@ function yk_mt_ajax_meals() {
 
 	// If performing a search, set options to look for string. Otherwise load load a max of 20 from DB for user.
 	if ( false === empty( $_POST[ 'search' ] ) ) {
-		$options = [ 'search' => $_POST[ 'search' ] ];
+		$options = [ 'search' => sanitize_text_field( $_POST[ 'search' ] ) ];
 	} else {
 		$options = [ 'limit' => 20 ];
 	}
@@ -280,15 +280,17 @@ function yk_mt_ajax_external_search() {
 		wp_send_json( [] );
 	}
 
+	$search_term = sanitize_text_field( $_POST[ 'search' ] );
+
 	check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-	$cache_key = 'ext-search-' . md5( $_POST[ 'search' ] );
+	$cache_key = 'ext-search-' . md5( $search_term );
 
 	if ( $cache = yk_mt_cache_get( $cache_key ) )  {
 		wp_send_json( $cache );
 	}
 
-	$meals = yk_mt_ext_source_search( $_POST[ 'search' ] );
+	$meals = yk_mt_ext_source_search( $search_term );
 
 	// Do we have an error?
 	if ( 'ERR' === $meals ) {
@@ -323,15 +325,17 @@ function yk_mt_ajax_external_servings() {
 		wp_send_json( [] );
 	}
 
+	$search_term = sanitize_text_field( $_POST[ 'search' ] );
+
 	check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-	$cache_key = 'ext-servings-' . md5( $_POST[ 'search' ] );
+	$cache_key = 'ext-servings-' . md5( $search_term );
 
 	if ( $cache = yk_mt_cache_get( $cache_key ) )  {
 		wp_send_json( $cache );
 	}
 
-	$servings = yk_mt_ext_source_servings( $_POST[ 'search' ] );
+	$servings = yk_mt_ext_source_servings( $search_term );
 
 	// Do we have an error?
 	if ( 'ERR' === $servings ) {
@@ -536,7 +540,7 @@ function yk_mt_ajax_get_post_value( $key, $default = NULL, $force_to_int = false
     $value = NULL;
 
     if ( false === empty( $_POST[ $key ] ) ) {
-        return ( true === $force_to_int ) ? (int) $_POST[ $key ] : $_POST[ $key ];
+        return ( true === $force_to_int ) ? (int) $_POST[ $key ] : sanitize_text_field( $_POST[ $key ] );
     }
 
     return $default ?: NULL;

@@ -1454,7 +1454,7 @@ function yk_mt_log_error( $text ) {
  * @return mixed
  */
 function yk_mt_server_ip() {
-	return $_SERVER['SERVER_ADDR'];
+	return sanitize_text_field( $_SERVER['SERVER_ADDR'] );
 }
 
 /**

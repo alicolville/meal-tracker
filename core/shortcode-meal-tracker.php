@@ -860,7 +860,7 @@ function yk_mt_shortcode_get_current_url( $mode = '' ) {
  */
 function yk_mt_shortcode_get_mode() {
 	$mode = ( false === empty( $_GET[ 'yk-mt-mode' ] ) ) ?
-		$_GET[ 'yk-mt-mode' ] :
+		sanitize_text_field( $_GET[ 'yk-mt-mode' ] ) :
 		'default';
 
 	if ( 'default' !== $mode && true !== yk_mt_license_is_premium() ) {
