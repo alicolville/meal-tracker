@@ -89,6 +89,8 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 3.2 =
 
+* Bug fix: Corrected date format on ['mt-table-entries] shortcode.
+
 Several fixes based upon WordPress's plugin feedback:
 
 

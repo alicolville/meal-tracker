@@ -1156,14 +1156,14 @@ function yk_mt_entry_for_given_date( $date, $user_id = NULL ) {
 /*
  * Format an ISO date
  */
-function yk_mt_date_format( $iso_date ) {
+function yk_mt_date_format( $iso_date, $format = NULL ) {
 
     if ( true === empty( $iso_date ) ) {
         return '-';
     }
 
     $time 			= strtotime( $iso_date );
-    $date_format 	= get_option( 'date_format' );
+   $date_format 	= ( true === empty( $format ) ) ? get_option( 'date_format' ) : $format;
 
     return date( $date_format, $time );
 }

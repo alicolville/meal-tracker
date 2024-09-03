@@ -50,7 +50,7 @@ function yk_mt_shortcode_table_entries( $user_defined_arguments ) {
 							</tr>
 						</thead>
 						<tbody>',
-						'D/M/Y',
+						'D/M/YYYY',
 						__( 'Date', YK_MT_SLUG ),
 						__( 'Allowed', YK_MT_SLUG ),
 						__( 'Used', YK_MT_SLUG ),
@@ -73,7 +73,7 @@ function yk_mt_shortcode_table_entries( $user_defined_arguments ) {
 		                        <td %8$s><a href="%7$s" class="btn btn-default footable-edit" %10$s><i class="fa fa-eye">%9$s</i></a></td>
 		                    </tr>',
 							$class,
-							yk_mt_date_format( $entry['date' ] ),
+							yk_mt_date_format( $entry['date' ], 'd/m/Y' ),
 							$entry[ 'calories_allowed' ],
 							$entry[ 'calories_used' ],
 							$entry[ 'calories_remaining' ],
