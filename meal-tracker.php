@@ -22,7 +22,7 @@ define( 'YK_MT_PLUGIN_VERSION', '3.2' );
 define( 'YK_MT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'YK_MT_SLUG', 'meal-tracker' );
 define( 'YK_MT_BASE_URL', plugin_dir_url( __FILE__ ) );
-define( 'YK_MT_CDN_CHART_JS', YK_MT_BASE_URL . 'assets/js/libraries/chart-4.4.1.min.js' );
+define( 'YK_MT_CDN_CHART_JS', YK_MT_BASE_URL . 'assets/js/chart-4.4.1.min.js' );
 define( 'YK_MT_CDN_FONT_AWESOME_CSS', YK_MT_BASE_URL . 'assets/css/fontawesome-4.7.0.min.css' );
 
 // -----------------------------------------------------------------------------------------
