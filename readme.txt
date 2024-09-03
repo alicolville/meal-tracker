@@ -54,9 +54,10 @@ For further information read our documentation:
 
 As with most modern software, this plugins utilises other 3rd party plugins. Depending on how you use the plugin (i.e. which shortcodes) determines which libraries maybe used. Below is a list of the 3rd party libraries used:
 
-* [Chart.js](https://www.chartjs.org/)
 * [animatedModal.js](https://joaopereirawd.github.io/animatedModal.js/)
+* [Chart.js](https://www.chartjs.org/)
 * [Footable](https://fooplugins.github.io/FooTable/)
+* [Font Awesome](https://fontawesome.com/)
 * [LoadingOverlay](https://gasparesganga.com/labs/jquery-loading-overlay/)
 * [notify.js](https://notifyjs.jpillora.com/)
 * [Selectize](https://github.com/selectize/selectize.js)
@@ -65,7 +66,7 @@ As with most modern software, this plugins utilises other 3rd party plugins. Dep
 
 
 
-* [Font Awesome](https://fontawesome.com/)
+
 
 
 * [jQuery Validation Plugin](https://jqueryvalidation.org/)
@@ -118,6 +119,8 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 Several fixes based upon WordPress's plugin feedback:
 
 * Removed moment.js from plugin and replaced with the version shipped with WP. 
+* FontAwesome is now bundled with the plugin, rather than included via a CDN.
+* Included all non minified versions of 3rd party library code and added 3rd party dependencies to readme.
 
 = 3.1.7 =
 

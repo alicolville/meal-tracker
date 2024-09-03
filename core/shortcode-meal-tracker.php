@@ -771,7 +771,7 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 
 	// Styles > Core
 	wp_enqueue_style( 'mt-core', plugins_url( 'assets/css/yk-mt-core.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-	wp_enqueue_style( 'mt-font-icons', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
+	wp_enqueue_style( 'mt-font-icons', YK_MT_CDN_FONT_AWESOME_CSS, [], YK_MT_PLUGIN_VERSION );
 
 	$is_themed = yk_mt_site_options_as_bool('css-theme-enabled' );
 
