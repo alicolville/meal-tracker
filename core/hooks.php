@@ -111,10 +111,10 @@ add_action( 'admin_enqueue_scripts', 'yk_mt_enqueue_admin_files');
  * Enqueue Footable scripts
  */
 function yk_mt_enqueue_scripts_footable() {
+    wp_enqueue_script( 'moment' );
 	wp_enqueue_style( 'mt-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], YK_MT_PLUGIN_VERSION );
-	wp_enqueue_script( 'mt-moment', plugins_url( '/assets/js/moment.min.js', __DIR__ ), [ 'jquery' ], YK_MT_PLUGIN_VERSION, true );
-    wp_enqueue_style( 'mt-footable', plugins_url( '/assets/css/footable.standalone.min.css', __DIR__  ), [], YK_MT_PLUGIN_VERSION );
-    wp_enqueue_script( 'mt-footable', plugins_url( '/assets/js/footable.min.js', __DIR__ ), [ 'jquery', 'mt-moment' ], YK_MT_PLUGIN_VERSION, true );
+	wp_enqueue_style( 'mt-footable', plugins_url( '/assets/css/footable.standalone.min.css', __DIR__  ), [], YK_MT_PLUGIN_VERSION );
+    wp_enqueue_script( 'mt-footable', plugins_url( '/assets/js/footable.min.js', __DIR__ ), [ 'jquery', 'moment' ], YK_MT_PLUGIN_VERSION, true );
 }
 
 /**

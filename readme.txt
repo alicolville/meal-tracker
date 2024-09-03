@@ -93,7 +93,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 Several fixes based upon WordPress's plugin feedback:
 
-
+* Removed moment.js from plugin and replaced with the version shipped with WP. 
 
 = 3.1.7 =
 
