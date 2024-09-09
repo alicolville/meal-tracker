@@ -366,7 +366,7 @@ function yk_mt_ajax_external_add_to_collection() {
 
 	check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-	$serving_id = ( false === empty( $_POST[ 'serving_id' ] ) ) ? $_POST[ 'serving_id' ] : NULL;
+	$serving_id = ( false === empty( $_POST[ 'serving_id' ] ) ) ? sanitize_text_field( $_POST[ 'serving_id' ] ) : NULL;
 
 	$meal_id    = yk_mt_ext_add_meal_to_user_collection( $_POST[ 'meal_id' ], $serving_id );
 

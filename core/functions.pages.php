@@ -605,7 +605,7 @@ function yk_mt_link_current_url() {
         ( isset($_SERVER['SERVER_PORT'] ) && 443 == $_SERVER['SERVER_PORT'] )
     ) ? 'https://' : 'http://';
 
-    $base_url = $protocol . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+    $base_url = $protocol . sanitize_text_field( $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"] );
 	
     return esc_url_raw( $base_url );
 }
