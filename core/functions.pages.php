@@ -144,7 +144,7 @@ function yk_mt_user_side_bar_postbox_allowed_sources( $user_id ) {
 			?>
 			<?php if ( true === YK_MT_IS_PREMIUM &&
 					   true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ): ?>
-				<form class="yk-mt-admin-form yk-mt-side-bar-admin-allowance<?php echo ( 'admin' !== $selected_source[ 'key' ] ) ? ' yk-mt-hide' : ''; ?>" id="yk-mt-admin-allowance" method="post" action="<?php echo esc_url( $current_url ); ?>">
+				<form class="yk-mt-admin-form yk-mt-side-bar-admin-allowance<?php echo ( 'admin' !== $selected_source[ 'key' ] ) ? ' yk-mt-hide' : ''; ?>" id="yk-mt-admin-allowance" method="post" action="<?php echo esc_url( yk_mt_link_current_url() ); ?>">
 					<p><strong><?php echo esc_html__( 'Specify admin allowance for the user', 'meal-tracker' ); ?></strong></p>
 					<p class="small"><?php echo esc_html__( 'Please be aware that the user can override this value if other calories sources have been enabled within the plugin\'s settings.', 'meal-tracker' ); ?></p>
 					<?php
