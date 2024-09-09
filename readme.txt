@@ -115,6 +115,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 * Improvement: Added additional sanitising around $_POST, $_GET and $_SESSION.
 * Improvement: Added additional escaping around data when written to browser.
 * Improvement: Removed an interation over $_POST.
+* Improvement: Ran more SQL queries through wpdb->prepare().
 * Improvement: Various minor code changes.
 * Maintenance: Updated Chart.js to latest library.
 * Maintenance: Updated Selectize.js to latest library.

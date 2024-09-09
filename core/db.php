@@ -792,10 +792,10 @@ function yk_mt_db_meal_fraction_exist( $meal_id, $fraction, $added_by = false ) 
 
 	global $wpdb;
 
-	$sql 	= $wpdb->prepare(  'Select id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where fraction_parent = %d and fraction = %f', $meal_id, $fraction );
+	$sql 	= $wpdb->prepare(  'Select id from %i where fraction_parent = %d and fraction = %f', $wpdb->prefix . YK_WT_DB_MEALS, $meal_id, $fraction );
 
 	if ( false === empty( $added_by ) ) {
-		$sql .= ' and added_by = ' . (int) $added_by;
+		$sql .=  $wpdb->prepare( ' and added_by = %d ', (int) $added_by );
 	}
 
 	$sql    .= ' limit 0, 1';
@@ -816,12 +816,12 @@ function yk_mt_db_ext_meal_exist( $ext_id, $serving_id = NULL, $added_by = false
 
 	global $wpdb;
 
-	$sql 	= $wpdb->prepare(  'Select id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where ext_id = %d and added_by = %d', $ext_id, $added_by );
+	$sql 	= $wpdb->prepare(  'Select id from %i where ext_id = %d and added_by = %d', $wpdb->prefix . YK_WT_DB_MEALS, $ext_id, $added_by );
 
 	if ( false === empty( $serving_id ) ) {
-		$sql .= ' and ext_serving_id = ' . (int) $serving_id;
+		$sql .=  $wpdb->prepare( ' and ext_serving_id = %d ', (int) $serving_id );
 	}
-
+	
 	$sql    .= ' limit 0, 1';
 	$id 	= $wpdb->get_var( $sql );
 
@@ -864,17 +864,16 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
 
     $sql = ( true === $options[ 'count-only' ] ) ? 'Select count( id )' : 'select *';
 
-    $sql .= ' from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where 1=1 ';
+    $sql .= $wpdb->prepare( ' from %i where 1=1 ', $wpdb->prefix . YK_WT_DB_MEALS );
 
     // Restrict to a user?
     if ( false === empty( $user_id ) ) {
 
     	if ( false === $options[ 'include-admin-meals' ] ) {
-		    $sql .= sprintf( ' and ( added_by = %d and IFNULL( added_by_admin, 0 ) = 0 )', $user_id );
+		    $sql .= $wpdb->prepare( ' and ( added_by = %d and IFNULL( added_by_admin, 0 ) = 0 )', $user_id );
 	    } else {
-		    $sql .= sprintf( ' and ( added_by = %d or added_by_admin = 1 )', $user_id );
+		    $sql .= $wpdb->prepare( ' and ( added_by = %d or added_by_admin = 1 )', $user_id );
 	    }
-
     }
 
     // Admin only meals?
@@ -883,7 +882,7 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
     }
 
 	if ( false === empty( $options[ 'last-x-days' ] ) ) {
-		$sql .= sprintf( ' and added >= NOW() - INTERVAL %d DAY and added <= NOW()', $options[ 'last-x-days' ] );
+		$sql .= $wpdb->prepare( ' and added >= NOW() - INTERVAL %d DAY and added <= NOW()', $options[ 'last-x-days' ] );
 	}
 
     // Exclude deleted?
@@ -905,11 +904,11 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
 
         $sort_order = ( true === in_array( $options[ 'sort-order' ], [ 'asc', 'desc' ] ) ) ? $options[ 'sort-order' ] : 'asc';
 
-        $sql .= sprintf( ' order by %s %s', $sort, $sort_order );
+        $sql .= $wpdb->prepare( ' order by %s %s', $sort, $sort_order );
 
         // Limit
         if ( false === empty( $options[ 'limit' ] ) ) {
-            $sql .= sprintf( ' limit 0, %d', $options[ 'limit' ] ) ;
+            $sql .= $wpdb->prepare( ' limit 0, %d', $options[ 'limit' ] );
         }
 
         $meals = $wpdb->get_results( $sql, ARRAY_A );
