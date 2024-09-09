@@ -196,7 +196,7 @@ add_action( 'wp_ajax_add_meal', 'yk_mt_ajax_meal_add' );
 /**
  * Meal added by admin?
  */
-function wp_ajax_add_meal_admin() {
+function yk_mt_ajax_add_meal_admin() {
 
 	check_ajax_referer( 'yk-mt-admin-nonce', 'admin-security' );
 
@@ -211,7 +211,7 @@ function wp_ajax_add_meal_admin() {
 
 	yk_mt_ajax_meal_add( $options );
 }
-add_action( 'wp_ajax_add_meal_admin', 'wp_ajax_add_meal_admin' );
+add_action( 'wp_ajax_add_meal_admin', 'yk_mt_ajax_add_meal_admin' );
 
 /**
  * Fetch the data for a meal
