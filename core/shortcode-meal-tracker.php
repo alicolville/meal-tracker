@@ -767,7 +767,7 @@ function yk_mt_shortcode_meal_tracker_enqueue_scripts() {
 	// Styles
 	wp_enqueue_style( 'mt-meal-tracker-normalize', plugins_url( 'assets/css/normalize.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 	wp_enqueue_style( 'mt-animate', plugins_url( 'assets/css/animate.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
-	wp_enqueue_style( 'mt-selectize', plugins_url( 'assets/css/selectize.default.min.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
+	wp_enqueue_style( 'mt-selectize', plugins_url( 'assets/css/selectize.default.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );
 
 	// Styles > Core
 	wp_enqueue_style( 'mt-core', plugins_url( 'assets/css/yk-mt-core.css', __DIR__ ), [], YK_MT_PLUGIN_VERSION );

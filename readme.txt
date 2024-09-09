@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food
 Requires at least: 5.7
 Tested up to: 6.5
-Stable tag: 3.2
+Stable tag: 3.2.1
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -67,6 +67,10 @@ As with most modern software, this plugins utilises other 3rd party plugins. Dep
 * [ZOZO UI Tabs](http://www.zozoui.com)
 * [Zebra Datepicker](https://github.com/stefangabos/Zebra_Datepicker)
 
+YeKen libraries:
+
+* [YeKen Shop API prices](https://shop.yeken.uk) - [Privacy Policy](https://shop.yeken.uk/privacy-policy/)
+
 == Installation ==
 
 1. Login into Wordpress Admin Panel
@@ -103,6 +107,18 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 3.1 - Communicate and search with meal collections from other WP installs with Meal Tracker installed.
 
 == Changelog ==
+
+= 3.2.1 =
+
+* Bug fix: Can now set a user's calorie limit via admin screens.
+* Bug fix: Fixed a couple of localisation function calls.
+* Improvement: Added additional sanitising around $_POST, $_GET and $_SESSION.
+* Improvement: Added additional escaping around data when written to browser.
+* Improvement: Removed an interation over $_POST.
+* Improvement: Ran more SQL queries through wpdb->prepare().
+* Improvement: Various minor code changes.
+* Maintenance: Updated Chart.js to latest library.
+* Maintenance: Updated Selectize.js to latest library.
 
 = 3.2 =
 

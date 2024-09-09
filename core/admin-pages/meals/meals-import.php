@@ -44,7 +44,7 @@ function yk_mt_admin_page_meals_import() {
 									<br />
 								</div>
 								<div class="yk-mt-hide" id="selected-form" >
-									<form action="<?php echo admin_url( 'admin.php?page=yk-mt-meals&mode=import'); ?>" method="post">
+									<form action="<?php echo esc_url( admin_url( 'admin.php?page=yk-mt-meals&mode=import') ); ?>" method="post">
 										<div class="yk-mt-form-row">
 											<label for="attachment-path"><?php echo esc_html__( 'Selected file:', 'meal-tracker' ); ?></label>
 											<input type='text' name='attachment-path' id='attachment-path' value='' class="widefat" disabled="disabled" />

@@ -112,14 +112,14 @@ function yk_mt_ajax_meal_add( $options = [] ) {
             return wp_send_json( [ 'error' => 'missing-meta-fields-array' ] );
         }
 
-        $meta_fields = $_POST[ 'meta-fields' ];
-
         foreach ( yk_mt_meta_fields_visible_user_keys() as $key ) {
-            if ( false === isset( $meta_fields[ $key ] ) ) {
+            if ( false === isset( $_POST[ 'meta-fields' ][ $key ] ) ) {
                 return wp_send_json( [ 'error' => 'missing-meta-field-' . $key ] );
             }
 
-            $post_data[ $key ] = (float) $meta_fields[ $key ];
+			$value = sanitize_text_field( $_POST[ 'meta-fields' ][ $key ] );
+
+            $post_data[ $key ] = (float) $value;
         }
 
     }
@@ -196,7 +196,7 @@ add_action( 'wp_ajax_add_meal', 'yk_mt_ajax_meal_add' );
 /**
  * Meal added by admin?
  */
-function wp_ajax_add_meal_admin() {
+function yk_mt_ajax_add_meal_admin() {
 
 	check_ajax_referer( 'yk-mt-admin-nonce', 'admin-security' );
 
@@ -211,7 +211,7 @@ function wp_ajax_add_meal_admin() {
 
 	yk_mt_ajax_meal_add( $options );
 }
-add_action( 'wp_ajax_add_meal_admin', 'wp_ajax_add_meal_admin' );
+add_action( 'wp_ajax_add_meal_admin', 'yk_mt_ajax_add_meal_admin' );
 
 /**
  * Fetch the data for a meal
@@ -366,7 +366,7 @@ function yk_mt_ajax_external_add_to_collection() {
 
 	check_ajax_referer( 'yk-mt-nonce', 'security' );
 
-	$serving_id = ( false === empty( $_POST[ 'serving_id' ] ) ) ? $_POST[ 'serving_id' ] : NULL;
+	$serving_id = ( false === empty( $_POST[ 'serving_id' ] ) ) ? sanitize_text_field( $_POST[ 'serving_id' ] ) : NULL;
 
 	$meal_id    = yk_mt_ext_add_meal_to_user_collection( $_POST[ 'meal_id' ], $serving_id );
 
@@ -413,13 +413,10 @@ function yk_mt_ajax_save_settings() {
 
 	$updated = false;
 
-	foreach ( $_POST as $key => $value ) {
+	foreach ( yk_mt_settings_allowed_keys() as $key ) {
 
-		$key = str_replace( 'yk-mt-', '', $key );
-
-		if ( false === in_array( $key, yk_mt_settings_allowed_keys() ) ) {
-			continue;
-		}
+		$post_key 	= sprintf( '%s%s', 'yk-mt-', $key );
+		$value 		= yk_mt_ajax_get_post_value( $post_key );
 
 		yk_mt_settings_set( $key, $value );
 
@@ -515,7 +512,7 @@ function yk_mt_ajax_extract_and_validate_post_data_single( $key, $is_empty_check
 		wp_send_json( [ 'error' => 'missing-' . $key ] );
 	}
 
-	return $_POST[ $key ];
+	return sanitize_text_field( $_POST[ $key ] );
 }
 
 /**

@@ -136,7 +136,7 @@ function yk_mt_user_side_bar_postbox_allowed_sources( $user_id ) {
                 <?php if ( ! empty( $selected_source[ 'value' ] ) ) : ?>
                     <tr>
                         <th><?php echo esc_html__( 'Current allowance', 'meal-tracker' ); ?></th>
-                        <td><?php echo yk_mt_format_calories( $selected_source[ 'value' ] ); ?></td>
+                        <td><?php echo esc_html__( yk_mt_format_calories( $selected_source[ 'value' ] ) ); ?></td>
                     </tr>
                 <?php endif; ?>
 			</table>
@@ -144,7 +144,7 @@ function yk_mt_user_side_bar_postbox_allowed_sources( $user_id ) {
 			?>
 			<?php if ( true === YK_MT_IS_PREMIUM &&
 					   true === yk_mt_site_options_as_bool( 'allow-calorie-override-admin' ) ): ?>
-				<form class="yk-mt-admin-form yk-mt-side-bar-admin-allowance<?php echo ( 'admin' !== $selected_source[ 'key' ] ) ? ' yk-mt-hide' : ''; ?>" id="yk-mt-admin-allowance" method="post" action="<?php echo esc_url( $current_url ); ?>">
+				<form class="yk-mt-admin-form yk-mt-side-bar-admin-allowance<?php echo ( 'admin' !== $selected_source[ 'key' ] ) ? ' yk-mt-hide' : ''; ?>" id="yk-mt-admin-allowance" method="post" action="<?php echo esc_url( yk_mt_link_current_url() ); ?>">
 					<p><strong><?php echo esc_html__( 'Specify admin allowance for the user', 'meal-tracker' ); ?></strong></p>
 					<p class="small"><?php echo esc_html__( 'Please be aware that the user can override this value if other calories sources have been enabled within the plugin\'s settings.', 'meal-tracker' ); ?></p>
 					<?php
@@ -182,19 +182,19 @@ function yk_mt_user_side_bar_postbox_user_stats( $user_id ) {
 			<table class="yk-mt-sidebar-stats">
 				<tr>
 					<th><?php echo esc_html__( 'Latest Entry', 'meal-tracker' ); ?></th>
-					<td><?php echo yk_mt_date_format( $stats[ 'date-last' ] ); ?></td>
+					<td><?php yk_mt_echo( yk_mt_date_format( $stats[ 'date-last' ] ) ); ?></td>
 				</tr>
 				<tr>
 					<th><?php echo esc_html__( 'Oldest Entry', 'meal-tracker' ); ?></th>
-					<td class="yk-mt-blur"><?php echo yk_mt_date_format( $stats[ 'date-first' ] ); ?></td>
+					<td class="yk-mt-blur"><?php yk_mt_echo(  yk_mt_date_format( $stats[ 'date-first' ] ) ); ?></td>
 				</tr>
 				<tr>
 					<th><?php echo esc_html__( 'Number of Entries', 'meal-tracker' ); ?></th>
-					<td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-entries' ] ); ?></td>
+					<td class="yk-mt-blur"><?php yk_mt_echo(  yk_mt_blur_text( $stats[ 'count-entries' ] ) ); ?></td>
 				</tr>
 				<tr>
 					<th><?php echo esc_html__( 'Number of Meals', 'meal-tracker' ); ?></th>
-					<td class="yk-mt-blur"><?php echo yk_mt_blur_text( $stats[ 'count-meals' ] ); ?>
+					<td class="yk-mt-blur"><?php yk_mt_echo(  yk_mt_blur_text( $stats[ 'count-meals' ] ) ); ?>
 						<?php
 						printf( ' ( <a href="%s">%s</a> ) ',
 							esc_url( admin_url( 'admin.php?page=yk-mt-meals&user-id=' . (int) $user_id ) ),
@@ -223,7 +223,7 @@ function yk_mt_user_side_bar_postbox_entry( $entry = NULL ) {
 		<div class="inside">
 			<?php if ( NULL !== $entry ): ?>
 				<div class="yk-mt__table--summary-chart-slot">
-					<?php echo yk_mt_chart_progress_canvas( [ 'chart-height' => '150px' ] ); ?>
+					<?php yk_mt_echo_wp_kses( yk_mt_chart_progress_canvas( [ 'chart-height' => '150px' ] ) ); ?>
 				</div>
 				<table class="yk-mt-sidebar-stats">
 					<tr>
@@ -234,7 +234,7 @@ function yk_mt_user_side_bar_postbox_entry( $entry = NULL ) {
 						<th><?php echo esc_html__( 'Calories Allowed', 'meal-tracker' ); ?></th>
 						<td>
 							<form class="yk-mt-admin-form" id="yk-mt-admin-calories-allowed" method="post" action="<?php echo esc_url( $current_url ); ?>">
-								<input type="hidden" name="yk-mt-update-allowance" value="<?php echo (int) $entry[ 'id' ]; ?>" />
+								<input type="hidden" name="yk-mt-update-allowance" value="<?php yk_mt_echo( (int) $entry[ 'id' ] ); ?>" />
 								<?php
 
 								echo yk_mt_form_number( esc_html__( 'Calories allowed: ', 'meal-tracker' ),
@@ -254,19 +254,19 @@ function yk_mt_user_side_bar_postbox_entry( $entry = NULL ) {
 					</tr>
 					<tr>
 						<th><?php echo esc_html__( 'Calories Used', 'meal-tracker' ); ?></th>
-						<td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'calories_used' ] ); ?></td>
+						<td class="yk-mt-blur"><?php yk_mt_echo_wp_kses( yk_mt_blur_text( $entry[ 'calories_used' ] ) ); ?></td>
 					</tr>
 					<tr>
 						<th><?php echo esc_html__( 'Calories Remaining', 'meal-tracker' ); ?></th>
-						<td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'calories_remaining' ] ); ?></td>
+						<td class="yk-mt-blur"><?php yk_mt_echo_wp_kses( yk_mt_blur_text( $entry[ 'calories_remaining' ] ) ); ?></td>
 					</tr>
 					<tr>
 						<th><?php echo esc_html__( 'Percentage used', 'meal-tracker' ); ?></th>
-						<td class="yk-mt-blur"><?php echo yk_mt_format_number( $entry[ 'percentage_used' ], 1 ); ?>%</td>
+						<td class="yk-mt-blur"><?php yk_mt_echo_wp_kses( yk_mt_format_number( $entry[ 'percentage_used' ], 1 ) ); ?>%</td>
 					</tr>
 					<tr>
 						<th><?php echo esc_html__( 'Meals', 'meal-tracker' ); ?></th>
-						<td class="yk-mt-blur"><?php echo yk_mt_blur_text( $entry[ 'counts' ][ 'total-meals' ] ); ?></td>
+						<td class="yk-mt-blur"><?php yk_mt_echo_wp_kses( yk_mt_blur_text( $entry[ 'counts' ][ 'total-meals' ] ) ); ?></td>
 					</tr>
 				</table>
 			<?php else: ?>
@@ -332,38 +332,38 @@ function yk_mt_postbox_summary_counts() {
              <table class="yk-mt-sidebar-stats">
                  <tr>
                      <th><?php echo esc_html__( 'Entries', 'meal-tracker' ); ?></th>
-                     <td><?php echo yk_mt_format_number( $stats[ 'yk_mt_entry' ] ); ?></td>
+                     <td><?php yk_mt_echo( yk_mt_format_number( $stats[ 'yk_mt_entry' ] ) ); ?></td>
                  </tr>
                  <tr>
                      <th><?php echo esc_html__( 'Meals added by users', 'meal-tracker' ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'meals-user' ] ); ?></td>
+                     <td class="yk-mt-blur"><?php yk_mt_echo( yk_mt_format_number( $stats[ 'meals-user' ] ) ); ?></td>
                  </tr>
                  <tr>
                      <th><?php echo esc_html__( 'Meal Collection', 'meal-tracker' ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_link_render( esc_url( admin_url( 'admin.php?page=yk-mt-meals' ) ), yk_mt_format_number( $stats[ 'meals-admin' ] ) ); ?></td>
+                     <td class="yk-mt-blur"><?php yk_mt_echo( yk_mt_link_render( esc_url( admin_url( 'admin.php?page=yk-mt-meals' ) ), yk_mt_format_number( $stats[ 'meals-admin' ] ) ), 'wp_kses_post' ); ?></td>
                  </tr>
                  <tr>
                      <th><?php echo esc_html__( 'Meals added to entries', 'meal-tracker' ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'yk_mt_entry_meals' ] ); ?></td>
+                     <td class="yk-mt-blur"><?php yk_mt_echo( yk_mt_format_number( $stats[ 'yk_mt_entry_meals' ] ) ); ?></td>
                  </tr>
                  <tr>
                      <th><?php echo esc_html__( 'WordPress users', 'meal-tracker' ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'wp-users' ] ); ?></td>
+                     <td class="yk-mt-blur"><?php yk_mt_echo( yk_mt_format_number( $stats[ 'wp-users' ] ) ); ?></td>
                  </tr>
                  <tr>
                      <th><?php echo esc_html__( 'Users with an entry', 'meal-tracker' ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'unique-users' ] ); ?></td>
+                     <td class="yk-mt-blur"><?php yk_mt_echo( yk_mt_format_number( $stats[ 'unique-users' ] ) ); ?></td>
                  </tr>
                  <tr>
                      <th><?php echo esc_html__( 'Entries on target', 'meal-tracker' ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'successful-entries' ] ); ?></td>
+                     <td class="yk-mt-blur"><?php yk_mt_echo( yk_mt_format_number( $stats[ 'successful-entries' ] ) ); ?></td>
                  </tr>
                  <tr>
                      <th><?php echo esc_html__( 'Entries over target', 'meal-tracker' ); ?></th>
-                     <td class="yk-mt-blur"><?php echo yk_mt_format_number( $stats[ 'failed-entries' ] ); ?></td>
+                     <td class="yk-mt-blur"><?php yk_mt_echo( yk_mt_format_number( $stats[ 'failed-entries' ] ) ); ?></td>
                  </tr>
                   <tr>
-                     <td colspan="2" class="small"><?php printf( '%s %s', esc_html__( 'last updated at ', 'meal-tracker' ), $stats[ 'last-updated' ] ); ?></td>
+                     <td colspan="2" class="small"><?php yk_mt_echo( sprintf( '%s %s', esc_html__( 'last updated at ', 'meal-tracker' ), $stats[ 'last-updated' ] ) ); ?></td>
                  </tr>
              </table>
     	</div>
@@ -605,7 +605,7 @@ function yk_mt_link_current_url() {
         ( isset($_SERVER['SERVER_PORT'] ) && 443 == $_SERVER['SERVER_PORT'] )
     ) ? 'https://' : 'http://';
 
-    $base_url = $protocol . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+    $base_url = $protocol . sanitize_text_field( $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"] );
 	
     return esc_url_raw( $base_url );
 }

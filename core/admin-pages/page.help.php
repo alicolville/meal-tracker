@@ -95,7 +95,7 @@ function yk_mt_help_page() {
  */
 function yk_mt_setup_wizard_meal_tracker_html() {
 	?>
-	<p><img src="<?php echo plugins_url( 'admin-pages/assets/images/wt-logo.png', __DIR__ ); ?>" width="100" height="100" style="margin-right:20px" align="left" />
+	<p><img src="<?php yk_mt_echo( plugins_url( 'admin-pages/assets/images/wt-logo.png', __DIR__ ) ); ?>" width="100" height="100" style="margin-right:20px" align="left" />
 		<?php echo esc_html__( 'Why not check out our sister plugin Weight Tracker. Allow your user\'s to track weight and much more!', 'meal-tracker' ); ?></p>
 	<p><strong><?php echo esc_html__( 'Get Weight Tracker Now', 'meal-tracker' ); ?>.</strong></p>
 	<p style="font-weight: bold; font-size: 18px;"><?php echo esc_html__( '20% off coupon', 'meal-tracker' ); ?>: 20-OFF-WEIGHT-TRACKER</p>

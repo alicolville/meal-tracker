@@ -53,7 +53,7 @@ function yk_mt_settings_page_generic() {
                     <div class="postbox">
                         <h3 class="hndle">
                             <span>
-                                <?php echo esc_html__( YK_MT_PLUGIN_NAME . ' Settings', 'meal-tracker' ); ?>
+                                <?php echo esc_html__( 'Meal Tracker Settings', 'meal-tracker' ); ?>
                             </span>
                         </h3>
                         <div class="inside">
@@ -109,7 +109,7 @@ function yk_mt_settings_page_generic() {
                                             </table>
                                             <h3><?php echo esc_html__( 'Security' , 'meal-tracker' ); ?></h3>
                                             <table class="form-table">
-                                                <tr  class="<?php echo $disable_if_not_premium_class; ?>" >
+                                                <tr  class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?>" >
                                                     <th scope="row"><?php echo esc_html__( 'Who can view and modify user data?' , 'meal-tracker' ); ?></th>
                                                     <td>
                                                         <?php
@@ -126,7 +126,7 @@ function yk_mt_settings_page_generic() {
                                             </table>
                                             <h3><?php echo esc_html__( 'Searching for meals' , 'meal-tracker' ); ?></h3>
                                             <table class="form-table">
-                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
+                                                <tr class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?>">
                                                     <th scope="row"><?php echo esc_html__( 'Other user\'s meals' , 'meal-tracker' ); ?></th>
                                                     <td>
                                                         <?php
@@ -139,7 +139,7 @@ function yk_mt_settings_page_generic() {
                                                         <p><?php echo esc_html__( 'If set to "Yes", users are not restricted to searching their own meal collections. Instead, a search will be performed across every user\'s meal collection. Please note, this may cause search to slow across large meal collections.', 'meal-tracker' )?></p>
                                                     </td>
                                                 </tr>
-												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+												<tr class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?>">
 													<th scope="row"><?php echo esc_html__( 'Admin\'s meal collection' , 'meal-tracker' ); ?></th>
 													<td>
 														<?php
@@ -155,7 +155,7 @@ function yk_mt_settings_page_generic() {
                                             </table>
 											<h3><?php echo esc_html__( 'Macronutrients' , 'meal-tracker' ); ?></h3>
 											<table class="form-table">
-												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+												<tr class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?>">
 													<th scope="row"><?php echo esc_html__( 'Enable Macronutrients?' , 'meal-tracker' ); ?></th>
 													<td>
 														<?php
@@ -168,7 +168,7 @@ function yk_mt_settings_page_generic() {
 														<p><?php echo esc_html__( 'Please note, there is only basic support for Macronutrient fields at the moment. The framework has been build for specifying and storing these values against meals. Future releases will further integrate the values into the user interface.', 'meal-tracker' )?></p>
 													</td>
 												</tr>
-												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+												<tr class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?>">
 													<th scope="row"><?php echo esc_html__( 'Required?' , 'meal-tracker' ); ?></th>
 													<td>
 														<?php
@@ -184,7 +184,7 @@ function yk_mt_settings_page_generic() {
 											</table>
                                             <h3><?php echo esc_html__( 'New Entries' , 'meal-tracker' ); ?></h3>
 											<table class="form-table">
-												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+												<tr class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?>">
 													<th scope="row"><?php echo esc_html__( 'Allow new entries in the past' , 'meal-tracker' ); ?></th>
 													<td>
 														<?php
@@ -197,7 +197,7 @@ function yk_mt_settings_page_generic() {
 														<p><?php echo esc_html__( 'If set to "Yes", users can create entries for dates in the past.', 'meal-tracker' )?></p>
 													</td>
 												</tr>
-												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+												<tr class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?>">
 													<th scope="row"><?php echo esc_html__( 'Allow new entries in the future' , 'meal-tracker' ); ?></th>
 													<td>
 														<?php
@@ -213,7 +213,7 @@ function yk_mt_settings_page_generic() {
 											</table>
 											<h3><?php echo esc_html__( 'Allow fractions of meals when adding to an entry?' , 'meal-tracker' ); ?></h3>
 											<table class="form-table">
-												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+												<tr class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?>">
 													<th scope="row"><?php echo esc_html__( 'Enabled' , 'meal-tracker' ); ?></th>
 													<td>
 														<?php
@@ -233,7 +233,7 @@ function yk_mt_settings_page_generic() {
                                                 <strong><?php echo esc_html__('Ensure you specify at least one option or your users will not be able to use Meal Tracker as no allowance will be set.', 'meal-tracker' )?>.</strong></p>
                                             <table class="form-table">
 
-                                                <tr class="<?php echo $disable_if_not_premium_class; ?>">
+                                                <tr class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?>">
                                                     <th scope="row">1. <?php echo esc_html__( 'Admin specified' , 'meal-tracker' ); ?></th>
                                                     <td>
                                                         <?php
@@ -259,7 +259,7 @@ function yk_mt_settings_page_generic() {
                                                         <p><?php echo esc_html__('Allow a user to specify their own daily calorie intake.', 'meal-tracker' )?></p>
                                                     </td>
                                                 </tr>
-                                                <tr class="<?php echo $disable_if_not_premium_class; ?><?php if ( false === yk_mt_wlt_pro_plus_enabled() ) { echo ' yk-mt-plugin-disabled'; } ?>">
+                                                <tr class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?><?php if ( false === yk_mt_wlt_pro_plus_enabled() ) { echo ' yk-mt-plugin-disabled'; } ?>">
                                                     <th scope="row">3.
                                                         <a href="https://weight.yeken.uk" target="_blank" rel="noopener">
                                                             <?php echo esc_html__( 'YeKen: Weight Tracker' , 'meal-tracker' ); ?>
@@ -290,7 +290,7 @@ function yk_mt_settings_page_generic() {
 											</p>
 											<h3><?php echo esc_html__( 'Enabled' , 'meal-tracker' ); ?></h3>
 											<table class="form-table">
-												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+												<tr class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?>">
 													<th scope="row"><?php echo esc_html__( 'External sources enabled?' , 'meal-tracker' ); ?></th>
 													<td>
 														<?php
@@ -360,7 +360,7 @@ function yk_mt_settings_page_generic() {
 											<p>
 												<strong><?php echo esc_html__( 'Important' , 'meal-tracker' ); ?></strong>:
 												<?php echo esc_html__( 'Please ensure you have whitelisted your server\'s IP address with FatSecret. This can be done by selecting your application (using the above link) and completing the "Allowed IP Addresses" section. It looks like your server IP may be:' , 'meal-tracker' ); ?>
-												<strong><?php echo yk_mt_server_ip(); ?></strong>
+												<strong><?php yk_mt_echo( yk_mt_server_ip() ); ?></strong>
 											</p>
 											<?php
 											if ( $current_source_text === 'fat-secret' ) {
@@ -449,7 +449,7 @@ function yk_mt_settings_page_generic() {
 											</table>
 											<h3><?php echo esc_html__( 'Chart' , 'meal-tracker' ); ?></h3>
 											<table class="form-table">
-												<tr class="<?php echo $disable_if_not_premium_class; ?>">
+												<tr class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?>">
 													<th scope="row"><?php echo esc_html__( 'Calories Allowed colour', 'meal-tracker' ); ?></th>
 													<td>
 														<input id="ws-ls-calories-allowed-colour" name="ws-ls-calories-allowed-colour" type="color" value="<?php echo esc_attr( get_option( 'ws-ls-calories-allowed-colour', '#fb8e2e' ) ); ?>">
@@ -459,7 +459,7 @@ function yk_mt_settings_page_generic() {
 											</table>
                                             <h3><?php echo esc_html__( 'Meal Tracker Shortcode' , 'meal-tracker' ); ?></h3>
                                             <table class="form-table">
-                                               <tr class="<?php echo $disable_if_not_premium_class; ?>">
+                                               <tr class="<?php yk_mt_echo( $disable_if_not_premium_class ); ?>">
                                                     <th scope="row"><?php echo esc_html__( 'Accordion Enabled' , 'meal-tracker' ); ?></th>
                                                     <td>
                                                         <?php

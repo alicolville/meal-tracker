@@ -83,7 +83,7 @@ add_action( 'wp_ajax_yk_mt_setup_wizard_dismiss', 'yk_mt_setup_wizard_dismiss_no
 function yk_mt_setup_wizard_custom_notification_html() {
 	?>
 
-		<p><img src="<?php echo plugins_url( 'admin-pages/assets/images/yeken-logo.png', __FILE__ ); ?>" width="100" height="100" style="margin-right:20px" align="left" /><?php echo esc_html__( 'If require plugin modifications to Weight Tracker, or need a new plugin built, or perhaps you need a developer to help you with your website then please don\'t hesitiate get in touch!', 'meal-tracker' ); ?></p>
+		<p><img src="<?php yk_mt_echo( plugins_url( 'admin-pages/assets/images/yeken-logo.png', __FILE__ ) ); ?>" width="100" height="100" style="margin-right:20px" align="left" /><?php echo esc_html__( 'If require plugin modifications to Weight Tracker, or need a new plugin built, or perhaps you need a developer to help you with your website then please don\'t hesitiate get in touch!', 'meal-tracker' ); ?></p>
 		<p><strong><?php echo esc_html__( 'We provide fixed priced quotes.', 'meal-tracker' ); ?></strong></p>
 		<p><a href="https://www.yeken.uk" rel="noopener noreferrer" target="_blank">YeKen.uk</a> /
 			<a href="https://profiles.wordpress.org/aliakro" rel="noopener noreferrer" target="_blank">WordPress Profile</a> /

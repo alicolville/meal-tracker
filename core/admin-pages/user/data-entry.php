@@ -32,7 +32,7 @@ function yk_mt_admin_page_entry_view() {
                     }
                     ?>
                     <div class="postbox">
-                        <h2 class="hndle"><span><?php echo esc_html__('Entry for', 'meal-tracker' ); ?> <?php echo yk_mt_date_format( $entry[ 'date' ] ); ?></span></h2>
+                        <h2 class="hndle"><span><?php echo esc_html__('Entry for', 'meal-tracker' ); ?> <?php yk_mt_echo( yk_mt_date_format( $entry[ 'date' ] ) ); ?></span></h2>
                         <div class="inside">
                             <table class="yk-mt-footable yk-mt-footable-basic yk-mt-data-entry" data-state="true">
                                 <thead>
@@ -55,9 +55,9 @@ function yk_mt_admin_page_entry_view() {
                                                                 <td colspan="2">%1$s</td>
                                                                 <td class="yk-mt-blur">%2$skcal%3$s</td>
                                                              </tr>',
-                                                            esc_html( $meal_type[ 'name' ] ),
-                                                            $total_calories,
-															$meta_counts
+                                                            yk_mt_wp_kses( $meal_type[ 'name' ] ),
+                                                            yk_mt_wp_kses( $total_calories ),
+															yk_mt_wp_kses( $meta_counts )
                                             );
 
                                             if ( true === empty( $entry[ 'meals' ][ $meal_type[ 'id' ] ] ) ) {

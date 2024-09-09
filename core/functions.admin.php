@@ -354,7 +354,7 @@ function yk_mt_admin_option_links( $key, $default,  $options, $cache_notice = NU
     echo '<div class="yk-mt-link-group">';
 
     if ( false === empty( $prepend ) ) {
-    	echo esc_html( $prepend );
+    	yk_mt_echo_wp_kses( $prepend );
 	}
 
     foreach ( $options as $option_key => $option_name ) {
@@ -368,7 +368,7 @@ function yk_mt_admin_option_links( $key, $default,  $options, $cache_notice = NU
     if ( false === empty ( $cache_notice ) &&
         true === yk_mt_site_options_as_bool('caching-enabled' ) ) {
 
-            printf( '<small>%1$s %2$d %3$s.</small>', esc_html__('The above table updates every', 'meal-tracker' ), $cache_notice, esc_html__('minutes', 'meal-tracker' ) );
+            printf( '<small>%1$s %2$d %3$s.</small>', esc_html__('The above table updates every', 'meal-tracker' ), wp_kses_post( $cache_notice ), esc_html__('minutes', 'meal-tracker' ) );
     }
 
     echo '</div>';

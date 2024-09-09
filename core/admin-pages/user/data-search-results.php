@@ -33,7 +33,7 @@ function yk_mt_admin_page_search_results() {
 
                                 if( 0 !== $count ) {
                                     printf('<p>%1$d %2$s: <em>"%3$s"</em></p>',
-                                                    $count,
+                                                    esc_html( $count ),
                                                     esc_html__( 'results were found for', 'meal-tracker' ),
                                                     esc_html( $search_term )
                                     );

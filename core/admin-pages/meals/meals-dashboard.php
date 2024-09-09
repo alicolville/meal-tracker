@@ -45,7 +45,7 @@ function yk_mt_admin_page_meals_dashboard() {
 							if ( false === empty( $delete_id ) &&
 									true === YK_MT_IS_PREMIUM ) {
 								if ( true === yk_mt_meal_update_delete( $delete_id ) ) {
-									printf( '<p><strong>%s</strong></p>', esc_html__( 'The meal has been successfully deleted.' ) );
+									printf( '<p><strong>%s</strong></p>', esc_html__( 'The meal has been successfully deleted.', 'meal-tracker'  ) );
 								}
 							}
 
