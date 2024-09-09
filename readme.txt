@@ -106,8 +106,9 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 = 3.2.1 =
 
-* More suggestions from WP!!
-* Updated Chart.js to latest library.
+* Bug fix: Can now set a user's calorie limit via admin screens.
+* Maintenance: Updated Chart.js to latest library.
+* Maintenance: Updated Selectize.js to latest library.
 
 = 3.2 =
 
