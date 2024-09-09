@@ -108,6 +108,9 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 == Changelog ==
 
+
+todo: replace yk_mt_echo_wp_kses_post with yk_mt_echo_wp_kses
+<?php echo $disable_if_not_premium_class; ?> to <?php yk_mt_echo( $disable_if_not_premium_class ); ?>
 = 3.2.1 =
 
 * Bug fix: Can now set a user's calorie limit via admin screens.

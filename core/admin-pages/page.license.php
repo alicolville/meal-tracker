@@ -68,7 +68,7 @@
 
 												yk_mt_features_button();
 
-												echo yk_mt_features_display();
+												echo wp_kses_post( yk_mt_features_display() );
 
                                             endif;
                                         ?>
@@ -88,7 +88,7 @@
 
                                 <div class="inside">
 
-                                    <form action="<?php echo admin_url( 'admin.php?page=yk-mt-license&add-license=true' ); ?>"
+                                    <form action="<?php echo esc_url( admin_url( 'admin.php?page=yk-mt-license&add-license=true' ) ); ?>"
                                           method="post">
                                         <p>Copy and paste the license given to you by YeKen into this box and click "Apply License".</p>
                                         <textarea rows="5" style="width:100%" name="license-key"></textarea>
@@ -133,7 +133,7 @@
                                                 <td colspan="2"><textarea rows="5" style="width:100%"><?php echo esc_textarea( $existing_license ); ?></textarea></td>
                                             </tr>
                                             <tr class="last">
-                                                <td colspan="2"><a href="<?php echo admin_url('admin.php?page=yk-mt-license&remove-license=true'); ?>" class="button-secondary delete-license">Remove License</a></td>
+                                                <td colspan="2"><a href="<?php echo esc_url( admin_url('admin.php?page=yk-mt-license&remove-license=true') ); ?>" class="button-secondary delete-license">Remove License</a></td>
                                             </tr>
 
                                         <?php endif; ?>

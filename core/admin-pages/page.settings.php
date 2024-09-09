@@ -360,7 +360,7 @@ function yk_mt_settings_page_generic() {
 											<p>
 												<strong><?php echo esc_html__( 'Important' , 'meal-tracker' ); ?></strong>:
 												<?php echo esc_html__( 'Please ensure you have whitelisted your server\'s IP address with FatSecret. This can be done by selecting your application (using the above link) and completing the "Allowed IP Addresses" section. It looks like your server IP may be:' , 'meal-tracker' ); ?>
-												<strong><?php echo yk_mt_server_ip(); ?></strong>
+												<strong><?php yk_mt_echo( yk_mt_server_ip() ); ?></strong>
 											</p>
 											<?php
 											if ( $current_source_text === 'fat-secret' ) {
