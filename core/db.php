@@ -23,7 +23,7 @@ function yk_mt_db_settings_get( $user_id ) {
 
     global $wpdb;
 
-    $sql        = $wpdb->prepare('Select json from ' . $wpdb->prefix . YK_WT_DB_SETTINGS . ' where user_id = %d limit 0, 1', $user_id );
+    $sql        = $wpdb->prepare('Select json from %i where user_id = %d limit 0, 1', $wpdb->prefix . YK_WT_DB_SETTINGS, $user_id );
     $settings   = $wpdb->get_var( $sql );
     $settings   = ( false === empty( $settings ) ) ? json_decode( $settings, true ) : [];
 
@@ -193,7 +193,7 @@ function yk_mt_db_entry_get_id_for_today( $user_id = NULL ) {
 
     global $wpdb;
 
-    $sql = $wpdb->prepare( 'Select id from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where user_id = %d and date = %s', $user_id, $todays_date );
+    $sql = $wpdb->prepare( 'Select id from %i where user_id = %d and date = %s', $wpdb->prefix . YK_WT_DB_ENTRY , $user_id, $todays_date );
 
     $result = $wpdb->get_var( $sql );
 
@@ -210,7 +210,7 @@ function yk_mt_db_entry_user_id( $entry_id ) {
 
     global $wpdb;
 
-    $sql = $wpdb->prepare( 'Select user_id from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where id = %d', $entry_id );
+    $sql = $wpdb->prepare( 'Select user_id from %i where id = %d', $wpdb->prefix . YK_WT_DB_ENTRY, $entry_id );
 
     return $wpdb->get_var( $sql );
 }
@@ -232,7 +232,7 @@ function yk_mt_db_entry_get_ids_and_dates( $user_id = NULL ) {
 
     global $wpdb;
 
-    $sql = $wpdb->prepare( 'Select id, date from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where user_id = %d order by date asc', $user_id );
+    $sql = $wpdb->prepare( 'Select id, date from %i where user_id = %d order by date asc', $wpdb->prefix . YK_WT_DB_ENTRY, $user_id );
 
     $results = $wpdb->get_results( $sql, ARRAY_A );
 
@@ -333,7 +333,7 @@ function yk_mt_db_entry_get( $id = NULL ) {
 
     global $wpdb;
 
-    $sql = $wpdb->prepare( 'Select * from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where id = %d limit 0, 1', $id );
+    $sql = $wpdb->prepare( 'Select * from %i where id = %d limit 0, 1', $wpdb->prefix . YK_WT_DB_ENTRY, $id );
 
     $entry = $wpdb->get_row( $sql, ARRAY_A );
 
@@ -353,11 +353,13 @@ function yk_mt_db_entry_get( $id = NULL ) {
 		}
 
         $sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity, m.unit, m.description, m.added_by_admin, m.added_by' . $meta_sql . ',
-								em.meal_type, em.id as meal_entry_id from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' m
-                                Inner Join ' . $wpdb->prefix . YK_WT_DB_ENTRY_MEAL . ' em
+								em.meal_type, em.id as meal_entry_id from %i m
+                                Inner Join %i em
                                 on em.meal_id = m.id
                                 where em.entry_id = %d
                                 order by meal_type, em.id asc',
+                                $wpdb->prefix . YK_WT_DB_MEALS,
+                                $wpdb->prefix . YK_WT_DB_ENTRY_MEAL,
                                 $id
         );
 		//echo $sql;
@@ -765,10 +767,9 @@ function yk_mt_db_meal_get( $id, $added_by = false ) {
     global $wpdb;
 
     if ( false !== $added_by ) {
-        $sql = $wpdb->prepare(  'Select * from ' . $wpdb->prefix . YK_WT_DB_MEALS .
-                                ' where id = %d and added_by = %d limit 0, 1', $id, $added_by );
+        $sql = $wpdb->prepare(  'Select * from %i where id = %d and added_by = %d limit 0, 1', $wpdb->prefix . YK_WT_DB_MEALS, $id, $added_by );
     } else {
-        $sql = $wpdb->prepare('Select * from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where id = %d limit 0, 1', $id );
+        $sql = $wpdb->prepare('Select * from %i where id = %d limit 0, 1', $wpdb->prefix . YK_WT_DB_MEALS, $id );
     }
 
     $meal = $wpdb->get_row( $sql, ARRAY_A );
@@ -987,7 +988,9 @@ function yk_mt_db_meal_types_all( $use_cache = true) {
 
     global $wpdb;
 
-    $meal_types = $wpdb->get_results( 'Select * from ' . $wpdb->prefix . YK_WT_DB_MEAL_TYPES . ' where deleted = 0 order by sort asc', ARRAY_A );
+    $sql = $wpdb->prepare( 'Select * from %i where deleted = 0 order by sort asc', $wpdb->prefix . YK_WT_DB_MEAL_TYPES );
+
+    $meal_types = $wpdb->get_results( $sql, ARRAY_A );
 
     $meal_types = ( false === empty( $meal_types ) ) ? $meal_types : false;
 
@@ -1032,11 +1035,11 @@ function yk_mt_db_mysql_count( $mode = 'unique-users', $use_cache = true ) {
 
     global $wpdb;
 
-    $sql_statements = [     'meals-user'            => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where added_by_admin is null',
-                            'meals-admin'           => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_MEALS . ' where added_by_admin = 1',
-                            'unique-users'          => 'Select count( distinct( user_id ) ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY,
-                            'successful-entries'    => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where calories_used <= calories_allowed',
-                            'failed-entries'        => 'Select count( id ) from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where calories_used > calories_allowed'
+    $sql_statements = [     'meals-user'            => $wpdb->prepare( 'Select count( id ) from %i where added_by_admin is null', $wpdb->prefix . YK_WT_DB_MEALS ),
+                            'meals-admin'           => $wpdb->prepare( 'Select count( id ) from %i where added_by_admin = 1', $wpdb->prefix . YK_WT_DB_MEALS ),
+                            'unique-users'          => $wpdb->prepare( 'Select count( distinct( user_id ) ) from %i', $wpdb->prefix . YK_WT_DB_ENTRY ),
+                            'successful-entries'    => $wpdb->prepare( 'Select count( id ) from %i where calories_used <= calories_allowed', $wpdb->prefix . YK_WT_DB_ENTRY ),
+                            'failed-entries'        => $wpdb->prepare( 'Select count( id ) from %i where calories_used > calories_allowed', $wpdb->prefix . YK_WT_DB_ENTRY )
     ];
 
     if ( false === array_key_exists( $mode, $sql_statements ) ) {
