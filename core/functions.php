@@ -1640,7 +1640,7 @@ function yk_mt_echo( $value, $sanitiser = 'sanitize_text_field' ) {
 			echo esc_html( $value );
 			break;
 		case 'wp_kses':
-			echo wp_kses( $value );
+			echo yk_mt_wp_kses( $value );
 			break;	
 		default:
 			echo sanitize_text_field( $value );
@@ -1659,4 +1659,11 @@ function yk_mt_echo_esc_html( $value ) {
  */
 function yk_mt_echo_wp_kses_post( $value ) {
 	yk_mt_echo( $value, $sanitiser = 'wp_kses' );
+}
+
+/**
+ * Our version of kses and the HTML we are happy with
+ */
+function yk_mt_wp_kses( $value ) {
+	return wp_kses( $value, [ 'canvas', 'a', 'div', 'span', 'em', 'table', 'tr', 'td' ] );
 }
