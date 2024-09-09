@@ -349,7 +349,10 @@ function yk_mt_db_entry_get( $id = NULL ) {
 		$meta_per_line 	= yk_mt_meta_fields_where( 'visible_user', true );
 
 		if ( false === empty( $meta_per_line ) ) {
-			$meta_sql = ' , m.' . implode( ' , m.', wp_list_pluck( $meta_per_line, 'db_col' ) );
+     
+			 foreach ( wp_list_pluck( $meta_per_line, 'db_col' ) as $name ) {
+                $meta_sql .= $wpdb->prepare( ' , m.%i', $name );
+            }
 		}
 
         $sql = $wpdb->prepare( 'Select m.id, m.name, m.calories, m.quantity, m.unit, m.description, m.added_by_admin, m.added_by' . $meta_sql . ',
@@ -362,7 +365,7 @@ function yk_mt_db_entry_get( $id = NULL ) {
                                 $wpdb->prefix . YK_WT_DB_ENTRY_MEAL,
                                 $id
         );
-		//echo $sql;
+
         $meal_type_ids = yk_mt_meal_types_ids();
 
 		$meta_to_total 	= ( true === YK_MT_IS_PREMIUM ) ? yk_mt_meta_fields_where( 'total-these', true ) : [];
