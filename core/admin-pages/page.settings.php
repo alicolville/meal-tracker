@@ -53,7 +53,7 @@ function yk_mt_settings_page_generic() {
                     <div class="postbox">
                         <h3 class="hndle">
                             <span>
-                                <?php echo esc_html__( YK_MT_PLUGIN_NAME . ' Settings', 'meal-tracker' ); ?>
+                                <?php echo esc_html__( 'Meal Tracker Settings', 'meal-tracker' ); ?>
                             </span>
                         </h3>
                         <div class="inside">
