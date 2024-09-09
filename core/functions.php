@@ -1665,6 +1665,5 @@ function yk_mt_echo_wp_kses( $value ) {
  * Our version of kses and the HTML we are happy with
  */
 function yk_mt_wp_kses( $value ) {
-	echo 'here';
 	return wp_kses( $value, [ 'canvas', 'p', 'a', 'div', 'span', 'em', 'table', 'tr', 'td' ] );
 }
