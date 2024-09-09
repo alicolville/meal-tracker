@@ -117,7 +117,6 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 * Improvement: Removed an interation over $_POST.
 * Maintenance: Updated Chart.js to latest library.
 * Maintenance: Updated Selectize.js to latest library.
-* Maintenance: Removed redundant Ajax call.
 
 = 3.2 =
 
