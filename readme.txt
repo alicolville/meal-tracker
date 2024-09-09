@@ -67,6 +67,10 @@ As with most modern software, this plugins utilises other 3rd party plugins. Dep
 * [ZOZO UI Tabs](http://www.zozoui.com)
 * [Zebra Datepicker](https://github.com/stefangabos/Zebra_Datepicker)
 
+YeKen libraries:
+
+* [YeKen Shop API prices](https://shop.yeken.uk) - [Privacy Policy](https://shop.yeken.uk/privacy-policy/)
+
 == Installation ==
 
 1. Login into Wordpress Admin Panel
