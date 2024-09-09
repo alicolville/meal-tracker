@@ -223,7 +223,7 @@ function yk_mt_user_side_bar_postbox_entry( $entry = NULL ) {
 		<div class="inside">
 			<?php if ( NULL !== $entry ): ?>
 				<div class="yk-mt__table--summary-chart-slot">
-					<?php yk_mt_echo_wp_kses_post( yk_mt_chart_progress_canvas( [ 'chart-height' => '150px' ] ) ); ?>
+					<?php yk_mt_echo_wp_kses( yk_mt_chart_progress_canvas( [ 'chart-height' => '150px' ] ) ); ?>
 				</div>
 				<table class="yk-mt-sidebar-stats">
 					<tr>
@@ -254,19 +254,19 @@ function yk_mt_user_side_bar_postbox_entry( $entry = NULL ) {
 					</tr>
 					<tr>
 						<th><?php echo esc_html__( 'Calories Used', 'meal-tracker' ); ?></th>
-						<td class="yk-mt-blur"><?php yk_mt_echo_wp_kses_post( yk_mt_blur_text( $entry[ 'calories_used' ] ) ); ?></td>
+						<td class="yk-mt-blur"><?php yk_mt_echo_wp_kses( yk_mt_blur_text( $entry[ 'calories_used' ] ) ); ?></td>
 					</tr>
 					<tr>
 						<th><?php echo esc_html__( 'Calories Remaining', 'meal-tracker' ); ?></th>
-						<td class="yk-mt-blur"><?php yk_mt_echo_wp_kses_post( yk_mt_blur_text( $entry[ 'calories_remaining' ] ) ); ?></td>
+						<td class="yk-mt-blur"><?php yk_mt_echo_wp_kses( yk_mt_blur_text( $entry[ 'calories_remaining' ] ) ); ?></td>
 					</tr>
 					<tr>
 						<th><?php echo esc_html__( 'Percentage used', 'meal-tracker' ); ?></th>
-						<td class="yk-mt-blur"><?php yk_mt_echo_wp_kses_post( yk_mt_format_number( $entry[ 'percentage_used' ], 1 ) ); ?>%</td>
+						<td class="yk-mt-blur"><?php yk_mt_echo_wp_kses( yk_mt_format_number( $entry[ 'percentage_used' ], 1 ) ); ?>%</td>
 					</tr>
 					<tr>
 						<th><?php echo esc_html__( 'Meals', 'meal-tracker' ); ?></th>
-						<td class="yk-mt-blur"><?php yk_mt_echo_wp_kses_post( yk_mt_blur_text( $entry[ 'counts' ][ 'total-meals' ] ) ); ?></td>
+						<td class="yk-mt-blur"><?php yk_mt_echo_wp_kses( yk_mt_blur_text( $entry[ 'counts' ][ 'total-meals' ] ) ); ?></td>
 					</tr>
 				</table>
 			<?php else: ?>

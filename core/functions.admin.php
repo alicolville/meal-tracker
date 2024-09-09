@@ -354,7 +354,7 @@ function yk_mt_admin_option_links( $key, $default,  $options, $cache_notice = NU
     echo '<div class="yk-mt-link-group">';
 
     if ( false === empty( $prepend ) ) {
-    	yk_mt_echo_wp_kses_post( $prepend );
+    	yk_mt_echo_wp_kses( $prepend );
 	}
 
     foreach ( $options as $option_key => $option_name ) {
