@@ -904,7 +904,7 @@ function yk_mt_db_meal_for_user( $user_id = NULL, $options = []  ) {
 
         $sort_order = ( true === in_array( $options[ 'sort-order' ], [ 'asc', 'desc' ] ) ) ? $options[ 'sort-order' ] : 'asc';
 
-        $sql .= $wpdb->prepare( ' order by %s %s', $sort, $sort_order );
+        $sql .= ' order by' . sanitize_sql_orderby( sprintf( ' %s %s', $sort, $sort_order ) );
 
         // Limit
         if ( false === empty( $options[ 'limit' ] ) ) {
