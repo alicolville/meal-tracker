@@ -273,25 +273,25 @@ function yk_mt_db_entries_summary( $args ) {
 
     global $wpdb;
 
-    $sql = 'Select id, user_id, calories_allowed, calories_used, date from ' . $wpdb->prefix . YK_WT_DB_ENTRY . ' where 1=1 ';
+    $sql = $wpdb->prepare( 'Select id, user_id, calories_allowed, calories_used, date from %i where 1=1 ', $wpdb->prefix . YK_WT_DB_ENTRY );
 
     if ( false === empty( $args[ 'user-id' ] ) ) {
-        $sql .= sprintf( ' and user_id = %d', $args[ 'user-id' ] );
+        $sql .= $wpdb->prepare( ' and user_id = %d', $args[ 'user-id' ] );
     }
 
     if ( false === empty( $args[ 'last-x-days' ] ) ) {
-        $sql .= sprintf( ' and date >= NOW() - INTERVAL %d DAY and date <= NOW()', $args[ 'last-x-days' ] );
+        $sql .= $wpdb->prepare( ' and date >= NOW() - INTERVAL %d DAY and date <= NOW()', $args[ 'last-x-days' ] );
     }
 
     $sort = ( true === in_array( $args[ 'sort' ], [ 'date', 'calories_allowed', 'calories_used' ] ) ) ?  $args[ 'sort' ] : 'date';
 
     $sort_order = ( true === in_array( $args[ 'sort-order' ], [ 'asc', 'desc' ] ) ) ? $args[ 'sort-order' ] : 'asc';
 
-    $sql .= sprintf( ' order by %s %s', $sort, $sort_order );
+    $sql .= ' order by' . sanitize_sql_orderby( sprintf( ' %s %s', $sort, $sort_order ) );
 
     // Limit
     if ( false === empty( $args[ 'limit' ] ) ) {
-        $sql .= sprintf( ' limit 0, %d', $args[ 'limit' ] ) ;
+        $sql .= $wpdb->prepare( ' limit 0, %d', $args[ 'limit' ] ) ;
     }
 
     $results = $wpdb->get_results( $sql, ARRAY_A );
