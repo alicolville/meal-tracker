@@ -523,7 +523,7 @@ function yk_mt_use_minified() {
  * @return null
  */
 function yk_mt_querystring_value( $key, $default = NULL ) {
-	return ( false === empty( $_GET[ $key ] ) ) ? $_GET[ $key ] : $default;
+	return ( false === empty( $_GET[ $key ] ) ) ? sanitize_text_field( $_GET[ $key ] ) : $default;
 }
 
 /**
@@ -535,7 +535,7 @@ function yk_mt_querystring_value( $key, $default = NULL ) {
  * @return null
  */
 function yk_mt_post_value( $key, $default = NULL ) {
-	return ( false === empty( $_POST[ $key ] ) ) ? $_POST[ $key ] : $default;
+	return ( false === empty( $_POST[ $key ] ) ) ? sanitize_text_field( $_POST[ $key ] ) : $default;
 }
 
 /**

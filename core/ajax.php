@@ -512,7 +512,7 @@ function yk_mt_ajax_extract_and_validate_post_data_single( $key, $is_empty_check
 		wp_send_json( [ 'error' => 'missing-' . $key ] );
 	}
 
-	return $_POST[ $key ];
+	return sanitize_text_field( $_POST[ $key ] );
 }
 
 /**
