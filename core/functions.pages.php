@@ -136,7 +136,7 @@ function yk_mt_user_side_bar_postbox_allowed_sources( $user_id ) {
                 <?php if ( ! empty( $selected_source[ 'value' ] ) ) : ?>
                     <tr>
                         <th><?php echo esc_html__( 'Current allowance', 'meal-tracker' ); ?></th>
-                        <td><?php echo yk_mt_format_calories( $selected_source[ 'value' ] ); ?></td>
+                        <td><?php echo esc_html__( yk_mt_format_calories( $selected_source[ 'value' ] ) ); ?></td>
                     </tr>
                 <?php endif; ?>
 			</table>
