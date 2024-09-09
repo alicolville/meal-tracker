@@ -112,14 +112,14 @@ function yk_mt_ajax_meal_add( $options = [] ) {
             return wp_send_json( [ 'error' => 'missing-meta-fields-array' ] );
         }
 
-        $meta_fields = $_POST[ 'meta-fields' ];
-
         foreach ( yk_mt_meta_fields_visible_user_keys() as $key ) {
-            if ( false === isset( $meta_fields[ $key ] ) ) {
+            if ( false === isset( $_POST[ 'meta-fields' ][ $key ] ) ) {
                 return wp_send_json( [ 'error' => 'missing-meta-field-' . $key ] );
             }
 
-            $post_data[ $key ] = (float) $meta_fields[ $key ];
+			$value = sanitize_text_field( $_POST[ 'meta-fields' ][ $key ] );
+
+            $post_data[ $key ] = (float) $value;
         }
 
     }

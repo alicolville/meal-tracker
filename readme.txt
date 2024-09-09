@@ -112,7 +112,7 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 * Bug fix: Can now set a user's calorie limit via admin screens.
 * Bug fix: Fixed a couple of localisation function calls.
-* Improvement: Added additional sanitising around $_POST and $_GET calls.
+* Improvement: Added additional sanitising around $_POST, $_GET and $_SESSION.
 * Improvement: Removed an interation over $_POST.
 * Maintenance: Updated Chart.js to latest library.
 * Maintenance: Updated Selectize.js to latest library.
