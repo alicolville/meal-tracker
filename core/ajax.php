@@ -413,13 +413,10 @@ function yk_mt_ajax_save_settings() {
 
 	$updated = false;
 
-	foreach ( $_POST as $key => $value ) {
+	foreach ( yk_mt_settings_allowed_keys() as $key ) {
 
-		$key = str_replace( 'yk-mt-', '', $key );
-
-		if ( false === in_array( $key, yk_mt_settings_allowed_keys() ) ) {
-			continue;
-		}
+		$post_key 	= sprintf( '%s%s', 'yk-mt-', $key );
+		$value 		= yk_mt_ajax_get_post_value( $post_key );
 
 		yk_mt_settings_set( $key, $value );
 
