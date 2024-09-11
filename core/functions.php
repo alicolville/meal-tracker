@@ -1632,26 +1632,16 @@ function yk_mt_import_csv_meal_collection_validate_row( $csv_row ) {
  * A wrapper around PHP echo for WP's sake. Their automated scanner flags all sorts of issues with just use of echo() without their sanitising
  * functions called before it - even though the code is sanitising correctly in other places user input etc. 
  */
-function yk_mt_echo( $value, $sanitiser = 'sanitize_text_field' ) {
+function yk_mt_echo( $value, $sanitiser = 'esc_html' ) {
 
 	switch ( $sanitiser ) {
 
-		case 'esc_html':
-			echo esc_html( $value );
-			break;
 		case 'wp_kses':
 			echo yk_mt_wp_kses( $value );
 			break;	
 		default:
-			echo sanitize_text_field( $value );
+			echo esc_html( $value );
 	}
-}
-
-/**
- * Easy to use wrapper around yk_mt_echo()
- */
-function yk_mt_echo_esc_html( $value ) {
-	yk_mt_echo( $value, $sanitiser = 'esc_html' );
 }
 
 /**
