@@ -1,6 +1,26 @@
-<?php /** @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection */
+<?php
 
 defined('ABSPATH') or die('Naw ya dinnie!');
+
+/**
+ * Is the Pro plugin installed?
+ * @param $meal
+ *
+ * @return mixed
+ */
+function yk_mt_is_pro_installed() {
+	return function_exists( 'yk_mt_pro_license_is_premium');
+}
+
+/**
+ * Do we have a Pro license?
+ * @param $meal
+ *
+ * @return mixed
+ */
+function yk_mt_license_is_premium() {
+	return yk_mt_is_pro_installed() && yk_mt_pro_license_is_premium();
+}
 
 /**
  * Prep a meal for display

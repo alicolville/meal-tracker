@@ -56,7 +56,10 @@ function yk_mt_build_admin_menu() {
     }
 
     $menu_text = ( true === yk_mt_license_is_premium() ) ? esc_html__( 'Your License', 'meal-tracker' ) : esc_html__( 'Upgrade to Pro', 'meal-tracker' );
-    add_submenu_page( 'yk-mt-main-menu', $menu_text,  $menu_text, 'manage_options', 'yk-mt-license', 'yk_mt_advertise_pro');
+   
+    $license_page_function = yk_mt_is_pro_installed() ? 'yk_mt_pro_license_page' : 'yk_mt_advertise_pro';
+   
+    add_submenu_page( 'yk-mt-main-menu', $menu_text,  $menu_text, 'manage_options', 'yk-mt-license', $license_page_function );
 
     add_submenu_page( 'yk-mt-main-menu', esc_html__( 'Settings', 'meal-tracker' ),  esc_html__( 'Settings', 'meal-tracker' ), 'manage_options', 'yk-mt-settings', 'yk_mt_settings_page_generic' );
     add_submenu_page( 'yk-mt-main-menu', esc_html__( 'Help', 'meal-tracker' ),  esc_html__( 'Help', 'meal-tracker' ), $permission_level, 'yk-mt-help', 'yk_mt_help_page' );
