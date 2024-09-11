@@ -367,8 +367,9 @@ function yk_mt_ajax_external_add_to_collection() {
 	check_ajax_referer( 'yk-mt-nonce', 'security' );
 
 	$serving_id = ( false === empty( $_POST[ 'serving_id' ] ) ) ? sanitize_text_field( $_POST[ 'serving_id' ] ) : NULL;
+	$meal_id	= sanitize_text_field( $_POST[ 'meal_id' ] );
 
-	$meal_id    = yk_mt_ext_add_meal_to_user_collection( $_POST[ 'meal_id' ], $serving_id );
+	$meal_id    = yk_mt_ext_add_meal_to_user_collection( $meal_id, $serving_id );
 
 	// No meal ID returned? Then we failed to find it in the user's meal collection of from the external source!
 	if ( false === $meal_id ) {
