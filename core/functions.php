@@ -606,7 +606,7 @@ function yk_mt_entry( $entry_id = NULL ) {
  */
 function yk_mt_current_url() {
 
-	$url = $url = get_permalink();
+	$url = get_permalink();
 
 	return add_query_arg( 'yk-mt', 'y', $url );
 }

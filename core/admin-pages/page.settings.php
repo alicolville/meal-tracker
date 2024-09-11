@@ -33,7 +33,7 @@ function yk_mt_settings_page_generic() {
 						<p><a href="%2$s?page=yk-mt-settings&amp;recreate-tables=y">%3$s</a></p>
 					</div>',
 			esc_html__( 'One or more database tables are missing for this plugin. They must be rebuilt if you wish to use the plugin.', 'meal-tracker' ),
-			get_permalink(),
+			esc_url( get_permalink() ),
 			esc_html__( 'Rebuild them now', 'meal-tracker' )
 
 		);

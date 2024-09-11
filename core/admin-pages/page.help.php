@@ -57,7 +57,7 @@ function yk_mt_help_page() {
                                     );
                                 }
 
-								printf( '<a href="%1$s?page=yk-mt-settings&amp;recreate-tables=y" class="button">%2$s</a>', get_permalink(), esc_html__( 'Run MySQL Tool', 'meal-tracker' ) );
+								printf( '<a href="%1$s?page=yk-mt-settings&amp;recreate-tables=y" class="button">%2$s</a>', esc_url( get_permalink() ), esc_html__( 'Run MySQL Tool', 'meal-tracker' ) );
 
                                 ?>
                             </p>

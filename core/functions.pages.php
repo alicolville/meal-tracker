@@ -15,8 +15,7 @@ function yk_mt_user_side_bar( $user_id, $entry = NULL ) {
     if( true === empty( $user_id ) )  {
         return;
     }
-    $current_url = yk_mt_link_current_url();
-
+  
     ?>
 	<div id="postbox-container-1" class="postbox-container">
 	  <div class="meta-box-sortables" id="yk-mt-user-data-one-sidebar">
@@ -109,7 +108,7 @@ function yk_mt_user_side_bar_postbox_allowed_sources( $user_id ) {
 						if ( false === empty( $sources ) ) {
 
 							printf( ' <form class="yk-mt-admin-form" method="post" action="%1$s">
-                                                            <select name="%2$s" id="%2$s">', yk_mt_link_current_url(), 'yk-mt-calorie-source' );
+                                                            <select name="%2$s" id="%2$s">', esc_url( yk_mt_link_current_url() ), 'yk-mt-calorie-source' );
 
 							foreach ( yk_mt_user_calories_sources() as $key => $source ) {
 

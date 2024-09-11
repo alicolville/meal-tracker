@@ -227,7 +227,7 @@ function yk_mt_table_meals( $args ) {
 								</td>
 							</tr>',
 							esc_url( $base_url . '&delete=' . (int) $meal[ 'id' ] ),
-							$edit_link
+							esc_url( $edit_link )
 					);
 				}
 			}
