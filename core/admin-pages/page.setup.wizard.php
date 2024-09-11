@@ -55,8 +55,8 @@ function yk_mt_setup_wizard_page() {
                                             </p>
                                             <h4>Meal Tracker shortcode</h4>
                                             <p>
-                                                <a rel="nopener" href="<?php echo YK_MT_BASE_URL . 'core/admin-pages/assets/images/setup-wizard-meal-tracker-shortcode.png'; ?>" target="_blank">
-                                                    <img src="<?php echo YK_MT_BASE_URL . 'core/admin-pages/assets/images/setup-wizard-meal-tracker-shortcode-small.png'; ?>" align="left" class="setup-wizard-image"/>
+                                                <a rel="nopener" href="<?php yk_mt_echo( YK_MT_BASE_URL ) ?>core/admin-pages/assets/images/setup-wizard-meal-tracker-shortcode.png" target="_blank">
+                                                    <img src="<?php yk_mt_echo( YK_MT_BASE_URL ) ?>core/admin-pages/assets/images/setup-wizard-meal-tracker-shortcode-small.png" align="left" class="setup-wizard-image"/>
                                                 </a>
 												The user interface (as seen) is rendered by placing the shortcode <strong><a href="https://mealtracker.yeken.uk/shortcodes/meal-tracker.html" target="_blank" rel="noopener">[meal-tracker]</a></strong> on a page or post.
                                             </p>
@@ -68,8 +68,8 @@ function yk_mt_setup_wizard_page() {
                                         </div>
                                         <div>
                                             <p>
-                                                <a rel="nopener" href="<?php echo YK_MT_BASE_URL . 'core/admin-pages/assets/images/user-data.png'; ?>" target="_blank">
-                                                    <img src="<?php echo YK_MT_BASE_URL . 'core/admin-pages/assets/images/user-data-small.png'; ?>" align="left" class="setup-wizard-image"/>
+                                                <a rel="nopener" href="<?php yk_mt_echo( YK_MT_BASE_URL ) ?>core/admin-pages/assets/images/user-data.png" target="_blank">
+                                                    <img src="<?php yk_mt_echo( YK_MT_BASE_URL ) ?>core/admin-pages/assets/images/user-data-small.png" align="left" class="setup-wizard-image"/>
                                                 </a>
                                                 Meal Tracker contains an extensive admin section for viewing your user's data. You can access it from the WordPress admin menu by navigating to Meal Tracker > <a href="<?php echo esc_url( $user_data_link ); ?>">Manage User Data</a>
                                             </p>
