@@ -21,8 +21,10 @@
             <?php
                 if ( false === empty( $_POST['license-key'] ) ){
 
+                    $license_key    = sanitize_text_field( $_POST['license-key'] );
+
                     // First try validating and applying a new subscription license
-                    $valid_license = yk_mt_license_apply( $_POST['license-key'] );
+                    $valid_license  = yk_mt_license_apply( $license_key );
 
                     if ( $valid_license ) {
                         yk_mt_message_display( esc_html__('Your license has been applied!', 'meal-tracker' ) );
