@@ -68,7 +68,7 @@
 
 												yk_mt_features_button();
 
-												echo wp_kses_post( yk_mt_features_display() );
+												ws_ls_echo_wp_kses( yk_mt_features_display() );
 
                                             endif;
                                         ?>

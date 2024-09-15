@@ -1209,7 +1209,7 @@ function yk_mt_upgrade_button( $css_class = '', $link = NULL ) {
  */
 function yk_mt_features_button( $css_class = '', $link = NULL ) {
 
-	$link = ( false === empty( $link ) ) ? $link : 'https://mealtracker.yeken.uk/features.html';
+	$link = ( false === empty( $link ) ) ? $link : 'https://mealtracker.yeken.uk/features';
 
 	echo sprintf('<a href="%s" class="button-secondary sh-cd-upgrade-button%s" target="_blank" rel="noopener">%s</a>',
 		esc_url( $link ),
@@ -1240,38 +1240,7 @@ function yk_mt_message_display( $text, $error = false ) {
  * @param $features
  */
 function yk_mt_features_display() {
-
-    $features = yk_mt_features_list();
-
-    $html = '';
-
-    if ( false === empty( $features ) ) {
-
-        $class  = '';
-        $html   = '<table class="form-table" >';
-
-        foreach ( $features as $title => $description ) {
-
-            if ( false === empty( $title ) ) {
-
-                $class = ('alternate' == $class) ? '' : 'alternate';
-
-                $html .= sprintf( '<tr valign="top" class="%1$s">
-                                            <td scope="row" style="padding-left:30px"><label for="tablecell">
-                                                    &middot; <strong>%2$s:</strong> %3$s.
-                                                </label></td>
-
-                                        </tr>',
-                    $class,
-                    esc_html( $title ),
-                    esc_html( $description )
-                );
-            }
-        }
-
-        $html .= '</table>';
-    }
-    return $html;
+    return yk_mt_display_features( yk_mt_feature_list_premium(), false );
 }
 
 /**
@@ -1280,24 +1249,71 @@ function yk_mt_features_display() {
 function yk_mt_features_list() {
 
     return [
-				esc_html__( 'Additional shortcodes', 'meal-tracker' )    	=> esc_html__( 'Enrich your site with additional shortcodes', 'meal-tracker' ),
-    			esc_html__( 'External APIs', 'meal-tracker' )    			=> esc_html__( 'Search FatSecrets Recipe and Food APIs', 'meal-tracker' ),
-				esc_html__( 'Own Meal collection', 'meal-tracker' )     	=> esc_html__( 'Create your own meal collection for your users to search', 'meal-tracker' ),
-				esc_html__( 'Edit user\'s meals', 'meal-tracker' )     		=> esc_html__( 'View, edit and delete meals in your user\'s meal collections', 'meal-tracker' ),
-                esc_html__( 'Create and view entries', 'meal-tracker' )     => esc_html__( 'Allow your users to create and view entries for any day', 'meal-tracker' ),
-                esc_html__( 'Edit entries', 'meal-tracker' )                => esc_html__( 'Allow your users to edit their entries for any given day', 'meal-tracker' ),
-                esc_html__( 'Edit meals', 'meal-tracker' )                  => esc_html__( 'Allow your users to edit their stored meals', 'meal-tracker' ),
-                esc_html__( 'Calorie sources', 'meal-tracker' )             => esc_html__( 'Fetch daily calorie limits from other sources e.g. YeKen\'s Weight Tracker', 'meal-tracker' ),
-                esc_html__( 'Compress meal items', 'meal-tracker' )         => esc_html__( 'Compress multiple meal lines for an entry into one line', 'meal-tracker' ),
-                esc_html__( 'Unlimited meals per user', 'meal-tracker' )    => esc_html__( 'Your users are no longer limited to a maximum of 40 meals and may add as many as they wish', 'meal-tracker' ),
-                esc_html__( 'View your user\'s data', 'meal-tracker' )      => esc_html__( 'View all of your user entries, meals and calorie intake', 'meal-tracker' ),
-                esc_html__( 'Set calorie allowances', 'meal-tracker' )      => esc_html__( 'Set daily calorie allowances for your users', 'meal-tracker' ),
-                esc_html__( 'Summary Statistics', 'meal-tracker' )          => esc_html__( 'View summary statistics of your Meal Tracker data and it\'s usage by your users', 'meal-tracker' ),
-                esc_html__( 'Calorie Allowance sources', 'meal-tracker' )   => esc_html__( 'Specify one or more sources for calorie allowance', 'meal-tracker' ),
-                esc_html__( 'Additional settings', 'meal-tracker' )         => esc_html__( 'Additional settings for customising your Meal Tracker usage', 'meal-tracker' ),
-                esc_html__( 'Admin Search', 'meal-tracker' )                => esc_html__( 'Search for users by name and email address', 'meal-tracker' ),
-				esc_html__( 'Fractional meal quantities', 'meal-tracker' )  => esc_html__( 'If enabled (via settings) additional quantity settings of 1/4, 1/2 and 3/4 are available when adding meals to an entry', 'meal-tracker' )
-     ];
+			[ 	
+				'title'			=> esc_html__( 'Additional shortcodes', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Enhance your site with extra shortcodes.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'External APIs', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Allow your users to browse FatSecrets Food and Recipe APIs.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Own Meal collection', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Build your own meal collection for your users to explore.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Edit user\'s meals', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Manage your user\'s meal collections by viewing, editing, and deleting meals.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Create and view entries', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Enable your users to create and view meal entries for any date.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Edit entries', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Give your users the ability to edit their entries for any selected day.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Edit Meals', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Enable your users to modify their saved meals.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Calorie Allowance sources', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Retrieve daily calorie limits from external sources, such as YeKen\'s Weight Tracker.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Compress meal items', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Consolidate multiple meal lines into a single entry line.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Unlimited meals per user', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Users are no longer restricted to a maximum of 40 meals and can now add as many meals as they wish.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Access your user\'s data', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Access all their entries, meals, and calorie intake', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Set calorie allowances', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Assign daily calorie allowances for your users.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Summary Statistics', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Review summary statistics of your Meal Tracker data and analyze its usage by your users.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Fractional meal quantities', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'If enabled in the settings, you can use additional quantity options of 1/4, 1/2, and 3/4 when adding meals to an entry.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Admin Search', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Search for users by name or email address.', WE_LS_SLUG )
+			],
+			[ 	
+				'title'			=> esc_html__( 'Additional settings', WE_LS_SLUG ), 
+				'description'	=> esc_html__( 'Additional settings for tailoring your Meal Tracker experience.', WE_LS_SLUG )
+			],
+	];	
 }
 
 /**
