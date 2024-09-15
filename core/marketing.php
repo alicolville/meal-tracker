@@ -8,7 +8,7 @@ defined('ABSPATH') or die('Jog on!');
 function yk_mt_get_marketing_message() {
 
 	if ( $cache = get_transient( '_yeken_meal_tracker_update' ) ) {
-		//return $cache;
+		return $cache;
 	}
 
 	$response = wp_remote_get( YK_MT_YEKEN_UPDATES_URL );
