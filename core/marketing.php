@@ -211,68 +211,68 @@ add_shortcode( 'mt-version', 'yk_mt_shortcode_version' );
 function yk_mt_feature_list_premium() {
 	return [
 				[ 	
-					'title'			=> esc_html__( 'Additional shortcodes', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Enhance your site with extra shortcodes.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Additional shortcodes', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Enhance your site with extra shortcodes.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'External APIs', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Allow your users to browse FatSecrets Food and Recipe APIs.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'External APIs', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Allow your users to browse FatSecrets Food and Recipe APIs.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Own Meal collection', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Build your own meal collection for your users to explore.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Own Meal collection', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Build your own meal collection for your users to explore.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Edit user\'s meals', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Manage your user\'s meal collections by viewing, editing, and deleting meals.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Edit user\'s meals', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Manage your user\'s meal collections by viewing, editing, and deleting meals.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Create and view entries', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Enable your users to create and view meal entries for any date.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Create and view entries', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Enable your users to create and view meal entries for any date.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Edit entries', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Give your users the ability to edit their entries for any selected day.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Edit entries', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Give your users the ability to edit their entries for any selected day.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Edit Meals', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Enable your users to modify their saved meals.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Edit Meals', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Enable your users to modify their saved meals.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Calorie Allowance sources', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Retrieve daily calorie limits from external sources, such as YeKen\'s Weight Tracker.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Calorie Allowance sources', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Retrieve daily calorie limits from external sources, such as YeKen\'s Weight Tracker.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Compress meal items', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Consolidate multiple meal lines into a single entry line.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Compress meal items', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Consolidate multiple meal lines into a single entry line.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Unlimited meals per user', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Users are no longer restricted to a maximum of 40 meals and can now add as many meals as they wish.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Unlimited meals per user', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Users are no longer restricted to a maximum of 40 meals and can now add as many meals as they wish.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Access your user\'s data', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Access all their entries, meals, and calorie intake', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Access your user\'s data', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Access all their entries, meals, and calorie intake', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Set calorie allowances', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Assign daily calorie allowances for your users.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Set calorie allowances', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Assign daily calorie allowances for your users.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Summary Statistics', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Review summary statistics of your Meal Tracker data and analyze its usage by your users.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Summary Statistics', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Review summary statistics of your Meal Tracker data and analyze its usage by your users.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Fractional meal quantities', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'If enabled in the settings, you can use additional quantity options of 1/4, 1/2, and 3/4 when adding meals to an entry.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Fractional meal quantities', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'If enabled in the settings, you can use additional quantity options of 1/4, 1/2, and 3/4 when adding meals to an entry.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Admin Search', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Search for users by name or email address.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Admin Search', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Search for users by name or email address.', 'meal-tracker' )
 				],
 				[ 	
-					'title'			=> esc_html__( 'Additional settings', WE_LS_SLUG ), 
-					'description'	=> esc_html__( 'Additional settings for tailoring your Meal Tracker experience.', WE_LS_SLUG )
+					'title'			=> esc_html__( 'Additional settings', 'meal-tracker' ), 
+					'description'	=> esc_html__( 'Additional settings for tailoring your Meal Tracker experience.', 'meal-tracker' )
 				],
 	];	
 }
