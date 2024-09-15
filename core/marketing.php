@@ -199,8 +199,7 @@ function yk_mt_shortcode_version() {
 add_shortcode( 'mt-version', 'yk_mt_shortcode_version' );
 
 // add_action( 'init', function() {
-// 	yk_mt_display_features(  yk_mt_feature_list_pro(), true, $format = 'markdown'  );
-// 	yk_mt_display_features(  yk_mt_feature_list_pro_plus(), true, $format = 'markdown'  );
+// 	yk_mt_display_features(  yk_mt_feature_list_premium(), true, $format = 'markdown'  );
 // 	die;
 // });
 
