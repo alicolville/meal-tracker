@@ -36,19 +36,22 @@ For further information read our documentation:
 
 = Premium Features =
 
-* [Additional shortcodes](https://mealtracker.yeken.uk/shortcodes.html).
-* As an administrator, you can view your user's progress and entries.
-* Your user's can have Unlimited meals.
-* If enabled, allow your users to record meals for any date, future or past.
-* Allow your users to search other user's meals.
-* [myCred integration](https://mealtracker.yeken.uk/gamification.html). Gamify your user's entries.
-* Support for Macronutrients.
-* Search [external APIs](https://mealtracker.yeken.uk/external-apis.html) (like [Fatsecret](https://www.fatsecret.com/)) for meals.
-* [FatSecrets Food](https://platform.fatsecret.com/api/Default.aspx?screen=rapiref&method=foods.search) and [Recipe API](https://platform.fatsecret.com/api/Default.aspx?screen=rapiref&method=recipe.get) are supported.
-* [Meal Collection](https://mealtracker.yeken.uk/meal-collections.html) - create a library of meals for your users to search.
-* Fractional meal quantities - If enabled (via settings) additional quantity settings of 1/4, 1/2 and 3/4 are available when adding meals to an entry.
-* View, edit and delete meals in your user's meal collection.
-* Import your meal collection via CSV.
+* **Additional shortcodes** - Enhance your site with extra shortcodes.
+* **External APIs** - Allow your users to browse FatSecrets Food and Recipe APIs.
+* **Own Meal collection** - Build your own meal collection for your users to explore.
+* **Edit user&#039;s meals** - Manage your user&#039;s meal collections by viewing, editing, and deleting meals.
+* **Create and view entries** - Enable your users to create and view meal entries for any date.
+* **Edit entries** - Give your users the ability to edit their entries for any selected day.
+* **Edit Meals** - Enable your users to modify their saved meals.
+* **Calorie Allowance sources** - Retrieve daily calorie limits from external sources, such as YeKen&#039;s Weight Tracker.
+* **Compress meal items** - Consolidate multiple meal lines into a single entry line.
+* **Unlimited meals per user** - Users are no longer restricted to a maximum of 40 meals and can now add as many meals as they wish.
+* **Access your user&#039;s data** - Access all their entries, meals, and calorie intake
+* **Set calorie allowances** - Assign daily calorie allowances for your users.
+* **Summary Statistics** - Review summary statistics of your Meal Tracker data and analyze its usage by your users.
+* **Fractional meal quantities** - If enabled in the settings, you can use additional quantity options of 1/4, 1/2, and 3/4 when adding meals to an entry.
+* **Admin Search** - Search for users by name or email address.
+* **Additional settings** - Additional settings for tailoring your Meal Tracker experience.
 
 == 3rd Party Libraries == 
 
@@ -107,6 +110,10 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 3.1 - Communicate and search with meal collections from other WP installs with Meal Tracker installed.
 
 == Changelog ==
+
+= 3.2.3 =
+
+* Updated features and readme.txt.
 
 = 3.2.2 =
 

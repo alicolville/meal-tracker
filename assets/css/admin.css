@@ -174,3 +174,6 @@ Core.css overrides
   padding: 5px;
   text-transform: uppercase;
 }
+.yk-mt-features-table td {
+    padding: 0px;
+}
