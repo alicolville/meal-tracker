@@ -111,6 +111,10 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 == Changelog ==
 
+= 3.2.3 =
+
+* Updated features and readme.txt.
+
 = 3.2.2 =
 
 * Improvement: Added messaging from YeKen.uk.
