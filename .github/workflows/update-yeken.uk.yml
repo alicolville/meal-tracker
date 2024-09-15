@@ -1,0 +1,45 @@
+name: Build WP Plugin (zip) and FTP to web server
+on: push
+# on:
+#   push:
+#     tags:
+#       - "*"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        path: /home/runner/work/meal-tracker/meal-tracker/meal-tracker/
+    - name: Create temporary directories
+      run: | 
+          mkdir /tmp/zip/
+          mkdir /tmp/code/       
+    - name: Build the zip (excluding certain folders)
+      uses: thedoctor0/zip-release@0.7.5
+      with:
+        type: 'zip'
+        directory: /home/runner/work/meal-tracker/meal-tracker/
+        filename: '/tmp/zip/meal-tracker.zip'
+        exclusions: '*.git* /*node_modules/* .editorconfig /*playwright* /*docs* /*dist*'
+    - name:  FTP - Zip file for user downloads
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_URL }}
+        username: ${{ secrets.FTP_MT_USERNAME }}
+        password: ${{ secrets.FTP_MT_PASSWORD }}
+        local-dir: /tmp/zip/ 
+    - name:  FTP - update plugin on Yeken.uk
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_URL }}
+        username: ${{ secrets.FTP_PLUGIN_USERNAME }}
+        password: ${{ secrets.FTP_PLUGIN_PASSWORD }}
+        local-dir: /home/runner/work/meal-tracker/meal-tracker/meal-tracker/
+        exclude: |
+           **/.git*
+           **/.git*/**
+           **/node_modules/**
+           **/docs/**
+           **/playwright/**
+           **/dist/**
