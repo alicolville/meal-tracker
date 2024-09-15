@@ -1240,7 +1240,7 @@ function yk_mt_message_display( $text, $error = false ) {
  * @param $features
  */
 function yk_mt_features_display() {
-    return yk_mt_display_features( yk_mt_feature_list_premium(), false );
+    return yk_mt_display_features( yk_mt_feature_list_premium(), true );
 }
 
 /**
@@ -1681,5 +1681,19 @@ function yk_mt_echo_wp_kses( $value ) {
  * Our version of kses and the HTML we are happy with
  */
 function yk_mt_wp_kses( $value ) {
-	return wp_kses( $value, [ 'canvas', 'p', 'a', 'div', 'span', 'em', 'table', 'tr', 'td' ] );
+	
+	$basic_tags = wp_kses_allowed_html( 'html' );
+
+	$basic_tags[ 'a' ] 		= [ 'id' => true, 'class' => true, 'href' => true, 'title' => true, 'target' => true];
+	$basic_tags[ 'canvas' ] = [ 'id' => true, 'class' => true ];
+	$basic_tags[ 'div' ]	= [ 'id' => true, 'class' => true, 'style' => true ];	
+	$basic_tags[ 'i' ]		= [ 'id' => true, 'class' => true ];	
+	$basic_tags[ 'p' ]		= [ 'id' => true, 'class' => true ];		
+	$basic_tags[ 'span' ]	= [ 'id' => true, 'class' => true ];			
+	$basic_tags[ 'table' ]	= [ 'id' => true, 'class' => true ];	
+	$basic_tags[ 'tr' ]		= [ 'id' => true, 'class' => true ];	
+	$basic_tags[ 'td' ]		= [ 'id' => true, 'class' => true ];	
+	$basic_tags[ 'li' ]		= [ 'class' => true ];	
+
+	return wp_kses( $value, $basic_tags );
 }
