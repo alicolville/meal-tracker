@@ -26,8 +26,8 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_URL }}
-        username: ${{ secrets.FTP_MT_USERNAME }}
-        password: ${{ secrets.FTP_MT_PASSWORD }}
+        username: ${{ secrets.FTP_ZIP_USERNAME }}
+        password: ${{ secrets.FTP_ZIP_PASSWORD }}
         local-dir: /tmp/zip/ 
     - name:  FTP - update plugin on Yeken.uk
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
