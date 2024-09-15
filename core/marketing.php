@@ -187,7 +187,7 @@ function yk_mt_display_features( $features, $echo = true, $format = 'table'  ) {
 function yk_mt_shortcode_display_features() {
 	return yk_mt_display_features( yk_mt_feature_list_premium(), false, 'ul' );
 }
-add_shortcode( 'wt-features-table', 'yk_mt_shortcode_display_features' );
+add_shortcode( 'mt-features-table', 'yk_mt_shortcode_display_features' );
 
 /**
  * Display WP Version
