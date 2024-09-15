@@ -5,7 +5,7 @@ defined('ABSPATH') or die("Jog on!");
 /**
  * Plugin Name:         Meal Tracker
  * Description:         Allow your users to track their meals and calorie intake for a given day.
- * Version:             3.2.1
+ * Version:             3.2.2
  * Requires at least:   5.7
  * Tested up to:		6.5
  * Requires PHP:        7.2
@@ -18,12 +18,13 @@ defined('ABSPATH') or die("Jog on!");
  */
 
 define( 'YK_MT_ABSPATH', plugin_dir_path( __FILE__ ) );
-define( 'YK_MT_PLUGIN_VERSION', '3.2.1' );
+define( 'YK_MT_PLUGIN_VERSION', '3.2.2' );
 define( 'YK_MT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'YK_MT_SLUG', 'meal-tracker' );
 define( 'YK_MT_BASE_URL', plugin_dir_url( __FILE__ ) );
 define( 'YK_MT_CDN_CHART_JS', YK_MT_BASE_URL . 'assets/js/chart-4.4.4.min.js' );
 define( 'YK_MT_CDN_FONT_AWESOME_CSS', YK_MT_BASE_URL . 'assets/css/fontawesome-4.7.0.min.css' );
+define( 'YK_MT_YEKEN_UPDATES_URL', 'https://yeken.uk/downloads/_updates/meal-tracker.json' );
 
 // -----------------------------------------------------------------------------------------
 // AC: Include all relevant PHP files
@@ -37,6 +38,7 @@ include_once YK_MT_ABSPATH . 'core/functions.settings.php';
 include_once YK_MT_ABSPATH . 'core/functions.chart.php';
 include_once YK_MT_ABSPATH . 'core/license.php';
 include_once YK_MT_ABSPATH . 'core/setup.wizard.php';
+include_once YK_MT_ABSPATH . 'core/marketing.php';
 
 $is_premium = yk_mt_license_is_premium();
 

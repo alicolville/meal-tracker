@@ -21,6 +21,7 @@ function yk_mt_admin_page_meals_import() {
 
     ?>
     <div class="wrap ws-ls-user-meals ws-ls-admin-page">
+	<h2><?php echo esc_html__( 'Import CSV', 'meal-tracker' ); ?></h2>
     <div id="poststuff">
         <div id="post-body" class="metabox-holder columns-2">
             <div id="post-body-content">
@@ -32,8 +33,7 @@ function yk_mt_admin_page_meals_import() {
 
                     ?>
                    <div class="postbox">
-					   	<h2 class="hndle"><?php echo esc_html__( 'Import CSV', 'meal-tracker' ); ?></h2>
-                        <div class="inside">
+					   	<div class="inside">
                         	<?php if ( false === $importing ): ?>
 								<div class="yk-mt-form-row">
 									<p>
