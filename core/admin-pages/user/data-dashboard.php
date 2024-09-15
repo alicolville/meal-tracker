@@ -8,6 +8,7 @@ function yk_mt_admin_page_dashboard() {
 
     ?>
     <div class="wrap ws-ls-user-data ws-ls-admin-page">
+	<h2><span><?php echo esc_html__( 'User Data', 'meal-tracker' ) ?></span></h2>
     <div id="poststuff">
         <div id="post-body" class="metabox-holder columns-2">
             <div id="post-body-content">

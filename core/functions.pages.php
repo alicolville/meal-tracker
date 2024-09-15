@@ -409,7 +409,7 @@ function yk_mt_user_header( $user_id ) {
     $additional_links = apply_filters( 'yk_mt_user_profile_header_links', '', $user_id );
 
     printf('
-        <h3>%s %s</h3>
+       	<h2><span>%s %s</span></h2>
         <div class="postbox yk-mt-user-data">
             <div class="inside">
                 <a href="%s" class="button-secondary"><i class="fa fa-arrow-left"></i><span> %s</span></a>

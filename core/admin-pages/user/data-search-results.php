@@ -8,13 +8,12 @@ function yk_mt_admin_page_search_results() {
 
     ?>
     <div class="wrap">
-    <h1><?php echo esc_html__( 'Search Results', 'meal-tracker' ); ?></h1>
+    <h2><span><?php echo esc_html__( 'Search Results', 'meal-tracker' ) ?></span></h2>
     <div id="poststuff">
         <div id="post-body" class="metabox-holder">
             <div id="post-body-content">
                 <div class="meta-box-sortables ui-sortable">
                     <div class="postbox">
-                        <h2 class="hndle"><span><?php echo esc_html__( 'Search Results', 'meal-tracker' ); ?></span></h2>
                         <div class="inside">
                         <?php
 

@@ -6,8 +6,30 @@ function yk_mt_admin_page_meals_dashboard() {
 
     yk_mt_admin_permission_check();
 
+	if ( false === YK_MT_IS_PREMIUM ) {
+		yk_mt_display_pro_upgrade_notice();
+	}
+
+	$user_id = yk_mt_querystring_value( 'user-id' );
+	$options = [ 'sort-order' => 'asc', 'use-cache' => false ];
+
+	if ( true === empty( $user_id ) ) {
+		$options[ 'admin-meals-only' ] = true;
+	}
+
     ?>
     <div class="wrap ws-ls-user-meals ws-ls-admin-page">
+	<h2>
+		<span>
+			<?php
+				if  ( false === empty( $user_id ) ) {
+					printf( '%s: <em>%s</em>', esc_html__( 'Meals added by', 'meal-tracker' ), yk_mt_user_display_name( $user_id ) );
+				} else {
+					printf( ' %s', esc_html__( 'Meal collection', 'meal-tracker' ) );
+				}
+			?>
+		</span>
+	</h2>
     <div id="poststuff">
         <div id="post-body" class="metabox-holder columns-2">
             <div id="post-body-content">
@@ -18,25 +40,8 @@ function yk_mt_admin_page_meals_dashboard() {
 						yk_mt_display_pro_upgrade_notice();
 					}
 
-					$user_id = yk_mt_querystring_value( 'user-id' );
-					$options = [ 'sort-order' => 'asc', 'use-cache' => false ];
-
-					if ( true === empty( $user_id ) ) {
-						$options[ 'admin-meals-only' ] = true;
-					}
                     ?>
                    <div class="postbox">
-                        <h2 class="hndle">
-								<span>
-									<?php
-										if  ( false === empty( $user_id ) ) {
-											printf( '%s: <em>%s</em>', esc_html__( 'Meals added by', 'meal-tracker' ), yk_mt_user_display_name( $user_id ) );
-										} else {
-											printf( ' %s', esc_html__( 'Meal collection', 'meal-tracker' ) );
-										}
-									?>
-								</span>
-						</h2>
                         <div class="inside">
 							<?php
 
