@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/yeken
 Tags: meal, tracker, calories, weight, food
 Requires at least: 5.7
 Tested up to: 6.5
-Stable tag: 3.2.4
+Stable tag: 3.3
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -110,6 +110,10 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 3.1 - Communicate and search with meal collections from other WP installs with Meal Tracker installed.
 
 == Changelog ==
+
+= 3.3 =
+
+* New feature: Auto updater that doesn't reply on WordPress.org
 
 = 3.2.4 =
 
