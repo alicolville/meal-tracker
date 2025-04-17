@@ -5,9 +5,9 @@ defined('ABSPATH') or die("Jog on!");
 /**
  * Plugin Name:         Meal Tracker
  * Description:         Allow your users to track their meals and calorie intake for a given day.
- * Version:             3.3
+ * Version:             3.3.1
  * Requires at least:   5.7
- * Tested up to:		6.5
+ * Tested up to:		6.8
  * Requires PHP:        7.2
  * Author:              Ali Colville
  * Author URI:          https://www.YeKen.uk
@@ -18,7 +18,7 @@ defined('ABSPATH') or die("Jog on!");
  */
 
 define( 'YK_MT_ABSPATH', plugin_dir_path( __FILE__ ) );
-define( 'YK_MT_PLUGIN_VERSION', '3.3' );
+define( 'YK_MT_PLUGIN_VERSION', '3.3.1' );
 define( 'YK_MT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'YK_MT_SLUG', 'meal-tracker' );
 define( 'YK_MT_BASE_URL', plugin_dir_url( __FILE__ ) );
