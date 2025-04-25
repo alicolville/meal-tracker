@@ -111,6 +111,8 @@ The plugin is written in English (UK) but is ready for translation. If you wish 
 
 == Changelog ==
 
+! Remember to update Release.json
+
 = 3.3.1 =
 
 * Version bump for WP 6.8 compatibility.
