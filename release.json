@@ -1,6 +1,6 @@
 {
     "name" : "Meal Tracker",
-    "version" : "3.3",
+    "version" : "3.3.1",
     "download_url" : "https://mealtracker.yeken.uk/downloads/meal-tracker/meal-tracker.zip",
     "sections" : {
         "description" : "Extend your site by allowing your users to track their meals and calorie intake. Calorie targets for the day can be set by admins, the users or automatically pulled from Yeken's Weight Tracker"
